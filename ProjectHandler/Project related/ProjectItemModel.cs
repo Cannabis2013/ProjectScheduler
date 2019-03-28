@@ -9,11 +9,11 @@ namespace ProjectNameSpace
 {
     public class ProjectItemModel : ListViewItem
     {
-        public ProjectItemModel(Project p)
+        public ProjectItemModel(ref Project p)
         {
-            this.p = p;
+            Text = p.ProjectID;
+            SubItems.Add(p.StartDate.ToString());
+            SubItems.Add(p.estimatedEndDate.ToString());
         }
-
-        private Project p = null;
     }
 }

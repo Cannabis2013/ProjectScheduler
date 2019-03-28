@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Projecthandler;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ProjectNameSpace
 {
-    public class ProjectManager
+    public class ProjectManager : IItemModel<ProjectItemModel>
     {
         public ProjectManager()
         {
@@ -21,6 +23,11 @@ namespace ProjectNameSpace
         public Project project(int index)
         {
             return projectDB.projects[index];
+        }
+
+        public List<ProjectItemModel> itemModelList()
+        {
+            throw new NotImplementedException();
         }
 
         private readonly ProjectDatabase projectDB = new ProjectDatabase();

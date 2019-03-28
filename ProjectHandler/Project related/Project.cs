@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Projecthandler;
 using Projecthandler.Object_wrappers;
+using VirtualUserDomain;
 
 namespace ProjectNameSpace
 {
-    public class Project
+    public class Project : IItemModel<ActivityItemModel>
     {
         public Project(string projectID)
         {
@@ -17,16 +19,20 @@ namespace ProjectNameSpace
 
         public void addActivity(Activity a) => projectActivities.AddLast(a);
 
-        private HashSet<string> assignedUserIdentities = new HashSet<string>();
+        public List<ActivityItemModel> itemModelList()
+        {
+            throw new NotImplementedException();
+        }
+
         internal LinkedList<Activity> projectActivities = new LinkedList<Activity>();
     }
 
-    public class Activity
+    public class Activity : IItemModel<UserItemModel>
     {
-        public Activity(string title, HashSet<string> assignedUserIdentities)
+        public Activity(string title, HashSet<string> assignedUserIdentities = null)
         {
             this.title = title;
-            this.assignedUserIdentities = assignedUserIdentities;
+            this.assignedUserIdentities = assignedUserIdentities ?? assignedUserIdentities;
         }
 
         public Activity(string title)
@@ -41,6 +47,11 @@ namespace ProjectNameSpace
         
 
         public void addTimeObject(TimeObject timeO) => timeObjects.Add(timeO);
+
+        public List<UserItemModel> itemModelList()
+        {
+            throw new NotImplementedException();
+        }
 
         /*
          * List section

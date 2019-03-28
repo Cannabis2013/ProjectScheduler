@@ -17,7 +17,7 @@ namespace Projecthandler
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            MainApp app = new MainApp();
+            MainApp app = new MainApp("admin","1234");
             Application.Run();
         }
     }

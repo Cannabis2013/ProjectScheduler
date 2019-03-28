@@ -61,9 +61,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IItemModel.cs" />
     <Compile Include="Events\MyEventArgs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Object wrappers\TimeObject.cs" />
+    <Compile Include="Project related\ActivityItemModel.cs" />
     <Compile Include="Project related\ProjectManager.cs" />
     <Compile Include="Project related\Project.cs" />
     <Compile Include="Project related\ProjectItemModel.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="Forms\MainWindow\adminView.Designer.cs">
       <DependentUpon>adminView.cs</DependentUpon>
     </Compile>
+    <Compile Include="User Management\UserItemModel.cs" />
     <Compile Include="User Management\UserDatabase.cs" />
     <Compile Include="User Management\UserManager.cs" />
     <Compile Include="Forms\Login\LoginView.cs">
@@ -101,6 +104,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\ProjectNameSpace.Project.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

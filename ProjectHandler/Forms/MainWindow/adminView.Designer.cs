@@ -65,6 +65,7 @@
             this.PButtonLayout = new System.Windows.Forms.TableLayoutPanel();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.ActivityLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -75,7 +76,10 @@
             this.button4 = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.button7 = new System.Windows.Forms.Button();
+            this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.ProjectID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.StartDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.EndDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -85,6 +89,7 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.ButtonLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // imageList1
@@ -92,6 +97,7 @@
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "economy-2016-1080x675.jpg");
+            this.imageList1.Images.SetKeyName(1, "Anders Samuelsen 2.jpg");
             // 
             // menuStrip1
             // 
@@ -372,12 +378,22 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ProjectID,
+            this.StartDate,
+            this.EndDate});
+            this.listView1.DataBindings.Add(new System.Windows.Forms.Binding("Tag", this.projectBindingSource, "ProjectID", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listView1.FullRowSelect = true;
             this.listView1.Location = new System.Drawing.Point(0, 64);
             this.listView1.Margin = new System.Windows.Forms.Padding(0);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(347, 579);
+            this.listView1.SmallImageList = this.imageList1;
+            this.listView1.StateImageList = this.imageList1;
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Tile;
             // 
             // PButtonLayout
             // 
@@ -424,6 +440,19 @@
             this.button6.TabIndex = 0;
             this.button6.Text = "Edit project";
             this.button6.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button7.Location = new System.Drawing.Point(230, 0);
+            this.button7.Margin = new System.Windows.Forms.Padding(0);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(117, 32);
+            this.button7.TabIndex = 0;
+            this.button7.Text = "Delete project";
+            this.button7.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel3
             // 
@@ -571,18 +600,9 @@
             this.tabPage2.Text = "Calendar";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // button7
+            // projectBindingSource
             // 
-            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button7.Location = new System.Drawing.Point(230, 0);
-            this.button7.Margin = new System.Windows.Forms.Padding(0);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(117, 32);
-            this.button7.TabIndex = 0;
-            this.button7.Text = "Delete project";
-            this.button7.UseVisualStyleBackColor = true;
+            this.projectBindingSource.DataSource = typeof(ProjectNameSpace.Project);
             // 
             // AdminView
             // 
@@ -609,6 +629,7 @@
             this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.ButtonLayout.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -662,5 +683,9 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label ActivityLabel;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.ColumnHeader ProjectID;
+        private System.Windows.Forms.ColumnHeader StartDate;
+        private System.Windows.Forms.ColumnHeader EndDate;
+        private System.Windows.Forms.BindingSource projectBindingSource;
     }
 }

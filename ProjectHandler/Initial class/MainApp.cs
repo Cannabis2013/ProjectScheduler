@@ -2,6 +2,7 @@
 using Projecthandler.Custom_events;
 using VirtualUserDomain;
 using System;
+using System.Windows.Forms;
 
 namespace MainUserSpace
 {
@@ -21,7 +22,10 @@ namespace MainUserSpace
         private void launchLoginView(string uName = null, string pass = null)
         {
             LoginView lView = new LoginView();
+
             lView.OnSubmitClicked += loginView_OnSubmitClicked;
+            lView.onFormClose += loginView_onFormClose;
+
             lView.Show();
             if (uName != null && pass != null)
                 lView.enterCredentialsManual(uName, pass);
@@ -34,6 +38,7 @@ namespace MainUserSpace
             {
                 if (uManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
                 {
+                    isLastWindow = false;
                     AdminView view = new AdminView(uManager);
                     view.logoutEvent += mView_logoutEvent;
                     view.closeEvent += mView_closeEvent;
@@ -50,6 +55,12 @@ namespace MainUserSpace
             }
         }
 
+        private void loginView_onFormClose(object sender, EventArgs e)
+        {
+            if (isLastWindow)
+                Application.Exit();
+        }
+
         private void mView_logoutEvent(object sender, EventArgs e)
         {
             AdminView view = (AdminView) sender;
@@ -58,9 +69,10 @@ namespace MainUserSpace
 
         private void mView_closeEvent(object sender, EventArgs e)
         {
+            isLastWindow = true;
             launchLoginView();
         }
-        
+        private bool isLastWindow = true;
         private UserManager uManager = new UserManager();
     }
 }

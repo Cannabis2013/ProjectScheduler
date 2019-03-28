@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Projecthandler;
+using Projecthandler.User_Management;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-
+using System.Windows.Forms;
 
 namespace VirtualUserDomain
 {
-    public class UserManager
+    public class UserManager : IItemModel<UserItemModel>
     {
         public UserManager()
         {}
@@ -64,6 +66,11 @@ namespace VirtualUserDomain
                 currentLoggedIn.RemoveWhere(c => c.LocalAdress == localAdress);
             }
             
+        }
+
+        public List<UserItemModel> itemModelList()
+        {
+            throw new NotImplementedException();
         }
 
         private HashSet<User> currentLoggedIn = new HashSet<User>();
