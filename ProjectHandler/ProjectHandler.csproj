@@ -64,6 +64,8 @@
     <Compile Include="Events\MyEventArgs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Object wrappers\TimeObject.cs" />
+    <Compile Include="Project related\Activity.cs" />
+    <Compile Include="Project related\ListItemView.cs" />
     <Compile Include="Project related\ProjectManager.cs" />
     <Compile Include="Project related\Project.cs" />
     <Compile Include="Forms\MainWindow\adminView.cs">

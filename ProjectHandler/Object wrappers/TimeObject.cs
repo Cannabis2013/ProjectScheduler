@@ -5,16 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Projecthandler.Object_wrappers
+namespace WrapperDomain
 {
     public class TimeObject
     {
         private readonly DayOfWeek day;
 
-        public TimeObject(int hours, string userID)
+        public TimeObject(int hours, string userName)
         {
             this.sethours(hours);
-            UserID = userID ?? null;
+            this.userName = userName ?? null;
             registerDate = DateTime.Now;
         }
 
@@ -57,6 +57,6 @@ namespace Projecthandler.Object_wrappers
 
         public DateTime registeredDate() => registerDate;
 
-        public string UserID { get; set; } = null;
+        public string userName { get; set; } = null;
     }
 }
