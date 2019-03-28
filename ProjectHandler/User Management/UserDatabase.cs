@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Windows.Forms;
 
 namespace VirtualUserDomain
 {
@@ -62,6 +64,28 @@ namespace VirtualUserDomain
                     return true;
             }
             return false;
+        }
+
+        public List<ListViewItem> itemModels()
+        {
+            List<ListViewItem> models = new List<ListViewItem>();
+            foreach (User u in Users)
+            {
+                ListViewItem model = new ListViewItem(u.UserName);
+
+                string role = "";
+
+                if (u.Role == User.UserRole.Admin)
+                    role = "Admin";
+                else if (u.Role == User.UserRole.leader)
+                    role = "Project Leader";
+                else
+                    role = "Employee";
+
+                model.SubItems.Add(role);
+                models.Add(model);
+            }
+            return models;
         }
 
 

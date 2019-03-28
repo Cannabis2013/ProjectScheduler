@@ -1,6 +1,4 @@
-﻿using Projecthandler;
-using Projecthandler.User_Management;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -8,7 +6,7 @@ using System.Windows.Forms;
 
 namespace VirtualUserDomain
 {
-    public class UserManager : IItemModel<UserItemModel>
+    public class UserManager
     {
         public UserManager()
         {}
@@ -54,6 +52,8 @@ namespace VirtualUserDomain
             }
             throw new Exception("User not logged in");
         }
+
+        public List<ListViewItem> userListModel() => userDB.itemModels();
     
         private void userLogOut(string localAdress, User user = null)
         {
@@ -65,13 +65,8 @@ namespace VirtualUserDomain
             {
                 currentLoggedIn.RemoveWhere(c => c.LocalAdress == localAdress);
             }
-            
         }
-
-        public List<UserItemModel> itemModelList()
-        {
-            throw new NotImplementedException();
-        }
+        
 
         private HashSet<User> currentLoggedIn = new HashSet<User>();
         private UserDatabase userDB = new UserDatabase();

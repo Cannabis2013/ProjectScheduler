@@ -6,7 +6,7 @@ using VirtualUserDomain;
 
 namespace ProjectNameSpace
 {
-    public class Project : IItemModel<ActivityItemModel>
+    public class Project
     {
         public Project(string projectID)
         {
@@ -14,20 +14,19 @@ namespace ProjectNameSpace
         }
 
         public string ProjectID { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime estimatedEndDate { get; set; }
+        public int StartWeek { get; set; }
+        public int estimatedEndWeek { get; set; }
+        public string projectLeaderID { get; set; }
+
+        public int estimatedDuration() => estimatedEndWeek - StartWeek;
 
         public void addActivity(Activity a) => projectActivities.AddLast(a);
-
-        public List<ActivityItemModel> itemModelList()
-        {
-            throw new NotImplementedException();
-        }
+        
 
         internal LinkedList<Activity> projectActivities = new LinkedList<Activity>();
     }
 
-    public class Activity : IItemModel<UserItemModel>
+    public class Activity
     {
         public Activity(string title, HashSet<string> assignedUserIdentities = null)
         {
@@ -35,23 +34,12 @@ namespace ProjectNameSpace
             this.assignedUserIdentities = assignedUserIdentities ?? assignedUserIdentities;
         }
 
-        public Activity(string title)
-        {
-            this.title = title;
-        }
-
-        public Activity()
-        {}
+        public Activity(string title) => this.title = title;
+        public Activity(){}
 
         public string title { get; set; }
-        
 
-        public void addTimeObject(TimeObject timeO) => timeObjects.Add(timeO);
-
-        public List<UserItemModel> itemModelList()
-        {
-            throw new NotImplementedException();
-        }
+        public void addTimeObject(TimeObject timeO) => timeObjects.Add(timeO);        
 
         /*
          * List section

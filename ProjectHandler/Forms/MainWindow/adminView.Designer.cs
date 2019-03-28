@@ -80,6 +80,7 @@
             this.ProjectID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.StartDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.EndDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ProjectLeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -381,7 +382,8 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ProjectID,
             this.StartDate,
-            this.EndDate});
+            this.EndDate,
+            this.ProjectLeader});
             this.listView1.DataBindings.Add(new System.Windows.Forms.Binding("Tag", this.projectBindingSource, "ProjectID", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listView1.FullRowSelect = true;
@@ -687,5 +689,6 @@
         private System.Windows.Forms.ColumnHeader StartDate;
         private System.Windows.Forms.ColumnHeader EndDate;
         private System.Windows.Forms.BindingSource projectBindingSource;
+        private System.Windows.Forms.ColumnHeader ProjectLeader;
     }
 }
