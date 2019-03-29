@@ -1,11 +1,7 @@
-﻿using Projecthandler;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using VirtualUserDomain;
 
 namespace ProjectNameSpace
 {
@@ -13,7 +9,11 @@ namespace ProjectNameSpace
     {
         public ProjectManager()
         {
-            projectDB.projects.Add(new Project("ssdf"));
+            Project p = new Project("Project TEST");
+            p.StartWeek = 1;
+            p.estimatedEndWeek = 4;
+            p.projectLeaderID = "Niels_Henrik";
+            projectDB.projects.Add(p);
         }
 
         public void addProject(Project newProject)
@@ -41,18 +41,21 @@ namespace ProjectNameSpace
             {
                 ListViewItem model = new ListViewItem(p.ProjectID);
 
-
-                StringBuilder startDate = new StringBuilder();
-                startDate.Append("Week: ");
+                StringBuilder startDate = new StringBuilder("Week begin: ");
                 startDate.Append(p.StartWeek);
                 model.SubItems.Add(startDate.ToString());
 
-                StringBuilder endDate = new StringBuilder();
-                endDate.Append("Week: ");
+                StringBuilder endDate = new StringBuilder("Week end: ");
                 endDate.Append(p.estimatedEndWeek);
                 model.SubItems.Add(endDate.ToString());
 
-                model.SubItems.Add(p.projectLeaderID);
+                StringBuilder userLeader = new StringBuilder("Tech lead: ");
+                userLeader.Append(p.projectLeaderID);
+
+                model.SubItems.Add(userLeader.ToString());
+
+                // Set picture index
+                model.StateImageIndex = 0;
 
                 models.Add(model);
             }
@@ -60,5 +63,48 @@ namespace ProjectNameSpace
         }
 
         internal List<Project> projects = new List<Project>();
+    }
+
+    public class Project
+    {
+        public Project(string projectID)
+        {
+            ProjectID = projectID ?? throw new ArgumentNullException(nameof(projectID));
+        }
+
+        public ListViewItem[] activityItemModels()
+        {
+            int count = projectActivities.Count, index = 0;
+            ListViewItem[] models = new ListViewItem[count];
+            foreach (Activity a in projectActivities)
+            {
+                models[index] = a.activityItemModel();
+                index++;
+            }
+            return models;
+        }
+
+        public string ProjectID { get; set; }
+        public int StartWeek { get; set; }
+        public int estimatedEndWeek { get; set; }
+        public string projectLeaderID { get; set; }
+
+        public Activity activity(int index)
+        {
+            int i = 0;
+            foreach(Activity a in projectActivities)
+            {
+                if (i == index)
+                    return a;
+                i++;
+            }
+            return null;
+        }
+
+        public int estimatedDuration() => estimatedEndWeek - StartWeek;
+
+        public void addActivity(Activity a) => projectActivities.AddLast(a);
+
+        internal LinkedList<Activity> projectActivities = new LinkedList<Activity>();
     }
 }

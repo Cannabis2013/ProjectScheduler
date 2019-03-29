@@ -73,7 +73,7 @@
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             this.quitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
@@ -97,21 +97,23 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.Window;
             this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.button1, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.warningLabel, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.warningLabel, 0, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(224, 337);
             this.tableLayoutPanel1.TabIndex = 1;
@@ -121,11 +123,11 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(224, 51);
+            this.label1.Size = new System.Drawing.Size(224, 37);
             this.label1.TabIndex = 0;
             this.label1.Text = "Log in";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -137,7 +139,7 @@
             this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel1.Controls.Add(this.label2);
             this.flowLayoutPanel1.Controls.Add(this.textBox1);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 51);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 56);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(224, 20);
@@ -156,10 +158,11 @@
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Location = new System.Drawing.Point(61, 0);
             this.textBox1.Margin = new System.Windows.Forms.Padding(0);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(154, 20);
+            this.textBox1.Size = new System.Drawing.Size(154, 13);
             this.textBox1.TabIndex = 1;
             // 
             // flowLayoutPanel2
@@ -168,7 +171,7 @@
             this.flowLayoutPanel2.AutoSize = true;
             this.flowLayoutPanel2.Controls.Add(this.label3);
             this.flowLayoutPanel2.Controls.Add(this.textBox2);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 71);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 76);
             this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(224, 20);
@@ -187,11 +190,12 @@
             // textBox2
             // 
             this.textBox2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox2.Location = new System.Drawing.Point(61, 0);
             this.textBox2.Margin = new System.Windows.Forms.Padding(0);
             this.textBox2.Name = "textBox2";
             this.textBox2.PasswordChar = '*';
-            this.textBox2.Size = new System.Drawing.Size(154, 20);
+            this.textBox2.Size = new System.Drawing.Size(154, 13);
             this.textBox2.TabIndex = 1;
             this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             // 
@@ -200,9 +204,9 @@
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.AutoSize = true;
-            this.button1.Location = new System.Drawing.Point(3, 310);
+            this.button1.Location = new System.Drawing.Point(3, 316);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(218, 24);
+            this.button1.Size = new System.Drawing.Size(218, 18);
             this.button1.TabIndex = 3;
             this.button1.Text = "Log in";
             this.button1.UseVisualStyleBackColor = true;
@@ -215,9 +219,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.warningLabel.AutoSize = true;
             this.warningLabel.ForeColor = System.Drawing.Color.Red;
-            this.warningLabel.Location = new System.Drawing.Point(3, 91);
+            this.warningLabel.Location = new System.Drawing.Point(3, 96);
             this.warningLabel.Name = "warningLabel";
-            this.warningLabel.Size = new System.Drawing.Size(218, 26);
+            this.warningLabel.Size = new System.Drawing.Size(218, 217);
             this.warningLabel.TabIndex = 4;
             // 
             // LoginView
