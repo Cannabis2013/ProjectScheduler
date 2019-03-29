@@ -241,7 +241,7 @@
             this.customizeToolStripMenuItem,
             this.optionsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 24);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // customizeToolStripMenuItem
@@ -253,8 +253,8 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.optionsToolStripMenuItem.Text = "&Options";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionsToolStripMenuItem.Text = "&Preferences";
             // 
             // helpToolStripMenuItem
             // 
@@ -416,7 +416,7 @@
             // 
             // ButtonTableLayout
             // 
-            this.ButtonTableLayout.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ButtonTableLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.ButtonTableLayout.ColumnCount = 3;
             this.ButtonTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
             this.ButtonTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
@@ -424,50 +424,57 @@
             this.ButtonTableLayout.Controls.Add(this.button2, 0, 0);
             this.ButtonTableLayout.Controls.Add(this.button3, 1, 0);
             this.ButtonTableLayout.Controls.Add(this.button4, 2, 0);
-            this.ButtonTableLayout.Location = new System.Drawing.Point(526, 591);
-            this.ButtonTableLayout.MaximumSize = new System.Drawing.Size(390, 400);
+            this.ButtonTableLayout.Location = new System.Drawing.Point(526, 588);
+            this.ButtonTableLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.ButtonTableLayout.MaximumSize = new System.Drawing.Size(390, 0);
             this.ButtonTableLayout.MinimumSize = new System.Drawing.Size(390, 0);
             this.ButtonTableLayout.Name = "ButtonTableLayout";
             this.ButtonTableLayout.RowCount = 1;
             this.ButtonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ButtonTableLayout.Size = new System.Drawing.Size(390, 26);
+            this.ButtonTableLayout.Size = new System.Drawing.Size(390, 32);
             this.ButtonTableLayout.TabIndex = 3;
             // 
             // button2
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.AutoSize = true;
             this.button2.Location = new System.Drawing.Point(3, 3);
             this.button2.MaximumSize = new System.Drawing.Size(128, 0);
             this.button2.MinimumSize = new System.Drawing.Size(128, 0);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(128, 20);
+            this.button2.Size = new System.Drawing.Size(128, 26);
             this.button2.TabIndex = 1;
             this.button2.Text = "Add activity";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.AutoSize = true;
             this.button3.Location = new System.Drawing.Point(131, 3);
             this.button3.MaximumSize = new System.Drawing.Size(128, 0);
             this.button3.MinimumSize = new System.Drawing.Size(128, 0);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(128, 20);
+            this.button3.Size = new System.Drawing.Size(128, 26);
             this.button3.TabIndex = 1;
             this.button3.Text = "Manage activity";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
-            this.button4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.button4.AutoSize = true;
             this.button4.Location = new System.Drawing.Point(259, 3);
             this.button4.MaximumSize = new System.Drawing.Size(128, 0);
             this.button4.MinimumSize = new System.Drawing.Size(128, 0);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(128, 20);
+            this.button4.Size = new System.Drawing.Size(128, 26);
             this.button4.TabIndex = 1;
             this.button4.Text = "Register hour";
             this.button4.UseVisualStyleBackColor = true;

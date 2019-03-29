@@ -73,8 +73,9 @@ namespace MainUserSpace
             isLastWindow = true;
             launchLoginView();
         }
+
         private bool isLastWindow = true;
-        public UserManager uManager = new UserManager();
+        private UserManager uManager = new UserManager();
         private ProjectManager pManager = new ProjectManager();
     }
 }

@@ -72,7 +72,7 @@
     <Compile Include="Forms\MainWindow\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="User Management\UserDatabase.cs" />
+    <Compile Include="User Management\User.cs" />
     <Compile Include="User Management\UserManager.cs" />
     <Compile Include="Forms\Login\LoginView.cs">
       <SubType>Form</SubType>
