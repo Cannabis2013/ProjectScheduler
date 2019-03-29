@@ -5,6 +5,30 @@ using System.Windows.Forms;
 
 namespace ProjectNameSpace
 {
+
+    /*
+     * ProjectManager
+     * - Add/create project
+     * - Edit projects
+     * - Remove Projects
+     * - Project manipulation
+     * -- Add activity to a given project
+     * -- Delete activity within a given project
+     * -- Register work hour to a given activity in a given project
+     * - Retrieve project activities
+     * 
+     * ProjectDatabase
+     * - Contains the projects
+     * - Create item model lists for projects
+     * 
+     * Project
+     * - Fields and properties related to the project like:
+     * -- ProjectID
+     * -- Start and estimated end date on a weekly basis
+     * -- Project leader user ID
+     * -- A list of activities
+     */
+
     public class ProjectManager
     {
         public ProjectManager()

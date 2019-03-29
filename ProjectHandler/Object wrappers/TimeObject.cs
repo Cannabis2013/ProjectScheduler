@@ -9,8 +9,6 @@ namespace WrapperDomain
 {
     public class TimeObject
     {
-        private readonly DayOfWeek day;
-
         public TimeObject(int hours, string userName)
         {
             this.sethours(hours);
@@ -18,10 +16,7 @@ namespace WrapperDomain
             registerDate = DateTime.Now;
         }
 
-        public DayOfWeek getday()
-        {
-            return day;
-        }
+        public DayOfWeek getday() => day;
 
         public string dayToString()
         {
@@ -52,6 +47,7 @@ namespace WrapperDomain
         internal void sethours(int h) => hours = h;
         internal void addHours(int h) => hours += h;
 
+        private readonly DayOfWeek day;
         private readonly DateTime registerDate;
         private int hours;
 

@@ -61,7 +61,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\SubmitEvent.cs" />
     <Compile Include="Events\MyEventArgs.cs" />
+    <Compile Include="Forms\Project\AddProjectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Project\AddProjectDialog.Designer.cs">
+      <DependentUpon>AddProjectDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Object wrappers\TimeObject.cs" />
     <Compile Include="Project related\Activity.cs" />
@@ -88,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainWindow\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Project\AddProjectDialog.resx">
+      <DependentUpon>AddProjectDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

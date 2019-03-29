@@ -65,6 +65,16 @@ namespace VirtualUserDomain
         }
 
         public List<ListViewItem> userListModel() => userDB.itemModels();
+
+        public string[] allUserNames()
+        {
+            int count = userDB.Users.Count, index = 0;
+            string[] result = new string[count];
+            foreach (User u in userDB.Users)
+                result[index++] = u.UserName;
+
+            return result;
+        }
     
         private void userLogOut(string localAdress, User user = null)
         {

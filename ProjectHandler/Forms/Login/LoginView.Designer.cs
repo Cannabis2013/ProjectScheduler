@@ -238,7 +238,7 @@
             this.MaximumSize = new System.Drawing.Size(240, 400);
             this.MinimumSize = new System.Drawing.Size(240, 400);
             this.Name = "LoginView";
-            this.Text = "User login";
+            this.Text = "Log in";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginView_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
