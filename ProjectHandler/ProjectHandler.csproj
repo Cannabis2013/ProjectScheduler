@@ -70,7 +70,7 @@
       <DependentUpon>AddProjectDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Object wrappers\TimeObject.cs" />
+    <Compile Include="Project related\TimeObject.cs" />
     <Compile Include="Project related\Activity.cs" />
     <Compile Include="Project related\ProjectManager.cs" />
     <Compile Include="Forms\MainWindow\MainWindow.cs">
@@ -127,6 +127,7 @@
   <ItemGroup>
     <Content Include="Project_Icon.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\SpecFlow.2.4.1\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.2.4.1\build\SpecFlow.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

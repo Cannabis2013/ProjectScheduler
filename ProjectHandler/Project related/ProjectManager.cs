@@ -89,8 +89,18 @@ namespace ProjectNameSpace
         internal List<Project> projects = new List<Project>();
     }
 
+    /*
+     * Project class
+     */
+
     public class Project
     {
+        public Project(string projectID, HashSet<string> assignedUsers)
+        {
+            ProjectID = projectID ?? throw new ArgumentNullException(nameof(projectID));
+            assignedUserIdentities = assignedUsers;
+        }
+
         public Project(string projectID)
         {
             ProjectID = projectID ?? throw new ArgumentNullException(nameof(projectID));
@@ -108,11 +118,6 @@ namespace ProjectNameSpace
             return models;
         }
 
-        public string ProjectID { get; set; }
-        public int StartWeek { get; set; }
-        public int estimatedEndWeek { get; set; }
-        public string projectLeaderID { get; set; }
-
         public Activity activity(int index)
         {
             int i = 0;
@@ -125,10 +130,17 @@ namespace ProjectNameSpace
             return null;
         }
 
+        public string ProjectID { get; set; }
+        public int StartWeek { get; set; }
+        public int estimatedEndWeek { get; set; }
+        public string projectLeaderID { get; set; }
+
+
         public int estimatedDuration() => estimatedEndWeek - StartWeek;
 
         public void addActivity(Activity a) => projectActivities.AddLast(a);
 
+        internal HashSet<string> assignedUserIdentities = new HashSet<string>();
         internal LinkedList<Activity> projectActivities = new LinkedList<Activity>();
     }
 }

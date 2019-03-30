@@ -30,8 +30,8 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.startWeekSelector = new System.Windows.Forms.ComboBox();
             this.endWeekSelector = new System.Windows.Forms.ComboBox();
+            this.startWeekSelector = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -88,18 +88,6 @@
             this.label1.Text = "Create project";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // startWeekSelector
-            // 
-            this.startWeekSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.startWeekSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startWeekSelector.FormattingEnabled = true;
-            this.startWeekSelector.Location = new System.Drawing.Point(136, 105);
-            this.startWeekSelector.Name = "startWeekSelector";
-            this.startWeekSelector.Size = new System.Drawing.Size(393, 28);
-            this.startWeekSelector.TabIndex = 1;
-            // 
             // endWeekSelector
             // 
             this.endWeekSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -111,6 +99,18 @@
             this.endWeekSelector.Name = "endWeekSelector";
             this.endWeekSelector.Size = new System.Drawing.Size(393, 28);
             this.endWeekSelector.TabIndex = 2;
+            // 
+            // startWeekSelector
+            // 
+            this.startWeekSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.startWeekSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startWeekSelector.FormattingEnabled = true;
+            this.startWeekSelector.Location = new System.Drawing.Point(136, 105);
+            this.startWeekSelector.Name = "startWeekSelector";
+            this.startWeekSelector.Size = new System.Drawing.Size(393, 28);
+            this.startWeekSelector.TabIndex = 1;
             // 
             // label2
             // 

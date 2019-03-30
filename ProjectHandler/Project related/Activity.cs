@@ -1,12 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
-using WrapperDomain;
+using ProjectNameSpace;
 
 namespace ProjectNameSpace
 {
     public class Activity
     {
+
+        /*
+         * Constructor section
+         * - Activity(Activity title, assigned users)
+         * - Activity(Activity title)
+         * - Default constructor with no parameters
+         */
+
         public Activity(string title, HashSet<string> assignedUserIdentities = null)
         {
             this.title = title;
@@ -16,7 +24,28 @@ namespace ProjectNameSpace
         public Activity(string title) => this.title = title;
         public Activity() { }
 
+        /*
+         * Public fields section
+         * - Title : string
+         */
+
         public string title { get; set; }
+
+        /*
+         * public methods section
+         * - Assign users to activity
+         * - Register hour to activity
+         * - Retrieve item models
+         * -- Retrieve item models for key values overview presentation
+         * -- Retrieve item models for assigned users overview presentation
+         */
+
+        public void assignUser(string userID) => assignedUserIdentities.Add(userID);
+        public void assignUsers(List<string> userIDs)
+        {
+            foreach (string userID in userIDs)
+                assignedUserIdentities.Add(userID);
+        }
 
         public void addTimeObject(TimeObject timeO) => timeObjects.Add(timeO);
 
@@ -77,11 +106,11 @@ namespace ProjectNameSpace
         }
 
         /*
-         * List section
-         * The assigned users
-         * The TimeObject's that contain the hours spend and the corresponding user
+         * Private fields section
+         * - The assigned users
+         * - The TimeObject's that contain the hours spend and the corresponding user
          */
-
+        
         private HashSet<string> assignedUserIdentities = new HashSet<string>();
         private List<TimeObject> timeObjects = new List<TimeObject>();
     }
