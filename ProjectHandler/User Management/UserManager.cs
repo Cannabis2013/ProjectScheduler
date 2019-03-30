@@ -58,7 +58,7 @@ namespace VirtualUserDomain
         {
             foreach(User u in userDB.Users)
             {
-                if (u.UserName == userName)
+                if (u.UserName() == userName)
                     return u;
             }
             return null;
@@ -71,7 +71,7 @@ namespace VirtualUserDomain
             int count = userDB.Users.Count, index = 0;
             string[] result = new string[count];
             foreach (User u in userDB.Users)
-                result[index++] = u.UserName;
+                result[index++] = u.UserName();
 
             return result;
         }
@@ -80,7 +80,7 @@ namespace VirtualUserDomain
         {
             if (user != null)
             {
-                currentLoggedIn.RemoveWhere(c => c.LocalAdress == localAdress && c.UserName == user.UserName);
+                currentLoggedIn.RemoveWhere(c => c.LocalAdress == localAdress && c.UserName() == user.UserName());
             }
             else
             {
@@ -109,9 +109,9 @@ namespace VirtualUserDomain
         public User verifyCredentials(string userName, string password)
         {
             foreach (User u in Users)
-                if (u.UserName == userName && u.passWord == password)
+                if (u.UserName() == userName && u.PassWord() == password)
                 {
-                    User userCopy = new User(u.UserName, u.passWord, u.Role);
+                    User userCopy = new User(u.UserName(), u.PassWord(), u.Role);
                     return userCopy;
                 }
 
@@ -145,7 +145,7 @@ namespace VirtualUserDomain
         {
             foreach (User u in Users)
             {
-                if (u.UserName == username)
+                if (u.UserName() == username)
                     return true;
             }
             return false;
@@ -156,7 +156,10 @@ namespace VirtualUserDomain
             List<ListViewItem> models = new List<ListViewItem>();
             foreach (User u in Users)
             {
-                ListViewItem model = new ListViewItem(u.UserName);
+                ListViewItem model = new ListViewItem(u.UserName())
+                {
+                    ImageIndex = 0
+                };
 
                 StringBuilder fullName = new StringBuilder("Full name: ");
                 fullName.Append(u.fullName);

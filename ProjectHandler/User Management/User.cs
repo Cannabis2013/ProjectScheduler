@@ -8,7 +8,7 @@ namespace VirtualUserDomain
         public User(string userName, string passWord, UserRole role)
         {
             
-            this.UserName = userName;
+            this.userName = userName;
             this.passWord = passWord;
             this.Role = role;
         }
@@ -44,8 +44,11 @@ namespace VirtualUserDomain
         public UserRole Role { get; }
         public string LocalAdress { get; set; }
         public enum UserRole { Admin, leader, employee };
-        
-        private string UserName { get; }
+
+        public string UserName() => userName;
+        public string PassWord() => passWord;
+
+        private string userName { get; }
         private string passWord { get; }
 
         private List<assignedActivityItem> assignedActivities = new List<assignedActivityItem>();

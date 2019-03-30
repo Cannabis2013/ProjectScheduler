@@ -3,6 +3,7 @@ using VirtualUserDomain;
 using System;
 using ProjectNameSpace;
 using System.Collections.Generic;
+using Projecthandler.Forms.Project;
 
 namespace MainUserSpace
 {
@@ -21,14 +22,7 @@ namespace MainUserSpace
             updateProjectListView();
         }
 
-        private void updateProjectListView()
-        {
-            List<ListViewItem> models = pManager.projectItemModels();
-            foreach (ListViewItem model in models)
-            {
-                pView.Items.Add(model);
-            }
-        }
+        private void updateProjectListView() => pView.Items.AddRange(pManager.projectItemModels());
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -36,10 +30,7 @@ namespace MainUserSpace
             logoutEvent?.Invoke(this, e);
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e) => Application.Exit();
 
         private void MainView_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -53,6 +44,15 @@ namespace MainUserSpace
         private UserManager uManager;
         private ProjectManager pManager;
         private ListView pView, aView;
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(uManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
+            {
+                ProjectManagement pMng = new ProjectManagement(pManager,uManager);
+                pMng.ShowDialog(this);
+            }
+        }
 
         private void ProjectListView_DoubleClick(object sender, EventArgs e)
         {

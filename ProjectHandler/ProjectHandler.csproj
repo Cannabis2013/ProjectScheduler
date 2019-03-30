@@ -63,11 +63,23 @@
   <ItemGroup>
     <Compile Include="Events\SubmitEvent.cs" />
     <Compile Include="Events\MyEventArgs.cs" />
-    <Compile Include="Forms\Project\AddProjectDialog.cs">
+    <Compile Include="Forms\Dialogs\AddProjectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Project\AddProjectDialog.Designer.cs">
+    <Compile Include="Forms\Dialogs\AddProjectDialog.Designer.cs">
       <DependentUpon>AddProjectDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Dialogs\SelectUserDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dialogs\SelectUserDialog.Designer.cs">
+      <DependentUpon>SelectUserDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Project\ProjectManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Project\ProjectManagement.Designer.cs">
+      <DependentUpon>ProjectManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Project related\TimeObject.cs" />
@@ -90,14 +102,20 @@
     <Compile Include="Application facade\MainApp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\Dialogs\SelectUserDialog.resx">
+      <DependentUpon>SelectUserDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Login\LoginView.resx">
       <DependentUpon>LoginView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainWindow\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Project\AddProjectDialog.resx">
+    <EmbeddedResource Include="Forms\Dialogs\AddProjectDialog.resx">
       <DependentUpon>AddProjectDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Project\ProjectManagement.resx">
+      <DependentUpon>ProjectManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

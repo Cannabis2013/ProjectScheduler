@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using VirtualUserDomain;
 
 namespace ProjectNameSpace
 {
@@ -37,30 +38,31 @@ namespace ProjectNameSpace
             p.StartWeek = 1;
             p.estimatedEndWeek = 4;
             p.projectLeaderID = "Niels_Henrik";
-            projectDB.projects.Add(p);
+            projectDB.addProject(p);
         }
 
         public void addProject(Project newProject)
         {
-            projectDB.projects.Add(newProject);
+            projectDB.addProject(newProject);
         }
 
-        public Project project(int index)
-        {
-            return projectDB.projects[index];
-        }
+        public Project project(int index) => projectDB.projectAt(index);
 
-        public List<ListViewItem> projectItemModels() => projectDB.projectItemModels();
-        
+        public ListViewItem[] projectItemModels() => projectDB.projectItemModels() ?? throw new ArgumentNullException("No items to pass.");
+
 
         private readonly ProjectDatabase projectDB = new ProjectDatabase();
     }
 
     class ProjectDatabase
     {
-        internal List<ListViewItem> projectItemModels()
+        public void addProject(Project p) => projects.Add(p);
+
+        public ListViewItem[] projectItemModels()
         {
-            List<ListViewItem> models = new List<ListViewItem>();
+            int count = projects.Count;
+            ListViewItem[] models = new ListViewItem[count];
+            int index = 0;
             foreach (Project p in projects)
             {
                 ListViewItem model = new ListViewItem(p.ProjectID);
@@ -79,14 +81,17 @@ namespace ProjectNameSpace
                 model.SubItems.Add(userLeader.ToString());
 
                 // Set picture index
+                model.ImageIndex = 0;
                 model.StateImageIndex = 0;
 
-                models.Add(model);
+                models[index++] = model; ;
             }
             return models;
         }
 
-        internal List<Project> projects = new List<Project>();
+        public Project projectAt(int index) => projects[index];
+
+        private List<Project> projects = new List<Project>();
     }
 
     /*
@@ -123,22 +128,24 @@ namespace ProjectNameSpace
             int i = 0;
             foreach(Activity a in projectActivities)
             {
-                if (i == index)
+                if (i++ == index)
                     return a;
-                i++;
             }
             return null;
         }
+
+        public void assignUserToProject(string userID) => assignedUserIdentities.Add(userID);
+        public void addActivity(Activity a) => projectActivities.AddLast(a);
+        public int estimatedDuration() => estimatedEndWeek - StartWeek;
+        
+        /*
+         * Public fields section
+         */
 
         public string ProjectID { get; set; }
         public int StartWeek { get; set; }
         public int estimatedEndWeek { get; set; }
         public string projectLeaderID { get; set; }
-
-
-        public int estimatedDuration() => estimatedEndWeek - StartWeek;
-
-        public void addActivity(Activity a) => projectActivities.AddLast(a);
 
         internal HashSet<string> assignedUserIdentities = new HashSet<string>();
         internal LinkedList<Activity> projectActivities = new LinkedList<Activity>();
