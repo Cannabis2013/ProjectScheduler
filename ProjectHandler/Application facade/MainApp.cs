@@ -75,7 +75,7 @@ namespace MainUserSpace
         }
 
         private bool isLastWindow = true;
-        private UserManager uManager = new UserManager();
-        private ProjectManager pManager = new ProjectManager();
+        private readonly UserManager uManager = new UserManager();
+        private readonly ProjectManager pManager = new ProjectManager();
     }
 }

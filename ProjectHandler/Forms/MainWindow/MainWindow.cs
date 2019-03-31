@@ -45,16 +45,6 @@ namespace MainUserSpace
             closeEvent?.Invoke(this, e);
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if(uManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
-            {
-                var pMng = new ProjectManagement(pManager,uManager);
-                pMng.updateParentView += _updateParentView;
-                pMng.ShowDialog(this);
-            }
-        }
-
         private void _updateParentView(object sender, EventArgs e)
         {
             updateProjectListView();
@@ -78,5 +68,25 @@ namespace MainUserSpace
         private UserManager uManager;
         private ProjectManager pManager;
         private ListView pView, aView;
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (uManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
+            {
+                var pMng = new ProjectManagement(pManager, uManager);
+                pMng.updateParentView += _updateParentView;
+                pMng.ShowDialog(this);
+            }
+        }
+
+        private void customizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (uManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
+            {
+                var pMng = new ProjectManagement(pManager, uManager);
+                pMng.updateParentView += _updateParentView;
+                pMng.ShowDialog(this);
+            }
+        }
     }
 }

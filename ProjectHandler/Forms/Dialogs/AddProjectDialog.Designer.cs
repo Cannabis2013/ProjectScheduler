@@ -133,6 +133,7 @@
             this.endWeekSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.endWeekSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.endWeekSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.endWeekSelector.FormattingEnabled = true;
             this.endWeekSelector.Location = new System.Drawing.Point(131, 145);
@@ -145,6 +146,7 @@
             this.startWeekSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.startWeekSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.startWeekSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startWeekSelector.FormattingEnabled = true;
             this.startWeekSelector.Location = new System.Drawing.Point(131, 105);
@@ -223,6 +225,7 @@
             this.leaderSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.leaderSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.leaderSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.leaderSelector.FormattingEnabled = true;
             this.leaderSelector.Location = new System.Drawing.Point(131, 185);

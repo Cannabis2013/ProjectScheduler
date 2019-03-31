@@ -65,7 +65,7 @@
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.MainLayout.Size = new System.Drawing.Size(385, 601);
+            this.MainLayout.Size = new System.Drawing.Size(385, 441);
             this.MainLayout.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -86,7 +86,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(96, 521);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(96, 361);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // button1
@@ -156,7 +156,7 @@
             this.ProjectListView.Location = new System.Drawing.Point(96, 48);
             this.ProjectListView.Margin = new System.Windows.Forms.Padding(0);
             this.ProjectListView.Name = "ProjectListView";
-            this.ProjectListView.Size = new System.Drawing.Size(289, 521);
+            this.ProjectListView.Size = new System.Drawing.Size(289, 361);
             this.ProjectListView.SmallImageList = this.ItemIcons;
             this.ProjectListView.TabIndex = 2;
             this.ProjectListView.UseCompatibleStateImageBehavior = false;
@@ -176,13 +176,13 @@
             this.MainLayout.SetColumnSpan(this.tableLayoutPanel1, 2);
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.button4, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(171, 569);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(160, 409);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.MaximumSize = new System.Drawing.Size(0, 48);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(43, 32);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(64, 32);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // button4
@@ -194,10 +194,10 @@
             this.button4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button4.Location = new System.Drawing.Point(0, 0);
             this.button4.Margin = new System.Windows.Forms.Padding(0);
-            this.button4.MaximumSize = new System.Drawing.Size(0, 32);
-            this.button4.MinimumSize = new System.Drawing.Size(0, 32);
+            this.button4.MaximumSize = new System.Drawing.Size(64, 32);
+            this.button4.MinimumSize = new System.Drawing.Size(64, 32);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(43, 32);
+            this.button4.Size = new System.Drawing.Size(64, 32);
             this.button4.TabIndex = 0;
             this.button4.Text = "Close";
             this.button4.UseVisualStyleBackColor = true;
@@ -207,10 +207,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 601);
+            this.ClientSize = new System.Drawing.Size(384, 441);
             this.Controls.Add(this.MainLayout);
-            this.MaximumSize = new System.Drawing.Size(400, 640);
-            this.MinimumSize = new System.Drawing.Size(400, 640);
+            this.MaximumSize = new System.Drawing.Size(400, 480);
+            this.MinimumSize = new System.Drawing.Size(400, 480);
             this.Name = "ProjectManagement";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Form1";

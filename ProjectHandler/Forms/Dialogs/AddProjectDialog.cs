@@ -22,6 +22,9 @@ namespace DialogNamespace
                 startWeekSelector.Items.Add(i.ToString());
                 endWeekSelector.Items.Add(i.ToString());
             }
+
+            startWeekSelector.SelectedIndex = 0;
+            endWeekSelector.SelectedIndex = 0;
         }
         
         private void AddButton_Click(object sender, EventArgs e)
