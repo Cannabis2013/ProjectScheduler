@@ -37,9 +37,9 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.ProjectListView = new System.Windows.Forms.ListView();
+            this.ItemIcons = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button4 = new System.Windows.Forms.Button();
-            this.ItemIcons = new System.Windows.Forms.ImageList(this.components);
             this.MainLayout.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -62,7 +62,7 @@
             this.MainLayout.Margin = new System.Windows.Forms.Padding(0);
             this.MainLayout.Name = "MainLayout";
             this.MainLayout.RowCount = 3;
-            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.MainLayout.Size = new System.Drawing.Size(385, 601);
@@ -78,7 +78,7 @@
             this.tableLayoutPanel2.Controls.Add(this.button1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.button2, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.button3, 0, 2);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 40);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 48);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 4;
@@ -86,7 +86,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(96, 529);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(96, 521);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // button1
@@ -102,6 +102,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Add project";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -142,7 +143,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(379, 40);
+            this.label1.Size = new System.Drawing.Size(379, 48);
             this.label1.TabIndex = 1;
             this.label1.Text = "Project Management";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -152,14 +153,20 @@
             this.ProjectListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ProjectListView.Location = new System.Drawing.Point(96, 40);
+            this.ProjectListView.Location = new System.Drawing.Point(96, 48);
             this.ProjectListView.Margin = new System.Windows.Forms.Padding(0);
             this.ProjectListView.Name = "ProjectListView";
-            this.ProjectListView.Size = new System.Drawing.Size(289, 529);
+            this.ProjectListView.Size = new System.Drawing.Size(289, 521);
             this.ProjectListView.SmallImageList = this.ItemIcons;
             this.ProjectListView.TabIndex = 2;
             this.ProjectListView.UseCompatibleStateImageBehavior = false;
             this.ProjectListView.View = System.Windows.Forms.View.SmallIcon;
+            // 
+            // ItemIcons
+            // 
+            this.ItemIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ItemIcons.ImageStream")));
+            this.ItemIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.ItemIcons.Images.SetKeyName(0, "Project_Icon.png");
             // 
             // tableLayoutPanel1
             // 
@@ -194,12 +201,7 @@
             this.button4.TabIndex = 0;
             this.button4.Text = "Close";
             this.button4.UseVisualStyleBackColor = true;
-            // 
-            // ItemIcons
-            // 
-            this.ItemIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ItemIcons.ImageStream")));
-            this.ItemIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.ItemIcons.Images.SetKeyName(0, "Project_Icon.png");
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // ProjectManagement
             // 

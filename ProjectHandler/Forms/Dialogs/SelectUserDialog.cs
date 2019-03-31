@@ -7,14 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VirtualUserDomain;
 
-namespace Projecthandler.Forms.Dialogs
+namespace DialogNamespace
 {
     public partial class SelectUserDialog : Form
     {
-        public SelectUserDialog()
+        public SelectUserDialog(UserManager uManager)
         {
             InitializeComponent();
+            
+            UserListView.Items.AddRange(uManager.userListModel());
         }
         
     }

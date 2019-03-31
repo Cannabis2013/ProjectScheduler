@@ -2,6 +2,7 @@
 using ProjectNameSpace;
 using VirtualUserDomain;
 using System.Collections.Generic;
+using DialogNamespace;
 
 namespace Projecthandler.Forms.Project
 {
@@ -20,8 +21,19 @@ namespace Projecthandler.Forms.Project
 
         private void updateView() => pView.Items.AddRange(pManager.projectItemModels());
 
-        private ListView pView;
-        private ProjectManager pManager;
+        private readonly ListView pView;
+        private readonly ProjectManager pManager;
         private UserManager uManager;
+
+        private void button4_Click(object sender, System.EventArgs e)
+        {
+            Close();
+        }
+
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+            AddProjectDialog pDialog = new AddProjectDialog(uManager);
+            pDialog.ShowDialog(this);
+        }
     }
 }

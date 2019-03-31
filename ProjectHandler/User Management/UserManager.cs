@@ -5,12 +5,19 @@ using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
 
+// ReSharper disable FieldCanBeMadeReadOnly.Local
+// ReSharper disable once CheckNamespace
+
 namespace VirtualUserDomain
 {
     public class UserManager
     {
         public UserManager()
         {}
+
+        /*
+         * Local adress based on the ipv4 adress of the user
+         */
 
         public static string getLocalAddress()
         {
@@ -27,11 +34,11 @@ namespace VirtualUserDomain
 
         public bool logIn(string userName, string password, string localAdress)
         {
-            User user = userDB.verifyCredentials(userName, password);
+            var user = userDb.verifyCredentials(userName, password);
             if (user == null)
                 return false;
 
-            user.LocalAdress = localAdress;
+            user.localAdress = localAdress;
             userLogOut(localAdress, user);
 
             currentLoggedIn.Add(user);
@@ -46,58 +53,57 @@ namespace VirtualUserDomain
 
         public User.UserRole verifyUserState(string localAdress)
         {
-            foreach (User u in currentLoggedIn)
+            foreach (var u in currentLoggedIn)
             {
-                if (u.LocalAdress == localAdress)
-                    return u.Role;
+                if (u.localAdress == localAdress)
+                    return u.role;
             }
             throw new Exception("User not logged in");
         }
 
-        public User user(string userName)
-        {
-            foreach(User u in userDB.Users)
-            {
-                if (u.UserName() == userName)
-                    return u;
-            }
-            return null;
-        }
+        public User user(string userName) => userDb.user(userName);
 
-        public List<ListViewItem> userListModel() => userDB.itemModels();
+        public ListViewItem[] userListModel() => userDb.itemModels();
 
-        public string[] allUserNames()
-        {
-            int count = userDB.Users.Count, index = 0;
-            string[] result = new string[count];
-            foreach (User u in userDB.Users)
-                result[index++] = u.UserName();
-
-            return result;
-        }
+        public string[] allUserNames() => userDb.allUserNames();
     
         private void userLogOut(string localAdress, User user = null)
         {
             if (user != null)
             {
-                currentLoggedIn.RemoveWhere(c => c.LocalAdress == localAdress && c.UserName() == user.UserName());
+                currentLoggedIn.RemoveWhere(c => c.localAdress == localAdress && c.getUserName() == user.getUserName());
             }
             else
             {
-                currentLoggedIn.RemoveWhere(c => c.LocalAdress == localAdress);
+                currentLoggedIn.RemoveWhere(c => c.localAdress == localAdress);
             }
         }
 
         private HashSet<User> currentLoggedIn = new HashSet<User>();
-        private UserDatabase userDB = new UserDatabase();
+        private UserDatabase userDb = new UserDatabase();
     }
 
     class UserDatabase
     {
         public UserDatabase()
         {
-            User admin = new User("admin", "1234", User.UserRole.Admin);
-            Users.Add(admin);
+            var admin = new User("admin", "1234", User.UserRole.Admin);
+            users.Add(admin);
+
+            /*
+             * Initialize five users for testing purposes
+             */
+            var nUser1 = new User("Jens_Werner2019", "Tango44",User.UserRole.Employee);
+            var nUser2 = new User("Niels_Erik1964", "Traktor", User.UserRole.Employee);
+            var nUser3 = new User("Bent_Bjerre", "ghb4life", User.UserRole.Employee);
+            var nUser4 = new User("Finn_Luger_P38", "Elmer_Fjott",User.UserRole.Employee);
+            var nUser5 = new User("Technotonny","GOA_gartner", User.UserRole.Employee);
+
+            users.Add(nUser1);
+            users.Add(nUser2);
+            users.Add(nUser3);
+            users.Add(nUser4);
+            users.Add(nUser5);
         }
 
         /*
@@ -108,10 +114,10 @@ namespace VirtualUserDomain
 
         public User verifyCredentials(string userName, string password)
         {
-            foreach (User u in Users)
-                if (u.UserName() == userName && u.PassWord() == password)
+            foreach (var u in users)
+                if (u.getUserName() == userName && u.getPassWord() == password)
                 {
-                    User userCopy = new User(u.UserName(), u.PassWord(), u.Role);
+                    var userCopy = new User(u.getUserName(), u.getPassWord(), u.role);
                     return userCopy;
                 }
 
@@ -128,13 +134,38 @@ namespace VirtualUserDomain
             if (userNameExist(userName))
                 return;
 
-            User newUser = new User(userName, passWord, role);
-            Users.Add(newUser);
+            var newUser = new User(userName, passWord, role);
+            users.Add(newUser);
         }
 
         public bool removeUser(User user)
         {
-            return Users.Remove(user);
+            return users.Remove(user);
+        }
+
+        /*
+         * Retrieve user object by userName
+         * Retrieve list of usernames
+         */
+
+        public User user(string userName)
+        {
+            foreach (var u in users)
+            {
+                if (u.getUserName() == userName)
+                    return u;
+            }
+            return null;
+        }
+
+        public string[] allUserNames()
+        {
+            int count = users.Count, index = 0;
+            var result = new string[count];
+            foreach (var u in users)
+                result[index++] = u.getUserName();
+
+            return result;
         }
 
         /*
@@ -143,44 +174,48 @@ namespace VirtualUserDomain
 
         private bool userNameExist(string username)
         {
-            foreach (User u in Users)
+            foreach (var u in users)
             {
-                if (u.UserName() == username)
+                if (u.getUserName() == username)
                     return true;
             }
             return false;
         }
 
-        public List<ListViewItem> itemModels()
+        public ListViewItem[] itemModels(bool fullList = false)
         {
-            List<ListViewItem> models = new List<ListViewItem>();
-            foreach (User u in Users)
+            int uCount = fullList ? users.Count : users.Count - 1, index = 0;
+            var models = new ListViewItem[uCount];
+            foreach (var u in users)
             {
-                ListViewItem model = new ListViewItem(u.UserName())
+                if(!fullList && u.role == User.UserRole.Admin)
+                    continue;
+
+                var model = new ListViewItem(u.getUserName())
                 {
                     ImageIndex = 0
                 };
 
-                StringBuilder fullName = new StringBuilder("Full name: ");
+                var fullName = new StringBuilder("Full name: ");
                 fullName.Append(u.fullName);
 
                 model.SubItems.Add(fullName.ToString());
 
-                StringBuilder role = new StringBuilder("Users role: ");
+                var role = new StringBuilder("Users role: ");
                 
-                if (u.Role == User.UserRole.Admin)
+                if (u.role == User.UserRole.Admin)
                     role.Append("Admin");
-                else if (u.Role == User.UserRole.leader)
+                else if (u.role == User.UserRole.Leader)
                     role.Append("Project Leader");
                 else
                     role.Append("Employee");
 
                 model.SubItems.Add(role.ToString());
-                models.Add(model);
+                models[index++] = model;
             }
             return models;
         }
 
-        internal HashSet<User> Users = new HashSet<User>();
+        private HashSet<User> users = new HashSet<User>();
     }
 }

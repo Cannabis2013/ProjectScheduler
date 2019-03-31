@@ -1,6 +1,8 @@
 ﻿using ProjectNameSpace;
 using System.Collections.Generic;
 
+// ReSharper disable once CheckNamespace
+
 namespace VirtualUserDomain
 {
     public class User
@@ -10,16 +12,16 @@ namespace VirtualUserDomain
             
             this.userName = userName;
             this.passWord = passWord;
-            this.Role = role;
+            this.role = role;
         }
 
-        public availability isAvailableWithinTimeSpan(int fromWeek, int toWeek)
+        public Availability isAvailableWithinTimeSpan(int fromWeek, int toWeek)
         {
             if (assignedActivities.Count < 20)
-                return availability.available;
+                return Availability.Available;
 
             int partlyOccurences = 0, fullOccurences = 0;
-            foreach (assignedActivityItem item in assignedActivities)
+            foreach (var item in assignedActivities)
             {
                 if(fromWeek < item.fromWeek && toWeek > item.toWeek)
                     partlyOccurences++;
@@ -32,41 +34,35 @@ namespace VirtualUserDomain
             }
 
             if (fullOccurences >= 20)
-                return availability.notAvailable;
+                return Availability.NotAvailable;
             else if ((partlyOccurences + fullOccurences) >= 20)
-                return availability.partlyAvailable;
+                return Availability.PartlyAvailable;
             else
-                return availability.available;
+                return Availability.Available;
         }
 
-        public enum availability { notAvailable, partlyAvailable, available};
+        public enum Availability { NotAvailable, PartlyAvailable, Available};
         public string fullName { get; set; }
-        public UserRole Role { get; }
-        public string LocalAdress { get; set; }
-        public enum UserRole { Admin, leader, employee };
+        public UserRole role { get; }
+        public string localAdress { get; set; }
+        public enum UserRole { Admin, Leader, Employee };
 
-        public string UserName() => userName;
-        public string PassWord() => passWord;
+        public string getUserName() => userName;
+        public string getPassWord() => passWord;
 
         private string userName { get; }
         private string passWord { get; }
 
-        private List<assignedActivityItem> assignedActivities = new List<assignedActivityItem>();
+        private List<AssignedActivityItem> assignedActivities = new List<AssignedActivityItem>();
     }
 
-    public struct assignedActivityItem
+    public struct AssignedActivityItem
     {
-        internal bool withinTimeSpan(int w)
-        {
-            if (w >= fromWeek && w <= toWeek)
-                return true;
-            else
-                return false;
-        }
+        internal bool withinTimeSpan(int w) => w >= fromWeek && w <= toWeek;
 
-        internal int fromWeek { get; set; }
-        internal int toWeek { get; set; }
-        internal string activityIdentity { get; set; }
-        internal Activity activity { get; set; }
+        public int fromWeek { get; set; }
+        public int toWeek { get; set; }
+        public string activityIdentity { get; set; }
+        public Activity activity { get; set; }
     }
 }
