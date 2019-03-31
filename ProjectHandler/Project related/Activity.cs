@@ -51,15 +51,15 @@ namespace ProjectNameSpace
 
         public ListViewItem activityItemModel()
         {
-            ListViewItem model = new ListViewItem(title);
+            var model = new ListViewItem(title);
 
-            StringBuilder assignedHours = new StringBuilder("Total assigned hours: ");
-            int totalHours = totalRegisteredHours();
+            var assignedHours = new StringBuilder("Total assigned hours: ");
+            var totalHours = totalRegisteredHours();
             assignedHours.Append(totalHours.ToString());
             model.SubItems.Add(assignedHours.ToString());
 
-            StringBuilder assignedUsers = new StringBuilder("Active users: ");
-            int totalUsersAssigned = assignedUserIdentities.Count;
+            var assignedUsers = new StringBuilder("Active users: ");
+            var totalUsersAssigned = assignedUserIdentities.Count;
             assignedUsers.Append(totalUsersAssigned.ToString());
 
             model.SubItems.Add(assignedUsers.ToString());
@@ -69,11 +69,11 @@ namespace ProjectNameSpace
 
         public List<ListViewItem> assignedUserModels()
         {
-            List<ListViewItem> models = new List<ListViewItem>();
-            foreach (string userName in assignedUserIdentities)
+            var models = new List<ListViewItem>();
+            foreach (var userName in assignedUserIdentities)
             {
-                ListViewItem model = new ListViewItem(userName);
-                StringBuilder totalHours = new StringBuilder("Total hours registered: ");
+                var model = new ListViewItem(userName);
+                var totalHours = new StringBuilder("Total hours registered: ");
                 
                 totalHours.Append(totalRegisteredHours(userName));
                 model.SubItems.Add(totalHours.ToString());
@@ -85,10 +85,10 @@ namespace ProjectNameSpace
 
         private int totalRegisteredHours(string userName = null)
         {
-            int totalHours = 0;
+            var totalHours = 0;
             if(userName != null)
             {
-                foreach (TimeObject t in timeObjects)
+                foreach (var t in timeObjects)
                 {
                     if (userName == t.userName)
                         totalHours += t.gethours();
@@ -96,7 +96,7 @@ namespace ProjectNameSpace
             }
             else
             {
-                foreach (TimeObject t in timeObjects)
+                foreach (var t in timeObjects)
                 {
                     totalHours += t.gethours();
                 }
@@ -111,7 +111,7 @@ namespace ProjectNameSpace
          * - The TimeObject's that contain the hours spend and the corresponding user
          */
         
-        private HashSet<string> assignedUserIdentities = new HashSet<string>();
-        private List<TimeObject> timeObjects = new List<TimeObject>();
+        private readonly HashSet<string> assignedUserIdentities = new HashSet<string>();
+        private readonly List<TimeObject> timeObjects = new List<TimeObject>();
     }
 }

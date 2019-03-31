@@ -22,7 +22,11 @@ namespace MainUserSpace
             updateProjectListView();
         }
 
-        private void updateProjectListView() => pView.Items.AddRange(pManager.projectItemModels());
+        private void updateProjectListView()
+        {
+            pView.Clear();
+            pView.Items.AddRange(pManager.projectItemModels());
+        }
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -30,7 +34,10 @@ namespace MainUserSpace
             logoutEvent?.Invoke(this, e);
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e) => Application.Exit();
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
 
         private void MainView_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -38,20 +45,19 @@ namespace MainUserSpace
             closeEvent?.Invoke(this, e);
         }
 
-
-        public event EventHandler<EventArgs> logoutEvent;
-        public event EventHandler<EventArgs> closeEvent;
-        private UserManager uManager;
-        private ProjectManager pManager;
-        private ListView pView, aView;
-
         private void button1_Click(object sender, EventArgs e)
         {
             if(uManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
             {
-                ProjectManagement pMng = new ProjectManagement(pManager,uManager);
+                var pMng = new ProjectManagement(pManager,uManager);
+                pMng.updateParentView += _updateParentView;
                 pMng.ShowDialog(this);
             }
+        }
+
+        private void _updateParentView(object sender, EventArgs e)
+        {
+            updateProjectListView();
         }
 
         private void ProjectListView_DoubleClick(object sender, EventArgs e)
@@ -66,6 +72,11 @@ namespace MainUserSpace
 
             ActivityListView.Items.AddRange(aModels);
         }
-        
+
+        public event EventHandler<EventArgs> logoutEvent;
+        public event EventHandler<EventArgs> closeEvent;
+        private UserManager uManager;
+        private ProjectManager pManager;
+        private ListView pView, aView;
     }
 }

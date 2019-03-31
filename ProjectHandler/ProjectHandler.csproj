@@ -82,6 +82,8 @@
       <DependentUpon>ProjectManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Project related\Project.cs" />
+    <Compile Include="Project related\ProjectDatabase.cs" />
     <Compile Include="Project related\TimeObject.cs" />
     <Compile Include="Project related\Activity.cs" />
     <Compile Include="Project related\ProjectManager.cs" />
@@ -92,6 +94,7 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="User Management\User.cs" />
+    <Compile Include="User Management\UserDatabase.cs" />
     <Compile Include="User Management\UserManager.cs" />
     <Compile Include="Forms\Login\LoginView.cs">
       <SubType>Form</SubType>
