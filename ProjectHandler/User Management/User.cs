@@ -33,6 +33,7 @@ namespace VirtualUserDomain
          */
 
         public void assignProject(Project p) => assignedProjects.Add(p);
+        public bool unAssignProject(Project p) => assignedProjects.Remove(p);
 
         public Availability isAvailableWithinTimeSpan(int fromWeek, int toWeek)
         {

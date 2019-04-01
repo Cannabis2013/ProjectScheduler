@@ -71,7 +71,7 @@ namespace MainUserSpace
         {
             if (uManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
             {
-                var pMng = new ProjectManagement(pManager, uManager);
+                var pMng = new ProjectManagement(pManager);
                 pMng.updateParentView += _updateParentView;
                 pMng.ShowDialog(this);
             }
@@ -81,7 +81,7 @@ namespace MainUserSpace
         {
             if (uManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
             {
-                var pMng = new ProjectManagement(pManager, uManager);
+                var pMng = new ProjectManagement(pManager);
                 pMng.updateParentView += _updateParentView;
                 pMng.ShowDialog(this);
             }

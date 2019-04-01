@@ -33,7 +33,7 @@ namespace VirtualUserDomain
 
         public bool logIn(string userName, string password, string localAdress)
         {
-            var user = userDb.verifyCredentials(userName, password);
+            var user = _userDb.verifyCredentials(userName, password);
             if (user == null)
                 return false;
 
@@ -59,11 +59,11 @@ namespace VirtualUserDomain
             throw new Exception("User not logged in");
         }
 
-        public User user(string userName) => userDb.user(userName);
+        public static User user(string userName) => _userDb.user(userName);
 
-        public ListViewItem[] userListModel() => userDb.itemModels();
+        public static ListViewItem[] userListModel() => _userDb.itemModels();
 
-        public List<string> allUserNames() => userDb.allUserNames();
+        public static List<string> allUserNames() => _userDb.allUserNames();
     
         private void userLogOut(string localAdress, User user = null)
         {
@@ -78,6 +78,6 @@ namespace VirtualUserDomain
         }
 
         private HashSet<User> currentLoggedIn = new HashSet<User>();
-        private UserDatabase userDb = new UserDatabase();
+        private static UserDatabase _userDb = new UserDatabase();
     }
 }

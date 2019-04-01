@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using VirtualUserDomain;
@@ -88,10 +89,17 @@ namespace ProjectNameSpace
         {
             foreach (var u in users)
             {
-                uManager?.user(u).assignProject(this);
+                UserManager.user(u).assignProject(this);
                 assignedUserIdentities.Add(u);
-                
             }
+        }
+
+        public void unAssignUsers()
+        {
+            foreach (var uId in assignedUserIdentities)
+                UserManager.user(uId).unAssignProject(this);
+
+            assignedUserIdentities.Clear();
         }
 
         public void addActivity(Activity a) => projectActivities.AddLast(a);

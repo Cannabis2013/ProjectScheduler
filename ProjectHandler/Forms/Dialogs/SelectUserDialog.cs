@@ -17,7 +17,7 @@ namespace DialogNamespace
         {
             InitializeComponent();
             
-            UserListView.Items.AddRange(uManager.userListModel());
+            UserListView.Items.AddRange(UserManager.userListModel());
         }
         
     }

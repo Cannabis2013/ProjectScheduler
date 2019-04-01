@@ -9,21 +9,23 @@ namespace DialogNamespace
 {
     public partial class ProjectDialog : Form
     {
-        public ProjectDialog(UserManager uManager)
+        public ProjectDialog()
         {
             InitializeComponent();
             initializeWeekSelectors();
 
             mode = DialogMode.AddMode;
 
-            UserListView.Items.AddRange(uManager.userListModel());
+            UserListView.Items.AddRange(UserManager.userListModel());
         }
 
-        public ProjectDialog(UserManager uManager, Project p)
+        public ProjectDialog(Project p)
         {
+            temporaryProject = p;
+
             InitializeComponent();
             initializeWeekSelectors();
-            initializeDialogValues(p, uManager);
+            initializeDialogValues();
 
             mode = DialogMode.EditMode;
         }
@@ -40,24 +42,24 @@ namespace DialogNamespace
             endWeekSelector.SelectedIndex = 0;
         }
 
-        private void initializeDialogValues(Project p, UserManager uManager)
+        private void initializeDialogValues()
         {
             /*
              * Initialize the comboboxes
              */
 
-            projectIDSelector.Text = p.projectId;
-            leaderSelector.Text = p.projectLeaderId;
+            projectIDSelector.Text = temporaryProject.projectId;
+            leaderSelector.Text = temporaryProject.projectLeaderId;
 
-            startWeekSelector.SelectedText = p.startWeek.ToString();
-            endWeekSelector.SelectedText = p.endWeek.ToString();
+            startWeekSelector.Text = temporaryProject.startWeek.ToString();
+            endWeekSelector.Text = temporaryProject.endWeek.ToString();
 
             /*
              * Removing the assigned user from the total user list
              */
 
-            var pUserList = p.assignedUserList();
-            var userList = uManager.allUserNames();
+            var pUserList = temporaryProject.assignedUserList();
+            var userList = UserManager.allUserNames();
 
             foreach (var user in pUserList)
                 userList.Remove(user);
@@ -75,6 +77,9 @@ namespace DialogNamespace
 
             foreach (var user in pUserList)
                 assignedUsersList.Add(user);
+
+            updateLeaderComboBoxView();
+            leaderSelector.Text = temporaryProject.projectLeaderId;
         }
         
         private void AddButton_Click(object sender, EventArgs e)
@@ -108,31 +113,67 @@ namespace DialogNamespace
             if (projectIDSelector.Text == "" || startWeekSelector.Text == "")
                 return;
 
-            string title = projectIDSelector.Text, pLeader = leaderSelector.Text;
-            
+            if(mode == DialogMode.AddMode)
+                invoke_Add_Mode_Submit();
+            else
+                invoke_Edit_Mode_Submit();
 
-            if(!int.TryParse(startWeekSelector.Text,out var sWeek))
+            Close();
+        }
+
+        private void invoke_Add_Mode_Submit()
+        {
+            string title = projectIDSelector.Text, pLeader = leaderSelector.Text;
+
+
+            if (!int.TryParse(startWeekSelector.Text, out var sWeek))
                 throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
 
-            if(!int.TryParse(endWeekSelector.Text, out var eWeek))
+            if (!int.TryParse(endWeekSelector.Text, out var eWeek))
                 throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
 
             var items = AssignedUserListView.Items;
+
             var usernames = new string[items.Count];
             var index = 0;
 
             foreach (ListViewItem item in items)
                 usernames[index++] = item.Text;
 
-            OnSubmitPushed?.Invoke(this,new SubmitEvent(title,sWeek,eWeek,usernames,pLeader));
+            OnSubmitPushed?.Invoke(this, new SubmitEvent(title, sWeek, eWeek, usernames, pLeader));
+        }
 
-            Close();
+        private void invoke_Edit_Mode_Submit()
+        {
+            temporaryProject.projectId = projectIDSelector.Text;
+            temporaryProject.projectLeaderId = leaderSelector.Text;
+
+
+            if (!int.TryParse(startWeekSelector.Text, out var sWeek))
+                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
+
+            if (!int.TryParse(endWeekSelector.Text, out var eWeek))
+                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
+
+            var items = AssignedUserListView.Items;
+
+            temporaryProject.unAssignUsers();
+
+            var usernames = new string[items.Count];
+            var index = 0;
+
+            foreach (ListViewItem item in items)
+                usernames[index++] = item.Text;
+
+            temporaryProject.assignUsersToProject(usernames);
+
+            OnEditPushed?.Invoke(this,null);
         }
 
         private void leaderSelector_DropDown(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in AssignedUserListView.Items)
-                leaderSelector.Items.Add(item.Text);
+            if(leaderSelector.Items.Count < 1)
+                updateLeaderComboBoxView();
         }
 
         private void UserListView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -141,10 +182,23 @@ namespace DialogNamespace
             var item = sList[0];
         }
 
+        private void updateLeaderComboBoxView()
+        {
+            foreach (ListViewItem item in AssignedUserListView.Items)
+                leaderSelector.Items.Add(item.Text);
+        }
+
         public event EventHandler<SubmitEvent> OnSubmitPushed;
         public event EventHandler<EventArgs> OnEditPushed; 
 
         private DialogMode mode;
         private enum DialogMode { AddMode, EditMode};
+
+        private Project temporaryProject = null;
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }
