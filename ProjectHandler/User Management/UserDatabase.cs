@@ -79,12 +79,11 @@ namespace VirtualUserDomain
             return null;
         }
 
-        public string[] allUserNames()
+        public List<string> allUserNames()
         {
-            int count = users.Count, index = 0;
-            var result = new string[count];
+            var result = new List<string>();
             foreach (var u in users)
-                result[index++] = u.userName();
+                result.Add(u.userName());
 
             return result;
         }

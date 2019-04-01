@@ -1,6 +1,6 @@
 ﻿namespace DialogNamespace
 {
-    partial class AddProjectDialog
+    partial class ProjectDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddProjectDialog));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectDialog));
             this.MainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.DeleteButton = new System.Windows.Forms.Button();
@@ -295,6 +295,7 @@
             this.UserListView.TabIndex = 1;
             this.UserListView.UseCompatibleStateImageBehavior = false;
             this.UserListView.View = System.Windows.Forms.View.SmallIcon;
+            this.UserListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.UserListView_MouseDoubleClick);
             // 
             // UserIcons
             // 
@@ -380,7 +381,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 274);
             this.Controls.Add(this.MainLayout);
-            this.Name = "AddProjectDialog";
+            this.Name = "ProjectDialog";
             this.Text = "Form1";
             this.MainLayout.ResumeLayout(false);
             this.MainLayout.PerformLayout();

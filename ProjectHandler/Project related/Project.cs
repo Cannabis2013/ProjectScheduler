@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using VirtualUserDomain;
 
 namespace ProjectNameSpace
 {
     public class Project
     {
-        public Project(string projectId, HashSet<string> assignedUsers)
+
+        /*
+         * Constructor section
+         */
+
+        public Project(string projectId, List<string> assignedUsers)
         {
             this.projectId = projectId ?? throw new ArgumentNullException(nameof(projectId));
             assignedUserIdentities = assignedUsers;
@@ -17,6 +23,14 @@ namespace ProjectNameSpace
         {
             this.projectId = projectId ?? throw new ArgumentNullException(nameof(projectId));
         }
+
+        /*
+         * Constructor section ends
+         */
+
+        /*
+         * Public methods begin
+         */
 
         public ListViewItem itemModel()
         {
@@ -70,15 +84,24 @@ namespace ProjectNameSpace
 
         public void assignUserToProject(string userId) => assignedUserIdentities.Add(userId);
 
-        public void assignUsersToProject(string[] users)
+        public void assignUsersToProject(string[] users, UserManager uManager = null)
         {
             foreach (var u in users)
+            {
+                uManager?.user(u).assignProject(this);
                 assignedUserIdentities.Add(u);
+                
+            }
         }
 
         public void addActivity(Activity a) => projectActivities.AddLast(a);
         public int estimatedDuration() => endWeek - startWeek;
 
+        public List<string> assignedUserList() => assignedUserIdentities;
+
+        /*
+         * Public methods ends
+         */
 
         /*
          * Public fields section
@@ -131,7 +154,7 @@ namespace ProjectNameSpace
         private string title, pLeader;
         private int sWeek, eWeek;
 
-        private readonly HashSet<string> assignedUserIdentities = new HashSet<string>();
+        private readonly List<string> assignedUserIdentities = new List<string>();
         private readonly LinkedList<Activity> projectActivities = new LinkedList<Activity>();
     }
 }

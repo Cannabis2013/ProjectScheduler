@@ -63,7 +63,7 @@ namespace VirtualUserDomain
 
         public ListViewItem[] userListModel() => userDb.itemModels();
 
-        public string[] allUserNames() => userDb.allUserNames();
+        public List<string> allUserNames() => userDb.allUserNames();
     
         private void userLogOut(string localAdress, User user = null)
         {

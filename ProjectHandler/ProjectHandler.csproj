@@ -64,11 +64,11 @@
     <Compile Include="Templates\ItemModelEntity.cs" />
     <Compile Include="Events\SubmitEvent.cs" />
     <Compile Include="Events\MyEventArgs.cs" />
-    <Compile Include="Forms\Dialogs\AddProjectDialog.cs">
+    <Compile Include="Forms\Dialogs\ProjectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Dialogs\AddProjectDialog.Designer.cs">
-      <DependentUpon>AddProjectDialog.cs</DependentUpon>
+    <Compile Include="Forms\Dialogs\ProjectDialog.Designer.cs">
+      <DependentUpon>ProjectDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Dialogs\SelectUserDialog.cs">
       <SubType>Form</SubType>
@@ -116,8 +116,8 @@
     <EmbeddedResource Include="Forms\MainWindow\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Dialogs\AddProjectDialog.resx">
-      <DependentUpon>AddProjectDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Dialogs\ProjectDialog.resx">
+      <DependentUpon>ProjectDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Project\ProjectManagement.resx">
       <DependentUpon>ProjectManagement.cs</DependentUpon>

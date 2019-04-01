@@ -79,8 +79,20 @@ namespace VirtualUserDomain
         {
             var model = new ListViewItem(t);
 
+            // ReSharper disable once InconsistentNaming
+            var FullName = new StringBuilder("Fullname: ");
+            FullName.Append(fullName);
+            model.SubItems.Add(FullName.ToString());
+
             var activityCount = new StringBuilder("Number of projects assigned: ");
             activityCount.Append(assignedProjects.Count);
+            model.SubItems.Add(activityCount.ToString());
+
+            var uRole = new StringBuilder("User role: ");
+            uRole.Append(roleStringRepresentation(role));
+            model.SubItems.Add(uRole.ToString());
+
+            return model;
         }
 
         /*
@@ -96,6 +108,16 @@ namespace VirtualUserDomain
          */
 
         /*
+         * Private methods
+         */
+
+        private string roleStringRepresentation(UserRole r) => r == UserRole.Admin ? "Administrator" : "Employee";
+
+        /*
+         * Private methods
+         */
+
+        /*
          * Public member fields
          */
 
@@ -105,7 +127,10 @@ namespace VirtualUserDomain
         public string localAdress { get; set; }
         public enum UserRole { Admin, Leader, Employee };
 
-        
+        /*
+         * Public member fields ends
+         */
+
 
         /*
          * Private member fields

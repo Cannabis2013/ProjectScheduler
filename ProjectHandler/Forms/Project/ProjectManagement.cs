@@ -28,7 +28,7 @@ namespace ProjectNameSpace
 
         private void _OnSubmitPushed(object sender, SubmitEvent e)
         {
-            var p = new Project(e.pTitle) {startWeek = e.sWeek, estimatedEndWeek = e.eWeek};
+            var p = new Project(e.pTitle) {startWeek = e.sWeek, endWeek = e.eWeek};
             p.assignUsersToProject(e.users);
             p.projectLeaderId = e.pLeader;
 
@@ -47,7 +47,7 @@ namespace ProjectNameSpace
 
         private void button1_Click(object sender, System.EventArgs e)
         {
-            var pDialog = new AddProjectDialog(uManager);
+            var pDialog = new ProjectDialog(uManager);
             pDialog.OnSubmitPushed += _OnSubmitPushed;
             pDialog.ShowDialog(this);
         }
@@ -57,5 +57,10 @@ namespace ProjectNameSpace
         private readonly ListView pView;
         private readonly ProjectManager pManager;
         private readonly UserManager uManager;
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
