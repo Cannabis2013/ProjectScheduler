@@ -36,9 +36,9 @@ namespace VirtualUserDomain
         public User verifyCredentials(string userName, string password)
         {
             foreach (var u in users)
-                if (u.getUserName() == userName && u.getPassWord() == password)
+                if (u.userName() == userName && u.passWord() == password)
                 {
-                    var userCopy = new User(u.getUserName(), u.getPassWord(), u.role);
+                    var userCopy = new User(u.userName(), u.passWord(), u.role);
                     return userCopy;
                 }
 
@@ -73,7 +73,7 @@ namespace VirtualUserDomain
         {
             foreach (var u in users)
             {
-                if (u.getUserName() == userName)
+                if (u.userName() == userName)
                     return u;
             }
             return null;
@@ -84,7 +84,7 @@ namespace VirtualUserDomain
             int count = users.Count, index = 0;
             var result = new string[count];
             foreach (var u in users)
-                result[index++] = u.getUserName();
+                result[index++] = u.userName();
 
             return result;
         }
@@ -97,7 +97,7 @@ namespace VirtualUserDomain
         {
             foreach (var u in users)
             {
-                if (u.getUserName() == username)
+                if (u.userName() == username)
                     return true;
             }
             return false;
@@ -112,7 +112,7 @@ namespace VirtualUserDomain
                 if(!fullList && u.role == User.UserRole.Admin)
                     continue;
 
-                var model = new ListViewItem(u.getUserName())
+                var model = new ListViewItem(u.userName())
                 {
                     ImageIndex = 0
                 };

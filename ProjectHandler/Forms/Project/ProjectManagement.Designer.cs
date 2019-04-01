@@ -1,4 +1,4 @@
-﻿namespace Projecthandler.Forms.Project
+﻿namespace ProjectNameSpace
 {
     partial class ProjectManagement
     {

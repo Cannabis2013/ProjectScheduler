@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using ProjectNameSpace;
 using VirtualUserDomain;
 using DialogNamespace;
 using Projecthandler.Events;
 
-namespace Projecthandler.Forms.Project
+namespace ProjectNameSpace
 {
     public partial class ProjectManagement : Form
     {
@@ -29,7 +28,7 @@ namespace Projecthandler.Forms.Project
 
         private void _OnSubmitPushed(object sender, SubmitEvent e)
         {
-            var p = new ProjectNameSpace.Project(e.pTitle) {startWeek = e.sWeek, estimatedEndWeek = e.eWeek};
+            var p = new Project(e.pTitle) {startWeek = e.sWeek, estimatedEndWeek = e.eWeek};
             p.assignUsersToProject(e.users);
             p.projectLeaderId = e.pLeader;
 

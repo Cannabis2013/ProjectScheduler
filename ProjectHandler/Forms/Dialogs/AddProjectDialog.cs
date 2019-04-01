@@ -60,7 +60,7 @@ namespace DialogNamespace
                 return;
 
             string title = projectIDSelector.Text, pLeader = leaderSelector.Text;
-            int sWeek = 0, eWeek = 0;
+            int sWeek, eWeek = 0;
 
             if(!int.TryParse(startWeekSelector.Text,out sWeek) && 
                !int.TryParse(endWeekSelector.Text,out eWeek))

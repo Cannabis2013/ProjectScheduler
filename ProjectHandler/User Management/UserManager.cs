@@ -69,7 +69,7 @@ namespace VirtualUserDomain
         {
             if (user != null)
             {
-                currentLoggedIn.RemoveWhere(c => c.localAdress == localAdress && c.getUserName() == user.getUserName());
+                currentLoggedIn.RemoveWhere(c => c.localAdress == localAdress && c.userName() == user.userName());
             }
             else
             {

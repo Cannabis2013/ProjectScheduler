@@ -1,45 +1,103 @@
 ﻿using ProjectNameSpace;
 using System.Collections.Generic;
+using System.Text;
+using System.Windows.Forms;
+using Templates;
+
 
 // ReSharper disable once CheckNamespace
 
 namespace VirtualUserDomain
 {
-    public class User
+    public class User : ItemModelEntity<ListViewItem>
     {
+        /*
+         * Constructor section begins
+         */
+
         public User(string userName, string passWord, UserRole role)
         {
-            
-            this.userName = userName;
-            this.passWord = passWord;
+            this.t = userName;
+            this.pass = passWord;
             this.role = role;
         }
 
+        /*
+         * Constructor section ends
+         */
+
+        /*
+         * Public method section begins
+         * - Assign to project
+         * - isAvailableWithinTimespan(int,int) -> Checks if the employee is available over a given timespan
+         */
+
+        public void assignProject(Project p) => assignedProjects.Add(p);
+
         public Availability isAvailableWithinTimeSpan(int fromWeek, int toWeek)
         {
-            if (assignedActivities.Count < 20)
-                return Availability.Available;
-
             int partlyOccurences = 0, fullOccurences = 0;
-            foreach (var item in assignedActivities)
+            foreach (var project in assignedProjects)
             {
-                if(fromWeek < item.fromWeek && toWeek > item.toWeek)
-                    partlyOccurences++;
-                else if (fromWeek < item.fromWeek && item.withinTimeSpan(toWeek))
-                    partlyOccurences++;
-                else if (item.withinTimeSpan(fromWeek) && toWeek > item.toWeek)
-                    partlyOccurences++;
-                else if(item.withinTimeSpan(fromWeek) && item.withinTimeSpan(toWeek))
-                    fullOccurences++;
+                var activityEntities = project.activityEntities();
+                
+
+                foreach (var item in activityEntities)
+                {
+                    if (fromWeek < item.startWeek && toWeek > item.endWeek)
+                        partlyOccurences++;
+                    else if (fromWeek < item.startWeek && item.withinTimespan(toWeek))
+                        partlyOccurences++;
+                    else if (item.withinTimespan(fromWeek) && toWeek > item.endWeek)
+                        partlyOccurences++;
+                    else if (item.withinTimespan(fromWeek) && item.withinTimespan(toWeek))
+                        fullOccurences++;
+                }
             }
 
             if (fullOccurences >= 20)
                 return Availability.NotAvailable;
-            else if ((partlyOccurences + fullOccurences) >= 20)
-                return Availability.PartlyAvailable;
-            else
-                return Availability.Available;
+            return (partlyOccurences + fullOccurences) >= 20 ? Availability.PartlyAvailable : Availability.Available;
         }
+
+        public ListViewItem[] assignedProjectModels()
+        {
+            var models = new ListViewItem[assignedProjects.Count];
+            var index = 0;
+
+            foreach (var project in assignedProjects)
+            {
+                models[index++] = project.itemModel();
+            }
+
+            return models;
+        }
+        public ListViewItem[] assignedActivityModels(string projectId) =>
+            assignedProjects.Find(item => item.projectId == projectId).activityItemModels();
+
+        public override ListViewItem itemModel()
+        {
+            var model = new ListViewItem(t);
+
+            var activityCount = new StringBuilder("Number of projects assigned: ");
+            activityCount.Append(assignedProjects.Count);
+        }
+
+        /*
+         * Public getter methods
+         * Notice: In this class the inheritet protected field 't' is used as a container for the username id.
+         */
+
+        public string userName() => t;
+        public string passWord() => pass;
+
+        /*
+         * Public method section ends
+         */
+
+        /*
+         * Public member fields
+         */
 
         public enum Availability { NotAvailable, PartlyAvailable, Available};
         public string fullName { get; set; }
@@ -47,22 +105,14 @@ namespace VirtualUserDomain
         public string localAdress { get; set; }
         public enum UserRole { Admin, Leader, Employee };
 
-        public string getUserName() => userName;
-        public string getPassWord() => passWord;
+        
 
-        private string userName { get; }
-        private string passWord { get; }
+        /*
+         * Private member fields
+         */
 
-        private List<AssignedActivityItem> assignedActivities = new List<AssignedActivityItem>();
-    }
+        private string pass { get; }
 
-    public struct AssignedActivityItem
-    {
-        internal bool withinTimeSpan(int w) => w >= fromWeek && w <= toWeek;
-
-        public int fromWeek { get; set; }
-        public int toWeek { get; set; }
-        public string activityIdentity { get; set; }
-        public Activity activity { get; set; }
+        private readonly List<Project> assignedProjects = new List<Project>();
     }
 }

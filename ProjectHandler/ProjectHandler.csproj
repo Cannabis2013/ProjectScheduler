@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Templates\ItemModelEntity.cs" />
     <Compile Include="Events\SubmitEvent.cs" />
     <Compile Include="Events\MyEventArgs.cs" />
     <Compile Include="Forms\Dialogs\AddProjectDialog.cs">
@@ -82,6 +83,7 @@
       <DependentUpon>ProjectManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Project related\ActivityEntity.cs" />
     <Compile Include="Project related\Project.cs" />
     <Compile Include="Project related\ProjectDatabase.cs" />
     <Compile Include="Project related\TimeObject.cs" />

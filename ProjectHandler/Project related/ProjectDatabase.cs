@@ -19,10 +19,11 @@ namespace ProjectNameSpace
 
                 var startDate = new StringBuilder("Week begin: ");
                 startDate.Append(p.startWeek);
+                
                 model.SubItems.Add(startDate.ToString());
 
                 var endDate = new StringBuilder("Week end: ");
-                endDate.Append(p.estimatedEndWeek);
+                endDate.Append(p.endWeek);
                 model.SubItems.Add(endDate.ToString());
 
                 var userLeader = new StringBuilder("Tech lead: ");

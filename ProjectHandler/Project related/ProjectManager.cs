@@ -22,7 +22,7 @@ namespace ProjectNameSpace
         {
             var p = new Project("Project TEST");
             p.startWeek = 1;
-            p.estimatedEndWeek = 4;
+            p.endWeek = 4;
             p.projectLeaderId = "Niels_Henrik";
             projectDB.addProject(p);
         }

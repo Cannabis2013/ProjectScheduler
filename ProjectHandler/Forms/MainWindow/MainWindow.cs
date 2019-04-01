@@ -2,8 +2,6 @@
 using VirtualUserDomain;
 using System;
 using ProjectNameSpace;
-using System.Collections.Generic;
-using Projecthandler.Forms.Project;
 
 namespace MainUserSpace
 {

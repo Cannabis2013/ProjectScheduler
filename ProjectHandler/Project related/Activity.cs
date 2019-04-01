@@ -15,21 +15,37 @@ namespace ProjectNameSpace
          * - Default constructor with no parameters
          */
 
-        public Activity(string title, HashSet<string> assignedUserIdentities = null)
+        public Activity(string title, int sWeek, int eWeek, HashSet<string> assignedUserIdentities = null)
         {
             this.title = title;
+            this.sWeek = sWeek;
+            this.eWeek = eWeek;
             this.assignedUserIdentities = assignedUserIdentities ?? assignedUserIdentities;
         }
 
-        public Activity(string title) => this.title = title;
-        public Activity() { }
+        public Activity(string title, int sWeek, int eWeek)
+        {
+            this.title = title;
+            this.sWeek = sWeek;
+            this.eWeek = eWeek;
+        }
+
+        public Activity(int sWeek, int eWeek)
+        {
+            this.sWeek = sWeek;
+            this.eWeek = eWeek;
+        }
 
         /*
          * Public fields section
-         * - Title : string
+         * - title : string
+         * - startWeek : int <- sWeek
+         * - endWeek : int <- eWeek
          */
 
         public string title { get; set; }
+        public int startWeek => sWeek;
+        public int endWeek => eWeek;
 
         /*
          * public methods section
@@ -43,13 +59,13 @@ namespace ProjectNameSpace
         public void assignUser(string userID) => assignedUserIdentities.Add(userID);
         public void assignUsers(List<string> userIDs)
         {
-            foreach (string userID in userIDs)
-                assignedUserIdentities.Add(userID);
+            foreach (var userId in userIDs)
+                assignedUserIdentities.Add(userId);
         }
 
         public void addTimeObject(TimeObject timeO) => timeObjects.Add(timeO);
 
-        public ListViewItem activityItemModel()
+        public ListViewItem itemModel()
         {
             var model = new ListViewItem(title);
 
@@ -105,12 +121,8 @@ namespace ProjectNameSpace
             return totalHours;
         }
 
-        /*
-         * Private fields section
-         * - The assigned users
-         * - The TimeObject's that contain the hours spend and the corresponding user
-         */
-        
+        private readonly int sWeek;
+        private readonly int eWeek;
         private readonly HashSet<string> assignedUserIdentities = new HashSet<string>();
         private readonly List<TimeObject> timeObjects = new List<TimeObject>();
     }
