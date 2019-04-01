@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Templates;
 using VirtualUserDomain;
 
 namespace ProjectNameSpace
 {
-    public class Project
+    public class Project : ItemModelEntity<ListViewItem>
     {
 
         /*
@@ -33,29 +34,12 @@ namespace ProjectNameSpace
          * Public methods begin
          */
 
-        public ListViewItem itemModel()
+        public override ListViewItem itemModel(ListMode mode = ListMode.Tile)
         {
-            var model = new ListViewItem(title);
+            if (mode == ListMode.Tile)
+                return itemTileModel();
 
-            var startDate = new StringBuilder("Week begin: ");
-            startDate.Append(startWeek);
-
-            model.SubItems.Add(startDate.ToString());
-
-            var endDate = new StringBuilder("Week end: ");
-            endDate.Append(endWeek);
-            model.SubItems.Add(endDate.ToString());
-
-            var userLeader = new StringBuilder("Tech lead: ");
-            userLeader.Append(projectLeaderId);
-
-            model.SubItems.Add(userLeader.ToString());
-
-            // Set picture index
-            model.ImageIndex = 0;
-            model.StateImageIndex = 0;
-
-            return model;
+            return itemListModel();
         }
 
         public ListViewItem[] activityItemModels()
@@ -154,6 +138,60 @@ namespace ProjectNameSpace
 
             return entities;
         }
+
+        /*
+         * Private methods section begins
+         */
+
+        private ListViewItem itemTileModel()
+        {
+            var model = new ListViewItem(title);
+
+            var userLeader = new StringBuilder("Tech lead: ");
+            userLeader.Append(projectLeaderId);
+            model.SubItems.Add(userLeader.ToString());
+
+
+            var startDate = new StringBuilder("Week begin: ");
+            startDate.Append(startWeek);
+            model.SubItems.Add(startDate.ToString());
+
+            var endDate = new StringBuilder("Week end: ");
+            endDate.Append(endWeek);
+            model.SubItems.Add(endDate.ToString());
+
+
+            // Set picture index
+            model.ImageIndex = 0;
+            model.StateImageIndex = 0;
+
+            return model;
+        }
+
+        private ListViewItem itemListModel()
+        {
+            var model = new ListViewItem(title);
+
+            var userLeader = new StringBuilder(projectLeaderId);
+            model.SubItems.Add(userLeader.ToString());
+
+            model.SubItems.Add(startWeek.ToString());
+            model.SubItems.Add(endWeek.ToString());
+
+            var numberOfUsers = assignedUserIdentities.Count;
+
+            model.SubItems.Add(numberOfUsers.ToString());
+            
+            // Set picture index
+            model.ImageIndex = 0;
+            model.StateImageIndex = 0;
+
+            return model;
+        }
+
+        /*
+         * Private methods section ends
+         */
 
         /*
         * Private fields section

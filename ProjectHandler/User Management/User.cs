@@ -76,7 +76,7 @@ namespace VirtualUserDomain
         public ListViewItem[] assignedActivityModels(string projectId) =>
             assignedProjects.Find(item => item.projectId == projectId).activityItemModels();
 
-        public override ListViewItem itemModel()
+        public override ListViewItem itemModel(ListMode mode = ListMode.Tile)
         {
             var model = new ListViewItem(t);
 
@@ -127,6 +127,7 @@ namespace VirtualUserDomain
         public UserRole role { get; }
         public string localAdress { get; set; }
         public enum UserRole { Admin, Leader, Employee };
+        
 
         /*
          * Public member fields ends
@@ -137,8 +138,8 @@ namespace VirtualUserDomain
          * Private member fields
          */
 
+        private int imageIndex = 0;
         private string pass { get; }
-
         private readonly List<Project> assignedProjects = new List<Project>();
     }
 }

@@ -8,8 +8,10 @@
             set => t = value;
         }
 
-        public abstract T itemModel();
+        public abstract T itemModel(ListMode mode = ListMode.Tile);
 
         protected string t;
+
+        public enum ListMode { Tile, List};
     }
 }

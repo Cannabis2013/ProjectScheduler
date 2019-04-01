@@ -34,25 +34,21 @@ namespace MainUserSpace
 
         private void loginView_OnSubmitClicked(object sender, MyEventArgs e)
         {
-            LoginView lView = (LoginView) sender;
-            if (uManager.logIn(e.arg1, e.arg2, UserManager.getLocalAddress()))
+            var lView = (LoginView) sender;
+            if (UserManager.logIn(e.arg1, e.arg2, UserManager.getLocalAddress()))
             {
-                if (uManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
-                {
-                    isLastWindow = false;
-                    MainWindow view = new MainWindow(uManager, pManager);
-                    view.logoutEvent += mView_logoutEvent;
-                    view.closeEvent += mView_closeEvent;
+                isLastWindow = false;
+                MainWindow view = new MainWindow(pManager);
+                view.logoutEvent += mView_logoutEvent;
+                view.closeEvent += mView_closeEvent;
 
-                    lView.Close();
-                    view.Show();
-                }
-
+                lView.Close();
+                view.Show();
             }
             else
             {
                 // Do something with LoginView
-                lView.setWarningText("Wrong credentials entered. The password is '1234' and username ''admin''. Idiot.");
+                lView.setWarningText("Wrong credentials entered.");
             }
         }
 

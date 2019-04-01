@@ -155,6 +155,9 @@ namespace DialogNamespace
             if (!int.TryParse(endWeekSelector.Text, out var eWeek))
                 throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
 
+            temporaryProject.startWeek = sWeek;
+            temporaryProject.endWeek = eWeek;
+
             var items = AssignedUserListView.Items;
 
             temporaryProject.unAssignUsers();
@@ -179,7 +182,11 @@ namespace DialogNamespace
         private void UserListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var sList = UserListView.SelectedItems;
+            if (sList.Count > 1)
+                return;
+
             var item = sList[0];
+            AddButton_Click(this,new EventArgs());
         }
 
         private void updateLeaderComboBoxView()
@@ -199,6 +206,11 @@ namespace DialogNamespace
         private void CancelButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

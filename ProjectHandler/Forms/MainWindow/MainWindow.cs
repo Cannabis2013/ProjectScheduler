@@ -1,34 +1,43 @@
 ﻿using System.Windows.Forms;
 using VirtualUserDomain;
 using System;
+using System.Text;
 using ProjectNameSpace;
+using Templates;
+// ReSharper disable InconsistentNaming
 
 namespace MainUserSpace
 {
     public partial class MainWindow : Form
     {
 
-        public MainWindow(UserManager uManager, ProjectManager pManager)
+        public MainWindow(ProjectManager pManager)
         {
             InitializeComponent();
-            ListViewItem item = new ListViewItem();
-            this.uManager = uManager;
+
+            var item = new ListViewItem();
+            
             this.pManager = pManager;
-            pView = ProjectListView;
             aView = ActivityListView;
 
-            updateProjectListView();
+            var welcomingText = new StringBuilder("Welcome ");
+            var userName = UserManager.currentlyLoggedIn().userName();
+            welcomingText.Append(userName);
+
+
+            WelcomeLabel.Text = welcomingText.ToString();
+
+            updateActivityView();
         }
 
-        private void updateProjectListView()
+        private void updateActivityView()
         {
-            pView.Clear();
-            pView.Items.AddRange(pManager.projectItemModels());
+            // Update activity view if their corresponding projects is removed
         }
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            uManager.logout(UserManager.getLocalAddress());
+            UserManager.logout(UserManager.getLocalAddress());
             logoutEvent?.Invoke(this, e);
         }
 
@@ -39,52 +48,39 @@ namespace MainUserSpace
 
         private void MainView_FormClosed(object sender, FormClosedEventArgs e)
         {
-            uManager.logout(UserManager.getLocalAddress());
+            UserManager.logout(UserManager.getLocalAddress());
             closeEvent?.Invoke(this, e);
         }
 
         private void _updateParentView(object sender, EventArgs e)
         {
-            updateProjectListView();
+            updateActivityView();
         }
-
-        private void ProjectListView_DoubleClick(object sender, EventArgs e)
-        {
-            ListView.SelectedListViewItemCollection selectedItems = pView.SelectedItems;
-            ListViewItem item = selectedItems[0];
-            int index = pView.Items.IndexOf(item);
-            
-            Project p = pManager.project(index);
-
-            ListViewItem[] aModels = p.activityItemModels();
-
-            ActivityListView.Items.AddRange(aModels);
-        }
-
-        public event EventHandler<EventArgs> logoutEvent;
-        public event EventHandler<EventArgs> closeEvent;
-        private UserManager uManager;
-        private ProjectManager pManager;
-        private ListView pView, aView;
+        
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (uManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
+            if (UserManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
             {
                 var pMng = new ProjectManagement(pManager);
                 pMng.updateParentView += _updateParentView;
                 pMng.ShowDialog(this);
+            }
+            else
+            {
+                MessageBox.Show(@"Administrator privilliges required YOU FUCKING NAZI PIG!");
             }
         }
 
         private void customizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (uManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
-            {
-                var pMng = new ProjectManagement(pManager);
-                pMng.updateParentView += _updateParentView;
-                pMng.ShowDialog(this);
-            }
+            linkLabel1_LinkClicked(this,e: null);
         }
+
+        public event EventHandler<EventArgs> logoutEvent;
+        public event EventHandler<EventArgs> closeEvent;
+        private ProjectManager pManager;
+        private ListView aView;
+        
     }
 }

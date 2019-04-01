@@ -17,7 +17,7 @@ namespace VirtualUserDomain
             var nUser1 = new User("Jens_Werner2019", "Tango44",User.UserRole.Employee);
             var nUser2 = new User("Niels_Erik1964", "Traktor", User.UserRole.Employee);
             var nUser3 = new User("Bent_Bjerre", "ghb4life", User.UserRole.Employee);
-            var nUser4 = new User("Finn_Luger_P38", "Elmer_Fjott",User.UserRole.Employee);
+            var nUser4 = new User("Finn_Luger_P38", "HITLER",User.UserRole.Employee);
             var nUser5 = new User("Technotonny","GOA_gartner", User.UserRole.Employee);
 
             users.Add(nUser1);

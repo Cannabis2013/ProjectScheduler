@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Templates;
 
 namespace ProjectNameSpace
 {
@@ -23,7 +24,6 @@ namespace ProjectNameSpace
             var p = new Project("Project TEST");
             p.startWeek = 1;
             p.endWeek = 4;
-            p.projectLeaderId = "Niels_Henrik";
             projectDB.addProject(p);
         }
 
@@ -32,9 +32,12 @@ namespace ProjectNameSpace
             projectDB.addProject(newProject);
         }
 
+        public void removeProjectAt(int index) => projectDB.removeAt(index);
+        public void removeProject(Project p) => projectDB.remove(p);
+
         public Project project(int index) => projectDB.projectAt(index);
 
-        public ListViewItem[] projectItemModels() => projectDB.projectItemModels() ?? throw new ArgumentNullException("No items to pass.");
+        public ListViewItem[] projectItemModels(ItemModelEntity<ListViewItem>.ListMode mode) => projectDB.projectItemModels(mode) ?? throw new ArgumentNullException("No items to pass.");
 
 
         private readonly ProjectDatabase projectDB = new ProjectDatabase();

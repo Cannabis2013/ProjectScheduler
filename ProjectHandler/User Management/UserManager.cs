@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Windows.Forms;
@@ -31,7 +32,7 @@ namespace VirtualUserDomain
             return "000.000.000.000";
         }
 
-        public bool logIn(string userName, string password, string localAdress)
+        public static bool logIn(string userName, string password, string localAdress)
         {
             var user = _userDb.verifyCredentials(userName, password);
             if (user == null)
@@ -40,18 +41,18 @@ namespace VirtualUserDomain
             user.localAdress = localAdress;
             userLogOut(localAdress, user);
 
-            currentLoggedIn.Add(user);
+            _currentLoggedIn.Add(user);
             return true;
         }
 
-        public void logout(string localAdress)
+        public static void logout(string localAdress)
         {
             userLogOut(localAdress);
         }
 
-        public User.UserRole verifyUserState(string localAdress)
+        public static User.UserRole verifyUserState(string localAdress)
         {
-            foreach (var u in currentLoggedIn)
+            foreach (var u in _currentLoggedIn)
             {
                 if (u.localAdress == localAdress)
                     return u.role;
@@ -60,24 +61,25 @@ namespace VirtualUserDomain
         }
 
         public static User user(string userName) => _userDb.user(userName);
+        public static User currentlyLoggedIn() => _currentLoggedIn.Where(item => item.localAdress == getLocalAddress()).ElementAt(0); 
 
         public static ListViewItem[] userListModel() => _userDb.itemModels();
 
         public static List<string> allUserNames() => _userDb.allUserNames();
     
-        private void userLogOut(string localAdress, User user = null)
+        private static void userLogOut(string localAdress, User user = null)
         {
             if (user != null)
             {
-                currentLoggedIn.RemoveWhere(c => c.localAdress == localAdress && c.userName() == user.userName());
+                _currentLoggedIn.RemoveWhere(c => c.localAdress == localAdress && c.userName() == user.userName());
             }
             else
             {
-                currentLoggedIn.RemoveWhere(c => c.localAdress == localAdress);
+                _currentLoggedIn.RemoveWhere(c => c.localAdress == localAdress);
             }
         }
 
-        private HashSet<User> currentLoggedIn = new HashSet<User>();
+        private static HashSet<User> _currentLoggedIn = new HashSet<User>();
         private static UserDatabase _userDb = new UserDatabase();
     }
 }

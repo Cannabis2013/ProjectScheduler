@@ -65,7 +65,7 @@
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.MainLayout.Size = new System.Drawing.Size(385, 441);
+            this.MainLayout.Size = new System.Drawing.Size(785, 441);
             this.MainLayout.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -133,6 +133,7 @@
             this.button3.TabIndex = 0;
             this.button3.Text = "Remove project";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label1
             // 
@@ -144,24 +145,28 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(379, 48);
+            this.label1.Size = new System.Drawing.Size(779, 48);
             this.label1.TabIndex = 1;
             this.label1.Text = "Project Management";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ProjectListView
             // 
+            this.ProjectListView.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.ProjectListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ProjectListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ProjectListView.Location = new System.Drawing.Point(96, 48);
             this.ProjectListView.Margin = new System.Windows.Forms.Padding(0);
+            this.ProjectListView.MultiSelect = false;
             this.ProjectListView.Name = "ProjectListView";
-            this.ProjectListView.Size = new System.Drawing.Size(289, 361);
+            this.ProjectListView.Size = new System.Drawing.Size(689, 361);
             this.ProjectListView.SmallImageList = this.ItemIcons;
             this.ProjectListView.TabIndex = 2;
             this.ProjectListView.UseCompatibleStateImageBehavior = false;
-            this.ProjectListView.View = System.Windows.Forms.View.SmallIcon;
+            this.ProjectListView.View = System.Windows.Forms.View.Details;
+            this.ProjectListView.DoubleClick += new System.EventHandler(this.ProjectListView_DoubleClick);
             // 
             // ItemIcons
             // 
@@ -177,7 +182,7 @@
             this.MainLayout.SetColumnSpan(this.tableLayoutPanel1, 2);
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.button4, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(160, 409);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(360, 409);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.MaximumSize = new System.Drawing.Size(0, 48);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -208,13 +213,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 441);
+            this.ClientSize = new System.Drawing.Size(784, 441);
             this.Controls.Add(this.MainLayout);
-            this.MaximumSize = new System.Drawing.Size(400, 480);
-            this.MinimumSize = new System.Drawing.Size(400, 480);
+            this.MaximumSize = new System.Drawing.Size(800, 480);
+            this.MinimumSize = new System.Drawing.Size(800, 480);
             this.Name = "ProjectManagement";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ProjectManagement_FormClosed);
             this.MainLayout.ResumeLayout(false);
             this.MainLayout.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
