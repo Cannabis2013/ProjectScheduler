@@ -51,11 +51,25 @@ namespace ProjectNameSpace
         }
 
         /*
+         * Copy constructor which takes an argument as same type.
+         */
+
+        public Activity(Activity copy)
+        {
+            t = copy.t;
+            sWeek = copy.sWeek;
+            eWeek = copy.eWeek;
+            assignedUserIdentities = copy.assignedUserIdentities;
+            registeredTimeObjects = copy.registeredTimeObjects;
+        }
+
+        /*
          * Constructor section ends
          */
 
         /*
          * public methods section
+         * - Retrieve a model list for view representation
          * - Assign users to activity
          * - Register hour to activity
          * - Retrieve item models
@@ -66,6 +80,28 @@ namespace ProjectNameSpace
         public override ListViewItem itemModel(ListMode mode = ListMode.Tile)
         {
             return mode == ListMode.Tile ? itemTileModel() : itemListModel();
+        }
+
+        public ListViewItem[] registeredHourItemModels(string userName)
+        {
+            var userTimeObjects = registeredTimeObjects.Where(item => item.UserName == userName).ToArray();
+
+            var tObjects = userTimeObjects.Select(item => new TimeObject(item)).ToArray();
+
+            var models = new ListViewItem[tObjects.Length];
+            var index = 0;
+
+            foreach (var tObject in tObjects)
+            {
+                var model = new ListViewItem(tObject.UserName);
+                model.SubItems.Add(tObject.Hours().ToString());
+                model.SubItems.Add(tObject.Week().ToString());
+
+                models[index++] = model;
+            }
+
+            return models;
+
         }
 
         public string activityId
@@ -106,7 +142,7 @@ namespace ProjectNameSpace
          * Register hours
          */
 
-        public void addTimeObject(TimeObject timeO) => timeObjects.Add(timeO);
+        public void addTimeObject(TimeObject time) => registeredTimeObjects.Add(time);
 
         public List<ListViewItem> assignedUserModels()
         {
@@ -163,17 +199,17 @@ namespace ProjectNameSpace
             var totalHours = 0;
             if(userName != null)
             {
-                foreach (var T in timeObjects)
+                foreach (var T in registeredTimeObjects)
                 {
-                    if (userName == T.userName)
-                        totalHours += T.gethours();
+                    if (userName == T.UserName)
+                        totalHours += T.Hours();
                 }
             }
             else
             {
-                foreach (var T in timeObjects)
+                foreach (var T in registeredTimeObjects)
                 {
-                    totalHours += T.gethours();
+                    totalHours += T.Hours();
                 }
             }
             return totalHours;
@@ -186,6 +222,6 @@ namespace ProjectNameSpace
         private int sWeek;
         private int eWeek;
         private readonly HashSet<string> assignedUserIdentities = new HashSet<string>();
-        private readonly List<TimeObject> timeObjects = new List<TimeObject>();
+        private readonly List<TimeObject> registeredTimeObjects = new List<TimeObject>();
     }
 }

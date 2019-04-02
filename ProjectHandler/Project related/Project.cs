@@ -136,6 +136,12 @@ namespace ProjectNameSpace
                 new ActivityEntity(item.startWeek, item.endWeek, item.title)).ToList();
         }
 
+        public List<Activity> assignedActivities(string userName)
+        {
+            var userActivities = projectActivities.Where(item => item.isUserAssigned(userName));
+            return userActivities.Select(item => new Activity(item)).ToList();
+        }
+
         /*
          * Private methods section begins
          */

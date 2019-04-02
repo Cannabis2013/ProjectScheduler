@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 
 namespace ProjectNameSpace
@@ -7,48 +8,43 @@ namespace ProjectNameSpace
     {
         public TimeObject(int hours, string userName)
         {
-            this.sethours(hours);
-            this.userName = userName ?? null;
-            registerDate = DateTime.Now;
+            this.hours = hours;
+            this.userName = userName;
+
+            var ciCurr = CultureInfo.CurrentCulture;
+            week = ciCurr.Calendar.GetWeekOfYear(DateTime.Now, 
+                CalendarWeekRule.FirstFourDayWeek, 
+                DayOfWeek.Monday);
         }
 
-        public DayOfWeek getday() => day;
+        /*
+         * Copy constructor
+         */
 
-        public string dayToString()
+        public TimeObject(TimeObject copy)
         {
-            if (day == (DayOfWeek)0)
-                return "Sunday";
-            else if (day == (DayOfWeek)1)
-                return "Monday";
-            else if (day == (DayOfWeek)2)
-                return "Tuesday";
-            else if (day == (DayOfWeek)3)
-                return "Wednesday";
-            else if (day == (DayOfWeek)4)
-                return "Thursday";
-            else if (day == (DayOfWeek)5)
-                return "Friday";
-            else if (day == (DayOfWeek)6)
-                return "Saturday";
-            else
-                return null;
-
+            this.userName = copy.UserName;
+            this.hours = copy.Hours();
+            this.week = copy.Week();
         }
 
-        public int gethours()
+        public int Hours() => hours;
+        public int Week() => week;
+
+        public void setHours(int h) => hours = h;
+        public void addHours(int h) => hours += h;
+
+        public string UserName
         {
-            return hours;
+            get => userName;
+            set => userName = value;
         }
 
-        internal void sethours(int h) => hours = h;
-        internal void addHours(int h) => hours += h;
 
-        private readonly DayOfWeek day;
-        private readonly DateTime registerDate;
+        private string userName;
+        private readonly int week;
         private int hours;
 
-        public DateTime registeredDate() => registerDate;
 
-        public string userName { get; set; } = null;
     }
 }

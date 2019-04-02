@@ -137,7 +137,8 @@ namespace VirtualUserDomain
         /*
          * Private member fields
          */
-         
+
+
         private string pass { get; }
         private readonly List<Project> assignedProjects = new List<Project>();
     }
