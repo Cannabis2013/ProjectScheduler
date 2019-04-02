@@ -1,35 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using NUnit.Framework;
 using Projecthandler.Events;
 using ProjectNameSpace;
 using VirtualUserDomain;
 
 namespace DialogNamespace
 {
-    public partial class ProjectDialog : Form
+    public partial class ActivityDialog : Form
     {
-        public ProjectDialog()
+        public ActivityDialog()
         {
             InitializeComponent();
-            initializeSelectors();
+            initializeWeekSelectors();
 
             mode = DialogMode.AddMode;
+
+            UserListView.Items.AddRange(UserManager.userListModel());
         }
 
-        public ProjectDialog(Project p)
+        public ActivityDialog(Project p)
         {
             temporaryProject = p;
 
             InitializeComponent();
-            initializeSelectors();
+            initializeWeekSelectors();
             initializeDialogValues();
 
             mode = DialogMode.EditMode;
         }
 
-        private void initializeSelectors()
+        private void initializeWeekSelectors()
         {
             for (var i = 1; i <= 52; i++)
             {
@@ -39,17 +40,38 @@ namespace DialogNamespace
 
             startWeekSelector.SelectedIndex = 0;
             endWeekSelector.SelectedIndex = 0;
-            updateLeaderComboBoxView();
         }
 
         private void initializeDialogValues()
         {
-            projectIDSelector.Text = temporaryProject.id;
-            startWeekSelector.Text = temporaryProject.startWeek.ToString();
-            endWeekSelector.Text = temporaryProject.endWeek.ToString();
-            leaderSelector.Text = temporaryProject.projectLeaderId;
+            
         }
         
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            if (UserListView.Items.Count <= 0)
+                return;
+
+            var currentItems = UserListView.SelectedItems;
+            foreach (var item in currentItems)
+            {
+                UserListView.Items.Remove((ListViewItem) item);
+                AssignedUserListView.Items.Add((ListViewItem) item);
+            }
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            if (AssignedUserListView.Items.Count <= 0)
+                return;
+
+            var currentItems = AssignedUserListView.SelectedItems;
+            foreach (var item in currentItems)
+            {
+                AssignedUserListView.Items.Remove((ListViewItem)item);
+                UserListView.Items.Add((ListViewItem)item);
+            }
+        }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
@@ -74,7 +96,14 @@ namespace DialogNamespace
 
             if (!int.TryParse(endWeekSelector.Text, out var eWeek))
                 throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
-            
+
+            var items = AssignedUserListView.Items;
+
+            var usernames = new string[items.Count];
+            var index = 0;
+
+            foreach (ListViewItem item in items)
+                usernames[index++] = item.Text;
 
             OnSubmitPushed?.Invoke(this, new SubmitEvent(title, sWeek, eWeek, pLeader));
         }
@@ -84,10 +113,26 @@ namespace DialogNamespace
             
         }
 
+        private void leaderSelector_DropDown(object sender, EventArgs e)
+        {
+            if(leaderSelector.Items.Count < 1)
+                updateLeaderComboBoxView();
+        }
+
+        private void UserListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var sList = UserListView.SelectedItems;
+            if (sList.Count > 1)
+                return;
+
+            var item = sList[0];
+            AddButton_Click(this,new EventArgs());
+        }
+
         private void updateLeaderComboBoxView()
         {
-            foreach (string item in UserManager.allUserNames())
-                leaderSelector.Items.Add(item);
+            foreach (ListViewItem item in AssignedUserListView.Items)
+                leaderSelector.Items.Add(item.Text);
         }
 
         public event EventHandler<SubmitEvent> OnSubmitPushed;
@@ -101,6 +146,11 @@ namespace DialogNamespace
         private void CancelButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

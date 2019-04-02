@@ -1,5 +1,6 @@
 ﻿using ProjectNameSpace;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Templates;
@@ -15,11 +16,12 @@ namespace VirtualUserDomain
          * Constructor section begins
          */
 
-        public User(string userName, string passWord, UserRole role)
+        public User(string userName, string passWord, UserRole role, string fullName)
         {
             this.t = userName;
             this.pass = passWord;
             this.role = role;
+            this.fullName = fullName;
         }
 
         /*
@@ -32,7 +34,7 @@ namespace VirtualUserDomain
          * - isAvailableWithinTimespan(int,int) -> Checks if the employee is available over a given timespan
          */
 
-        public void assignProject(Project p) => assignedProjects.Add(p);
+        public void assignToProject(Project p) => assignedProjects.Add(p);
         public bool unAssignProject(Project p) => assignedProjects.Remove(p);
 
         public Availability isAvailableWithinTimeSpan(int fromWeek, int toWeek)
@@ -74,7 +76,7 @@ namespace VirtualUserDomain
             return models;
         }
         public ListViewItem[] assignedActivityModels(string projectId) =>
-            assignedProjects.Find(item => item.projectId == projectId).activityItemModels();
+            assignedProjects.Find(item => item.id == projectId).activityItemModels();
 
         public override ListViewItem itemModel(ListMode mode = ListMode.Tile)
         {
@@ -97,11 +99,39 @@ namespace VirtualUserDomain
         }
 
         /*
+         * Retrieve models for all user assigned activities with the following data:
+         * - Activity id
+         * - Activity duration
+         * - Total registered user hours
+         * - The parent project id
+         */
+
+        public ListViewItem[] assignedActivityModels()
+        {
+            var activities = allUserAssignedActivities();
+
+            var count = activities.Count;
+            var models = new ListViewItem[count];
+
+            foreach (var activity in activities)
+            {
+                var model = new ListViewItem(activity.Id);
+                model.SubItems.Add(activity.estimatedDuration().ToString());
+                model.SubItems.Add(activity.totalRegisteredHours(userName()).ToString());
+                var projectId = activity.Parent().id;
+                model.SubItems.Add(projectId);
+            }
+
+            return models;
+        }
+
+        /*
          * Public getter methods
          * Notice: In this class the inheritet protected field 't' is used as a container for the username id.
          */
 
         public string userName() => t;
+        public string FullName() => fullName;
         public string passWord() => pass;
 
         /*
@@ -111,6 +141,18 @@ namespace VirtualUserDomain
         /*
          * Private methods
          */
+
+        private List<Activity> allUserAssignedActivities()
+        {
+            var activities = new List<Activity>();
+            foreach (var p in assignedProjects)
+            {
+                var userAssignedActivities = p.assignedActivities(userName());
+                activities.AddRange(userAssignedActivities);
+            }
+
+            return activities;
+        }
 
         private static string roleStringRepresentation(UserRole r) => r == UserRole.Admin ? "Administrator" : "Employee";
 
@@ -123,7 +165,8 @@ namespace VirtualUserDomain
          */
 
         public enum Availability { NotAvailable, PartlyAvailable, Available};
-        public string fullName { get; set; }
+
+        private readonly string fullName;
         public UserRole role { get; }
         public string localAddress { get; set; }
         public enum UserRole { Admin, Leader, Employee };

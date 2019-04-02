@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using VirtualUserDomain;
 using System;
+using System.Drawing;
 using System.Text;
 using ProjectNameSpace;
 using Templates;
@@ -21,18 +22,30 @@ namespace MainUserSpace
             aView = ActivityListView;
 
             var welcomingText = new StringBuilder("Welcome ");
-            var userName = UserManager.currentlyLoggedIn().userName();
+            var userName = UserManager.currentlyLoggedIn().FullName();
             welcomingText.Append(userName);
-
 
             WelcomeLabel.Text = welcomingText.ToString();
 
-            updateActivityView();
+            if (UserManager.verifyUserState(UserManager.getLocalAddress()) != User.UserRole.Admin)
+            {
+                updateActivityView();
+            }
         }
 
         private void updateActivityView()
         {
-            // Update activity view if their corresponding projects is removed
+            User cUser = UserManager.currentlyLoggedIn();
+            var assignedActivityModels = cUser.assignedActivityModels();
+            aView.Clear();
+            aView.View = View.Details;
+
+            aView.Columns.Add("Id", 160, HorizontalAlignment.Left);
+            aView.Columns.Add("Activity time duration", 160, HorizontalAlignment.Left);
+            aView.Columns.Add("Total registered hours", 160, HorizontalAlignment.Left);
+            aView.Columns.Add("Project", 160, HorizontalAlignment.Left);
+
+            aView.Items.AddRange(assignedActivityModels);
         }
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -81,6 +94,6 @@ namespace MainUserSpace
         public event EventHandler<EventArgs> closeEvent;
         private ProjectManager pManager;
         private ListView aView;
-        
+        private AnchorStyles anchorStyles;
     }
 }

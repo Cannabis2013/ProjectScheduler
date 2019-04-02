@@ -24,6 +24,7 @@ namespace ProjectNameSpace
         }
 
         public Project projectAt(int index) => projects[index];
+        public Project project(string projectId) => projects.Find(item => item.id == projectId);
 
         private readonly List<Project> projects = new List<Project>();
     }

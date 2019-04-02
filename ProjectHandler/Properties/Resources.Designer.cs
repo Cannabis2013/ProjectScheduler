@@ -63,9 +63,9 @@ namespace Projecthandler.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hitler {
+        internal static System.Drawing.Bitmap User {
             get {
-                object obj = ResourceManager.GetObject("hitler", resourceCulture);
+                object obj = ResourceManager.GetObject("User", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

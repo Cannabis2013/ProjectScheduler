@@ -2,7 +2,7 @@
 {
     public abstract class ItemModelEntity<T>
     {
-        public virtual string title
+        public virtual string id
         {
             get => t;
             set => t = value;

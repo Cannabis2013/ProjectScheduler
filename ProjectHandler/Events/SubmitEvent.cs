@@ -13,7 +13,7 @@ namespace Projecthandler.Events
         public string[] users { get; private set; }
         public string pLeader { get; private set; }
 
-        public SubmitEvent(string pTitle, int sWeek, int eWeek, string[] users, string pLeader)
+        public SubmitEvent(string pTitle, int sWeek, int eWeek, string pLeader)
         {
             this.pTitle = pTitle;
             this.sWeek = sWeek;

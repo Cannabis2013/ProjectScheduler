@@ -15,15 +15,9 @@ namespace ProjectNameSpace
          * Constructor section
          */
 
-        public Project(string projectId, List<string> assignedUsers)
-        {
-            this.projectId = projectId ?? throw new ArgumentNullException(nameof(projectId));
-            assignedUserIdentities = assignedUsers;
-        }
-
         public Project(string projectId)
         {
-            this.projectId = projectId ?? throw new ArgumentNullException(nameof(projectId));
+            t = projectId ?? throw new ArgumentNullException(nameof(projectId));
         }
 
         /*
@@ -66,30 +60,11 @@ namespace ProjectNameSpace
 
             return null;
         }
-
-        public void assignUserToProject(string userId) => assignedUserIdentities.Add(userId);
-
-        public void assignUsersToProject(string[] users, UserManager uManager = null)
-        {
-            foreach (var u in users)
-            {
-                UserManager.user(u).assignProject(this);
-                assignedUserIdentities.Add(u);
-            }
-        }
-
-        public void unAssignUsers()
-        {
-            foreach (var uId in assignedUserIdentities)
-                UserManager.user(uId).unAssignProject(this);
-
-            assignedUserIdentities.Clear();
-        }
+        
 
         public void addActivity(Activity a) => projectActivities.AddLast(a);
         public int estimatedDuration() => endWeek - startWeek;
-
-        public List<string> assignedUserList() => assignedUserIdentities;
+        
 
         /*
          * Public methods ends
@@ -98,12 +73,6 @@ namespace ProjectNameSpace
         /*
          * Public fields section
          */
-
-        public string projectId
-        {
-            get => title;
-            set => title = value;
-        }
 
         public int startWeek
         {
@@ -133,7 +102,7 @@ namespace ProjectNameSpace
                 projectActivities.Where(item => item.isUserAssigned(userName));
 
             return activities.Select(item => 
-                new ActivityEntity(item.startWeek, item.endWeek, item.title)).ToList();
+                new ActivityEntity(item.startWeek, item.endWeek, item.id)).ToList();
         }
 
         public List<Activity> assignedActivities(string userName)
@@ -141,6 +110,7 @@ namespace ProjectNameSpace
             var userActivities = projectActivities.Where(item => item.isUserAssigned(userName));
             return userActivities.Select(item => new Activity(item)).ToList();
         }
+        
 
         /*
          * Private methods section begins
@@ -148,7 +118,7 @@ namespace ProjectNameSpace
 
         private ListViewItem itemTileModel()
         {
-            var model = new ListViewItem(title);
+            var model = new ListViewItem(id);
 
             var userLeader = new StringBuilder("Tech lead: ");
             userLeader.Append(projectLeaderId);
@@ -173,17 +143,13 @@ namespace ProjectNameSpace
 
         private ListViewItem itemListModel()
         {
-            var model = new ListViewItem(title);
+            var model = new ListViewItem(id);
 
             var userLeader = new StringBuilder(projectLeaderId);
             model.SubItems.Add(userLeader.ToString());
 
             model.SubItems.Add(startWeek.ToString());
             model.SubItems.Add(endWeek.ToString());
-
-            var numberOfUsers = assignedUserIdentities.Count;
-
-            model.SubItems.Add(numberOfUsers.ToString());
             
             // Set picture index
             model.ImageIndex = 0;
@@ -200,10 +166,9 @@ namespace ProjectNameSpace
         * Private fields section
         */
 
-        private string title, pLeader;
+        private string pLeader;
         private int sWeek, eWeek;
-
-        private readonly List<string> assignedUserIdentities = new List<string>();
+        
         private readonly LinkedList<Activity> projectActivities = new LinkedList<Activity>();
     }
 }

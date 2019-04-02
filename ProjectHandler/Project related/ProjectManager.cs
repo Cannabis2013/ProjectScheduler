@@ -35,7 +35,8 @@ namespace ProjectNameSpace
         public void removeProjectAt(int index) => projectDB.removeAt(index);
         public void removeProject(Project p) => projectDB.remove(p);
 
-        public Project project(int index) => projectDB.projectAt(index);
+        public Project projectAt(int index) => projectDB.projectAt(index);
+        public Project project(string projectId) => projectDB.project(projectId);
 
         public ListViewItem[] projectItemModels(ItemModelEntity<ListViewItem>.ListMode mode) => projectDB.projectItemModels(mode) ?? throw new ArgumentNullException("No items to pass.");
 

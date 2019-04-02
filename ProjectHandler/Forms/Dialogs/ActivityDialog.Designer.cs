@@ -1,6 +1,6 @@
 ﻿namespace DialogNamespace
 {
-    partial class ProjectDialog
+    partial class ActivityDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectDialog));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ActivityDialog));
             this.MainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.endWeekSelector = new System.Windows.Forms.ComboBox();
             this.startWeekSelector = new System.Windows.Forms.ComboBox();
@@ -42,10 +42,19 @@
             this.ButtonLayout = new System.Windows.Forms.TableLayoutPanel();
             this.CancelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.DeleteButton = new System.Windows.Forms.Button();
+            this.AddButton = new System.Windows.Forms.Button();
+            this.UserListView = new System.Windows.Forms.ListView();
             this.UserIcons = new System.Windows.Forms.ImageList(this.components);
+            this.AssignedUserListView = new System.Windows.Forms.ListView();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.MainLayout.SuspendLayout();
             this.ButtonLayout.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainLayout
@@ -56,7 +65,7 @@
             this.MainLayout.BackColor = System.Drawing.Color.Sienna;
             this.MainLayout.ColumnCount = 2;
             this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
-            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 361F));
             this.MainLayout.Controls.Add(this.endWeekSelector, 1, 3);
             this.MainLayout.Controls.Add(this.startWeekSelector, 1, 2);
             this.MainLayout.Controls.Add(this.label2, 0, 2);
@@ -65,19 +74,24 @@
             this.MainLayout.Controls.Add(this.projectIDSelector, 1, 1);
             this.MainLayout.Controls.Add(this.label5, 0, 4);
             this.MainLayout.Controls.Add(this.leaderSelector, 1, 4);
-            this.MainLayout.Controls.Add(this.ButtonLayout, 0, 6);
+            this.MainLayout.Controls.Add(this.ButtonLayout, 0, 8);
+            this.MainLayout.Controls.Add(this.tableLayoutPanel1, 0, 6);
             this.MainLayout.Controls.Add(this.label6, 0, 0);
+            this.MainLayout.Controls.Add(this.label9, 0, 5);
             this.MainLayout.Location = new System.Drawing.Point(1, -2);
             this.MainLayout.Name = "MainLayout";
-            this.MainLayout.RowCount = 7;
+            this.MainLayout.RowCount = 9;
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.MainLayout.Size = new System.Drawing.Size(383, 243);
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.MainLayout.Size = new System.Drawing.Size(489, 556);
             this.MainLayout.TabIndex = 0;
             // 
             // endWeekSelector
@@ -90,7 +104,7 @@
             this.endWeekSelector.FormattingEnabled = true;
             this.endWeekSelector.Location = new System.Drawing.Point(131, 113);
             this.endWeekSelector.Name = "endWeekSelector";
-            this.endWeekSelector.Size = new System.Drawing.Size(249, 28);
+            this.endWeekSelector.Size = new System.Drawing.Size(355, 28);
             this.endWeekSelector.TabIndex = 2;
             // 
             // startWeekSelector
@@ -103,7 +117,7 @@
             this.startWeekSelector.FormattingEnabled = true;
             this.startWeekSelector.Location = new System.Drawing.Point(131, 73);
             this.startWeekSelector.Name = "startWeekSelector";
-            this.startWeekSelector.Size = new System.Drawing.Size(249, 28);
+            this.startWeekSelector.Size = new System.Drawing.Size(355, 28);
             this.startWeekSelector.TabIndex = 1;
             // 
             // label2
@@ -145,7 +159,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(122, 40);
             this.label4.TabIndex = 3;
-            this.label4.Text = "ProjectID:";
+            this.label4.Text = "Activity ID:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // projectIDSelector
@@ -154,7 +168,7 @@
             this.projectIDSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.projectIDSelector.Location = new System.Drawing.Point(131, 37);
             this.projectIDSelector.Name = "projectIDSelector";
-            this.projectIDSelector.Size = new System.Drawing.Size(249, 26);
+            this.projectIDSelector.Size = new System.Drawing.Size(355, 26);
             this.projectIDSelector.TabIndex = 4;
             // 
             // label5
@@ -168,7 +182,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(122, 40);
             this.label5.TabIndex = 3;
-            this.label5.Text = "Leader:";
+            this.label5.Text = "Project:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // leaderSelector
@@ -182,9 +196,10 @@
             this.leaderSelector.FormattingEnabled = true;
             this.leaderSelector.Location = new System.Drawing.Point(131, 153);
             this.leaderSelector.Name = "leaderSelector";
-            this.leaderSelector.Size = new System.Drawing.Size(249, 28);
+            this.leaderSelector.Size = new System.Drawing.Size(355, 28);
             this.leaderSelector.Sorted = true;
             this.leaderSelector.TabIndex = 2;
+            this.leaderSelector.DropDown += new System.EventHandler(this.leaderSelector_DropDown);
             // 
             // ButtonLayout
             // 
@@ -195,7 +210,7 @@
             this.ButtonLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.ButtonLayout.Controls.Add(this.CancelButton, 0, 0);
             this.ButtonLayout.Controls.Add(this.SaveButton, 1, 0);
-            this.ButtonLayout.Location = new System.Drawing.Point(91, 206);
+            this.ButtonLayout.Location = new System.Drawing.Point(144, 519);
             this.ButtonLayout.Name = "ButtonLayout";
             this.ButtonLayout.RowCount = 1;
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -230,6 +245,133 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.MainLayout.SetColumnSpan(this.tableLayoutPanel1, 2);
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label8, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.DeleteButton, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.AddButton, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.UserListView, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.AssignedUserListView, 2, 1);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 220);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(489, 276);
+            this.tableLayoutPanel1.TabIndex = 7;
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(3, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(218, 20);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Available users";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(267, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(219, 20);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "Assigned users";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // DeleteButton
+            // 
+            this.DeleteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DeleteButton.Location = new System.Drawing.Point(224, 40);
+            this.DeleteButton.Margin = new System.Windows.Forms.Padding(0);
+            this.DeleteButton.Name = "DeleteButton";
+            this.DeleteButton.Size = new System.Drawing.Size(40, 20);
+            this.DeleteButton.TabIndex = 0;
+            this.DeleteButton.Text = "<<";
+            this.DeleteButton.UseVisualStyleBackColor = true;
+            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
+            // 
+            // AddButton
+            // 
+            this.AddButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AddButton.Location = new System.Drawing.Point(224, 60);
+            this.AddButton.Margin = new System.Windows.Forms.Padding(0);
+            this.AddButton.Name = "AddButton";
+            this.AddButton.Size = new System.Drawing.Size(40, 20);
+            this.AddButton.TabIndex = 0;
+            this.AddButton.Text = ">>";
+            this.AddButton.UseVisualStyleBackColor = true;
+            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
+            // 
+            // UserListView
+            // 
+            this.UserListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.UserListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UserListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UserListView.Location = new System.Drawing.Point(0, 20);
+            this.UserListView.Margin = new System.Windows.Forms.Padding(0);
+            this.UserListView.Name = "UserListView";
+            this.tableLayoutPanel1.SetRowSpan(this.UserListView, 4);
+            this.UserListView.Size = new System.Drawing.Size(224, 256);
+            this.UserListView.SmallImageList = this.UserIcons;
+            this.UserListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.UserListView.TabIndex = 1;
+            this.UserListView.UseCompatibleStateImageBehavior = false;
+            this.UserListView.View = System.Windows.Forms.View.SmallIcon;
+            this.UserListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.UserListView_MouseDoubleClick);
+            // 
+            // UserIcons
+            // 
+            this.UserIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("UserIcons.ImageStream")));
+            this.UserIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.UserIcons.Images.SetKeyName(0, "User.png");
+            // 
+            // AssignedUserListView
+            // 
+            this.AssignedUserListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.AssignedUserListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AssignedUserListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.AssignedUserListView.Location = new System.Drawing.Point(264, 20);
+            this.AssignedUserListView.Margin = new System.Windows.Forms.Padding(0);
+            this.AssignedUserListView.Name = "AssignedUserListView";
+            this.tableLayoutPanel1.SetRowSpan(this.AssignedUserListView, 4);
+            this.AssignedUserListView.Size = new System.Drawing.Size(225, 256);
+            this.AssignedUserListView.SmallImageList = this.UserIcons;
+            this.AssignedUserListView.TabIndex = 1;
+            this.AssignedUserListView.UseCompatibleStateImageBehavior = false;
+            this.AssignedUserListView.View = System.Windows.Forms.View.SmallIcon;
+            // 
             // label6
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -242,31 +384,42 @@
             this.label6.Location = new System.Drawing.Point(0, 0);
             this.label6.Margin = new System.Windows.Forms.Padding(0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(383, 30);
+            this.label6.Size = new System.Drawing.Size(489, 30);
             this.label6.TabIndex = 3;
             this.label6.Text = "Fill in information";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // UserIcons
+            // label9
             // 
-            this.UserIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("UserIcons.ImageStream")));
-            this.UserIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.UserIcons.Images.SetKeyName(0, "User.png");
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label9.AutoSize = true;
+            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MainLayout.SetColumnSpan(this.label9, 2);
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(0, 190);
+            this.label9.Margin = new System.Windows.Forms.Padding(0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(489, 30);
+            this.label9.TabIndex = 3;
+            this.label9.Text = "Assign users to activity";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ProjectDialog
+            // ActivityDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 241);
+            this.ClientSize = new System.Drawing.Size(490, 554);
             this.Controls.Add(this.MainLayout);
-            this.MaximumSize = new System.Drawing.Size(400, 280);
-            this.MinimumSize = new System.Drawing.Size(400, 280);
-            this.Name = "ProjectDialog";
+            this.Name = "ActivityDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Create project";
+            this.Text = "Form1";
             this.MainLayout.ResumeLayout(false);
             this.MainLayout.PerformLayout();
             this.ButtonLayout.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -280,12 +433,20 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox projectIDSelector;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox leaderSelector;
         private System.Windows.Forms.TableLayoutPanel ButtonLayout;
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.ListView UserListView;
+        private System.Windows.Forms.Button DeleteButton;
+        private System.Windows.Forms.ListView AssignedUserListView;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.ImageList UserIcons;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox leaderSelector;
     }
 }

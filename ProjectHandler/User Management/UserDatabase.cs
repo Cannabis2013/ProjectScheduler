@@ -8,17 +8,18 @@ namespace VirtualUserDomain
     {
         public UserDatabase()
         {
-            var admin = new User("admin", "1234", User.UserRole.Admin);
+            var admin = new User("admin", "1234", User.UserRole.Admin,"Martin Hansen");
+            
             users.Add(admin);
 
             /*
              * Initialize five users for testing purposes
              */
-            var nUser1 = new User("Jens_Werner2019", "Tango44",User.UserRole.Employee);
-            var nUser2 = new User("Niels_Erik1964", "Traktor", User.UserRole.Employee);
-            var nUser3 = new User("Bent_Bjerre", "ghb4life", User.UserRole.Employee);
-            var nUser4 = new User("Finn_Luger_P38", "HITLER",User.UserRole.Employee);
-            var nUser5 = new User("Technotonny","GOA_gartner", User.UserRole.Employee);
+            var nUser1 = new User("Jens_Werner2019", "Tango44",User.UserRole.Employee, "Jens Werner");
+            var nUser2 = new User("Niels_Erik1964", "Traktor", User.UserRole.Employee, "Niels Pede Erik");
+            var nUser3 = new User("Bent_Bjerre", "ghb4life", User.UserRole.Employee, "Bent Bjerre");
+            var nUser4 = new User("Finn_Luger_P38", "HITLER",User.UserRole.Employee, "Engel Franz");
+            var nUser5 = new User("Technotonny","GOA_gartner", User.UserRole.Employee, "Tonny Jørgensen");
 
             users.Add(nUser1);
             users.Add(nUser2);
@@ -38,7 +39,7 @@ namespace VirtualUserDomain
             foreach (var u in users)
                 if (u.userName() == userName && u.passWord() == password)
                 {
-                    var userCopy = new User(u.userName(), u.passWord(), u.role);
+                    var userCopy = new User(u.userName(), u.passWord(), u.role, u.FullName());
                     return userCopy;
                 }
 
@@ -50,12 +51,12 @@ namespace VirtualUserDomain
          * Admin is allowed to create and delete users
          */
 
-        public void createUser(string userName, string passWord, User.UserRole role)
+        public void createUser(string userName, string passWord, User.UserRole role, string fullName)
         {
             if (userNameExist(userName))
                 return;
 
-            var newUser = new User(userName, passWord, role);
+            var newUser = new User(userName, passWord, role,fullName);
             users.Add(newUser);
         }
 
@@ -117,7 +118,7 @@ namespace VirtualUserDomain
                 };
 
                 var fullName = new StringBuilder("Full name: ");
-                fullName.Append(u.fullName);
+                fullName.Append(u.FullName());
 
                 model.SubItems.Add(fullName.ToString());
 
