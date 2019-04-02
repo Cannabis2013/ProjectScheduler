@@ -16,7 +16,7 @@ namespace VirtualUserDomain
         {}
 
         /*
-         * Local adress based on the ipv4 adress of the user
+         * Local address based on the ipv4 address of the user
          */
 
         public static string getLocalAddress()
@@ -32,50 +32,50 @@ namespace VirtualUserDomain
             return "000.000.000.000";
         }
 
-        public static bool logIn(string userName, string password, string localAdress)
+        public static bool logIn(string userName, string password, string localAddress)
         {
             var user = _userDb.verifyCredentials(userName, password);
             if (user == null)
                 return false;
 
-            user.localAdress = localAdress;
-            userLogOut(localAdress, user);
+            user.localAddress = localAddress;
+            userLogOut(localAddress, user);
 
             _currentLoggedIn.Add(user);
             return true;
         }
 
-        public static void logout(string localAdress)
+        public static void logout(string localAddress)
         {
-            userLogOut(localAdress);
+            userLogOut(localAddress);
         }
 
-        public static User.UserRole verifyUserState(string localAdress)
+        public static User.UserRole verifyUserState(string localAddress)
         {
             foreach (var u in _currentLoggedIn)
             {
-                if (u.localAdress == localAdress)
+                if (u.localAddress == localAddress)
                     return u.role;
             }
             throw new Exception("User not logged in");
         }
 
         public static User user(string userName) => _userDb.user(userName);
-        public static User currentlyLoggedIn() => _currentLoggedIn.Where(item => item.localAdress == getLocalAddress()).ElementAt(0); 
+        public static User currentlyLoggedIn() => _currentLoggedIn.Where(item => item.localAddress == getLocalAddress()).ElementAt(0); 
 
         public static ListViewItem[] userListModel() => _userDb.itemModels();
 
         public static List<string> allUserNames() => _userDb.allUserNames();
     
-        private static void userLogOut(string localAdress, User user = null)
+        private static void userLogOut(string localAddress, User user = null)
         {
             if (user != null)
             {
-                _currentLoggedIn.RemoveWhere(c => c.localAdress == localAdress && c.userName() == user.userName());
+                _currentLoggedIn.RemoveWhere(c => c.localAddress == localAddress && c.userName() == user.userName());
             }
             else
             {
-                _currentLoggedIn.RemoveWhere(c => c.localAdress == localAdress);
+                _currentLoggedIn.RemoveWhere(c => c.localAddress == localAddress);
             }
         }
 

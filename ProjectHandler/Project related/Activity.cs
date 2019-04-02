@@ -1,11 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ProjectNameSpace;
+using Templates;
+
+
+/*
+ * Class Activity has the following important pseudo attributes:
+ * - ActivityId (which in this case is the inherited field variable 't')
+ * - Start and end weeks
+ * - User assignment:
+ * -- assignUser()
+ * -- assignUsers()
+ * - Register hours:
+ * -- addTimeObject()
+ */
 
 namespace ProjectNameSpace
 {
-    public class Activity
+    public class Activity : ItemModelEntity<ListViewItem>
     {
 
         /*
@@ -17,7 +31,7 @@ namespace ProjectNameSpace
 
         public Activity(string title, int sWeek, int eWeek, HashSet<string> assignedUserIdentities = null)
         {
-            this.title = title;
+            t = title;
             this.sWeek = sWeek;
             this.eWeek = eWeek;
             this.assignedUserIdentities = assignedUserIdentities ?? assignedUserIdentities;
@@ -25,7 +39,7 @@ namespace ProjectNameSpace
 
         public Activity(string title, int sWeek, int eWeek)
         {
-            this.title = title;
+            t = title;
             this.sWeek = sWeek;
             this.eWeek = eWeek;
         }
@@ -37,15 +51,8 @@ namespace ProjectNameSpace
         }
 
         /*
-         * Public fields section
-         * - title : string
-         * - startWeek : int <- sWeek
-         * - endWeek : int <- eWeek
+         * Constructor section ends
          */
-
-        public string title { get; set; }
-        public int startWeek => sWeek;
-        public int endWeek => eWeek;
 
         /*
          * public methods section
@@ -56,6 +63,33 @@ namespace ProjectNameSpace
          * -- Retrieve item models for assigned users overview presentation
          */
 
+        public override ListViewItem itemModel(ListMode mode = ListMode.Tile)
+        {
+            return mode == ListMode.Tile ? itemTileModel() : itemListModel();
+        }
+
+        public string activityId
+        {
+            get => t;
+            set => t = value;
+        }
+
+        public int startWeek
+        {
+            get => sWeek;
+            set => sWeek = value;
+        }
+
+        public int endWeek
+        {
+            get => eWeek;
+            set => eWeek = value;
+        }
+
+        /*
+         * Assign users to activity
+         */
+
         public void assignUser(string userID) => assignedUserIdentities.Add(userID);
         public void assignUsers(List<string> userIDs)
         {
@@ -63,25 +97,16 @@ namespace ProjectNameSpace
                 assignedUserIdentities.Add(userId);
         }
 
-        public void addTimeObject(TimeObject timeO) => timeObjects.Add(timeO);
-
-        public ListViewItem itemModel()
+        public bool isUserAssigned(string userName)
         {
-            var model = new ListViewItem(title);
-
-            var assignedHours = new StringBuilder("Total assigned hours: ");
-            var totalHours = totalRegisteredHours();
-            assignedHours.Append(totalHours.ToString());
-            model.SubItems.Add(assignedHours.ToString());
-
-            var assignedUsers = new StringBuilder("Active users: ");
-            var totalUsersAssigned = assignedUserIdentities.Count;
-            assignedUsers.Append(totalUsersAssigned.ToString());
-
-            model.SubItems.Add(assignedUsers.ToString());
-
-            return model;
+            return assignedUserIdentities.Any(item => item == userName);
         }
+
+        /*
+         * Register hours
+         */
+
+        public void addTimeObject(TimeObject timeO) => timeObjects.Add(timeO);
 
         public List<ListViewItem> assignedUserModels()
         {
@@ -99,30 +124,67 @@ namespace ProjectNameSpace
             return models;
         }
 
+        /*
+         * Private methods section begins
+         */
+
+        private ListViewItem itemTileModel()
+        {
+            var model = new ListViewItem(title);
+
+            var assignedHours = new StringBuilder("Total assigned hours: ");
+            var totalHours = totalRegisteredHours();
+            assignedHours.Append(totalHours.ToString());
+            model.SubItems.Add(assignedHours.ToString());
+
+            var assignedUsers = new StringBuilder("Active users: ");
+            var totalUsersAssigned = assignedUserIdentities.Count;
+            assignedUsers.Append(totalUsersAssigned.ToString());
+
+            model.SubItems.Add(assignedUsers.ToString());
+
+            return model;
+        }
+
+        private ListViewItem itemListModel()
+        {
+            var model = new ListViewItem(title);
+            
+            model.SubItems.Add(totalRegisteredHours().ToString());
+            
+            var totalUsersAssigned = assignedUserIdentities.Count;
+            model.SubItems.Add(totalUsersAssigned.ToString());
+
+            return model;
+        }
+
         private int totalRegisteredHours(string userName = null)
         {
             var totalHours = 0;
             if(userName != null)
             {
-                foreach (var t in timeObjects)
+                foreach (var T in timeObjects)
                 {
-                    if (userName == t.userName)
-                        totalHours += t.gethours();
+                    if (userName == T.userName)
+                        totalHours += T.gethours();
                 }
             }
             else
             {
-                foreach (var t in timeObjects)
+                foreach (var T in timeObjects)
                 {
-                    totalHours += t.gethours();
+                    totalHours += T.gethours();
                 }
             }
-
             return totalHours;
         }
 
-        private readonly int sWeek;
-        private readonly int eWeek;
+        /*
+         * Private methods section ends
+         */
+
+        private int sWeek;
+        private int eWeek;
         private readonly HashSet<string> assignedUserIdentities = new HashSet<string>();
         private readonly List<TimeObject> timeObjects = new List<TimeObject>();
     }

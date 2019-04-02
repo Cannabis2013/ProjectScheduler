@@ -37,28 +37,28 @@ namespace VirtualUserDomain
 
         public Availability isAvailableWithinTimeSpan(int fromWeek, int toWeek)
         {
-            int partlyOccurences = 0, fullOccurences = 0;
+            int partlyOccurrences = 0, fullOccurrences = 0;
             foreach (var project in assignedProjects)
             {
-                var activityEntities = project.activityEntities();
+                // Retrieves a list of user-assigned activities
+                var activityEntities = project.activityEntities(userName());
                 
-
                 foreach (var item in activityEntities)
                 {
                     if (fromWeek < item.startWeek && toWeek > item.endWeek)
-                        partlyOccurences++;
+                        partlyOccurrences++;
                     else if (fromWeek < item.startWeek && item.withinTimespan(toWeek))
-                        partlyOccurences++;
+                        partlyOccurrences++;
                     else if (item.withinTimespan(fromWeek) && toWeek > item.endWeek)
-                        partlyOccurences++;
+                        partlyOccurrences++;
                     else if (item.withinTimespan(fromWeek) && item.withinTimespan(toWeek))
-                        fullOccurences++;
+                        fullOccurrences++;
                 }
             }
 
-            if (fullOccurences >= 20)
+            if (fullOccurrences >= 20)
                 return Availability.NotAvailable;
-            return (partlyOccurences + fullOccurences) >= 20 ? Availability.PartlyAvailable : Availability.Available;
+            return (partlyOccurrences + fullOccurrences) >= 20 ? Availability.PartlyAvailable : Availability.Available;
         }
 
         public ListViewItem[] assignedProjectModels()
@@ -112,7 +112,7 @@ namespace VirtualUserDomain
          * Private methods
          */
 
-        private string roleStringRepresentation(UserRole r) => r == UserRole.Admin ? "Administrator" : "Employee";
+        private static string roleStringRepresentation(UserRole r) => r == UserRole.Admin ? "Administrator" : "Employee";
 
         /*
          * Private methods
@@ -125,7 +125,7 @@ namespace VirtualUserDomain
         public enum Availability { NotAvailable, PartlyAvailable, Available};
         public string fullName { get; set; }
         public UserRole role { get; }
-        public string localAdress { get; set; }
+        public string localAddress { get; set; }
         public enum UserRole { Admin, Leader, Employee };
         
 
@@ -137,8 +137,7 @@ namespace VirtualUserDomain
         /*
          * Private member fields
          */
-
-        private int imageIndex = 0;
+         
         private string pass { get; }
         private readonly List<Project> assignedProjects = new List<Project>();
     }

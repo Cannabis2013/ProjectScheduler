@@ -124,19 +124,16 @@ namespace ProjectNameSpace
         }
 
         /*
-             * Create a list of Activity entities for user statistic purposes.
-             */
+        * Create a list of Activity entities for user statistic purposes.
+        */
 
-        public List<ActivityEntity> activityEntities()
+        public List<ActivityEntity> activityEntities(string userName = null)
         {
-            var entities = new List<ActivityEntity>();
-            foreach (var item in projectActivities)
-            {
-                var entity = new ActivityEntity(item.startWeek, item.endWeek, item.title);
-                entities.Add(entity);
-            }
+            var activities = (userName == null) ? projectActivities.ToList() : 
+                projectActivities.Where(item => item.isUserAssigned(userName));
 
-            return entities;
+            return activities.Select(item => 
+                new ActivityEntity(item.startWeek, item.endWeek, item.title)).ToList();
         }
 
         /*
