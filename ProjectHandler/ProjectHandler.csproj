@@ -67,6 +67,12 @@
     <Compile Include="Forms\Dialogs\ProjectDialog.Designer.cs">
       <DependentUpon>ProjectDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Project and activity management\ActivityManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Project and activity management\ActivityManagement.Designer.cs">
+      <DependentUpon>ActivityManagement.cs</DependentUpon>
+    </Compile>
     <Compile Include="TempPool.cs" />
     <Compile Include="Templates\ItemModelEntity.cs" />
     <Compile Include="Events\SubmitEvent.cs" />
@@ -83,10 +89,10 @@
     <Compile Include="Forms\Dialogs\SelectUserDialog.Designer.cs">
       <DependentUpon>SelectUserDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Project\ProjectManagement.cs">
+    <Compile Include="Forms\Project and activity management\ProjectManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Project\ProjectManagement.Designer.cs">
+    <Compile Include="Forms\Project and activity management\ProjectManagement.Designer.cs">
       <DependentUpon>ProjectManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
@@ -129,7 +135,10 @@
     <EmbeddedResource Include="Forms\Dialogs\ActivityDialog.resx">
       <DependentUpon>ActivityDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Project\ProjectManagement.resx">
+    <EmbeddedResource Include="Forms\Project and activity management\ActivityManagement.resx">
+      <DependentUpon>ActivityManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Project and activity management\ProjectManagement.resx">
       <DependentUpon>ProjectManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

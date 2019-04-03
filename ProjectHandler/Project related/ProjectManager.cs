@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
+using NUnit.Framework;
 using Templates;
+using VirtualUserDomain;
 
 namespace ProjectNameSpace
 {
@@ -21,26 +25,105 @@ namespace ProjectNameSpace
     {
         public ProjectManager()
         {
-            var p = new Project("Project TEST");
-            p.startWeek = 1;
-            p.endWeek = 4;
-            projectDB.addProject(p);
+            var p = new Project("Project TEST")
+            {
+                startWeek = 1,
+                endWeek = 4,
+                projectLeaderId = "Finn_Luger_P38"
+            };
+            projectDb.addProject(p);
         }
+
+        /*
+         * Public methods section begins
+         * - Add projects
+         * - Remove projects
+         * - Get activities
+         */
 
         public void addProject(Project newProject)
         {
-            projectDB.addProject(newProject);
+            projectDb.addProject(newProject);
         }
 
-        public void removeProjectAt(int index) => projectDB.removeAt(index);
-        public void removeProject(Project p) => projectDB.remove(p);
+        public void removeProjectAt(int index) => projectDb.removeAt(index);
+        public void removeProject(Project p) => projectDb.remove(p);
 
-        public Project projectAt(int index) => projectDB.projectAt(index);
-        public Project project(string projectId) => projectDB.project(projectId);
+        public Project projectAt(int index) => projectDb.projectAt(index);
+        public Project project(string projectId) => projectDb.project(projectId);
+        public List<Project> projects() => projectDb.allProjects();
 
-        public ListViewItem[] projectItemModels(ItemModelEntity<ListViewItem>.ListMode mode) => projectDB.projectItemModels(mode) ?? throw new ArgumentNullException("No items to pass.");
+        /*
+         * Item models section begins
+         */
 
+        public ListViewItem[] projectItemModels(ItemModelEntity<ListViewItem>.ListMode mode) => projectDb.projectItemModels(mode) ?? throw new ArgumentNullException("No items to pass.");
 
-        private readonly ProjectDatabase projectDB = new ProjectDatabase();
+        public ListViewItem[] registeredUserHourModels(string userName = null)
+        {
+            var activities = new List<ListViewItem>();
+            if(userName != null)
+            {
+                foreach (var p in projectDb.allProjects())
+                {
+                    foreach (var activity in p.allActivities())
+                    {
+                        var models = activity.registeredHourItemModels(userName).ToList();
+                        activities.AddRange(models);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var p in projectDb.allProjects())
+                {
+                    foreach (var activity in p.allActivities())
+                    {
+                        var models = activity.registeredHourItemModels().ToList();
+                        activities.AddRange(models);
+                    }
+                }
+            }
+
+            return activities.ToArray();
+        }
+
+        public ListViewItem[] projectActivityItemModels()
+        {
+            var models = new List<ListViewItem>();
+            if (UserManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
+            {
+                foreach (var p in projectDb.allProjects())
+                {
+                    foreach (var activity in p.allActivities())
+                    {
+                        var model = activity.itemModel(ItemModelEntity<ListViewItem>.ListMode.List);
+                        models.Add(model);
+                    }
+                }
+
+                return models.ToArray();
+            }
+
+            var userId = UserManager.currentlyLoggedIn().id;
+            foreach (var p in projectDb.allProjects())
+            {
+                foreach (var activity in p.allActivities())
+                {
+                    if(!activity.isUserAssigned() || p.projectLeaderId == userId)
+                        continue;
+
+                    var model = activity.itemModel(ItemModelEntity<ListViewItem>.ListMode.List);
+                    models.Add(model);
+                }
+            }
+            return models.ToArray();
+        }
+
+        /*
+         * Item models section ends
+         */
+
+        private readonly ProjectDatabase projectDb = new ProjectDatabase();
     }
 }

@@ -65,13 +65,13 @@ namespace VirtualUserDomain
 
         public static ListViewItem[] userListModel() => _userDb.itemModels();
 
-        public static List<string> allUserNames() => _userDb.allUserNames();
+        public static List<string> allUserNames() => _userDb.allUserNames().Where(item => item != "admin").ToList();
     
         private static void userLogOut(string localAddress, User user = null)
         {
             if (user != null)
             {
-                _currentLoggedIn.RemoveWhere(c => c.localAddress == localAddress && c.userName() == user.userName());
+                _currentLoggedIn.RemoveWhere(c => c.localAddress == localAddress && c.id == user.id);
             }
             else
             {

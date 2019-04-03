@@ -60,10 +60,13 @@ namespace ProjectNameSpace
 
             return null;
         }
-        
+
+        public Activity activity(string activityId) => projectActivities.Where(item => item.Id == activityId).ToArray()[0];
 
         public void addActivity(Activity a) => projectActivities.AddLast(a);
         public int estimatedDuration() => endWeek - startWeek;
+
+        public List<Activity> allActivities() => projectActivities.ToList();
         
 
         /*
@@ -95,15 +98,6 @@ namespace ProjectNameSpace
         /*
         * Create a list of Activity entities for user statistic purposes.
         */
-
-        public List<ActivityEntity> activityEntities(string userName = null)
-        {
-            var activities = (userName == null) ? projectActivities.ToList() : 
-                projectActivities.Where(item => item.isUserAssigned(userName));
-
-            return activities.Select(item => 
-                new ActivityEntity(item.startWeek, item.endWeek, item.id)).ToList();
-        }
 
         public List<Activity> assignedActivities(string userName)
         {

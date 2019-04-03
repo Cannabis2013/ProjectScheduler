@@ -68,25 +68,42 @@ namespace DialogNamespace
         {
             string title = projectIDSelector.Text, pLeader = leaderSelector.Text;
 
+            if (!int.TryParse(startWeekSelector.Text, out var sWeek))
+                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
+
+            if (!int.TryParse(endWeekSelector.Text, out var eWeek))
+                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
+
+            var p = new Project(title)
+            {
+                startWeek = sWeek,
+                endWeek = eWeek,
+                projectLeaderId = pLeader
+            };
+
+            OnSubmitPushed?.Invoke(this, new SubmitEvent(p));
+        }
+
+        private void invoke_Edit_Mode_Submit()
+        {
+            temporaryProject.id = projectIDSelector.Text;
+            temporaryProject.projectLeaderId = leaderSelector.Text;
 
             if (!int.TryParse(startWeekSelector.Text, out var sWeek))
                 throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
 
             if (!int.TryParse(endWeekSelector.Text, out var eWeek))
                 throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
-            
 
-            OnSubmitPushed?.Invoke(this, new SubmitEvent(title, sWeek, eWeek, pLeader));
-        }
+            temporaryProject.startWeek = sWeek;
+            temporaryProject.endWeek = eWeek;
 
-        private void invoke_Edit_Mode_Submit()
-        {
-            
+            OnEditPushed?.Invoke(this,new EventArgs());
         }
 
         private void updateLeaderComboBoxView()
         {
-            foreach (string item in UserManager.allUserNames())
+            foreach (var item in UserManager.allUserNames())
                 leaderSelector.Items.Add(item);
         }
 

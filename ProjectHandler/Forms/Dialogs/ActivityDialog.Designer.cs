@@ -36,22 +36,22 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.projectIDSelector = new System.Windows.Forms.TextBox();
+            this.IDSelector = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.leaderSelector = new System.Windows.Forms.ComboBox();
+            this.projectSelector = new System.Windows.Forms.ComboBox();
             this.ButtonLayout = new System.Windows.Forms.TableLayoutPanel();
             this.CancelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.DeleteButton = new System.Windows.Forms.Button();
-            this.AddButton = new System.Windows.Forms.Button();
             this.UserListView = new System.Windows.Forms.ListView();
             this.UserIcons = new System.Windows.Forms.ImageList(this.components);
             this.AssignedUserListView = new System.Windows.Forms.ListView();
             this.label6 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.Link_Remove = new System.Windows.Forms.LinkLabel();
+            this.Link_Add = new System.Windows.Forms.LinkLabel();
             this.MainLayout.SuspendLayout();
             this.ButtonLayout.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -71,9 +71,9 @@
             this.MainLayout.Controls.Add(this.label2, 0, 2);
             this.MainLayout.Controls.Add(this.label3, 0, 3);
             this.MainLayout.Controls.Add(this.label4, 0, 1);
-            this.MainLayout.Controls.Add(this.projectIDSelector, 1, 1);
+            this.MainLayout.Controls.Add(this.IDSelector, 1, 1);
             this.MainLayout.Controls.Add(this.label5, 0, 4);
-            this.MainLayout.Controls.Add(this.leaderSelector, 1, 4);
+            this.MainLayout.Controls.Add(this.projectSelector, 1, 4);
             this.MainLayout.Controls.Add(this.ButtonLayout, 0, 8);
             this.MainLayout.Controls.Add(this.tableLayoutPanel1, 0, 6);
             this.MainLayout.Controls.Add(this.label6, 0, 0);
@@ -162,14 +162,14 @@
             this.label4.Text = "Activity ID:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // projectIDSelector
+            // IDSelector
             // 
-            this.projectIDSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.projectIDSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.projectIDSelector.Location = new System.Drawing.Point(131, 37);
-            this.projectIDSelector.Name = "projectIDSelector";
-            this.projectIDSelector.Size = new System.Drawing.Size(355, 26);
-            this.projectIDSelector.TabIndex = 4;
+            this.IDSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.IDSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IDSelector.Location = new System.Drawing.Point(131, 37);
+            this.IDSelector.Name = "IDSelector";
+            this.IDSelector.Size = new System.Drawing.Size(355, 26);
+            this.IDSelector.TabIndex = 4;
             // 
             // label5
             // 
@@ -185,21 +185,21 @@
             this.label5.Text = "Project:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // leaderSelector
+            // projectSelector
             // 
-            this.leaderSelector.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.leaderSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.projectSelector.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.projectSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.leaderSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.leaderSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.leaderSelector.FormattingEnabled = true;
-            this.leaderSelector.Location = new System.Drawing.Point(131, 153);
-            this.leaderSelector.Name = "leaderSelector";
-            this.leaderSelector.Size = new System.Drawing.Size(355, 28);
-            this.leaderSelector.Sorted = true;
-            this.leaderSelector.TabIndex = 2;
-            this.leaderSelector.DropDown += new System.EventHandler(this.leaderSelector_DropDown);
+            this.projectSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.projectSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.projectSelector.FormattingEnabled = true;
+            this.projectSelector.Location = new System.Drawing.Point(131, 153);
+            this.projectSelector.Name = "projectSelector";
+            this.projectSelector.Size = new System.Drawing.Size(355, 28);
+            this.projectSelector.Sorted = true;
+            this.projectSelector.TabIndex = 2;
+            this.projectSelector.DropDown += new System.EventHandler(this.leaderSelector_DropDown);
             // 
             // ButtonLayout
             // 
@@ -257,10 +257,10 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.label7, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label8, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.DeleteButton, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.AddButton, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.UserListView, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.AssignedUserListView, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.Link_Remove, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.Link_Add, 1, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 220);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -286,7 +286,6 @@
             this.label7.TabIndex = 3;
             this.label7.Text = "Available users";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label8
             // 
@@ -301,34 +300,6 @@
             this.label8.TabIndex = 3;
             this.label8.Text = "Assigned users";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // DeleteButton
-            // 
-            this.DeleteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.DeleteButton.Location = new System.Drawing.Point(224, 40);
-            this.DeleteButton.Margin = new System.Windows.Forms.Padding(0);
-            this.DeleteButton.Name = "DeleteButton";
-            this.DeleteButton.Size = new System.Drawing.Size(40, 20);
-            this.DeleteButton.TabIndex = 0;
-            this.DeleteButton.Text = "<<";
-            this.DeleteButton.UseVisualStyleBackColor = true;
-            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
-            // 
-            // AddButton
-            // 
-            this.AddButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.AddButton.Location = new System.Drawing.Point(224, 60);
-            this.AddButton.Margin = new System.Windows.Forms.Padding(0);
-            this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(40, 20);
-            this.AddButton.TabIndex = 0;
-            this.AddButton.Text = ">>";
-            this.AddButton.UseVisualStyleBackColor = true;
-            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
             // 
             // UserListView
             // 
@@ -406,6 +377,40 @@
             this.label9.Text = "Assign users to activity";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Link_Remove
+            // 
+            this.Link_Remove.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Link_Remove.AutoSize = true;
+            this.Link_Remove.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Link_Remove.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.Link_Remove.Location = new System.Drawing.Point(227, 40);
+            this.Link_Remove.Name = "Link_Remove";
+            this.Link_Remove.Size = new System.Drawing.Size(34, 20);
+            this.Link_Remove.TabIndex = 4;
+            this.Link_Remove.TabStop = true;
+            this.Link_Remove.Text = "<<";
+            this.Link_Remove.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Link_Remove.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // Link_Add
+            // 
+            this.Link_Add.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Link_Add.AutoSize = true;
+            this.Link_Add.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Link_Add.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.Link_Add.Location = new System.Drawing.Point(227, 60);
+            this.Link_Add.Name = "Link_Add";
+            this.Link_Add.Size = new System.Drawing.Size(34, 20);
+            this.Link_Add.TabIndex = 5;
+            this.Link_Add.TabStop = true;
+            this.Link_Add.Text = ">>";
+            this.Link_Add.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Link_Add.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
             // ActivityDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -432,21 +437,21 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox projectIDSelector;
+        private System.Windows.Forms.TextBox IDSelector;
         private System.Windows.Forms.TableLayoutPanel ButtonLayout;
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.ListView UserListView;
-        private System.Windows.Forms.Button DeleteButton;
         private System.Windows.Forms.ListView AssignedUserListView;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.ImageList UserIcons;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox leaderSelector;
+        private System.Windows.Forms.ComboBox projectSelector;
+        private System.Windows.Forms.LinkLabel Link_Remove;
+        private System.Windows.Forms.LinkLabel Link_Add;
     }
 }

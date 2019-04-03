@@ -22,7 +22,7 @@ namespace MainUserSpace
             aView = ActivityListView;
 
             var welcomingText = new StringBuilder("Welcome ");
-            var userName = UserManager.currentlyLoggedIn().FullName();
+            var userName = UserManager.currentlyLoggedIn().fullName();
             welcomingText.Append(userName);
 
             WelcomeLabel.Text = welcomingText.ToString();
@@ -64,11 +64,6 @@ namespace MainUserSpace
             UserManager.logout(UserManager.getLocalAddress());
             closeEvent?.Invoke(this, e);
         }
-
-        private void _updateParentView(object sender, EventArgs e)
-        {
-            updateActivityView();
-        }
         
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -76,13 +71,18 @@ namespace MainUserSpace
             if (UserManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
             {
                 var pMng = new ProjectManagement(pManager);
-                pMng.updateParentView += _updateParentView;
                 pMng.ShowDialog(this);
             }
             else
             {
                 MessageBox.Show(@"Administrator privilliges required YOU FUCKING NAZI PIG!");
             }
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var pMng = new ActivityManagement(pManager);
+            pMng.ShowDialog(this);
         }
 
         private void customizeToolStripMenuItem_Click(object sender, EventArgs e)

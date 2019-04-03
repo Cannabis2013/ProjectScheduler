@@ -31,16 +31,13 @@ namespace ProjectNameSpace
             pView.Columns.Add("Project leader", columnWidth, HorizontalAlignment.Left);
             pView.Columns.Add("Start week", columnWidth, HorizontalAlignment.Left);
             pView.Columns.Add("Estimated end week", columnWidth, HorizontalAlignment.Left);
-            pView.Columns.Add("Number of users assigned", 180, HorizontalAlignment.Left);
             pView.Items.AddRange(pManager.projectItemModels(ItemModelEntity<ListViewItem>.ListMode.List));
         }
 
         private void _OnSubmitPushed(object sender, SubmitEvent e)
         {
-            var p = new Project(e.pTitle) {startWeek = e.sWeek, endWeek = e.eWeek};
+            var p = e.project();
             
-            p.projectLeaderId = e.pLeader;
-
             pManager.addProject(p);
 
             updateView();

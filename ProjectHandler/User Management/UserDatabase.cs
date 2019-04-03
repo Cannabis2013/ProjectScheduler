@@ -27,7 +27,7 @@ namespace VirtualUserDomain
             users.Add(nUser4);
             users.Add(nUser5);
         }
-
+        
         /*
          * Verify section
          * Verify user credentials and return a copy of the user corresponding to the credentials
@@ -37,9 +37,9 @@ namespace VirtualUserDomain
         public User verifyCredentials(string userName, string password)
         {
             foreach (var u in users)
-                if (u.userName() == userName && u.passWord() == password)
+                if (u.id == userName && u.passWord() == password)
                 {
-                    var userCopy = new User(u.userName(), u.passWord(), u.role, u.FullName());
+                    var userCopy = new User(u.id, u.passWord(), u.role, u.fullName());
                     return userCopy;
                 }
 
@@ -74,7 +74,7 @@ namespace VirtualUserDomain
         {
             foreach (var u in users)
             {
-                if (u.userName() == userName)
+                if (u.id == userName)
                     return u;
             }
             return null;
@@ -84,7 +84,7 @@ namespace VirtualUserDomain
         {
             var result = new List<string>();
             foreach (var u in users)
-                result.Add(u.userName());
+                result.Add(u.id);
 
             return result;
         }
@@ -97,7 +97,7 @@ namespace VirtualUserDomain
         {
             foreach (var u in users)
             {
-                if (u.userName() == username)
+                if (u.id == username)
                     return true;
             }
             return false;
@@ -112,24 +112,19 @@ namespace VirtualUserDomain
                 if(!fullList && u.role == User.UserRole.Admin)
                     continue;
 
-                var model = new ListViewItem(u.userName())
+                var model = new ListViewItem(u.id)
                 {
                     ImageIndex = 0
                 };
 
                 var fullName = new StringBuilder("Full name: ");
-                fullName.Append(u.FullName());
+                fullName.Append(u.fullName());
 
                 model.SubItems.Add(fullName.ToString());
 
                 var role = new StringBuilder("Users role: ");
-                
-                if(u.role == User.UserRole.Admin)
-                    role.Append("Admin");
-                else if (u.role == User.UserRole.Leader)
-                    role.Append("Project Leader");
-                else
-                    role.Append("Employee");
+
+                role.Append(u.role == User.UserRole.Admin ? "Admin" : "Employee");
 
                 model.SubItems.Add(role.ToString());
                 models[index++] = model;
