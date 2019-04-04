@@ -54,17 +54,16 @@ namespace DialogNamespace
 
             startWeekSelector.SelectedIndex = 0;
             endWeekSelector.SelectedIndex = 0;
-            if (UserManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
+            if (UserManager.verifyUserState() == User.UserRole.Admin)
             {
-                var projects = pManager.projects().Select(item => item.id).ToArray();
+                var projects = pManager.allProjectIdentities().ToArray();
                 // ReSharper disable once CoVariantArrayConversion
                 projectSelector.Items.AddRange(projects);
             }
             else
             {
                 var cUser = UserManager.currentlyLoggedIn();
-                var projects = pManager.projects().Where(item => item.projectLeaderId == cUser.id).ToArray();
-                var projectIdentities = projects.Select(item => item.id).ToArray();
+                var projectIdentities = pManager.allProjectIdentities(cUser.id).ToArray(); ;
                 // ReSharper disable once CoVariantArrayConversion
                 projectSelector.Items.AddRange(projectIdentities);
             }
@@ -106,8 +105,6 @@ namespace DialogNamespace
                 invoke_Add_Mode_Submit();
             else
                 invoke_Edit_Mode_Submit();
-
-            Close();
         }
 
         private void invoke_Add_Mode_Submit()
@@ -115,6 +112,12 @@ namespace DialogNamespace
             string activityTitle = IDSelector.Text, projectTitle = projectSelector.Text;
 
             var p = pManager.project(projectTitle);
+
+            if (p == null)
+            {
+                MessageBox.Show(@"You have to assign the activity to a project!");
+                return;
+;            }
 
             if (!int.TryParse(startWeekSelector.Text, out var sWeek))
                 throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
@@ -133,7 +136,9 @@ namespace DialogNamespace
 
             a.assignUsers(usernames);
 
-            OnSubmitPushed?.Invoke(this, new SubmitEvent(a));
+            OnSubmitPushed?.Invoke(this,new EventArgs());
+
+            Close();
         }
 
         private void invoke_Edit_Mode_Submit()
@@ -159,6 +164,8 @@ namespace DialogNamespace
                 usernames.Add(item.Text);
 
             activity.assignUsers(usernames);
+
+            Close();
         }
 
         private void leaderSelector_DropDown(object sender, EventArgs e)
@@ -187,16 +194,6 @@ namespace DialogNamespace
         {
             Close();
         }
-        
-
-        public event EventHandler<SubmitEvent> OnSubmitPushed;
-        public event EventHandler<EventArgs> OnEditPushed; 
-
-        private DialogMode mode;
-        private enum DialogMode { AddMode, EditMode};
-
-        private Activity activity = null;
-        private ProjectManager pManager;
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -223,5 +220,14 @@ namespace DialogNamespace
                 AssignedUserListView.Items.Add((ListViewItem)item);
             }
         }
+
+        public event EventHandler<EventArgs> OnSubmitPushed;
+        public event EventHandler<EventArgs> OnEditPushed; 
+
+        private DialogMode mode;
+        private enum DialogMode { AddMode, EditMode};
+
+        private Activity activity = null;
+        private ProjectManager pManager;
     }
 }

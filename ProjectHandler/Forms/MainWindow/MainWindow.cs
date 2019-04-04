@@ -27,7 +27,7 @@ namespace MainUserSpace
 
             WelcomeLabel.Text = welcomingText.ToString();
 
-            if (UserManager.verifyUserState(UserManager.getLocalAddress()) != User.UserRole.Admin)
+            if (UserManager.verifyUserState() != User.UserRole.Admin)
             {
                 updateActivityView();
             }
@@ -35,7 +35,7 @@ namespace MainUserSpace
 
         private void updateActivityView()
         {
-            User cUser = UserManager.currentlyLoggedIn();
+            var cUser = UserManager.currentlyLoggedIn();
             var assignedActivityModels = cUser.assignedActivityModels();
             aView.Clear();
             aView.View = View.Details;
@@ -68,7 +68,7 @@ namespace MainUserSpace
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (UserManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
+            if (UserManager.verifyUserState() == User.UserRole.Admin)
             {
                 var pMng = new ProjectManagement(pManager);
                 pMng.ShowDialog(this);
@@ -82,12 +82,18 @@ namespace MainUserSpace
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var pMng = new ActivityManagement(pManager);
+            pMng.updateParentView += _updateParentView;
             pMng.ShowDialog(this);
         }
 
         private void customizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             linkLabel1_LinkClicked(this,e: null);
+        }
+
+        private void  _updateParentView(object sender, EventArgs e)
+        {
+            updateActivityView();
         }
 
         public event EventHandler<EventArgs> logoutEvent;

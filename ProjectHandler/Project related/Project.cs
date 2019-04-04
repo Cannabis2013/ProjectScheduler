@@ -25,7 +25,7 @@ namespace ProjectNameSpace
          */
 
         /*
-         * Public methods begin
+         * Public properties begin
          */
 
         public override ListViewItem itemModel(ListMode mode = ListMode.Tile)
@@ -70,7 +70,7 @@ namespace ProjectNameSpace
         
 
         /*
-         * Public methods ends
+         * Public properties ends
          */
 
         /*
@@ -134,6 +134,14 @@ namespace ProjectNameSpace
 
             return model;
         }
+
+        /*
+         * ItemListModel
+         * Returns a ListViewItem to be presented in a ListView with the following data:
+         * - ProjectId
+         * - ProjectleaderId : The username of the projectleader
+         * - Start and estimated end week
+         */
 
         private ListViewItem itemListModel()
         {

@@ -47,11 +47,6 @@ namespace ProjectNameSpace
         {
             updateView();
         }
-        
-        public event EventHandler<EventArgs> updateParentView;
-
-        private readonly ListView pView;
-        private readonly ProjectManager pManager;
 
         private void ProjectManagement_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -110,5 +105,10 @@ namespace ProjectNameSpace
         {
             Close();
         }
+
+        public event EventHandler<EventArgs> updateParentView;
+
+        private readonly ListView pView;
+        private readonly ProjectManager pManager;
     }
 }

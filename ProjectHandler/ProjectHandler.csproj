@@ -98,7 +98,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Project related\ActivityEntity.cs" />
     <Compile Include="Project related\Project.cs" />
-    <Compile Include="Project related\ProjectDatabase.cs" />
     <Compile Include="Project related\TimeObject.cs" />
     <Compile Include="Project related\Activity.cs" />
     <Compile Include="Project related\ProjectManager.cs" />

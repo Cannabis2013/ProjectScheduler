@@ -1,5 +1,6 @@
 ﻿using ProjectNameSpace;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -29,13 +30,19 @@ namespace VirtualUserDomain
          */
 
         /*
-         * Public method section begins
+         * Public properties section begins
          * - Assign to activity
-         * - Unassign from activity
+         * - Un-assign from activity
+         * - Get activity from identification (string)
          * - isAvailableWithinTimespan(int,int) -> Checks if the employee is available over a given timespan
          */
 
-        public void assignToActivity(Activity activity) => assignedActivities.Add(activity);
+        public void assignToActivity(Activity activity)
+        {
+            assignedActivities.Add(activity);
+            int a = 0;
+        }
+
         public void unAssignFromActivity(Activity activity) => assignedActivities.Remove(activity);
         public void clearActivityAssignments() => assignedActivities.Clear();
 
@@ -58,7 +65,14 @@ namespace VirtualUserDomain
                 return Availability.NotAvailable;
             return (partlyOccurrences + fullOccurrences) >= 20 ? Availability.PartlyAvailable : Availability.Available;
         }
+
+        public Activity assignedActivity(string activityId) => 
+            allUserAssignedActivities().Find(item => item.Id == activityId);
         
+        /*
+         * Model section begins
+         */
+
         public override ListViewItem itemModel(ListMode mode = ListMode.Tile)
         {
             return mode != ListMode.Tile ? itemListModel() : itemTileModel();
@@ -78,6 +92,7 @@ namespace VirtualUserDomain
 
             var count = activities.Count;
             var models = new ListViewItem[count];
+            int index = 0;
 
             foreach (var activity in assignedActivities)
             {
@@ -86,10 +101,16 @@ namespace VirtualUserDomain
                 model.SubItems.Add(activity.totalRegisteredHours(id).ToString());
                 var projectId = activity.parent.id;
                 model.SubItems.Add(projectId);
+
+                models[index++] = model;
             }
 
             return models;
         }
+
+        /*
+         * Model section ends
+         */
 
         /*
          * Public getter methods
@@ -102,14 +123,14 @@ namespace VirtualUserDomain
         public int assignedActivityCount() => assignedActivities.Count;
 
         /*
-         * Public method section ends
+         * Public properties section ends
          */
 
         /*
-         * Private methods begins
+         * Private properties begins
          */
 
-        private List<ActivityEntity> activityEntities()
+        private IEnumerable<ActivityEntity> activityEntities()
         {
             return assignedActivities.Select(item =>
                 new ActivityEntity(item.startWeek, item.endWeek, item.id)).ToList();
@@ -148,7 +169,7 @@ namespace VirtualUserDomain
         }
 
         /*
-         * Private methods ends
+         * Private properties ends
          */
 
         /*
@@ -171,7 +192,7 @@ namespace VirtualUserDomain
          */
 
         private List<Activity> assignedActivities = new List<Activity>();
-        private string pass;
+        private readonly string pass;
         private readonly string fName;
 
         /*

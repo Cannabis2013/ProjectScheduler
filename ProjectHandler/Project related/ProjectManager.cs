@@ -14,6 +14,7 @@ namespace ProjectNameSpace
      * - Add/create project
      * - Edit projects
      * - Remove Projects
+     * - Add activity to project
      * - Project manipulation
      * -- Add activity to a given project
      * -- Delete activity within a given project
@@ -29,9 +30,9 @@ namespace ProjectNameSpace
             {
                 startWeek = 1,
                 endWeek = 4,
-                projectLeaderId = "Finn_Luger_P38"
+                projectLeaderId = "Finn_Luger"
             };
-            projectDb.addProject(p);
+            projects.Add(p);
         }
 
         /*
@@ -41,30 +42,51 @@ namespace ProjectNameSpace
          * - Get activities
          */
 
-        public void addProject(Project newProject)
+        public void addProject(Project p)
         {
-            projectDb.addProject(newProject);
+            projects.Add(p);
         }
 
-        public void removeProjectAt(int index) => projectDb.removeAt(index);
-        public void removeProject(Project p) => projectDb.remove(p);
+        public void removeProjectAt(int index) => projects.RemoveAt(index);
+        public void removeProject(Project p) => projects.Remove(p);
 
-        public Project projectAt(int index) => projectDb.projectAt(index);
-        public Project project(string projectId) => projectDb.project(projectId);
-        public List<Project> projects() => projectDb.allProjects();
+        public Project projectAt(int index) => projects.ElementAt(index);
+        public Project project(Project p) => projects.Find(item => item.id == p.id);
+        public Project project(string projectId) => projects.Find(item => item.id == projectId);
+        public List<string> allProjectIdentities() => projects.Select(item => item.id).ToList();
+        public List<string> allProjectIdentities(string projectLeaderId) => 
+            projects.Where(item => item.projectLeaderId == projectLeaderId).Select(item => item.id).ToList();
+
 
         /*
          * Item models section begins
+         * - Returns a list of Project Item models with the following columndata:
+         * -- ProjectId
+         * -- Projectleader username
+         * -- Start and estimated end week
          */
 
-        public ListViewItem[] projectItemModels(ItemModelEntity<ListViewItem>.ListMode mode) => projectDb.projectItemModels(mode) ?? throw new ArgumentNullException("No items to pass.");
+        public ListViewItem[] projectItemModels(ItemModelEntity<ListViewItem>.ListMode mode)
+        {
+            int count = projects.Count, index = 0;
+            var models = new ListViewItem[count];
+
+            foreach (var p in projects)
+                models[index++] = p.itemModel(mode);
+
+            return models;
+        }
+
+        /*
+         * Models all the user time registration for visual representation in a ListView
+         */
 
         public ListViewItem[] registeredUserHourModels(string userName = null)
         {
             var activities = new List<ListViewItem>();
             if(userName != null)
             {
-                foreach (var p in projectDb.allProjects())
+                foreach (var p in projects)
                 {
                     foreach (var activity in p.allActivities())
                     {
@@ -75,7 +97,7 @@ namespace ProjectNameSpace
             }
             else
             {
-                foreach (var p in projectDb.allProjects())
+                foreach (var p in projects)
                 {
                     foreach (var activity in p.allActivities())
                     {
@@ -88,12 +110,27 @@ namespace ProjectNameSpace
             return activities.ToArray();
         }
 
+        /*
+         * Returns a list of Activity item models where each item has the following column data:
+         * - Id
+         * - Start week
+         * - End week
+         * - Total registered hours
+         * - Number of assigned users
+         * - Parent project
+         *
+         * Furthermore there is some access restrictions:
+         * - Admin can retrieve all activities
+         * - Projectleaders has access to activities in their corresponding project
+         * - Employees has no access.
+         */
+
         public ListViewItem[] projectActivityItemModels()
         {
             var models = new List<ListViewItem>();
-            if (UserManager.verifyUserState(UserManager.getLocalAddress()) == User.UserRole.Admin)
+            if (UserManager.verifyUserState() == User.UserRole.Admin)
             {
-                foreach (var p in projectDb.allProjects())
+                foreach (var p in projects)
                 {
                     foreach (var activity in p.allActivities())
                     {
@@ -106,11 +143,12 @@ namespace ProjectNameSpace
             }
 
             var userId = UserManager.currentlyLoggedIn().id;
-            foreach (var p in projectDb.allProjects())
+
+            foreach (var p in projects)
             {
                 foreach (var activity in p.allActivities())
                 {
-                    if(!activity.isUserAssigned() || p.projectLeaderId == userId)
+                    if(!activity.isUserAssigned() && p.projectLeaderId != userId)
                         continue;
 
                     var model = activity.itemModel(ItemModelEntity<ListViewItem>.ListMode.List);
@@ -119,11 +157,10 @@ namespace ProjectNameSpace
             }
             return models.ToArray();
         }
-
+        
         /*
          * Item models section ends
          */
-
-        private readonly ProjectDatabase projectDb = new ProjectDatabase();
+        private readonly List<Project> projects = new List<Project>();
     }
 }

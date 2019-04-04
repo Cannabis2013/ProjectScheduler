@@ -18,30 +18,28 @@ namespace ProjectNameSpace
             InitializeComponent();
             this.pManager = pManager ?? throw new System.ArgumentNullException(nameof(pManager));
 
-            pView = ActivityListView;
+            aView = ActivityListView;
             
             updateView();
         }
 
         private void updateView()
         {
-            pView.Clear();
-            pView.View = View.Details;
-            pView.TileSize = new Size(120,80);
+            aView.Clear();
+            aView.View = View.Details;
+            aView.TileSize = new Size(120,80);
             const int columnWidth = 120;
-            pView.Columns.Add("Activity title", columnWidth, HorizontalAlignment.Left);
-            pView.Columns.Add("Start week", columnWidth, HorizontalAlignment.Left);
-            pView.Columns.Add("Estimated end week", columnWidth, HorizontalAlignment.Left);
-            pView.Columns.Add("Total registered hours", columnWidth, HorizontalAlignment.Left);
-            pView.Columns.Add("Assigned users", columnWidth, HorizontalAlignment.Left);
-            pView.Columns.Add("Project", columnWidth, HorizontalAlignment.Left);
-            pView.Items.AddRange(pManager.projectActivityItemModels());
+            aView.Columns.Add("Activity title", columnWidth, HorizontalAlignment.Left);
+            aView.Columns.Add("Start week", columnWidth, HorizontalAlignment.Left);
+            aView.Columns.Add("Estimated end week", columnWidth, HorizontalAlignment.Left);
+            aView.Columns.Add("Total registered hours", columnWidth, HorizontalAlignment.Left);
+            aView.Columns.Add("Assigned users", columnWidth, HorizontalAlignment.Left);
+            aView.Columns.Add("Project", columnWidth, HorizontalAlignment.Left);
+            aView.Items.AddRange(pManager.projectActivityItemModels());
         }
 
-        private void _OnSubmitPushed(object sender, SubmitEvent e)
+        private void _OnSubmitPushed(object sender, EventArgs e)
         {
-
-
             updateView();
         }
 
@@ -65,15 +63,9 @@ namespace ProjectNameSpace
             linkLabel2_LinkClicked(sender, null);
         }
 
-        public event EventHandler<EventArgs> updateParentView;
-
-        private readonly ListView pView;
-        private readonly ProjectManager pManager;
-
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var projects = pManager.projects()
-                .Where(item => item.projectLeaderId == UserManager.currentlyLoggedIn().id);
+            var projects = pManager.allProjectIdentities(UserManager.currentlyLoggedIn().id);
             if (!projects.Any())
             {
                 MessageBox.Show(@"You aren't project leader on any projects you fucking loser.");
@@ -83,7 +75,7 @@ namespace ProjectNameSpace
                 var aDialog = new ActivityDialog(pManager);
                 aDialog.OnSubmitPushed += _OnSubmitPushed;
                 aDialog.ShowDialog(this);
-                
+
             }
         }
 
@@ -91,15 +83,27 @@ namespace ProjectNameSpace
         {
             if (ActivityListView.Items.Count < 1)
                 return;
+            var projects = pManager.allProjectIdentities(UserManager.currentlyLoggedIn().id);
+            if (!projects.Any())
+            {
+                MessageBox.Show(@"You aren't project leader on any projects you fucking loser.");
+            }
+            else
+            {
+                var items = ActivityListView.SelectedItems;
+                var activityId = items[0].Text;
+                var projectId = items[0].SubItems[5];
+                var a = pManager.project(projectId.Text).activity(activityId);
 
-            var items = ActivityListView.SelectedItems;
-            var activityId = items[0].Text;
-            var projectId = items[0].SubItems[5];
-            var a = pManager.project(projectId.Text).activity(activityId);
-
-            var pDialog = new ActivityDialog(a, pManager);
-            pDialog.OnEditPushed += _OnEditPushed;
-            pDialog.ShowDialog(this);
+                var pDialog = new ActivityDialog(a, pManager);
+                pDialog.OnEditPushed += _OnEditPushed;
+                pDialog.ShowDialog(this);    
+            }
         }
+
+        public event EventHandler<EventArgs> updateParentView;
+
+        private readonly ListView aView;
+        private readonly ProjectManager pManager;
     }
 }

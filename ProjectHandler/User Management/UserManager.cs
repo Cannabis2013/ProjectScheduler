@@ -50,11 +50,11 @@ namespace VirtualUserDomain
             userLogOut(localAddress);
         }
 
-        public static User.UserRole verifyUserState(string localAddress)
+        public static User.UserRole verifyUserState()
         {
             foreach (var u in _currentLoggedIn)
             {
-                if (u.localAddress == localAddress)
+                if (u.localAddress == getLocalAddress())
                     return u.role;
             }
             throw new Exception("User not logged in");

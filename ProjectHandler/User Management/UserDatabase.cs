@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -18,7 +20,7 @@ namespace VirtualUserDomain
             var nUser1 = new User("Jens_Werner2019", "Tango44",User.UserRole.Employee, "Jens Werner");
             var nUser2 = new User("Niels_Erik1964", "Traktor", User.UserRole.Employee, "Niels Pede Erik");
             var nUser3 = new User("Bent_Bjerre", "ghb4life", User.UserRole.Employee, "Bent Bjerre");
-            var nUser4 = new User("Finn_Luger_P38", "HITLER",User.UserRole.Employee, "Engel Franz");
+            var nUser4 = new User("Finn_Luger", "hitler",User.UserRole.Employee, "Engel Franz");
             var nUser5 = new User("Technotonny","GOA_gartner", User.UserRole.Employee, "Tonny Jørgensen");
 
             users.Add(nUser1);
@@ -36,14 +38,15 @@ namespace VirtualUserDomain
 
         public User verifyCredentials(string userName, string password)
         {
-            foreach (var u in users)
-                if (u.id == userName && u.passWord() == password)
-                {
-                    var userCopy = new User(u.id, u.passWord(), u.role, u.fullName());
-                    return userCopy;
-                }
-
-            return null;
+            try
+            {
+                return users.First(item => item.id == userName && item.passWord() == password);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            
         }
 
         /*

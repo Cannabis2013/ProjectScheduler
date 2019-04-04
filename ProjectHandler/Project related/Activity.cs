@@ -41,28 +41,34 @@ namespace ProjectNameSpace
          * - Default constructor with no parameters
          */
 
-        public Activity(string title, int sWeek, int eWeek, List<string> assignedUserIdentities = null, Project parent = null)
+        public Activity(string title, int sWeek, int eWeek, Project parent, List<string> assignedUserIdentities = null)
         {
             t = title;
-            this.p = null;
+            p = parent;
             this.sWeek = sWeek;
             this.eWeek = eWeek;
             this.assignedUserIdentities = assignedUserIdentities;
+
+            p?.addActivity(this);
         }
 
-        public Activity(string title, int sWeek, int eWeek, Project parent = null)
+        public Activity(string title, int sWeek, int eWeek, Project parent)
         {
             t = title;
-            this.p = null;
+            p = parent;
             this.sWeek = sWeek;
             this.eWeek = eWeek;
+
+            p?.addActivity(this);
         }
 
-        public Activity(int sWeek, int eWeek, Project parent = null)
+        public Activity(int sWeek, int eWeek, Project parent)
         {
             this.sWeek = sWeek;
             this.eWeek = eWeek;
-            this.p = null;
+            p = parent;
+            
+            p?.addActivity(this);
         }
 
         /*
@@ -168,7 +174,11 @@ namespace ProjectNameSpace
          * Register hours
          */
 
-        public void addTimeObject(TimeObject time) => registeredTimeObjects.Add(time);
+        public void addTimeObject(TimeObject time)
+        {
+            time.owner = this;
+            registeredTimeObjects.Add(time);
+        }
 
         /*
          * Get total hours registered by a given user
@@ -182,14 +192,14 @@ namespace ProjectNameSpace
                 foreach (var T in registeredTimeObjects)
                 {
                     if (userName == T.UserName)
-                        totalHours += T.Hours();
+                        totalHours += T.Hours;
                 }
             }
             else
             {
                 foreach (var T in registeredTimeObjects)
                 {
-                    totalHours += T.Hours();
+                    totalHours += T.Hours;
                 }
             }
             return totalHours;
@@ -216,7 +226,7 @@ namespace ProjectNameSpace
             foreach (var tObject in tObjects)
             {
                 var model = new ListViewItem(tObject.UserName);
-                model.SubItems.Add(tObject.Hours().ToString());
+                model.SubItems.Add(tObject.Hours.ToString());
                 model.SubItems.Add(tObject.Week().ToString());
 
                 models[index++] = model;
@@ -235,7 +245,7 @@ namespace ProjectNameSpace
             foreach (var tObject in tObjects)
             {
                 var model = new ListViewItem(tObject.UserName);
-                model.SubItems.Add(tObject.Hours().ToString());
+                model.SubItems.Add(tObject.Hours.ToString());
                 model.SubItems.Add(tObject.Week().ToString());
 
                 models[index++] = model;
