@@ -6,22 +6,24 @@ using System.Windows.Forms;
 
 namespace VirtualUserDomain
 {
-    class UserDatabase
+    internal class UserDatabase
     {
+        private readonly HashSet<User> users = new HashSet<User>();
+
         public UserDatabase()
         {
-            var admin = new User("admin", "1234", User.UserRole.Admin,"Martin Hansen");
-            
+            var admin = new User("admin", "1234", User.UserRole.Admin, "Martin Hansen");
+
             users.Add(admin);
 
             /*
              * Initialize five users for testing purposes
              */
-            var nUser1 = new User("Jens_Werner2019", "Tango44",User.UserRole.Employee, "Jens Werner");
+            var nUser1 = new User("Jens_Werner2019", "Tango44", User.UserRole.Employee, "Jens Werner");
             var nUser2 = new User("Niels_Erik1964", "Traktor", User.UserRole.Employee, "Niels Pede Erik");
             var nUser3 = new User("Bent_Bjerre", "ghb4life", User.UserRole.Employee, "Bent Bjerre");
-            var nUser4 = new User("Finn_Luger", "hitler",User.UserRole.Employee, "Engel Franz");
-            var nUser5 = new User("Technotonny","GOA_gartner", User.UserRole.Employee, "Tonny Jørgensen");
+            var nUser4 = new User("Finn_Luger", "hitler", User.UserRole.Employee, "Engel Franz");
+            var nUser5 = new User("Technotonny", "GOA_gartner", User.UserRole.Employee, "Tonny Jørgensen");
 
             users.Add(nUser1);
             users.Add(nUser2);
@@ -29,7 +31,7 @@ namespace VirtualUserDomain
             users.Add(nUser4);
             users.Add(nUser5);
         }
-        
+
         /*
          * Verify section
          * Verify user credentials and return a copy of the user corresponding to the credentials
@@ -40,13 +42,12 @@ namespace VirtualUserDomain
         {
             try
             {
-                return users.First(item => item.id == userName && item.passWord() == password);
+                return users.First(item => item.userName() == userName && item.passWord() == password);
             }
             catch (Exception e)
             {
                 return null;
             }
-            
         }
 
         /*
@@ -59,7 +60,7 @@ namespace VirtualUserDomain
             if (userNameExist(userName))
                 return;
 
-            var newUser = new User(userName, passWord, role,fullName);
+            var newUser = new User(userName, passWord, role, fullName);
             users.Add(newUser);
         }
 
@@ -76,10 +77,8 @@ namespace VirtualUserDomain
         public User user(string userName)
         {
             foreach (var u in users)
-            {
-                if (u.id == userName)
+                if (u.userName() == userName)
                     return u;
-            }
             return null;
         }
 
@@ -87,7 +86,7 @@ namespace VirtualUserDomain
         {
             var result = new List<string>();
             foreach (var u in users)
-                result.Add(u.id);
+                result.Add(u.userName());
 
             return result;
         }
@@ -99,10 +98,8 @@ namespace VirtualUserDomain
         private bool userNameExist(string username)
         {
             foreach (var u in users)
-            {
-                if (u.id == username)
+                if (u.userName() == username)
                     return true;
-            }
             return false;
         }
 
@@ -112,10 +109,10 @@ namespace VirtualUserDomain
             var models = new ListViewItem[uCount];
             foreach (var u in users)
             {
-                if(!fullList && u.role == User.UserRole.Admin)
+                if (!fullList && u.role == User.UserRole.Admin)
                     continue;
 
-                var model = new ListViewItem(u.id)
+                var model = new ListViewItem(u.userName())
                 {
                     ImageIndex = 0
                 };
@@ -132,9 +129,8 @@ namespace VirtualUserDomain
                 model.SubItems.Add(role.ToString());
                 models[index++] = model;
             }
+
             return models;
         }
-
-        private HashSet<User> users = new HashSet<User>();
     }
 }

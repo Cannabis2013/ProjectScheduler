@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ProjectNameSpace;
 using Templates;
 using VirtualUserDomain;
 
@@ -33,6 +32,13 @@ namespace ProjectNameSpace
 {
     public class Activity : ItemModelEntity<ListViewItem>
     {
+        private readonly List<string> assignedUserIdentities = new List<string>();
+        private readonly List<TimeObject> registeredTimeObjects = new List<TimeObject>();
+
+
+        /*
+         * Private methods section ends
+         */
 
         /*
          * Constructor section
@@ -41,34 +47,28 @@ namespace ProjectNameSpace
          * - Default constructor with no parameters
          */
 
-        public Activity(string title, int sWeek, int eWeek, Project parent, List<string> assignedUserIdentities = null)
+        public Activity(string title, int sWeek, int eWeek, string project, List<string> assignedUserIdentities = null)
         {
             t = title;
-            p = parent;
-            this.sWeek = sWeek;
-            this.eWeek = eWeek;
+            parentProjectId = project;
+            startWeek = sWeek;
+            endWeek = eWeek;
             this.assignedUserIdentities = assignedUserIdentities;
-
-            p?.addActivity(this);
         }
 
-        public Activity(string title, int sWeek, int eWeek, Project parent)
+        public Activity(string title, int sWeek, int eWeek, string project)
         {
             t = title;
-            p = parent;
-            this.sWeek = sWeek;
-            this.eWeek = eWeek;
-
-            p?.addActivity(this);
+            parentProjectId = project;
+            startWeek = sWeek;
+            endWeek = eWeek;
         }
 
-        public Activity(int sWeek, int eWeek, Project parent)
+        public Activity(int sWeek, int eWeek, string project)
         {
-            this.sWeek = sWeek;
-            this.eWeek = eWeek;
-            p = parent;
-            
-            p?.addActivity(this);
+            startWeek = sWeek;
+            endWeek = eWeek;
+            parentProjectId = project;
         }
 
         /*
@@ -77,12 +77,13 @@ namespace ProjectNameSpace
 
         public Activity(Activity copy)
         {
-            p = null;
+            parentProjectId = null;
             t = copy.t;
-            sWeek = copy.sWeek;
-            eWeek = copy.eWeek;
+            startWeek = copy.startWeek;
+            endWeek = copy.endWeek;
             assignedUserIdentities = copy.assignedUserIdentities;
             registeredTimeObjects = copy.registeredTimeObjects;
+            parentProjectId = copy.parentProjectId;
         }
 
         /*
@@ -108,19 +109,16 @@ namespace ProjectNameSpace
             set => t = value;
         }
 
-        public int startWeek
-        {
-            get => sWeek;
-            set => sWeek = value;
-        }
+        public int startWeek { get; set; }
 
-        public int endWeek
-        {
-            get => eWeek;
-            set => eWeek = value;
-        }
+        public int endWeek { get; set; }
 
-        public int estimatedDuration() => eWeek - sWeek;
+        public string parentProjectId { get; set; }
+
+        public int estimatedDuration()
+        {
+            return endWeek - startWeek;
+        }
 
         /*
          * Assign users to activity
@@ -128,22 +126,17 @@ namespace ProjectNameSpace
 
         public void assignUser(string userID)
         {
-            UserManager.user(userID).assignToActivity(this);
             assignedUserIdentities.Add(userID);
         }
 
         public void assignUsers(List<string> userIDs)
         {
-            foreach (var userId in userIDs)
-            {
-                UserManager.user(userId).assignToActivity(this);
-                assignedUserIdentities.Add(userId);
-            }
+            foreach (var userId in userIDs) assignedUserIdentities.Add(userId);
         }
 
         public bool isUserAssigned()
         {
-            var userName = UserManager.currentlyLoggedIn().id;
+            var userName = UserManager.currentlyLoggedIn().userName();
             return assignedUserIdentities.Any(item => item == userName);
         }
 
@@ -156,7 +149,10 @@ namespace ProjectNameSpace
          * Retrieve a list of assigned usernames
          */
 
-        public List<string> assignedUsers() => assignedUserIdentities;
+        public List<string> assignedUsers()
+        {
+            return assignedUserIdentities;
+        }
 
         /*
          * Clear the assignedUserIdentities list
@@ -164,9 +160,6 @@ namespace ProjectNameSpace
 
         public void clearAssignedUserIdentities()
         {
-            foreach (var userIdentity in assignedUserIdentities)
-                UserManager.user(userIdentity).unAssignFromActivity(this);
-
             assignedUserIdentities.Clear();
         }
 
@@ -188,20 +181,12 @@ namespace ProjectNameSpace
         {
             var totalHours = 0;
             if (userName != null)
-            {
                 foreach (var T in registeredTimeObjects)
-                {
                     if (userName == T.UserName)
                         totalHours += T.Hours;
-                }
-            }
-            else
-            {
-                foreach (var T in registeredTimeObjects)
-                {
-                    totalHours += T.Hours;
-                }
-            }
+                    else
+                        foreach (var T in registeredTimeObjects)
+                            totalHours += T.Hours;
             return totalHours;
         }
 
@@ -231,12 +216,12 @@ namespace ProjectNameSpace
 
                 models[index++] = model;
             }
+
             return models;
         }
 
         public ListViewItem[] registeredHourItemModels()
         {
-
             var tObjects = registeredTimeObjects.ToArray();
 
             var models = new ListViewItem[tObjects.Length];
@@ -250,6 +235,7 @@ namespace ProjectNameSpace
 
                 models[index++] = model;
             }
+
             return models;
         }
 
@@ -261,17 +247,6 @@ namespace ProjectNameSpace
                 rootNode.Nodes.Add(userName);
 
             return rootNode;
-        }
-
-        /*
-         * Get parent project
-         * Note: If copy, then Parent returns a null reference
-         */
-
-        public Project parent
-        {
-            get => p;
-            set => p = value;
         }
 
         /*
@@ -314,24 +289,13 @@ namespace ProjectNameSpace
             model.SubItems.Add(endWeek.ToString());
 
             model.SubItems.Add(totalRegisteredHours().ToString());
-            
+
             var totalUsersAssigned = assignedUserIdentities.Count;
             model.SubItems.Add(totalUsersAssigned.ToString());
 
-            model.SubItems.Add(p.id);
+            model.SubItems.Add(parentProjectId);
 
             return model;
         }
-
-
-        /*
-         * Private methods section ends
-         */
-
-        private int sWeek;
-        private int eWeek;
-        private readonly List<string> assignedUserIdentities = new List<string>();
-        private readonly List<TimeObject> registeredTimeObjects = new List<TimeObject>();
-        private Project p;
     }
 }

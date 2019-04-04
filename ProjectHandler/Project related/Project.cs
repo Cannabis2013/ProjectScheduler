@@ -4,12 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Templates;
-using VirtualUserDomain;
 
 namespace ProjectNameSpace
 {
     public class Project : ItemModelEntity<ListViewItem>
     {
+        /*
+        * Private fields section
+        */
+
+        private readonly LinkedList<Activity> projectActivities = new LinkedList<Activity>();
+        private string pLeader;
+        private int sWeek, eWeek;
 
         /*
          * Constructor section
@@ -18,6 +24,31 @@ namespace ProjectNameSpace
         public Project(string projectId)
         {
             t = projectId ?? throw new ArgumentNullException(nameof(projectId));
+        }
+
+
+        /*
+         * Public properties ends
+         */
+
+        
+
+        public int startWeek
+        {
+            get => sWeek;
+            set => sWeek = value;
+        }
+
+        public int endWeek
+        {
+            get => eWeek;
+            set => eWeek = value;
+        }
+
+        public string projectLeaderId
+        {
+            get => pLeader;
+            set => pLeader = value;
         }
 
         /*
@@ -53,46 +84,35 @@ namespace ProjectNameSpace
         {
             var i = 0;
             foreach (var a in projectActivities)
-            {
                 if (i++ == index)
                     return a;
-            }
 
             return null;
         }
 
-        public Activity activity(string activityId) => projectActivities.Where(item => item.Id == activityId).ToArray()[0];
-
-        public void addActivity(Activity a) => projectActivities.AddLast(a);
-        public int estimatedDuration() => endWeek - startWeek;
-
-        public List<Activity> allActivities() => projectActivities.ToList();
-        
-
-        /*
-         * Public properties ends
-         */
-
-        /*
-         * Public fields section
-         */
-
-        public int startWeek
+        public Activity activity(string activityId)
         {
-            get => sWeek;
-            set => sWeek = value;
+            return projectActivities.Where(item => item.Id == activityId).ToArray()[0];
         }
 
-        public int endWeek
+        public void addActivity(Activity a)
         {
-            get => eWeek;
-            set => eWeek = value;
+            projectActivities.AddLast(a);
         }
 
-        public string projectLeaderId
+        public void removeActivity(Activity a)
         {
-            get => pLeader;
-            set => pLeader = value;
+            projectActivities.Remove(a);
+        }
+
+        public int estimatedDuration()
+        {
+            return endWeek - startWeek;
+        }
+
+        public List<Activity> allActivities()
+        {
+            return projectActivities.ToList();
         }
 
         /*
@@ -104,10 +124,10 @@ namespace ProjectNameSpace
             var userActivities = projectActivities.Where(item => item.isUserAssigned(userName));
             return userActivities.Select(item => new Activity(item)).ToList();
         }
-        
+
 
         /*
-         * Private methods section begins
+         * Private properties section begins
          */
 
         private ListViewItem itemTileModel()
@@ -152,7 +172,7 @@ namespace ProjectNameSpace
 
             model.SubItems.Add(startWeek.ToString());
             model.SubItems.Add(endWeek.ToString());
-            
+
             // Set picture index
             model.ImageIndex = 0;
             model.StateImageIndex = 0;
@@ -161,16 +181,7 @@ namespace ProjectNameSpace
         }
 
         /*
-         * Private methods section ends
+         * Private properties section ends
          */
-
-        /*
-        * Private fields section
-        */
-
-        private string pLeader;
-        private int sWeek, eWeek;
-        
-        private readonly LinkedList<Activity> projectActivities = new LinkedList<Activity>();
     }
 }

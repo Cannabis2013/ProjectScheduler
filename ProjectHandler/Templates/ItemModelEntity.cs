@@ -2,6 +2,14 @@
 {
     public abstract class ItemModelEntity<T>
     {
+        public enum ListMode
+        {
+            Tile,
+            List
+        }
+
+        protected string t;
+
         public virtual string id
         {
             get => t;
@@ -9,9 +17,5 @@
         }
 
         public abstract T itemModel(ListMode mode = ListMode.Tile);
-
-        protected string t;
-
-        public enum ListMode { Tile, List};
     }
 }

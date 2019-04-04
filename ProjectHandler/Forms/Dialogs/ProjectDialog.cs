@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using NUnit.Framework;
 using Projecthandler.Events;
 using ProjectNameSpace;
 using VirtualUserDomain;
@@ -10,6 +8,10 @@ namespace DialogNamespace
 {
     public partial class ProjectDialog : Form
     {
+        private readonly DialogMode mode;
+
+        private readonly Project temporaryProject;
+
         public ProjectDialog()
         {
             InitializeComponent();
@@ -49,14 +51,14 @@ namespace DialogNamespace
             endWeekSelector.Text = temporaryProject.endWeek.ToString();
             leaderSelector.Text = temporaryProject.projectLeaderId;
         }
-        
+
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
             if (projectIDSelector.Text == "" || startWeekSelector.Text == "")
                 return;
 
-            if(mode == DialogMode.AddMode)
+            if (mode == DialogMode.AddMode)
                 invoke_Add_Mode_Submit();
             else
                 invoke_Edit_Mode_Submit();
@@ -98,7 +100,7 @@ namespace DialogNamespace
             temporaryProject.startWeek = sWeek;
             temporaryProject.endWeek = eWeek;
 
-            OnEditPushed?.Invoke(this,new EventArgs());
+            OnEditPushed?.Invoke(this, new EventArgs());
         }
 
         private void updateLeaderComboBoxView()
@@ -108,16 +110,17 @@ namespace DialogNamespace
         }
 
         public event EventHandler<SubmitEvent> OnSubmitPushed;
-        public event EventHandler<EventArgs> OnEditPushed; 
-
-        private DialogMode mode;
-        private enum DialogMode { AddMode, EditMode};
-
-        private Project temporaryProject = null;
+        public event EventHandler<EventArgs> OnEditPushed;
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private enum DialogMode
+        {
+            AddMode,
+            EditMode
         }
     }
 }

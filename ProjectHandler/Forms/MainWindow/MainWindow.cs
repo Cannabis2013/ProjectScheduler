@@ -1,23 +1,25 @@
-﻿using System.Windows.Forms;
-using VirtualUserDomain;
-using System;
-using System.Drawing;
+﻿using System;
 using System.Text;
+using System.Windows.Forms;
 using ProjectNameSpace;
-using Templates;
+using VirtualUserDomain;
+
 // ReSharper disable InconsistentNaming
 
 namespace MainUserSpace
 {
     public partial class MainWindow : Form
     {
+        private readonly ListView aView;
+        private readonly ProjectManager pManager;
+        private AnchorStyles anchorStyles;
 
         public MainWindow(ProjectManager pManager)
         {
             InitializeComponent();
 
             var item = new ListViewItem();
-            
+
             this.pManager = pManager;
             aView = ActivityListView;
 
@@ -27,16 +29,12 @@ namespace MainUserSpace
 
             WelcomeLabel.Text = welcomingText.ToString();
 
-            if (UserManager.verifyUserState() != User.UserRole.Admin)
-            {
-                updateActivityView();
-            }
+            if (UserManager.verifyUserState() != User.UserRole.Admin) updateActivityView();
         }
 
         private void updateActivityView()
         {
-            var cUser = UserManager.currentlyLoggedIn();
-            var assignedActivityModels = cUser.assignedActivityModels();
+            var assignedActivityModels = pManager.userAssignedActivityModels();
             aView.Clear();
             aView.View = View.Details;
 
@@ -64,7 +62,7 @@ namespace MainUserSpace
             UserManager.logout(UserManager.getLocalAddress());
             closeEvent?.Invoke(this, e);
         }
-        
+
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -88,18 +86,15 @@ namespace MainUserSpace
 
         private void customizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            linkLabel1_LinkClicked(this,e: null);
+            linkLabel1_LinkClicked(this, null);
         }
 
-        private void  _updateParentView(object sender, EventArgs e)
+        private void _updateParentView(object sender, EventArgs e)
         {
             updateActivityView();
         }
 
         public event EventHandler<EventArgs> logoutEvent;
         public event EventHandler<EventArgs> closeEvent;
-        private ProjectManager pManager;
-        private ListView aView;
-        private AnchorStyles anchorStyles;
     }
 }

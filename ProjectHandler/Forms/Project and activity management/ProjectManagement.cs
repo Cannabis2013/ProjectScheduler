@@ -1,8 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using ProjectNameSpace;
 using DialogNamespace;
 using Projecthandler.Events;
 using Templates;
@@ -11,13 +9,17 @@ namespace ProjectNameSpace
 {
     public partial class ProjectManagement : Form
     {
+        private readonly ProjectManager pManager;
+
+        private readonly ListView pView;
+
         public ProjectManagement(ProjectManager pManager)
         {
             InitializeComponent();
-            this.pManager = pManager ?? throw new System.ArgumentNullException(nameof(pManager));
+            this.pManager = pManager ?? throw new ArgumentNullException(nameof(pManager));
 
             pView = ProjectListView;
-            
+
             updateView();
         }
 
@@ -25,7 +27,7 @@ namespace ProjectNameSpace
         {
             pView.Clear();
             pView.View = View.Details;
-            pView.TileSize = new Size(120,80);
+            pView.TileSize = new Size(120, 80);
             const int columnWidth = 120;
             pView.Columns.Add("Project title", columnWidth, HorizontalAlignment.Left);
             pView.Columns.Add("Project leader", columnWidth, HorizontalAlignment.Left);
@@ -37,7 +39,7 @@ namespace ProjectNameSpace
         private void _OnSubmitPushed(object sender, SubmitEvent e)
         {
             var p = e.project();
-            
+
             pManager.addProject(p);
 
             updateView();
@@ -72,7 +74,6 @@ namespace ProjectNameSpace
             var pDialog = new ProjectDialog();
             pDialog.OnSubmitPushed += _OnSubmitPushed;
             pDialog.ShowDialog(this);
-
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -107,8 +108,5 @@ namespace ProjectNameSpace
         }
 
         public event EventHandler<EventArgs> updateParentView;
-
-        private readonly ListView pView;
-        private readonly ProjectManager pManager;
     }
 }

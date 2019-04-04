@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProjectNameSpace
+﻿namespace ProjectNameSpace
 {
     public class ActivityEntity
     {
+        private readonly string title;
+
         public ActivityEntity(int sWeek, int eWeek, string title)
         {
-            this.sWeek = sWeek;
-            this.eWeek = eWeek;
+            startWeek = sWeek;
+            endWeek = eWeek;
             this.title = title;
         }
 
-        public bool withinTimespan(int val) => val >= eWeek && val <= sWeek;
-
         public string activityId => title;
-        public int startWeek => sWeek;
-        public int endWeek => eWeek;
+        public int startWeek { get; }
 
-        private readonly string title;
-        private readonly int sWeek;
-        private readonly int eWeek;
+        public int endWeek { get; }
+
+        public bool withinTimespan(int val)
+        {
+            return val >= endWeek && val <= startWeek;
+        }
     }
 }

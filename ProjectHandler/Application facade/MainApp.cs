@@ -1,28 +1,36 @@
-﻿using Projecthandler.Class_forms;
-using Projecthandler.Custom_events;
-using VirtualUserDomain;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using Projecthandler.Class_forms;
+using Projecthandler.Custom_events;
 using ProjectNameSpace;
+using VirtualUserDomain;
 
 namespace MainUserSpace
 {
     public class MainApp
     {
+        private readonly ProjectManager pManager;
+        private readonly UserManager uManager;
+
+        private bool isLastWindow = true;
+
         public MainApp()
         {
+            pManager = new ProjectManager();
+            uManager = new UserManager(pManager);
+
             launchLoginView();
         }
 
         // For testing purposes
         public MainApp(string p0, string p1)
         {
-            launchLoginView(p0,p1);
+            launchLoginView(p0, p1);
         }
 
         private void launchLoginView(string uName = null, string pass = null)
         {
-            LoginView lView = new LoginView();
+            var lView = new LoginView();
 
             lView.OnSubmitClicked += loginView_OnSubmitClicked;
             lView.onFormClose += loginView_onFormClose;
@@ -38,7 +46,7 @@ namespace MainUserSpace
             if (UserManager.logIn(e.arg1, e.arg2, UserManager.getLocalAddress()))
             {
                 isLastWindow = false;
-                MainWindow view = new MainWindow(pManager);
+                var view = new MainWindow(pManager);
                 view.logoutEvent += mView_logoutEvent;
                 view.closeEvent += mView_closeEvent;
 
@@ -60,7 +68,7 @@ namespace MainUserSpace
 
         private void mView_logoutEvent(object sender, EventArgs e)
         {
-            MainWindow view = (MainWindow) sender;
+            var view = (MainWindow) sender;
             view.Close();
         }
 
@@ -69,9 +77,5 @@ namespace MainUserSpace
             isLastWindow = true;
             launchLoginView();
         }
-
-        private bool isLastWindow = true;
-        private readonly UserManager uManager = new UserManager();
-        private readonly ProjectManager pManager = new ProjectManager();
     }
 }

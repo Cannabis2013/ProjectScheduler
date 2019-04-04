@@ -1,25 +1,24 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using ProjectNameSpace;
 using DialogNamespace;
-using Projecthandler.Events;
-using Templates;
 using VirtualUserDomain;
 
 namespace ProjectNameSpace
 {
     public partial class ActivityManagement : Form
     {
+        private readonly ListView aView;
+        private readonly ProjectManager pManager;
+
         public ActivityManagement(ProjectManager pManager)
         {
             InitializeComponent();
-            this.pManager = pManager ?? throw new System.ArgumentNullException(nameof(pManager));
+            this.pManager = pManager ?? throw new ArgumentNullException(nameof(pManager));
 
             aView = ActivityListView;
-            
+
             updateView();
         }
 
@@ -27,7 +26,7 @@ namespace ProjectNameSpace
         {
             aView.Clear();
             aView.View = View.Details;
-            aView.TileSize = new Size(120,80);
+            aView.TileSize = new Size(120, 80);
             const int columnWidth = 120;
             aView.Columns.Add("Activity title", columnWidth, HorizontalAlignment.Left);
             aView.Columns.Add("Start week", columnWidth, HorizontalAlignment.Left);
@@ -65,7 +64,7 @@ namespace ProjectNameSpace
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var projects = pManager.allProjectIdentities(UserManager.currentlyLoggedIn().id);
+            var projects = pManager.allProjectIdentities(UserManager.currentlyLoggedIn().userName());
             if (!projects.Any())
             {
                 MessageBox.Show(@"You aren't project leader on any projects you fucking loser.");
@@ -75,7 +74,6 @@ namespace ProjectNameSpace
                 var aDialog = new ActivityDialog(pManager);
                 aDialog.OnSubmitPushed += _OnSubmitPushed;
                 aDialog.ShowDialog(this);
-
             }
         }
 
@@ -83,7 +81,7 @@ namespace ProjectNameSpace
         {
             if (ActivityListView.Items.Count < 1)
                 return;
-            var projects = pManager.allProjectIdentities(UserManager.currentlyLoggedIn().id);
+            var projects = pManager.allProjectIdentities(UserManager.currentlyLoggedIn().userName());
             if (!projects.Any())
             {
                 MessageBox.Show(@"You aren't project leader on any projects you fucking loser.");
@@ -97,13 +95,10 @@ namespace ProjectNameSpace
 
                 var pDialog = new ActivityDialog(a, pManager);
                 pDialog.OnEditPushed += _OnEditPushed;
-                pDialog.ShowDialog(this);    
+                pDialog.ShowDialog(this);
             }
         }
 
         public event EventHandler<EventArgs> updateParentView;
-
-        private readonly ListView aView;
-        private readonly ProjectManager pManager;
     }
 }

@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using Projecthandler.Custom_events;
 
-
 namespace Projecthandler.Class_forms
 {
     public partial class LoginView : Form
@@ -35,16 +34,20 @@ namespace Projecthandler.Class_forms
         {
             // Check if user credentials is valid..
 
-            string uName = textBox1.Text;
-            string pass = textBox2.Text;
+            var uName = textBox1.Text;
+            var pass = textBox2.Text;
 
             OnSubmitClicked?.Invoke(this, new MyEventArgs(uName, pass));
         }
 
-        private void quitToolStripMenuItem_Click(object sender, EventArgs e) => Application.Exit();
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
 
         public event EventHandler<MyEventArgs> OnSubmitClicked;
         public event EventHandler<EventArgs> onFormClose;
+
         private void LoginView_FormClosed(object sender, FormClosedEventArgs e)
         {
             onFormClose?.Invoke(this, new EventArgs());
@@ -52,7 +55,7 @@ namespace Projecthandler.Class_forms
 
         private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter || e.KeyChar == (char)Keys.Return)
+            if (e.KeyChar == (char) Keys.Enter || e.KeyChar == (char) Keys.Return)
                 button1_Click(this, e);
         }
     }

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Windows.Forms;
+using ProjectNameSpace;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Local
 // ReSharper disable once CheckNamespace
@@ -12,8 +14,14 @@ namespace VirtualUserDomain
 {
     public class UserManager
     {
-        public UserManager()
-        {}
+        private static HashSet<User> _currentLoggedIn = new HashSet<User>();
+        private static UserDatabase _userDb = new UserDatabase();
+        private readonly ProjectManager pManager;
+
+        public UserManager(ProjectManager pManager)
+        {
+            this.pManager = pManager;
+        }
 
         /*
          * Local address based on the ipv4 address of the user
@@ -23,12 +31,8 @@ namespace VirtualUserDomain
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (var ip in host.AddressList)
-            {
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
                     return ip.ToString();
-                }
-            }
             return "000.000.000.000";
         }
 
@@ -53,33 +57,68 @@ namespace VirtualUserDomain
         public static User.UserRole verifyUserState()
         {
             foreach (var u in _currentLoggedIn)
-            {
                 if (u.localAddress == getLocalAddress())
                     return u.role;
-            }
             throw new Exception("User not logged in");
         }
 
-        public static User user(string userName) => _userDb.user(userName);
-        public static User currentlyLoggedIn() => _currentLoggedIn.Where(item => item.localAddress == getLocalAddress()).ElementAt(0); 
+        public static User user(string userName)
+        {
+            return _userDb.user(userName);
+        }
 
-        public static ListViewItem[] userListModel() => _userDb.itemModels();
+        public static User currentlyLoggedIn()
+        {
+            return _currentLoggedIn.Where(item => item.localAddress == getLocalAddress()).ElementAt(0);
+        }
 
-        public static List<string> allUserNames() => _userDb.allUserNames().Where(item => item != "admin").ToList();
-    
+        public static ListViewItem[] userListModel()
+        {
+            return _userDb.itemModels();
+        }
+
+        public static List<string> allUserNames()
+        {
+            return _userDb.allUserNames().Where(item => item != "admin").ToList();
+        }
+
+        /*
+         * Return an item model for a given user with the following data:
+         * - Username
+         * - Full name
+         * - Number of activities assigned
+         * - Users role
+         */
+
+        public ListViewItem userItemModel(string userName)
+        {
+            var user = UserManager.user(userName);
+            var model = new ListViewItem(userName);
+
+            // ReSharper disable once InconsistentNaming
+            var FullName = new StringBuilder("Fullname: ");
+            FullName.Append(user.fullName());
+            model.SubItems.Add(FullName.ToString());
+
+            var numbersOfActivitiesAssigned = pManager.activities(userName).Count;
+
+            var activityCount = new StringBuilder("Number of activities assigned: ");
+            activityCount.Append(numbersOfActivitiesAssigned);
+            model.SubItems.Add(activityCount.ToString());
+
+            var uRole = new StringBuilder("User role: ");
+            uRole.Append(User._roleStringRepresentation(user.role));
+            model.SubItems.Add(uRole.ToString());
+
+            return model;
+        }
+
         private static void userLogOut(string localAddress, User user = null)
         {
             if (user != null)
-            {
-                _currentLoggedIn.RemoveWhere(c => c.localAddress == localAddress && c.id == user.id);
-            }
+                _currentLoggedIn.RemoveWhere(c => c.localAddress == localAddress && c.userName() == user.userName());
             else
-            {
                 _currentLoggedIn.RemoveWhere(c => c.localAddress == localAddress);
-            }
         }
-
-        private static HashSet<User> _currentLoggedIn = new HashSet<User>();
-        private static UserDatabase _userDb = new UserDatabase();
     }
 }

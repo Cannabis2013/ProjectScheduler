@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+
 // ReSharper disable FieldCanBeMadeReadOnly.Local
 
 
@@ -7,6 +8,13 @@ namespace ProjectNameSpace
 {
     public class TimeObject
     {
+        private readonly int originalRegistrationWeek;
+        private int hours;
+        private int latestEditedWeek;
+        private Activity parent;
+
+
+        private string userName;
         /*
          * Constructor section begins
          */
@@ -29,8 +37,8 @@ namespace ProjectNameSpace
             owner.addTimeObject(this);
 
             var ciCurr = CultureInfo.CurrentCulture;
-            originalRegistrationWeek = latestEditedWeek = ciCurr.Calendar.GetWeekOfYear(DateTime.Now, 
-                CalendarWeekRule.FirstFourDayWeek, 
+            originalRegistrationWeek = latestEditedWeek = ciCurr.Calendar.GetWeekOfYear(DateTime.Now,
+                CalendarWeekRule.FirstFourDayWeek,
                 DayOfWeek.Monday);
         }
 
@@ -40,10 +48,10 @@ namespace ProjectNameSpace
 
         public TimeObject(TimeObject copy)
         {
-            this.parent = copy.owner;
-            this.userName = copy.UserName;
-            this.hours = copy.Hours;
-            this.originalRegistrationWeek = copy.Week();
+            parent = copy.owner;
+            userName = copy.UserName;
+            hours = copy.Hours;
+            originalRegistrationWeek = copy.Week();
         }
 
         /*
@@ -69,9 +77,6 @@ namespace ProjectNameSpace
             set => hours = value;
         }
 
-        public int Week() => (originalRegistrationWeek == latestEditedWeek) ? 
-            originalRegistrationWeek : latestEditedWeek;
-        
 
         public string UserName
         {
@@ -79,11 +84,9 @@ namespace ProjectNameSpace
             set => userName = value;
         }
 
-
-        private string userName;
-        private readonly int originalRegistrationWeek;
-        private int latestEditedWeek;
-        private int hours;
-        private Activity parent;
+        public int Week()
+        {
+            return originalRegistrationWeek == latestEditedWeek ? originalRegistrationWeek : latestEditedWeek;
+        }
     }
 }
