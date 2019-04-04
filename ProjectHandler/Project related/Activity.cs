@@ -181,12 +181,19 @@ namespace ProjectNameSpace
         {
             var totalHours = 0;
             if (userName != null)
+            {
                 foreach (var T in registeredTimeObjects)
+                {
                     if (userName == T.UserName)
                         totalHours += T.Hours;
-                    else
-                        foreach (var T in registeredTimeObjects)
-                            totalHours += T.Hours;
+                }
+            }
+            else
+            {
+                foreach (var T in registeredTimeObjects)
+                    totalHours += T.Hours;
+            }
+
             return totalHours;
         }
 
