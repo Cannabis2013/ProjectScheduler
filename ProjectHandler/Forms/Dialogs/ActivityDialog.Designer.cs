@@ -1,4 +1,4 @@
-﻿namespace DialogNamespace
+﻿namespace Projecthandler.Forms.Dialogs
 {
     partial class ActivityDialog
     {

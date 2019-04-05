@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using ProjectNameSpace;
-using VirtualUserDomain;
-using System.Diagnostics;
+using Projecthandler.Project_related;
+using Projecthandler.User_Management;
 
-namespace DialogNamespace
+namespace Projecthandler.Forms.Dialogs
 {
     public partial class ActivityDialog : Form
     {
@@ -26,7 +25,7 @@ namespace DialogNamespace
 
             mode = DialogMode.AddMode;
 
-            UserListView.Items.AddRange(UserManager.userListViewItems());
+            UserListView.Items.AddRange(UserManager.UserListViewItems());
         }
 
         public ActivityDialog(Activity a, ProjectManager pManager)
@@ -37,7 +36,7 @@ namespace DialogNamespace
             Text = @"Edit activity";
 
             InitializeComponent();
-            initializeDialogValues();
+            InitializeDialogValues();
 
             mode = DialogMode.EditMode;
         }
@@ -48,7 +47,7 @@ namespace DialogNamespace
             set => base.Text = value;
         }
 
-        private void initializeSelectors(int sVal, int eVal)
+        private void InitializeSelectors(int sVal, int eVal)
         {
             if (eVal < sVal)
             {
@@ -78,29 +77,29 @@ namespace DialogNamespace
 
         private void initialize_userListViews()
         {
-            if (UserManager.verifyUserState() == User.UserRole.Admin)
+            if (UserManager.VerifyUserState() == User.UserRole.Admin)
             {
-                var projects = pManager.allProjectIdentities().ToArray();
+                var projects = pManager.AllProjectIdentities().ToArray();
                 // ReSharper disable once CoVariantArrayConversion
                 projectSelector.Items.AddRange(projects);
             }
             else
             {
-                var cUser = UserManager.currentlyLoggedIn();
-                var projectIdentities = pManager.allProjectIdentities(cUser.userName()).ToArray();
+                var cUser = UserManager.CurrentlyLoggedIn();
+                var projectIdentities = pManager.AllProjectIdentities(cUser.UserName()).ToArray();
                 ;
                 // ReSharper disable once CoVariantArrayConversion
                 projectSelector.Items.AddRange(projectIdentities);
             }
         }
 
-        private void initializeDialogValues()
+        private void InitializeDialogValues()
         {
             IDSelector.Text = activity.Id;
-            startWeekSelector.Text = activity.startWeek.ToString();
-            endWeekSelector.Text = activity.endWeek.ToString();
-            projectSelector.Text = activity.parentProjectId;
-            var assignedUsers = activity.assignedUsers();
+            startWeekSelector.Text = activity.StartWeek.ToString();
+            endWeekSelector.Text = activity.EndWeek.ToString();
+            projectSelector.Text = activity.ParentProjectId;
+            var assignedUsers = activity.AssignedUsers();
             var assignedUserModels = assignedUsers.Select(item =>
                 new ListViewItem
                 {
@@ -110,7 +109,7 @@ namespace DialogNamespace
 
             AssignedUserListView.Items.AddRange(assignedUserModels);
 
-            var availableUsers = UserManager.allUserNames().Where(item => !assignedUsers.Contains(item)).ToList();
+            var availableUsers = UserManager.AllUserNames().Where(item => !assignedUsers.Contains(item)).ToList();
             var availableUserModels = availableUsers.Select(item =>
                 new ListViewItem
                 {
@@ -158,10 +157,10 @@ namespace DialogNamespace
             foreach (ListViewItem item in items)
                 usernames.Add(item.Text);
 
-            a.assignUsers(usernames);
+            a.AssignUsers(usernames);
 
-            var p = pManager.project(projectTitle);
-            p.addActivity(a);   
+            var p = pManager.Project(projectTitle);
+            p.AddActivity(a);   
 
             OnSubmitPushed?.Invoke(this, new EventArgs());
 
@@ -174,12 +173,12 @@ namespace DialogNamespace
 
             var projectId = projectSelector.Text;
 
-            if (projectId != activity.parentProjectId)
+            if (projectId != activity.ParentProjectId)
             {
-                var p = pManager.project(activity.parentProjectId);
-                p.removeActivity(activity);
-                activity.parentProjectId = projectId;
-                p.addActivity(activity);
+                var p = pManager.Project(activity.ParentProjectId);
+                p.RemoveActivity(activity);
+                activity.ParentProjectId = projectId;
+                p.AddActivity(activity);
             }
 
             if (!int.TryParse(startWeekSelector.Text, out var sWeek))
@@ -188,18 +187,18 @@ namespace DialogNamespace
             if (!int.TryParse(endWeekSelector.Text, out var eWeek))
                 throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
 
-            activity.startWeek = sWeek;
-            activity.endWeek = eWeek;
+            activity.StartWeek = sWeek;
+            activity.EndWeek = eWeek;
 
             var items = AssignedUserListView.Items;
             var usernames = new List<string>();
 
-            activity.clearAssignedUserIdentities();
+            activity.ClearAssignedUserIdentities();
 
             foreach (ListViewItem item in items)
                 usernames.Add(item.Text);
 
-            activity.assignUsers(usernames);
+            activity.AssignUsers(usernames);
 
             Close();
         }
@@ -207,7 +206,7 @@ namespace DialogNamespace
         private void leaderSelector_DropDown(object sender, EventArgs e)
         {
             if (projectSelector.Items.Count < 1)
-                updateLeaderComboBoxView();
+                UpdateLeaderComboBoxView();
         }
 
         private void UserListView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -220,7 +219,7 @@ namespace DialogNamespace
             linkLabel2_LinkClicked(this, null);
         }
 
-        private void updateLeaderComboBoxView()
+        private void UpdateLeaderComboBoxView()
         {
             foreach (ListViewItem item in AssignedUserListView.Items)
                 projectSelector.Items.Add(item.Text);
@@ -274,8 +273,8 @@ namespace DialogNamespace
                 startWeekSelector.Enabled = true;
                 endWeekSelector.Enabled = true;
 
-                var p = pManager.projectAt(cIndex);
-                initializeSelectors(p.startWeek,p.endWeek);
+                var p = pManager.ProjectAt(cIndex);
+                InitializeSelectors(p.StartWeek,p.EndWeek);
             }
             else
             {

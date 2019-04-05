@@ -73,6 +73,7 @@
     <Compile Include="Forms\Project and activity management\ActivityManagement.Designer.cs">
       <DependentUpon>ActivityManagement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Project related\TimeObject.cs" />
     <Compile Include="TempPool.cs" />
     <Compile Include="Templates\ItemModelEntity.cs" />
     <Compile Include="Events\SubmitEvent.cs" />
@@ -98,7 +99,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Project related\ActivityEntity.cs" />
     <Compile Include="Project related\Project.cs" />
-    <Compile Include="Project related\TimeObject.cs" />
     <Compile Include="Project related\Activity.cs" />
     <Compile Include="Project related\ProjectManager.cs" />
     <Compile Include="Forms\MainWindow\MainWindow.cs">

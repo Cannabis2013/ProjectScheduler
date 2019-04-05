@@ -1,4 +1,4 @@
-﻿namespace Projecthandler.Class_forms
+﻿namespace Projecthandler.Forms.Login
 {
     partial class LoginView
     {

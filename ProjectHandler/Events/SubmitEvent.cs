@@ -1,5 +1,5 @@
 ﻿using System;
-using ProjectNameSpace;
+using Projecthandler.Project_related;
 
 namespace Projecthandler.Events
 {
@@ -18,12 +18,12 @@ namespace Projecthandler.Events
             this.a = a;
         }
 
-        public Project project()
+        public Project Project()
         {
             return p;
         }
 
-        public Activity activity()
+        public Activity Activity()
         {
             return a;
         }

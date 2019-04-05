@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using Projecthandler.Events;
-using ProjectNameSpace;
-using VirtualUserDomain;
+using Projecthandler.Project_related;
+using Projecthandler.User_Management;
 
-namespace DialogNamespace
+namespace Projecthandler.Forms.Dialogs
 {
     public partial class ProjectDialog : Form
     {
@@ -15,7 +15,7 @@ namespace DialogNamespace
         public ProjectDialog()
         {
             InitializeComponent();
-            initializeSelectors();
+            InitializeSelectors();
 
             mode = DialogMode.AddMode;
         }
@@ -25,13 +25,13 @@ namespace DialogNamespace
             temporaryProject = p;
 
             InitializeComponent();
-            initializeSelectors();
-            initializeDialogValues();
+            InitializeSelectors();
+            InitializeDialogValues();
 
             mode = DialogMode.EditMode;
         }
 
-        private void initializeSelectors()
+        private void InitializeSelectors()
         {
             for (var i = 1; i <= 52; i++)
             {
@@ -41,15 +41,15 @@ namespace DialogNamespace
 
             startWeekSelector.SelectedIndex = 0;
             endWeekSelector.SelectedIndex = 0;
-            updateLeaderComboBoxView();
+            UpdateLeaderComboBoxView();
         }
 
-        private void initializeDialogValues()
+        private void InitializeDialogValues()
         {
-            projectIDSelector.Text = temporaryProject.id;
-            startWeekSelector.Text = temporaryProject.startWeek.ToString();
-            endWeekSelector.Text = temporaryProject.endWeek.ToString();
-            leaderSelector.Text = temporaryProject.projectLeaderId;
+            projectIDSelector.Text = temporaryProject.Id;
+            startWeekSelector.Text = temporaryProject.StartWeek.ToString();
+            endWeekSelector.Text = temporaryProject.EndWeek.ToString();
+            leaderSelector.Text = temporaryProject.ProjectLeaderId;
         }
 
 
@@ -78,9 +78,9 @@ namespace DialogNamespace
 
             var p = new Project(title)
             {
-                startWeek = sWeek,
-                endWeek = eWeek,
-                projectLeaderId = pLeader
+                StartWeek = sWeek,
+                EndWeek = eWeek,
+                ProjectLeaderId = pLeader
             };
 
             OnSubmitPushed?.Invoke(this, new SubmitEvent(p));
@@ -88,8 +88,8 @@ namespace DialogNamespace
 
         private void invoke_Edit_Mode_Submit()
         {
-            temporaryProject.id = projectIDSelector.Text;
-            temporaryProject.projectLeaderId = leaderSelector.Text;
+            temporaryProject.Id = projectIDSelector.Text;
+            temporaryProject.ProjectLeaderId = leaderSelector.Text;
 
             if (!int.TryParse(startWeekSelector.Text, out var sWeek))
                 throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
@@ -97,15 +97,15 @@ namespace DialogNamespace
             if (!int.TryParse(endWeekSelector.Text, out var eWeek))
                 throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
 
-            temporaryProject.startWeek = sWeek;
-            temporaryProject.endWeek = eWeek;
+            temporaryProject.StartWeek = sWeek;
+            temporaryProject.EndWeek = eWeek;
 
             OnEditPushed?.Invoke(this, new EventArgs());
         }
 
-        private void updateLeaderComboBoxView()
+        private void UpdateLeaderComboBoxView()
         {
-            foreach (var item in UserManager.allUserNames())
+            foreach (var item in UserManager.AllUserNames())
                 leaderSelector.Items.Add(item);
         }
 

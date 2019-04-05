@@ -1,16 +1,16 @@
 ﻿using System;
 
-namespace Projecthandler.Custom_events
+namespace Projecthandler.Events
 {
     public class MyEventArgs : EventArgs
     {
-        public string arg1;
-        public string arg2;
+        public string Arg1;
+        public string Arg2;
 
         public MyEventArgs(string arg1, string arg2)
         {
-            this.arg1 = arg1;
-            this.arg2 = arg2;
+            Arg1 = arg1;
+            Arg2 = arg2;
         }
     }
 }

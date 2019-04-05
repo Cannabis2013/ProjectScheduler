@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace VirtualUserDomain
+namespace Projecthandler.User_Management
 {
     internal class UserDatabase
     {
@@ -12,18 +12,18 @@ namespace VirtualUserDomain
 
         public UserDatabase()
         {
-            var admin = new User("admin", "1234", User.UserRole.Admin, "Martin Hansen");
+            var admin = new User("admin", "1234", User_Management.User.UserRole.Admin, "Martin Hansen");
 
             users.Add(admin);
 
             /*
              * Initialize five users for testing purposes
              */
-            var nUser1 = new User("Jens_Werner2019", "Tango44", User.UserRole.Employee, "Jens Werner");
-            var nUser2 = new User("Niels_Erik1964", "Traktor", User.UserRole.Employee, "Niels Pede Erik");
-            var nUser3 = new User("Bent_Bjerre", "ghb4life", User.UserRole.Employee, "Bent Bjerre");
-            var nUser4 = new User("Finn_Luger", "hitler", User.UserRole.Employee, "Engel Franz");
-            var nUser5 = new User("Technotonny", "GOA_gartner", User.UserRole.Employee, "Tonny Jørgensen");
+            var nUser1 = new User("Jens_Werner2019", "Tango44", User_Management.User.UserRole.Employee, "Jens Werner");
+            var nUser2 = new User("Niels_Erik1964", "Traktor", User_Management.User.UserRole.Employee, "Niels Pede Erik");
+            var nUser3 = new User("Bent_Bjerre", "ghb4life", User_Management.User.UserRole.Employee, "Bent Bjerre");
+            var nUser4 = new User("Finn_Luger", "hitler", User_Management.User.UserRole.Employee, "Engel Franz");
+            var nUser5 = new User("Technotonny", "GOA_gartner", User_Management.User.UserRole.Employee, "Tonny Jørgensen");
 
             users.Add(nUser1);
             users.Add(nUser2);
@@ -38,11 +38,11 @@ namespace VirtualUserDomain
          * Check if user already exists
          */
 
-        public User verifyCredentials(string userName, string password)
+        public User VerifyCredentials(string userName, string password)
         {
             try
             {
-                return users.First(item => item.userName() == userName && item.passWord() == password);
+                return users.First(item => item.UserName() == userName && item.PassWord() == password);
             }
             catch (Exception e)
             {
@@ -55,16 +55,16 @@ namespace VirtualUserDomain
          * Admin is allowed to create and delete users
          */
 
-        public void createUser(string userName, string passWord, User.UserRole role, string fullName)
+        public void CreateUser(string userName, string passWord, User.UserRole role, string fullName)
         {
-            if (userNameExist(userName))
+            if (UserNameExist(userName))
                 return;
 
             var newUser = new User(userName, passWord, role, fullName);
             users.Add(newUser);
         }
 
-        public bool removeUser(User user)
+        public bool RemoveUser(User user)
         {
             return users.Remove(user);
         }
@@ -74,19 +74,19 @@ namespace VirtualUserDomain
          * Retrieve list of usernames
          */
 
-        public User user(string userName)
+        public User User(string userName)
         {
             foreach (var u in users)
-                if (u.userName() == userName)
+                if (u.UserName() == userName)
                     return u;
             return null;
         }
 
-        public List<string> allUserNames()
+        public List<string> AllUserNames()
         {
             var result = new List<string>();
             foreach (var u in users)
-                result.Add(u.userName());
+                result.Add(u.UserName());
 
             return result;
         }
@@ -95,36 +95,36 @@ namespace VirtualUserDomain
          * Private section
          */
 
-        private bool userNameExist(string username)
+        private bool UserNameExist(string username)
         {
             foreach (var u in users)
-                if (u.userName() == username)
+                if (u.UserName() == username)
                     return true;
             return false;
         }
 
-        public ListViewItem[] itemModels(bool fullList = false)
+        public ListViewItem[] ItemModels(bool fullList = false)
         {
             int uCount = fullList ? users.Count : users.Count - 1, index = 0;
             var models = new ListViewItem[uCount];
             foreach (var u in users)
             {
-                if (!fullList && u.role == User.UserRole.Admin)
+                if (!fullList && u.Role == User_Management.User.UserRole.Admin)
                     continue;
 
-                var model = new ListViewItem(u.userName())
+                var model = new ListViewItem(u.UserName())
                 {
                     ImageIndex = 0
                 };
 
                 var fullName = new StringBuilder("Full name: ");
-                fullName.Append(u.fullName());
+                fullName.Append(u.FullName());
 
                 model.SubItems.Add(fullName.ToString());
 
                 var role = new StringBuilder("Users role: ");
 
-                role.Append(u.role == User.UserRole.Admin ? "Admin" : "Employee");
+                role.Append(u.Role == User_Management.User.UserRole.Admin ? "Admin" : "Employee");
 
                 model.SubItems.Add(role.ToString());
                 models[index++] = model;

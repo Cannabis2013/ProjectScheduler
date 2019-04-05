@@ -1,4 +1,4 @@
-﻿namespace MainUserSpace
+﻿namespace Projecthandler.Forms.MainWindow
 {
     partial class MainWindow
     {

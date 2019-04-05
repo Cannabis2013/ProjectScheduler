@@ -1,4 +1,4 @@
-﻿namespace ProjectNameSpace
+﻿namespace Projecthandler.Forms.Project_and_activity_management
 {
     partial class ActivityManagement
     {

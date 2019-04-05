@@ -1,14 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
-using ProjectNameSpace;
-using VirtualUserDomain;
-using System.Runtime.Serialization.Formatters.Binary;
+using Projecthandler.Forms.Project_and_activity_management;
+using Projecthandler.Project_related;
+using Projecthandler.User_Management;
 
 // ReSharper disable InconsistentNaming
 
-namespace MainUserSpace
+namespace Projecthandler.Forms.MainWindow
 {
     public partial class MainWindow : Form
     {
@@ -26,17 +27,17 @@ namespace MainUserSpace
             aView = ActivityListView;
 
             var welcomingText = new StringBuilder("Welcome ");
-            var userName = UserManager.currentlyLoggedIn().fullName();
+            var userName = UserManager.CurrentlyLoggedIn().FullName();
             welcomingText.Append(userName);
 
             WelcomeLabel.Text = welcomingText.ToString();
 
-            if (UserManager.verifyUserState() != User.UserRole.Admin) updateActivityView();
+            if (UserManager.VerifyUserState() != User.UserRole.Admin) updateActivityView();
         }
 
         private void updateActivityView()
         {
-            var assignedActivityModels = pManager.userAssignedActivityModels();
+            var assignedActivityModels = pManager.UserAssignedActivityModels();
             aView.Clear();
             aView.View = View.Details;
 
@@ -50,7 +51,7 @@ namespace MainUserSpace
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UserManager.logout(UserManager.getLocalAddress());
+            UserManager.Logout(UserManager.GetLocalAddress());
             logoutEvent?.Invoke(this, e);
         }
 
@@ -62,14 +63,14 @@ namespace MainUserSpace
 
         private void MainView_FormClosed(object sender, FormClosedEventArgs e)
         {
-            UserManager.logout(UserManager.getLocalAddress());
+            UserManager.Logout(UserManager.GetLocalAddress());
             closeEvent?.Invoke(this, e);
         }
 
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (UserManager.verifyUserState() == User.UserRole.Admin)
+            if (UserManager.VerifyUserState() == User.UserRole.Admin)
             {
                 var pMng = new ProjectManagement(pManager);
                 pMng.ShowDialog(this);
@@ -83,7 +84,7 @@ namespace MainUserSpace
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var pMng = new ActivityManagement(pManager);
-            pMng.updateParentView += _updateParentView;
+            pMng.UpdateParentView += _updateParentView;
             pMng.ShowDialog(this);
         }
 

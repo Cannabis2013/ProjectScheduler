@@ -5,12 +5,12 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
-using ProjectNameSpace;
+using Projecthandler.Project_related;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Local
 // ReSharper disable once CheckNamespace
 
-namespace VirtualUserDomain
+namespace Projecthandler.User_Management
 {
     public class UserManager
     {
@@ -27,7 +27,7 @@ namespace VirtualUserDomain
          * Local address based on the ipv4 address of the user
          */
 
-        public static string getLocalAddress()
+        public static string GetLocalAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (var ip in host.AddressList)
@@ -36,50 +36,50 @@ namespace VirtualUserDomain
             return "000.000.000.000";
         }
 
-        public static bool logIn(string userName, string password, string localAddress)
+        public static bool LogIn(string userName, string password, string localAddress)
         {
-            var user = _userDb.verifyCredentials(userName, password);
+            var user = _userDb.VerifyCredentials(userName, password);
             if (user == null)
                 return false;
 
-            user.localAddress = localAddress;
-            userLogOut(localAddress, user);
+            user.LocalAddress = localAddress;
+            UserLogOut(localAddress, user);
 
             _currentLoggedIn.Add(user);
             return true;
         }
 
-        public static void logout(string localAddress)
+        public static void Logout(string localAddress)
         {
-            userLogOut(localAddress);
+            UserLogOut(localAddress);
         }
 
-        public static User.UserRole verifyUserState()
+        public static User.UserRole VerifyUserState()
         {
             foreach (var u in _currentLoggedIn)
-                if (u.localAddress == getLocalAddress())
-                    return u.role;
+                if (u.LocalAddress == GetLocalAddress())
+                    return u.Role;
             throw new Exception("User not logged in");
         }
 
-        public static User user(string userName)
+        public static User User(string userName)
         {
-            return _userDb.user(userName);
+            return _userDb.User(userName);
         }
 
-        public static User currentlyLoggedIn()
+        public static User CurrentlyLoggedIn()
         {
-            return _currentLoggedIn.Where(item => item.localAddress == getLocalAddress()).ElementAt(0);
+            return _currentLoggedIn.Where(item => item.LocalAddress == GetLocalAddress()).ElementAt(0);
         }
 
-        public static ListViewItem[] userListModel()
+        public static ListViewItem[] UserListModel()
         {
-            return _userDb.itemModels();
+            return _userDb.ItemModels();
         }
 
-        public static List<string> allUserNames()
+        public static List<string> AllUserNames()
         {
-            return _userDb.allUserNames().Where(item => item != "admin").ToList();
+            return _userDb.AllUserNames().Where(item => item != "admin").ToList();
         }
 
         /*
@@ -90,40 +90,40 @@ namespace VirtualUserDomain
          * - Users role
          */
 
-        public ListViewItem userItemModel(string userName)
+        public ListViewItem UserItemModel(string userName)
         {
-            var user = UserManager.user(userName);
+            var user = User(userName);
             var model = new ListViewItem(userName);
 
             // ReSharper disable once InconsistentNaming
             var FullName = new StringBuilder("Fullname: ");
-            FullName.Append(user.fullName());
+            FullName.Append(user.FullName());
             model.SubItems.Add(FullName.ToString());
 
-            var numbersOfActivitiesAssigned = pManager.activities(userName).Count;
+            var numbersOfActivitiesAssigned = pManager.Activities(userName).Count;
 
             var activityCount = new StringBuilder("Number of activities assigned: ");
             activityCount.Append(numbersOfActivitiesAssigned);
             model.SubItems.Add(activityCount.ToString());
 
             var uRole = new StringBuilder("User role: ");
-            uRole.Append(User._roleStringRepresentation(user.role));
+            uRole.Append(User_Management.User._roleStringRepresentation(user.Role));
             model.SubItems.Add(uRole.ToString());
 
             return model;
         }
 
-        public static ListViewItem[] userListViewItems()
+        public static ListViewItem[] UserListViewItems()
         {
-            return allUserNames().Select(item => new ListViewItem(item)).ToArray();
+            return AllUserNames().Select(item => new ListViewItem(item)).ToArray();
         }
 
-        private static void userLogOut(string localAddress, User user = null)
+        private static void UserLogOut(string localAddress, User user = null)
         {
             if (user != null)
-                _currentLoggedIn.RemoveWhere(c => c.localAddress == localAddress && c.userName() == user.userName());
+                _currentLoggedIn.RemoveWhere(c => c.LocalAddress == localAddress && c.UserName() == user.UserName());
             else
-                _currentLoggedIn.RemoveWhere(c => c.localAddress == localAddress);
+                _currentLoggedIn.RemoveWhere(c => c.LocalAddress == localAddress);
         }
     }
 }

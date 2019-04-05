@@ -3,85 +3,62 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Templates;
+using Projecthandler.Templates;
 
-namespace ProjectNameSpace
+namespace Projecthandler.Project_related
 {
-    [Serializable()]
+    [Serializable]
     public class Project : ItemModelEntity<ListViewItem>
     {
-        /*
-        * Private fields section
-        */
 
         private readonly LinkedList<Activity> projectActivities = new LinkedList<Activity>();
         private string pLeader;
         private int sWeek, eWeek;
 
-        /*
-         * Constructor section
-         */
-
         public Project(string projectId)
         {
-            t = projectId ?? throw new ArgumentNullException(nameof(projectId));
+            EntityTitle = projectId ?? throw new ArgumentNullException(nameof(projectId));
         }
 
-
-        /*
-         * Public properties ends
-         */
-
-        
-
-        public int startWeek
+        public int StartWeek
         {
             get => sWeek;
             set => sWeek = value;
         }
 
-        public int endWeek
+        public int EndWeek
         {
             get => eWeek;
             set => eWeek = value;
         }
 
-        public string projectLeaderId
+        public string ProjectLeaderId
         {
             get => pLeader;
             set => pLeader = value;
         }
-
-        /*
-         * Constructor section ends
-         */
-
-        /*
-         * Public properties begin
-         */
-
-        public override ListViewItem itemModel(ListMode mode = ListMode.Tile)
+        public override ListViewItem ItemModel(ListMode mode = ListMode.Tile)
         {
             if (mode == ListMode.Tile)
-                return itemTileModel();
+                return ItemTileModel();
 
-            return itemListModel();
+            return ItemListModel();
         }
 
-        public ListViewItem[] activityItemModels()
+        public ListViewItem[] ActivityItemModels()
         {
             int count = projectActivities.Count, index = 0;
             var models = new ListViewItem[count];
             foreach (var a in projectActivities)
             {
-                models[index] = a.itemModel();
+                models[index] = a.ItemModel();
                 index++;
             }
 
             return models;
         }
 
-        public Activity activity(int index)
+        public Activity Activity(int index)
         {
             var i = 0;
             foreach (var a in projectActivities)
@@ -91,61 +68,52 @@ namespace ProjectNameSpace
             return null;
         }
 
-        public Activity activity(string activityId)
+        public Activity Activity(string activityId)
         {
             return projectActivities.Where(item => item.Id == activityId).ToArray()[0];
         }
 
-        public void addActivity(Activity a)
+        public void AddActivity(Activity a)
         {
             projectActivities.AddLast(a);
         }
 
-        public void removeActivity(Activity a)
+        public void RemoveActivity(Activity a)
         {
             projectActivities.Remove(a);
         }
 
-        public int estimatedDuration()
+        public int EstimatedDuration()
         {
-            return endWeek - startWeek;
+            return EndWeek - StartWeek;
         }
 
-        public List<Activity> allActivities()
+        public List<Activity> AllActivities()
         {
             return projectActivities.ToList();
         }
 
-        /*
-        * Create a list of Activity entities for user statistic purposes.
-        */
-
-        public List<Activity> assignedActivities(string userName)
+        public List<Activity> AssignedActivities(string userName)
         {
-            var userActivities = projectActivities.Where(item => item.isUserAssigned(userName));
+            var userActivities = projectActivities.Where(item => item.IsUserAssigned(userName));
             return userActivities.Select(item => new Activity(item)).ToList();
         }
 
-
-        /*
-         * Private properties section begins
-         */
-
-        private ListViewItem itemTileModel()
+        private ListViewItem ItemTileModel()
         {
-            var model = new ListViewItem(id);
+            var model = new ListViewItem(Id);
 
             var userLeader = new StringBuilder("Tech lead: ");
-            userLeader.Append(projectLeaderId);
+            userLeader.Append(ProjectLeaderId);
             model.SubItems.Add(userLeader.ToString());
 
 
             var startDate = new StringBuilder("Week begin: ");
-            startDate.Append(startWeek);
+            startDate.Append(StartWeek);
             model.SubItems.Add(startDate.ToString());
 
             var endDate = new StringBuilder("Week end: ");
-            endDate.Append(endWeek);
+            endDate.Append(EndWeek);
             model.SubItems.Add(endDate.ToString());
 
 
@@ -156,33 +124,20 @@ namespace ProjectNameSpace
             return model;
         }
 
-        /*
-         * ItemListModel
-         * Returns a ListViewItem to be presented in a ListView with the following data:
-         * - ProjectId
-         * - ProjectleaderId : The username of the projectleader
-         * - Start and estimated end week
-         */
-
-        private ListViewItem itemListModel()
+        private ListViewItem ItemListModel()
         {
-            var model = new ListViewItem(id);
+            var model = new ListViewItem(Id);
 
-            var userLeader = new StringBuilder(projectLeaderId);
+            var userLeader = new StringBuilder(ProjectLeaderId);
             model.SubItems.Add(userLeader.ToString());
 
-            model.SubItems.Add(startWeek.ToString());
-            model.SubItems.Add(endWeek.ToString());
+            model.SubItems.Add(StartWeek.ToString());
+            model.SubItems.Add(EndWeek.ToString());
 
-            // Set picture index
             model.ImageIndex = 0;
             model.StateImageIndex = 0;
 
             return model;
         }
-
-        /*
-         * Private properties section ends
-         */
     }
 }

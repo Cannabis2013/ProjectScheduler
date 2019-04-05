@@ -1,10 +1,10 @@
 ﻿using System;
 using TechTalk.SpecFlow;
 using Projecthandler;
-using MainUserSpace;
-using VirtualUserDomain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
+using Projecthandler.Application_facade;
+using Projecthandler.User_Management;
 
 namespace TestProject
 {
@@ -25,20 +25,6 @@ namespace TestProject
             pass = p1;
         }
         
-        [Then]
-        public void ThenTheUserSuccesfullyLogsIn()
-        {
-            app = new MainApp(uName, pass);
-            bool userLoginSuccesfully = app.uManager.logIn(uName, pass, UserManager.getLocalAddress());
-            Assert.AreEqual(true, userLoginSuccesfully);
-        }
-        
-        [Then]
-        public void ThenTheUsersRoleIsAdmin()
-        {
-            User.UserRole uRole = app.uManager.verifyUserState(UserManager.getLocalAddress());
-            Assert.AreEqual(role, uRole);
-        }
 
         [Given]
         public void GivenThatTheUsersUsernameIs_P0_WithThePassword_P1(string p0, string p1)
@@ -53,13 +39,6 @@ namespace TestProject
             pass = p0;
         }
 
-        [Then]
-        public void ThenTheUserManagerReturnsAUserWhichIsNull()
-        {
-            app = new MainApp(uName, pass);
-            bool userLoginSuccesfully = app.uManager.logIn(uName, pass, UserManager.getLocalAddress());
-            Assert.AreEqual(false, userLoginSuccesfully);
-        }
 
 
         User.UserRole role;

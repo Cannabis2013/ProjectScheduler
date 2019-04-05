@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Templates
+namespace Projecthandler.Templates
 {
-    [Serializable()]
+    [Serializable]
     public abstract class ItemModelEntity<T>
     {
         public enum ListMode
@@ -11,14 +11,14 @@ namespace Templates
             List
         }
 
-        protected string t;
+        public string EntityTitle;
 
-        public virtual string id
+        public virtual string Id
         {
-            get => t;
-            set => t = value;
+            get => EntityTitle;
+            set => EntityTitle = value;
         }
 
-        public abstract T itemModel(ListMode mode = ListMode.Tile);
+        public abstract T ItemModel(ListMode mode = ListMode.Tile);
     }
 }

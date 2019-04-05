@@ -2,10 +2,11 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using DialogNamespace;
-using VirtualUserDomain;
+using Projecthandler.Forms.Dialogs;
+using Projecthandler.Project_related;
+using Projecthandler.User_Management;
 
-namespace ProjectNameSpace
+namespace Projecthandler.Forms.Project_and_activity_management
 {
     public partial class ActivityManagement : Form
     {
@@ -19,10 +20,10 @@ namespace ProjectNameSpace
 
             aView = ActivityListView;
 
-            updateView();
+            UpdateView();
         }
 
-        private void updateView()
+        private void UpdateView()
         {
             aView.Clear();
             aView.View = View.Details;
@@ -34,22 +35,22 @@ namespace ProjectNameSpace
             aView.Columns.Add("Total registered hours", columnWidth, HorizontalAlignment.Left);
             aView.Columns.Add("Assigned users", columnWidth, HorizontalAlignment.Left);
             aView.Columns.Add("Project", columnWidth, HorizontalAlignment.Left);
-            aView.Items.AddRange(pManager.projectActivityItemModels());
+            aView.Items.AddRange(pManager.ProjectActivityItemModels());
         }
 
         private void _OnSubmitPushed(object sender, EventArgs e)
         {
-            updateView();
+            UpdateView();
         }
 
         private void _OnEditPushed(object sender, EventArgs e)
         {
-            updateView();
+            UpdateView();
         }
 
         private void ProjectManagement_FormClosed(object sender, FormClosedEventArgs e)
         {
-            updateParentView?.Invoke(this, e);
+            UpdateParentView?.Invoke(this, e);
         }
 
         private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -64,7 +65,7 @@ namespace ProjectNameSpace
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var projects = pManager.allProjectIdentities(UserManager.currentlyLoggedIn().userName());
+            var projects = pManager.AllProjectIdentities(UserManager.CurrentlyLoggedIn().UserName());
             if (!projects.Any())
             {
                 MessageBox.Show(@"You aren't project leader on any projects you fucking loser.");
@@ -81,7 +82,7 @@ namespace ProjectNameSpace
         {
             if (ActivityListView.Items.Count < 1)
                 return;
-            var projects = pManager.allProjectIdentities(UserManager.currentlyLoggedIn().userName());
+            var projects = pManager.AllProjectIdentities(UserManager.CurrentlyLoggedIn().UserName());
             if (!projects.Any())
             {
                 MessageBox.Show(@"You aren't project leader on any projects you fucking loser.");
@@ -91,7 +92,7 @@ namespace ProjectNameSpace
                 var items = ActivityListView.SelectedItems;
                 var activityId = items[0].Text;
                 var projectId = items[0].SubItems[5];
-                var a = pManager.project(projectId.Text).activity(activityId);
+                var a = pManager.Project(projectId.Text).Activity(activityId);
 
                 var pDialog = new ActivityDialog(a, pManager);
                 pDialog.OnEditPushed += _OnEditPushed;
@@ -99,6 +100,6 @@ namespace ProjectNameSpace
             }
         }
 
-        public event EventHandler<EventArgs> updateParentView;
+        public event EventHandler<EventArgs> UpdateParentView;
     }
 }

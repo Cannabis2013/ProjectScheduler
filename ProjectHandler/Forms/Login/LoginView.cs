@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using Projecthandler.Custom_events;
+using Projecthandler.Events;
 
-namespace Projecthandler.Class_forms
+namespace Projecthandler.Forms.Login
 {
     public partial class LoginView : Form
     {
@@ -13,17 +13,17 @@ namespace Projecthandler.Class_forms
 
 
         // For testing purposes
-        public void enterCredentialsManual(string uName, string pass)
+        public void EnterCredentialsManual(string uName, string pass)
         {
             OnSubmitClicked?.Invoke(this, new MyEventArgs(uName, pass));
         }
 
-        public void setWarningText(string msg)
+        public void SetWarningText(string msg)
         {
             warningLabel.Text = msg;
         }
 
-        public void resetForms()
+        public void ResetForms()
         {
             textBox1.Clear();
             textBox2.Clear();
@@ -46,11 +46,11 @@ namespace Projecthandler.Class_forms
         }
 
         public event EventHandler<MyEventArgs> OnSubmitClicked;
-        public event EventHandler<EventArgs> onFormClose;
+        public event EventHandler<EventArgs> OnFormClose;
 
         private void LoginView_FormClosed(object sender, FormClosedEventArgs e)
         {
-            onFormClose?.Invoke(this, new EventArgs());
+            OnFormClose?.Invoke(this, new EventArgs());
         }
 
         private void textBox2_KeyPress(object sender, KeyPressEventArgs e)

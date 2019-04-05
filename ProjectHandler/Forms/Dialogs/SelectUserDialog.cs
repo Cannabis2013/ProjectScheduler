@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
-using VirtualUserDomain;
+using Projecthandler.User_Management;
 
-namespace DialogNamespace
+namespace Projecthandler.Forms.Dialogs
 {
     public partial class SelectUserDialog : Form
     {
@@ -9,7 +9,7 @@ namespace DialogNamespace
         {
             InitializeComponent();
 
-            UserListView.Items.AddRange(UserManager.userListModel());
+            UserListView.Items.AddRange(UserManager.UserListModel());
         }
     }
 }

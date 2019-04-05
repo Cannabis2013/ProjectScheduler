@@ -1,4 +1,6 @@
-﻿namespace ProjectNameSpace
+﻿using System;
+
+namespace Projecthandler.Project_related
 {
     public class ActivityEntity
     {
@@ -6,19 +8,19 @@
 
         public ActivityEntity(int sWeek, int eWeek, string title)
         {
-            startWeek = sWeek;
-            endWeek = eWeek;
+            StartWeek = sWeek;
+            EndWeek = eWeek;
             this.title = title;
         }
 
-        public string activityId => title;
-        public int startWeek { get; }
+        public string ActivityId => title;
+        public int StartWeek { get; }
 
-        public int endWeek { get; }
+        public int EndWeek { get; }
 
-        public bool withinTimespan(int val)
+        public bool WithinTimespan(int val)
         {
-            return val >= endWeek && val <= startWeek;
+            return val >= EndWeek && val <= StartWeek;
         }
     }
 }
