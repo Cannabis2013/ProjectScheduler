@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ProjectNameSpace;
 using VirtualUserDomain;
+using System.Diagnostics;
 
 namespace DialogNamespace
 {
@@ -47,12 +48,22 @@ namespace DialogNamespace
             set => base.Text = value;
         }
 
-        private void initializeSelectors()
+        private void initializeSelectors(int sVal, int eVal)
         {
-            for (var i = 1; i <= 52; i++)
+            if (eVal < sVal)
             {
-                startWeekSelector.Items.Add(i.ToString());
-                endWeekSelector.Items.Add(i.ToString());
+
+            }
+            else
+            {
+                
+                for (var i = sVal; i <= eVal; i++)
+                    startWeekSelector.Items.Add(i.ToString());
+                for (int i = 0; i < UPPER; i++)
+                {
+                    
+                }
+
             }
 
             startWeekSelector.SelectedIndex = 0;
@@ -243,6 +254,22 @@ namespace DialogNamespace
         {
             AddMode,
             EditMode
+        }
+
+        private void projectSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var cIndex = projectSelector.SelectedIndex;
+            if (cIndex != -1)
+            {
+                startWeekSelector.Enabled = true;
+                endWeekSelector.Enabled = true;
+
+
+            }
+            else
+            {
+                
+            }
         }
     }
 }

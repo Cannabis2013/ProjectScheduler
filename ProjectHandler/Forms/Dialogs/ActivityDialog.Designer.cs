@@ -38,7 +38,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.IDSelector = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.projectSelector = new System.Windows.Forms.ComboBox();
             this.ButtonLayout = new System.Windows.Forms.TableLayoutPanel();
             this.CancelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
@@ -52,6 +51,7 @@
             this.Link_Add = new System.Windows.Forms.LinkLabel();
             this.label6 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.projectSelector = new System.Windows.Forms.ComboBox();
             this.MainLayout.SuspendLayout();
             this.ButtonLayout.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -66,18 +66,18 @@
             this.MainLayout.ColumnCount = 2;
             this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
             this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 361F));
-            this.MainLayout.Controls.Add(this.endWeekSelector, 1, 3);
-            this.MainLayout.Controls.Add(this.startWeekSelector, 1, 2);
-            this.MainLayout.Controls.Add(this.label2, 0, 2);
-            this.MainLayout.Controls.Add(this.label3, 0, 3);
             this.MainLayout.Controls.Add(this.label4, 0, 1);
             this.MainLayout.Controls.Add(this.IDSelector, 1, 1);
-            this.MainLayout.Controls.Add(this.label5, 0, 4);
-            this.MainLayout.Controls.Add(this.projectSelector, 1, 4);
             this.MainLayout.Controls.Add(this.ButtonLayout, 0, 8);
             this.MainLayout.Controls.Add(this.tableLayoutPanel1, 0, 6);
             this.MainLayout.Controls.Add(this.label6, 0, 0);
             this.MainLayout.Controls.Add(this.label9, 0, 5);
+            this.MainLayout.Controls.Add(this.endWeekSelector, 1, 4);
+            this.MainLayout.Controls.Add(this.startWeekSelector, 1, 3);
+            this.MainLayout.Controls.Add(this.label3, 0, 4);
+            this.MainLayout.Controls.Add(this.label2, 0, 3);
+            this.MainLayout.Controls.Add(this.label5, 0, 2);
+            this.MainLayout.Controls.Add(this.projectSelector, 1, 2);
             this.MainLayout.Location = new System.Drawing.Point(1, -2);
             this.MainLayout.Name = "MainLayout";
             this.MainLayout.RowCount = 9;
@@ -100,9 +100,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.endWeekSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.endWeekSelector.Enabled = false;
             this.endWeekSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.endWeekSelector.FormattingEnabled = true;
-            this.endWeekSelector.Location = new System.Drawing.Point(131, 113);
+            this.endWeekSelector.Location = new System.Drawing.Point(131, 153);
             this.endWeekSelector.Name = "endWeekSelector";
             this.endWeekSelector.Size = new System.Drawing.Size(355, 28);
             this.endWeekSelector.TabIndex = 2;
@@ -113,9 +114,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.startWeekSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.startWeekSelector.Enabled = false;
             this.startWeekSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startWeekSelector.FormattingEnabled = true;
-            this.startWeekSelector.Location = new System.Drawing.Point(131, 73);
+            this.startWeekSelector.Location = new System.Drawing.Point(131, 113);
             this.startWeekSelector.Name = "startWeekSelector";
             this.startWeekSelector.Size = new System.Drawing.Size(355, 28);
             this.startWeekSelector.TabIndex = 1;
@@ -127,7 +129,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 70);
+            this.label2.Location = new System.Drawing.Point(3, 110);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(122, 40);
             this.label2.TabIndex = 3;
@@ -141,7 +143,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 110);
+            this.label3.Location = new System.Drawing.Point(3, 150);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(122, 40);
             this.label3.TabIndex = 3;
@@ -178,28 +180,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(3, 150);
+            this.label5.Location = new System.Drawing.Point(3, 70);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(122, 40);
             this.label5.TabIndex = 3;
             this.label5.Text = "Project:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // projectSelector
-            // 
-            this.projectSelector.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.projectSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.projectSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.projectSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.projectSelector.FormattingEnabled = true;
-            this.projectSelector.Location = new System.Drawing.Point(131, 153);
-            this.projectSelector.Name = "projectSelector";
-            this.projectSelector.Size = new System.Drawing.Size(355, 28);
-            this.projectSelector.Sorted = true;
-            this.projectSelector.TabIndex = 2;
-            this.projectSelector.DropDown += new System.EventHandler(this.leaderSelector_DropDown);
             // 
             // ButtonLayout
             // 
@@ -410,6 +396,23 @@
             this.label9.TabIndex = 3;
             this.label9.Text = "Assign users to activity";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // projectSelector
+            // 
+            this.projectSelector.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.projectSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.projectSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.projectSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.projectSelector.FormattingEnabled = true;
+            this.projectSelector.Location = new System.Drawing.Point(131, 73);
+            this.projectSelector.Name = "projectSelector";
+            this.projectSelector.Size = new System.Drawing.Size(355, 28);
+            this.projectSelector.Sorted = true;
+            this.projectSelector.TabIndex = 2;
+            this.projectSelector.DropDown += new System.EventHandler(this.leaderSelector_DropDown);
+            this.projectSelector.SelectedIndexChanged += new System.EventHandler(this.projectSelector_SelectedIndexChanged);
             // 
             // ActivityDialog
             // 

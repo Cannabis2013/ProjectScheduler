@@ -57,11 +57,6 @@ namespace ProjectNameSpace
             projects.RemoveAt(index);
         }
 
-        public void removeProject(Project p)
-        {
-            projects.Remove(p);
-        }
-
         public Project projectAt(int index)
         {
             return projects.ElementAt(index);
