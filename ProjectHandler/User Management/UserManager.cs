@@ -113,6 +113,11 @@ namespace VirtualUserDomain
             return model;
         }
 
+        public static ListViewItem[] userListViewItems()
+        {
+            return allUserNames().Select(item => new ListViewItem(item)).ToArray();
+        }
+
         private static void userLogOut(string localAddress, User user = null)
         {
             if (user != null)

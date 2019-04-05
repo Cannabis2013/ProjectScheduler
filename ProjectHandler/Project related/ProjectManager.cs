@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Templates;
@@ -19,6 +20,7 @@ namespace ProjectNameSpace
      * - Retrieve project activities
      */
 
+    [Serializable()]
     public class ProjectManager
     {
         /*
@@ -32,13 +34,6 @@ namespace ProjectNameSpace
 
         public ProjectManager()
         {
-            var p = new Project("Project TEST")
-            {
-                startWeek = 1,
-                endWeek = 4,
-                projectLeaderId = "Finn_Luger"
-            };
-            projects.Add(p);
         }
 
         /*
@@ -46,6 +41,7 @@ namespace ProjectNameSpace
          * - Add/remove projects
          * - Get activities
          */
+        
 
         public void addProject(Project p)
         {

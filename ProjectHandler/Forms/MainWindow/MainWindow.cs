@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using ProjectNameSpace;
 using VirtualUserDomain;
+using System.Runtime.Serialization.Formatters.Binary;
 
 // ReSharper disable InconsistentNaming
 
@@ -54,6 +56,7 @@ namespace MainUserSpace
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            persistence();
             Application.Exit();
         }
 
@@ -92,6 +95,15 @@ namespace MainUserSpace
         private void _updateParentView(object sender, EventArgs e)
         {
             updateActivityView();
+        }
+
+        public void persistence()
+        {
+            Stream SaveFileStream = File.Create("ProjectFile");
+            BinaryFormatter serializer = new BinaryFormatter();
+            serializer.Serialize(SaveFileStream, pManager);
+            SaveFileStream.Close();
+
         }
 
         public event EventHandler<EventArgs> logoutEvent;

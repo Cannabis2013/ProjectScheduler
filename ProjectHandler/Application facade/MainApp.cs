@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using Projecthandler.Class_forms;
 using Projecthandler.Custom_events;
@@ -16,7 +18,19 @@ namespace MainUserSpace
 
         public MainApp()
         {
-            pManager = new ProjectManager();
+            if (File.Exists("ProjectFile"))
+            {
+                Stream openFileStream = File.OpenRead("ProjectFile");
+                BinaryFormatter deserializer = new BinaryFormatter();
+                pManager = (ProjectManager)deserializer.Deserialize(openFileStream);
+
+                openFileStream.Close();
+            }
+            else
+            {
+                pManager = new ProjectManager();
+            }
+            
             uManager = new UserManager(pManager);
 
             launchLoginView();

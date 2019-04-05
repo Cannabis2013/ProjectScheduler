@@ -7,6 +7,7 @@ using Templates;
 
 namespace ProjectNameSpace
 {
+    [Serializable()]
     public class Project : ItemModelEntity<ListViewItem>
     {
         /*

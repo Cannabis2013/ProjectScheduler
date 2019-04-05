@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -30,6 +31,7 @@ using VirtualUserDomain;
 
 namespace ProjectNameSpace
 {
+    [Serializable()]
     public class Activity : ItemModelEntity<ListViewItem>
     {
         private readonly List<string> assignedUserIdentities = new List<string>();

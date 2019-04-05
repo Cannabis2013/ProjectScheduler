@@ -19,13 +19,14 @@ namespace DialogNamespace
         {
             this.pManager = pManager;
             InitializeComponent();
-            initializeSelectors();
+            initialize_userListViews();
+            //initializeSelectors();
 
             Text = @"Create activity";
 
             mode = DialogMode.AddMode;
 
-            UserListView.Items.AddRange(UserManager.userListModel());
+            UserListView.Items.AddRange(UserManager.userListViewItems());
         }
 
         public ActivityDialog(Activity a, ProjectManager pManager)
@@ -36,7 +37,6 @@ namespace DialogNamespace
             Text = @"Edit activity";
 
             InitializeComponent();
-            initializeSelectors();
             initializeDialogValues();
 
             mode = DialogMode.EditMode;
@@ -52,22 +52,32 @@ namespace DialogNamespace
         {
             if (eVal < sVal)
             {
-
-            }
-            else
-            {
-                
-                for (var i = sVal; i <= eVal; i++)
-                    startWeekSelector.Items.Add(i.ToString());
-                for (int i = 0; i < UPPER; i++)
+                for (var i = eVal; i < 52; i++)
                 {
-                    
+                    startWeekSelector.Items.Add(i.ToString());
+                    endWeekSelector.Items.Add(i.ToString());
                 }
 
+                for (var i = 0; i < 52; i++)
+                {
+                    startWeekSelector.Items.Add(i.ToString());
+                    endWeekSelector.Items.Add(i.ToString());
+                }
+                startWeekSelector.SelectedIndex = 0;
+                endWeekSelector.SelectedIndex = 0;
             }
+            else
+            {   
+                for (var i = sVal; i <= eVal; i++)
+                {
+                    startWeekSelector.Items.Add(i.ToString());
+                    endWeekSelector.Items.Add(i.ToString());
+                }
+            }
+        }
 
-            startWeekSelector.SelectedIndex = 0;
-            endWeekSelector.SelectedIndex = 0;
+        private void initialize_userListViews()
+        {
             if (UserManager.verifyUserState() == User.UserRole.Admin)
             {
                 var projects = pManager.allProjectIdentities().ToArray();
@@ -151,7 +161,7 @@ namespace DialogNamespace
             a.assignUsers(usernames);
 
             var p = pManager.project(projectTitle);
-            p.addActivity(a);
+            p.addActivity(a);   
 
             OnSubmitPushed?.Invoke(this, new EventArgs());
 
@@ -264,11 +274,13 @@ namespace DialogNamespace
                 startWeekSelector.Enabled = true;
                 endWeekSelector.Enabled = true;
 
-
+                var p = pManager.projectAt(cIndex);
+                initializeSelectors(p.startWeek,p.endWeek);
             }
             else
             {
-                
+                startWeekSelector.Enabled = false;
+                endWeekSelector.Enabled = false;
             }
         }
     }

@@ -1,5 +1,8 @@
-﻿namespace Templates
+﻿using System;
+
+namespace Templates
 {
+    [Serializable()]
     public abstract class ItemModelEntity<T>
     {
         public enum ListMode
