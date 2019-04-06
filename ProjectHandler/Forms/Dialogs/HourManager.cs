@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Projecthandler.Forms.Dialogs
 {
-    public partial class RegisterWorkHourDialog : Form
+    public partial class HourManager : Form
     {
-        public RegisterWorkHourDialog()
+        public HourManager()
         {
             InitializeComponent();
         }

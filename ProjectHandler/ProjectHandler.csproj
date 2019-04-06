@@ -61,11 +61,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\Dialogs\RegisterWorkHourDialog.cs">
+    <Compile Include="Forms\Dialogs\HourManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Dialogs\RegisterWorkHourDialog.Designer.cs">
-      <DependentUpon>RegisterWorkHourDialog.cs</DependentUpon>
+    <Compile Include="Forms\Dialogs\HourManager.Designer.cs">
+      <DependentUpon>HourManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Dialogs\ProjectDialog.cs">
       <SubType>Form</SubType>
@@ -128,8 +128,8 @@
     <EmbeddedResource Include="Forms\Dialogs\ProjectDialog.resx">
       <DependentUpon>ProjectDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Dialogs\RegisterWorkHourDialog.resx">
-      <DependentUpon>RegisterWorkHourDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Dialogs\HourManager.resx">
+      <DependentUpon>HourManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dialogs\SelectUserDialog.resx">
       <DependentUpon>SelectUserDialog.cs</DependentUpon>

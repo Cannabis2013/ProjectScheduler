@@ -39,6 +39,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ActivityListView = new System.Windows.Forms.ListView();
             this.ItemIcons = new System.Windows.Forms.ImageList(this.components);
+            this.linkLabel5 = new System.Windows.Forms.LinkLabel();
             this.MainLayout.SuspendLayout();
             this.ButtonLayout.SuspendLayout();
             this.SuspendLayout();
@@ -76,14 +77,16 @@
             this.ButtonLayout.Controls.Add(this.linkLabel1, 0, 0);
             this.ButtonLayout.Controls.Add(this.linkLabel2, 0, 1);
             this.ButtonLayout.Controls.Add(this.linkLabel3, 0, 2);
-            this.ButtonLayout.Controls.Add(this.linkLabel4, 0, 3);
+            this.ButtonLayout.Controls.Add(this.linkLabel4, 0, 4);
+            this.ButtonLayout.Controls.Add(this.linkLabel5, 0, 3);
             this.ButtonLayout.Location = new System.Drawing.Point(0, 5);
             this.ButtonLayout.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonLayout.Name = "ButtonLayout";
-            this.ButtonLayout.RowCount = 5;
+            this.ButtonLayout.RowCount = 6;
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ButtonLayout.Size = new System.Drawing.Size(96, 431);
@@ -129,7 +132,7 @@
             // 
             this.linkLabel4.AutoSize = true;
             this.linkLabel4.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkLabel4.Location = new System.Drawing.Point(3, 39);
+            this.linkLabel4.Location = new System.Drawing.Point(3, 59);
             this.linkLabel4.Name = "linkLabel4";
             this.linkLabel4.Size = new System.Drawing.Size(71, 26);
             this.linkLabel4.TabIndex = 3;
@@ -172,6 +175,16 @@
             this.ItemIcons.TransparentColor = System.Drawing.Color.Transparent;
             this.ItemIcons.Images.SetKeyName(0, "Project_Icon.png");
             // 
+            // linkLabel5
+            // 
+            this.linkLabel5.AutoSize = true;
+            this.linkLabel5.Location = new System.Drawing.Point(3, 39);
+            this.linkLabel5.Name = "linkLabel5";
+            this.linkLabel5.Size = new System.Drawing.Size(75, 13);
+            this.linkLabel5.TabIndex = 4;
+            this.linkLabel5.TabStop = true;
+            this.linkLabel5.Text = "Manage hours";
+            // 
             // ActivityManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -203,5 +216,6 @@
         private System.Windows.Forms.LinkLabel linkLabel3;
         private System.Windows.Forms.LinkLabel linkLabel4;
         private System.Windows.Forms.ListView ActivityListView;
+        private System.Windows.Forms.LinkLabel linkLabel5;
     }
 }
