@@ -61,6 +61,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\Dialogs\RegisterWorkHourDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dialogs\RegisterWorkHourDialog.Designer.cs">
+      <DependentUpon>RegisterWorkHourDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Dialogs\ProjectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +127,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\Dialogs\ProjectDialog.resx">
       <DependentUpon>ProjectDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dialogs\RegisterWorkHourDialog.resx">
+      <DependentUpon>RegisterWorkHourDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dialogs\SelectUserDialog.resx">
       <DependentUpon>SelectUserDialog.cs</DependentUpon>

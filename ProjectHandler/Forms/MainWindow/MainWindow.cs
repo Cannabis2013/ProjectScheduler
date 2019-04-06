@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
-using ProjectNameSpace;
+using ProjectRelated;
 using VirtualUserDomain;
-using System.Runtime.Serialization.Formatters.Binary;
 
 // ReSharper disable InconsistentNaming
 
@@ -14,29 +14,31 @@ namespace MainUserSpace
     {
         private readonly ListView aView;
         private readonly ProjectManager pManager;
+        private readonly UserManager uManager;
         private AnchorStyles anchorStyles;
 
-        public MainWindow(ProjectManager pManager)
+        public MainWindow(ProjectManager pManager, UserManager uManager)
         {
             InitializeComponent();
 
             var item = new ListViewItem();
 
             this.pManager = pManager;
+            this.uManager = uManager;
             aView = ActivityListView;
 
             var welcomingText = new StringBuilder("Welcome ");
-            var userName = UserManager.currentlyLoggedIn().fullName();
+            var userName = uManager.currentlyLoggedIn().FullName();
             welcomingText.Append(userName);
 
             WelcomeLabel.Text = welcomingText.ToString();
 
-            if (UserManager.verifyUserState() != User.UserRole.Admin) updateActivityView();
+            if (uManager.verifyUserState() != User.UserRole.Admin) updateActivityView();
         }
 
         private void updateActivityView()
         {
-            var assignedActivityModels = pManager.userAssignedActivityModels();
+            var assignedActivityModels = pManager.UserAssignedActivityModels(uManager);
             aView.Clear();
             aView.View = View.Details;
 
@@ -50,28 +52,27 @@ namespace MainUserSpace
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UserManager.logout(UserManager.getLocalAddress());
+            uManager.logout(UserManager.getLocalAddress());
             logoutEvent?.Invoke(this, e);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            persistence();
-            Application.Exit();
+            HardCloseEvent?.Invoke(this,e);
         }
 
         private void MainView_FormClosed(object sender, FormClosedEventArgs e)
         {
-            UserManager.logout(UserManager.getLocalAddress());
-            closeEvent?.Invoke(this, e);
+            uManager.logout(UserManager.getLocalAddress());
+            CloseRequest?.Invoke(this, e);
         }
 
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (UserManager.verifyUserState() == User.UserRole.Admin)
+            if (uManager.verifyUserState() == User.UserRole.Admin)
             {
-                var pMng = new ProjectManagement(pManager);
+                var pMng = new ProjectManagement(pManager,uManager);
                 pMng.ShowDialog(this);
             }
             else
@@ -82,7 +83,7 @@ namespace MainUserSpace
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var pMng = new ActivityManagement(pManager);
+            var pMng = new ActivityManagement(pManager,uManager);
             pMng.updateParentView += _updateParentView;
             pMng.ShowDialog(this);
         }
@@ -97,16 +98,8 @@ namespace MainUserSpace
             updateActivityView();
         }
 
-        public void persistence()
-        {
-            Stream SaveFileStream = File.Create("ProjectFile");
-            BinaryFormatter serializer = new BinaryFormatter();
-            serializer.Serialize(SaveFileStream, pManager);
-            SaveFileStream.Close();
-
-        }
-
         public event EventHandler<EventArgs> logoutEvent;
-        public event EventHandler<EventArgs> closeEvent;
+        public event EventHandler<EventArgs> CloseRequest;
+        public event EventHandler<EventArgs> HardCloseEvent;
     }
 }

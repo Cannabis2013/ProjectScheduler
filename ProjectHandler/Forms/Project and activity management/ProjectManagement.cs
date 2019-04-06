@@ -4,26 +4,29 @@ using System.Windows.Forms;
 using DialogNamespace;
 using Projecthandler.Events;
 using Templates;
+using VirtualUserDomain;
 
-namespace ProjectNameSpace
+namespace ProjectRelated
 {
     public partial class ProjectManagement : Form
     {
         private readonly ProjectManager pManager;
+        private readonly UserManager uManager;
 
         private readonly ListView pView;
 
-        public ProjectManagement(ProjectManager pManager)
+        public ProjectManagement(ProjectManager pManager, UserManager uManager)
         {
             InitializeComponent();
             this.pManager = pManager ?? throw new ArgumentNullException(nameof(pManager));
+            this.uManager = uManager;
 
             pView = ProjectListView;
 
-            updateView();
+            UpdateView();
         }
 
-        private void updateView()
+        private void UpdateView()
         {
             pView.Clear();
             pView.View = View.Details;
@@ -33,21 +36,21 @@ namespace ProjectNameSpace
             pView.Columns.Add("Project leader", columnWidth, HorizontalAlignment.Left);
             pView.Columns.Add("Start week", columnWidth, HorizontalAlignment.Left);
             pView.Columns.Add("Estimated end week", columnWidth, HorizontalAlignment.Left);
-            pView.Items.AddRange(pManager.projectItemModels(ItemModelEntity<ListViewItem>.ListMode.List));
+            pView.Items.AddRange(pManager.ProjectItemModels(ItemModelEntity<ListViewItem>.ListMode.List));
         }
 
         private void _OnSubmitPushed(object sender, SubmitEvent e)
         {
             var p = e.project();
 
-            pManager.addProject(p);
+            pManager.AddProject(p);
 
-            updateView();
+            UpdateView();
         }
 
         private void _OnEditPushed(object sender, EventArgs e)
         {
-            updateView();
+            UpdateView();
         }
 
         private void ProjectManagement_FormClosed(object sender, FormClosedEventArgs e)
@@ -62,16 +65,16 @@ namespace ProjectNameSpace
 
             var cIndex = ProjectListView.SelectedIndices[0];
 
-            var p = pManager.projectAt(cIndex);
+            var p = pManager.ProjectAt(cIndex);
 
-            var pDialog = new ProjectDialog(p);
+            var pDialog = new ProjectDialog(p,uManager);
             pDialog.OnEditPushed += _OnEditPushed;
             pDialog.ShowDialog(this);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var pDialog = new ProjectDialog();
+            var pDialog = new ProjectDialog(uManager);
             pDialog.OnSubmitPushed += _OnSubmitPushed;
             pDialog.ShowDialog(this);
         }
@@ -81,9 +84,9 @@ namespace ProjectNameSpace
             if (ProjectListView.SelectedItems.Count < 1)
                 return;
             var cIndex = ProjectListView.SelectedIndices[0];
-            var project = pManager.projectAt(cIndex);
+            var project = pManager.ProjectAt(cIndex);
 
-            var pDialog = new ProjectDialog(project);
+            var pDialog = new ProjectDialog(project,uManager);
             pDialog.OnEditPushed += _OnEditPushed;
             pDialog.ShowDialog(this);
         }
@@ -97,8 +100,8 @@ namespace ProjectNameSpace
             var buttons = MessageBoxButtons.YesNo;
             if (MessageBox.Show("Are you sure?", "Confirm", buttons) == DialogResult.Yes)
             {
-                pManager.removeProjectAt(cIndex);
-                updateView();
+                pManager.RemoveProjectAt(cIndex);
+                UpdateView();
             }
         }
 

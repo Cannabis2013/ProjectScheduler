@@ -1,4 +1,4 @@
-﻿namespace ProjectNameSpace
+﻿namespace ProjectRelated
 {
     public class ActivityEntity
     {

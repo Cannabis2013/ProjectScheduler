@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Projecthandler.Events;
-using ProjectNameSpace;
+using ProjectRelated;
 using VirtualUserDomain;
 
 namespace DialogNamespace
@@ -11,18 +11,21 @@ namespace DialogNamespace
         private readonly DialogMode mode;
 
         private readonly Project temporaryProject;
+        private UserManager uManager;
 
-        public ProjectDialog()
+        public ProjectDialog(UserManager uManager)
         {
+            this.uManager = uManager;
             InitializeComponent();
             initializeSelectors();
 
             mode = DialogMode.AddMode;
         }
 
-        public ProjectDialog(Project p)
+        public ProjectDialog(Project p, UserManager uManager)
         {
             temporaryProject = p;
+            this.uManager = uManager;
 
             InitializeComponent();
             initializeSelectors();
@@ -105,7 +108,7 @@ namespace DialogNamespace
 
         private void updateLeaderComboBoxView()
         {
-            foreach (var item in UserManager.allUserNames())
+            foreach (var item in uManager.allUserNames())
                 leaderSelector.Items.Add(item);
         }
 

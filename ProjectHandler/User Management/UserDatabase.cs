@@ -42,7 +42,7 @@ namespace VirtualUserDomain
         {
             try
             {
-                return users.First(item => item.userName() == userName && item.passWord() == password);
+                return users.First(item => item.UserName() == userName && item.PassWord() == password);
             }
             catch (Exception e)
             {
@@ -77,7 +77,7 @@ namespace VirtualUserDomain
         public User user(string userName)
         {
             foreach (var u in users)
-                if (u.userName() == userName)
+                if (u.UserName() == userName)
                     return u;
             return null;
         }
@@ -86,7 +86,7 @@ namespace VirtualUserDomain
         {
             var result = new List<string>();
             foreach (var u in users)
-                result.Add(u.userName());
+                result.Add(u.UserName());
 
             return result;
         }
@@ -98,7 +98,7 @@ namespace VirtualUserDomain
         private bool userNameExist(string username)
         {
             foreach (var u in users)
-                if (u.userName() == username)
+                if (u.UserName() == username)
                     return true;
             return false;
         }
@@ -109,22 +109,22 @@ namespace VirtualUserDomain
             var models = new ListViewItem[uCount];
             foreach (var u in users)
             {
-                if (!fullList && u.role == User.UserRole.Admin)
+                if (!fullList && u.Role == User.UserRole.Admin)
                     continue;
 
-                var model = new ListViewItem(u.userName())
+                var model = new ListViewItem(u.UserName())
                 {
                     ImageIndex = 0
                 };
 
                 var fullName = new StringBuilder("Full name: ");
-                fullName.Append(u.fullName());
+                fullName.Append(u.FullName());
 
                 model.SubItems.Add(fullName.ToString());
 
                 var role = new StringBuilder("Users role: ");
 
-                role.Append(u.role == User.UserRole.Admin ? "Admin" : "Employee");
+                role.Append(u.Role == User.UserRole.Admin ? "Admin" : "Employee");
 
                 model.SubItems.Add(role.ToString());
                 models[index++] = model;

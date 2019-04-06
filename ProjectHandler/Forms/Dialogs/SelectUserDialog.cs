@@ -9,7 +9,7 @@ namespace DialogNamespace
         {
             InitializeComponent();
 
-            UserListView.Items.AddRange(UserManager.userListModel());
+            UserListView.Items.AddRange(uManager.userListModel());
         }
     }
 }

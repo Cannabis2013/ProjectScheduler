@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using ProjectNameSpace;
+using ProjectRelated;
 using VirtualUserDomain;
-using System.Diagnostics;
 
 namespace DialogNamespace
 {
@@ -14,30 +13,32 @@ namespace DialogNamespace
 
         private readonly DialogMode mode;
         private readonly ProjectManager pManager;
+        private readonly UserManager uManager;
 
-        public ActivityDialog(ProjectManager pManager)
+        public ActivityDialog(ProjectManager pManager, UserManager uManager)
         {
             this.pManager = pManager;
+            this.uManager = uManager;
             InitializeComponent();
             initialize_userListViews();
-            //initializeSelectors();
 
             Text = @"Create activity";
 
             mode = DialogMode.AddMode;
 
-            UserListView.Items.AddRange(UserManager.userListViewItems());
+            UserListView.Items.AddRange(uManager.userListViewItems());
         }
 
-        public ActivityDialog(Activity a, ProjectManager pManager)
+        public ActivityDialog(Activity a, ProjectManager pManager, UserManager uManager)
         {
             activity = a;
             this.pManager = pManager;
+            this.uManager = uManager;
 
             Text = @"Edit activity";
 
             InitializeComponent();
-            initializeDialogValues();
+            InitializeDialogValues();
 
             mode = DialogMode.EditMode;
         }
@@ -48,8 +49,10 @@ namespace DialogNamespace
             set => base.Text = value;
         }
 
-        private void initializeSelectors(int sVal, int eVal)
+        private void InitializeSelectors(int sVal, int eVal)
         {
+            startWeekSelector.Items.Clear();
+            endWeekSelector.Items.Clear();
             if (eVal < sVal)
             {
                 for (var i = eVal; i < 52; i++)
@@ -63,44 +66,54 @@ namespace DialogNamespace
                     startWeekSelector.Items.Add(i.ToString());
                     endWeekSelector.Items.Add(i.ToString());
                 }
+
                 startWeekSelector.SelectedIndex = 0;
                 endWeekSelector.SelectedIndex = 0;
             }
             else
-            {   
+            {
                 for (var i = sVal; i <= eVal; i++)
                 {
                     startWeekSelector.Items.Add(i.ToString());
                     endWeekSelector.Items.Add(i.ToString());
                 }
             }
+
+            if (mode == DialogMode.EditMode)
+            {
+                startWeekSelector.Text = activity.StartWeek.ToString();
+                endWeekSelector.Text = activity.EndWeek.ToString();
+            }
         }
 
         private void initialize_userListViews()
         {
-            if (UserManager.verifyUserState() == User.UserRole.Admin)
+            if (uManager.verifyUserState() == User.UserRole.Admin)
             {
-                var projects = pManager.allProjectIdentities().ToArray();
+                var projects = pManager.AllProjectIdentities().ToArray();
                 // ReSharper disable once CoVariantArrayConversion
                 projectSelector.Items.AddRange(projects);
             }
             else
             {
-                var cUser = UserManager.currentlyLoggedIn();
-                var projectIdentities = pManager.allProjectIdentities(cUser.userName()).ToArray();
+                var cUser = uManager.currentlyLoggedIn();
+                var projectIdentities = pManager.AllProjectIdentities(cUser.UserName()).ToArray();
                 ;
                 // ReSharper disable once CoVariantArrayConversion
                 projectSelector.Items.AddRange(projectIdentities);
             }
         }
 
-        private void initializeDialogValues()
+        private void InitializeDialogValues()
         {
-            IDSelector.Text = activity.Id;
-            startWeekSelector.Text = activity.startWeek.ToString();
-            endWeekSelector.Text = activity.endWeek.ToString();
-            projectSelector.Text = activity.parentProjectId;
-            var assignedUsers = activity.assignedUsers();
+            IDSelector.Text = activity.ActivityId;
+            projectSelector.Items.Add(activity.ParentProjectId);
+            projectSelector.Text = activity.ParentProjectId;
+            var p = pManager.Project(activity.ParentProjectId);
+            InitializeSelectors(p.startWeek,p.endWeek);
+            startWeekSelector.Text = activity.StartWeek.ToString();
+            endWeekSelector.Text = activity.EndWeek.ToString();
+            var assignedUsers = activity.AssignedUsers();
             var assignedUserModels = assignedUsers.Select(item =>
                 new ListViewItem
                 {
@@ -110,7 +123,7 @@ namespace DialogNamespace
 
             AssignedUserListView.Items.AddRange(assignedUserModels);
 
-            var availableUsers = UserManager.allUserNames().Where(item => !assignedUsers.Contains(item)).ToList();
+            var availableUsers = uManager.allUserNames().Where(item => !assignedUsers.Contains(item)).ToList();
             var availableUserModels = availableUsers.Select(item =>
                 new ListViewItem
                 {
@@ -152,16 +165,16 @@ namespace DialogNamespace
 
             var usernames = new List<string>();
 
-            var a = new Activity(activityTitle, sWeek, eWeek, projectTitle);
+            var a = new Activity(activityTitle, sWeek, eWeek, projectTitle,uManager);
 
 
             foreach (ListViewItem item in items)
                 usernames.Add(item.Text);
 
-            a.assignUsers(usernames);
+            a.AssignUsers(usernames);
 
-            var p = pManager.project(projectTitle);
-            p.addActivity(a);   
+            var p = pManager.Project(projectTitle);
+            p.AddActivity(a);
 
             OnSubmitPushed?.Invoke(this, new EventArgs());
 
@@ -170,16 +183,16 @@ namespace DialogNamespace
 
         private void invoke_Edit_Mode_Submit()
         {
-            activity.Id = IDSelector.Text;
+            activity.ActivityId = IDSelector.Text;
 
             var projectId = projectSelector.Text;
 
-            if (projectId != activity.parentProjectId)
+            if (projectId != activity.ParentProjectId)
             {
-                var p = pManager.project(activity.parentProjectId);
-                p.removeActivity(activity);
-                activity.parentProjectId = projectId;
-                p.addActivity(activity);
+                var p = pManager.Project(activity.ParentProjectId);
+                p.RemoveActivity(activity);
+                activity.ParentProjectId = projectId;
+                p.AddActivity(activity);
             }
 
             if (!int.TryParse(startWeekSelector.Text, out var sWeek))
@@ -188,26 +201,21 @@ namespace DialogNamespace
             if (!int.TryParse(endWeekSelector.Text, out var eWeek))
                 throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
 
-            activity.startWeek = sWeek;
-            activity.endWeek = eWeek;
+            activity.StartWeek = sWeek;
+            activity.EndWeek = eWeek;
 
             var items = AssignedUserListView.Items;
             var usernames = new List<string>();
 
-            activity.clearAssignedUserIdentities();
+            activity.ClearAssignedUserIdentities();
 
             foreach (ListViewItem item in items)
                 usernames.Add(item.Text);
 
-            activity.assignUsers(usernames);
+            activity.AssignUsers(usernames);
 
+            OnEditPushed?.Invoke(this,new EventArgs());
             Close();
-        }
-
-        private void leaderSelector_DropDown(object sender, EventArgs e)
-        {
-            if (projectSelector.Items.Count < 1)
-                updateLeaderComboBoxView();
         }
 
         private void UserListView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -218,12 +226,6 @@ namespace DialogNamespace
 
             var item = sList[0];
             linkLabel2_LinkClicked(this, null);
-        }
-
-        private void updateLeaderComboBoxView()
-        {
-            foreach (ListViewItem item in AssignedUserListView.Items)
-                projectSelector.Items.Add(item.Text);
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -260,12 +262,6 @@ namespace DialogNamespace
         public event EventHandler<EventArgs> OnSubmitPushed;
         public event EventHandler<EventArgs> OnEditPushed;
 
-        private enum DialogMode
-        {
-            AddMode,
-            EditMode
-        }
-
         private void projectSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
             var cIndex = projectSelector.SelectedIndex;
@@ -274,14 +270,20 @@ namespace DialogNamespace
                 startWeekSelector.Enabled = true;
                 endWeekSelector.Enabled = true;
 
-                var p = pManager.projectAt(cIndex);
-                initializeSelectors(p.startWeek,p.endWeek);
+                var p = pManager.ProjectAt(cIndex);
+                InitializeSelectors(p.startWeek, p.endWeek);
             }
             else
             {
                 startWeekSelector.Enabled = false;
                 endWeekSelector.Enabled = false;
             }
+        }
+
+        private enum DialogMode
+        {
+            AddMode,
+            EditMode
         }
     }
 }

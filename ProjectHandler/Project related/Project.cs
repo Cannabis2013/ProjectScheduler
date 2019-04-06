@@ -4,35 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Templates;
+using VirtualUserDomain;
 
-namespace ProjectNameSpace
+namespace ProjectRelated
 {
-    [Serializable()]
+    [Serializable]
     public class Project : ItemModelEntity<ListViewItem>
     {
-        /*
-        * Private fields section
-        */
-
-        private readonly LinkedList<Activity> projectActivities = new LinkedList<Activity>();
-        private string pLeader;
+        private readonly List<Activity> projectActivities = new List<Activity>();
+        private string pLeaderId;
         private int sWeek, eWeek;
 
-        /*
-         * Constructor section
-         */
 
         public Project(string projectId)
         {
-            t = projectId ?? throw new ArgumentNullException(nameof(projectId));
+            itemId = projectId ?? throw new ArgumentNullException(nameof(projectId));
         }
-
-
-        /*
-         * Public properties ends
-         */
-
-        
 
         public int startWeek
         {
@@ -48,40 +35,29 @@ namespace ProjectNameSpace
 
         public string projectLeaderId
         {
-            get => pLeader;
-            set => pLeader = value;
+            get => pLeaderId;
+            set => pLeaderId = value;
         }
 
-        /*
-         * Constructor section ends
-         */
-
-        /*
-         * Public properties begin
-         */
-
-        public override ListViewItem itemModel(ListMode mode = ListMode.Tile)
+        public override ListViewItem ItemModel(ListMode mode = ListMode.Tile)
         {
-            if (mode == ListMode.Tile)
-                return itemTileModel();
-
-            return itemListModel();
+            return mode == ListMode.Tile ? ItemTileModel() : ItemListModel();
         }
 
-        public ListViewItem[] activityItemModels()
+        public ListViewItem[] ActivityItemModels()
         {
             int count = projectActivities.Count, index = 0;
             var models = new ListViewItem[count];
             foreach (var a in projectActivities)
             {
-                models[index] = a.itemModel();
+                models[index] = a.ItemModel();
                 index++;
             }
 
             return models;
         }
 
-        public Activity activity(int index)
+        public Activity Activity(int index)
         {
             var i = 0;
             foreach (var a in projectActivities)
@@ -91,47 +67,23 @@ namespace ProjectNameSpace
             return null;
         }
 
-        public Activity activity(string activityId)
+        public Activity Activity(string activityId) => projectActivities.Where(item => item.ActivityId == activityId).ToArray()[0];
+
+        public void AddActivity(Activity a) => projectActivities.Add(a);
+
+        public void RemoveActivity(Activity a) => projectActivities.Remove(a);
+        
+        public int EstimatedDuration() => endWeek - startWeek;
+
+        public List<Activity> AllActivities() => projectActivities.ToList();
+
+        public List<Activity> AssignedActivities(string userName, UserManager uManager)
         {
-            return projectActivities.Where(item => item.Id == activityId).ToArray()[0];
+            var userActivities = projectActivities.Where(item => item.IsUserAssigned(userName));
+            return userActivities.Select(item => new Activity(item,uManager)).ToList();
         }
 
-        public void addActivity(Activity a)
-        {
-            projectActivities.AddLast(a);
-        }
-
-        public void removeActivity(Activity a)
-        {
-            projectActivities.Remove(a);
-        }
-
-        public int estimatedDuration()
-        {
-            return endWeek - startWeek;
-        }
-
-        public List<Activity> allActivities()
-        {
-            return projectActivities.ToList();
-        }
-
-        /*
-        * Create a list of Activity entities for user statistic purposes.
-        */
-
-        public List<Activity> assignedActivities(string userName)
-        {
-            var userActivities = projectActivities.Where(item => item.isUserAssigned(userName));
-            return userActivities.Select(item => new Activity(item)).ToList();
-        }
-
-
-        /*
-         * Private properties section begins
-         */
-
-        private ListViewItem itemTileModel()
+        private ListViewItem ItemTileModel()
         {
             var model = new ListViewItem(id);
 
@@ -147,24 +99,14 @@ namespace ProjectNameSpace
             var endDate = new StringBuilder("Week end: ");
             endDate.Append(endWeek);
             model.SubItems.Add(endDate.ToString());
-
-
-            // Set picture index
+            
             model.ImageIndex = 0;
             model.StateImageIndex = 0;
 
             return model;
         }
 
-        /*
-         * ItemListModel
-         * Returns a ListViewItem to be presented in a ListView with the following data:
-         * - ProjectId
-         * - ProjectleaderId : The username of the projectleader
-         * - Start and estimated end week
-         */
-
-        private ListViewItem itemListModel()
+        private ListViewItem ItemListModel()
         {
             var model = new ListViewItem(id);
 
@@ -173,16 +115,11 @@ namespace ProjectNameSpace
 
             model.SubItems.Add(startWeek.ToString());
             model.SubItems.Add(endWeek.ToString());
-
-            // Set picture index
+            
             model.ImageIndex = 0;
             model.StateImageIndex = 0;
 
             return model;
         }
-
-        /*
-         * Private properties section ends
-         */
     }
 }

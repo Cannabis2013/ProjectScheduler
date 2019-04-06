@@ -2,7 +2,7 @@
 
 namespace Templates
 {
-    [Serializable()]
+    [Serializable]
     public abstract class ItemModelEntity<T>
     {
         public enum ListMode
@@ -11,14 +11,14 @@ namespace Templates
             List
         }
 
-        protected string t;
+        protected string itemId;
 
         public virtual string id
         {
-            get => t;
-            set => t = value;
+            get => itemId;
+            set => itemId = value;
         }
 
-        public abstract T itemModel(ListMode mode = ListMode.Tile);
+        public abstract T ItemModel(ListMode mode = ListMode.Tile);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ProjectNameSpace
+﻿namespace ProjectRelated
 {
     partial class ActivityManagement
     {
@@ -36,9 +36,9 @@
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
-            this.ItemIcons = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ActivityListView = new System.Windows.Forms.ListView();
+            this.ItemIcons = new System.Windows.Forms.ImageList(this.components);
             this.MainLayout.SuspendLayout();
             this.ButtonLayout.SuspendLayout();
             this.SuspendLayout();
@@ -123,6 +123,7 @@
             this.linkLabel3.TabIndex = 2;
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "Delete activity";
+            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
             // 
             // linkLabel4
             // 
@@ -135,12 +136,6 @@
             this.linkLabel4.TabStop = true;
             this.linkLabel4.Text = "Close project management";
             this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel4_LinkClicked);
-            // 
-            // ItemIcons
-            // 
-            this.ItemIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ItemIcons.ImageStream")));
-            this.ItemIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.ItemIcons.Images.SetKeyName(0, "Project_Icon.png");
             // 
             // tableLayoutPanel1
             // 
@@ -170,6 +165,12 @@
             this.ActivityListView.TabIndex = 4;
             this.ActivityListView.UseCompatibleStateImageBehavior = false;
             this.ActivityListView.DoubleClick += new System.EventHandler(this.ActivityListView_DoubleClick);
+            // 
+            // ItemIcons
+            // 
+            this.ItemIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ItemIcons.ImageStream")));
+            this.ItemIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.ItemIcons.Images.SetKeyName(0, "Project_Icon.png");
             // 
             // ActivityManagement
             // 

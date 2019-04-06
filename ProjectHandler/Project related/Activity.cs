@@ -6,180 +6,88 @@ using System.Windows.Forms;
 using Templates;
 using VirtualUserDomain;
 
-
-/*
- * Class Activity has the following important attributes:
- * - Activity identification
- * - Interval weeks like start - and end weeks
- * - Number of assigned users
- * - Total hours registered by all or a single user
- * - A reference to its parent project
- * - A list of assigned TimeObject references to provide an overview of hour registration by the various users
- * - A list of assigned users which is identified by their username attribute
- *
- * More technically it has the following methods described by pseudo:
- * - Id (which in this case gets its value by the inherited field variable 't')
- * - Start and end weeks
- * - Total registered hours(user = null) : if user = null -> Total registered hours by all users,
- *      else total registered hours by the given user
- * - User assignment:
- * -- assignUser()
- * -- assignUsers()
- * - Register hours:
- * -- addTimeObject()
- */
-
-namespace ProjectNameSpace
+namespace ProjectRelated
 {
-    [Serializable()]
+    [Serializable]
     public class Activity : ItemModelEntity<ListViewItem>
     {
         private readonly List<string> assignedUserIdentities = new List<string>();
         private readonly List<TimeObject> registeredTimeObjects = new List<TimeObject>();
-
-
-        /*
-         * Private methods section ends
-         */
-
-        /*
-         * Constructor section
-         * - Activity(Activity title, assigned users)
-         * - Activity(Activity title)
-         * - Default constructor with no parameters
-         */
-
-        public Activity(string title, int sWeek, int eWeek, string project, List<string> assignedUserIdentities = null)
+        
+        public Activity(string title, int sWeek, int eWeek, string project, UserManager uManager)
         {
-            t = title;
-            parentProjectId = project;
-            startWeek = sWeek;
-            endWeek = eWeek;
-            this.assignedUserIdentities = assignedUserIdentities;
+            itemId = title;
+            ParentProjectId = project;
+            StartWeek = sWeek;
+            EndWeek = eWeek;
         }
 
-        public Activity(string title, int sWeek, int eWeek, string project)
+        public Activity(Activity copy, UserManager uManager)
         {
-            t = title;
-            parentProjectId = project;
-            startWeek = sWeek;
-            endWeek = eWeek;
-        }
-
-        public Activity(int sWeek, int eWeek, string project)
-        {
-            startWeek = sWeek;
-            endWeek = eWeek;
-            parentProjectId = project;
-        }
-
-        /*
-         * Copy constructor which takes an argument as same type.
-         */
-
-        public Activity(Activity copy)
-        {
-            parentProjectId = null;
-            t = copy.t;
-            startWeek = copy.startWeek;
-            endWeek = copy.endWeek;
+            ParentProjectId = null;
+            itemId = copy.itemId;
+            StartWeek = copy.StartWeek;
+            EndWeek = copy.EndWeek;
             assignedUserIdentities = copy.assignedUserIdentities;
             registeredTimeObjects = copy.registeredTimeObjects;
-            parentProjectId = copy.parentProjectId;
+            ParentProjectId = copy.ParentProjectId;
         }
 
-        /*
-         * Constructor section ends
-         */
-
-        /*
-         * public methods section
-         * - get activityId and interval weeks
-         * - Assign users to activity
-         * - Register hour to activity
-         * - Retrieve list of useridentities
-         * - Clear assigned useridentities
-         * - Retrieve item models
-         * -- Retrieve item models for key values overview presentation
-         * -- Retrieve item models for assigned users overview presentation
-         */
-
-
-        public string Id
+        public string ActivityId
         {
-            get => t;
-            set => t = value;
+            get => itemId;
+            set => itemId = value;
         }
 
-        public int startWeek { get; set; }
+        public int StartWeek { get; set; }
 
-        public int endWeek { get; set; }
+        public int EndWeek { get; set; }
 
-        public string parentProjectId { get; set; }
+        public string ParentProjectId { get; set; }
 
-        public int estimatedDuration()
+        public int EstimatedDuration()
         {
-            return endWeek - startWeek;
+            return EndWeek - StartWeek;
         }
 
-        /*
-         * Assign users to activity
-         */
-
-        public void assignUser(string userID)
+        public void AssignUser(string userID)
         {
             assignedUserIdentities.Add(userID);
         }
 
-        public void assignUsers(List<string> userIDs)
+        public void AssignUsers(List<string> userIDs)
         {
             foreach (var userId in userIDs) assignedUserIdentities.Add(userId);
         }
 
-        public bool isUserAssigned()
+        public bool IsUserAssigned(UserManager uManager)
         {
-            var userName = UserManager.currentlyLoggedIn().userName();
+            var userName = uManager.currentlyLoggedIn().UserName();
             return assignedUserIdentities.Any(item => item == userName);
         }
 
-        public bool isUserAssigned(string userName)
+        public bool IsUserAssigned(string userName)
         {
             return assignedUserIdentities.Any(item => item == userName);
         }
 
-        /*
-         * Retrieve a list of assigned usernames
-         */
-
-        public List<string> assignedUsers()
+        public List<string> AssignedUsers()
         {
             return assignedUserIdentities;
         }
 
-        /*
-         * Clear the assignedUserIdentities list
-         */
-
-        public void clearAssignedUserIdentities()
+        public void ClearAssignedUserIdentities()
         {
             assignedUserIdentities.Clear();
         }
 
-        /*
-         * Register hours
-         */
-
-        public void addTimeObject(TimeObject time)
+        public void AddTimeObject(TimeObject time)
         {
             time.owner = this;
             registeredTimeObjects.Add(time);
         }
 
-        /*
-         * Get total hours registered by a given user
-         */
-
-        public int totalRegisteredHours(string userName = null)
+        public int TotalRegisteredHours(string userName = null)
         {
             var totalHours = 0;
             if (userName != null)
@@ -199,16 +107,12 @@ namespace ProjectNameSpace
             return totalHours;
         }
 
-        /*
-         * ItemModel section
-         */
-
-        public override ListViewItem itemModel(ListMode mode = ListMode.Tile)
+        public override ListViewItem ItemModel(ListMode mode = ListMode.Tile)
         {
-            return mode == ListMode.Tile ? itemTileModel() : itemListModel();
+            return mode == ListMode.Tile ? ItemTileModel() : ItemListModel();
         }
 
-        public ListViewItem[] registeredHourItemModels(string userName)
+        public ListViewItem[] RegisteredHourItemModels(string userName)
         {
             var userTimeObjects = registeredTimeObjects.Where(item => item.UserName == userName).ToArray();
 
@@ -229,7 +133,7 @@ namespace ProjectNameSpace
             return models;
         }
 
-        public ListViewItem[] registeredHourItemModels()
+        public ListViewItem[] RegisteredHourItemModels()
         {
             var tObjects = registeredTimeObjects.ToArray();
 
@@ -248,7 +152,7 @@ namespace ProjectNameSpace
             return models;
         }
 
-        public TreeNode assignedUserModels()
+        public TreeNode AssignedUserModels()
         {
             var rootNode = new TreeNode(id);
 
@@ -258,16 +162,12 @@ namespace ProjectNameSpace
             return rootNode;
         }
 
-        /*
-         * Private methods section begins
-         */
-
-        private ListViewItem itemTileModel()
+        private ListViewItem ItemTileModel()
         {
             var model = new ListViewItem(id);
 
             var assignedHours = new StringBuilder("Total assigned hours: ");
-            var totalHours = totalRegisteredHours();
+            var totalHours = TotalRegisteredHours();
             assignedHours.Append(totalHours.ToString());
             model.SubItems.Add(assignedHours.ToString());
 
@@ -280,29 +180,19 @@ namespace ProjectNameSpace
             return model;
         }
 
-        /*
-         * Activity item model
-         * - Id
-         * - Start week
-         * - End week
-         * - Total registered hours
-         * - Number of assigned users
-         * - Parent project
-         */
-
-        private ListViewItem itemListModel()
+        private ListViewItem ItemListModel()
         {
             var model = new ListViewItem(id);
 
-            model.SubItems.Add(startWeek.ToString());
-            model.SubItems.Add(endWeek.ToString());
+            model.SubItems.Add(StartWeek.ToString());
+            model.SubItems.Add(EndWeek.ToString());
 
-            model.SubItems.Add(totalRegisteredHours().ToString());
+            model.SubItems.Add(TotalRegisteredHours().ToString());
 
             var totalUsersAssigned = assignedUserIdentities.Count;
             model.SubItems.Add(totalUsersAssigned.ToString());
 
-            model.SubItems.Add(parentProjectId);
+            model.SubItems.Add(ParentProjectId);
 
             return model;
         }

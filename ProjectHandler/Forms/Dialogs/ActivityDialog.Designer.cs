@@ -411,7 +411,6 @@
             this.projectSelector.Size = new System.Drawing.Size(355, 28);
             this.projectSelector.Sorted = true;
             this.projectSelector.TabIndex = 2;
-            this.projectSelector.DropDown += new System.EventHandler(this.leaderSelector_DropDown);
             this.projectSelector.SelectedIndexChanged += new System.EventHandler(this.projectSelector_SelectedIndexChanged);
             // 
             // ActivityDialog

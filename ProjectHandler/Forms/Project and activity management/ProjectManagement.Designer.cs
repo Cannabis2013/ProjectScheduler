@@ -1,4 +1,4 @@
-﻿namespace ProjectNameSpace
+﻿namespace ProjectRelated
 {
     partial class ProjectManagement
     {

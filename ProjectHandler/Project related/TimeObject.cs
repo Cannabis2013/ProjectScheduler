@@ -4,12 +4,12 @@ using System.Globalization;
 // ReSharper disable FieldCanBeMadeReadOnly.Local
 
 
-namespace ProjectNameSpace
+namespace ProjectRelated
 {
+    [Serializable]
     public class TimeObject
     {
         private readonly int originalRegistrationWeek;
-        private int hours;
         private int latestEditedWeek;
         private Activity parent;
 
@@ -21,7 +21,7 @@ namespace ProjectNameSpace
 
         public TimeObject(int hours, string userName)
         {
-            this.hours = hours;
+            this.Hours = hours;
             this.userName = userName;
 
             var ciCurr = CultureInfo.CurrentCulture;
@@ -32,9 +32,9 @@ namespace ProjectNameSpace
 
         public TimeObject(int hours, string userName, Activity owner)
         {
-            this.hours = hours;
+            this.Hours = hours;
             this.userName = userName;
-            owner.addTimeObject(this);
+            owner.AddTimeObject(this);
 
             var ciCurr = CultureInfo.CurrentCulture;
             originalRegistrationWeek = latestEditedWeek = ciCurr.Calendar.GetWeekOfYear(DateTime.Now,
@@ -42,28 +42,13 @@ namespace ProjectNameSpace
                 DayOfWeek.Monday);
         }
 
-        /*
-         * Copy constructor
-         */
-
         public TimeObject(TimeObject copy)
         {
             parent = copy.owner;
             userName = copy.UserName;
-            hours = copy.Hours;
+            Hours = copy.Hours;
             originalRegistrationWeek = copy.Week();
         }
-
-        /*
-         * Constructor section ends
-         */
-
-        /*
-         * Public properties section begins
-         * - {get;set;} the owner of the object, which in this case is the target activity
-         * - Get the hours assigned to the target activity
-         * - Get the registration week value
-         */
 
         public Activity owner
         {
@@ -71,11 +56,7 @@ namespace ProjectNameSpace
             set => parent = value;
         }
 
-        public int Hours
-        {
-            get => hours;
-            set => hours = value;
-        }
+        public int Hours { get; set; }
 
 
         public string UserName

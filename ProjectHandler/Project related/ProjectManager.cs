@@ -5,221 +5,128 @@ using System.Windows.Forms;
 using Templates;
 using VirtualUserDomain;
 
-namespace ProjectNameSpace
+namespace ProjectRelated
 {
-    /*
-     * ProjectManager
-     * - Add/create project
-     * - Edit projects
-     * - Remove Projects
-     * - Add activity to project
-     * - Project manipulation
-     * -- Add activity to a given project
-     * -- Delete activity within a given project
-     * -- Register work hour to a given activity in a given project
-     * - Retrieve project activities
-     */
-
-    [Serializable()]
+    [Serializable]
     public class ProjectManager
     {
-        /*
-         * Private fields section begins
-         */
         private readonly List<Project> projects = new List<Project>();
-
-        /*
-         * Private fields section ends
-         */
-
-        public ProjectManager()
-        {
-        }
-
-        /*
-         * Public properties section begins
-         * - Add/remove projects
-         * - Get activities
-         */
         
+        public void AddProject(Project p) => projects.Add(p);
 
-        public void addProject(Project p)
-        {
-            projects.Add(p);
-        }
+        public void RemoveProjectAt(int index) => projects.RemoveAt(index);
 
-        public void removeProjectAt(int index)
-        {
-            projects.RemoveAt(index);
-        }
+        public Project ProjectAt(int index) => projects.ElementAt(index);
+        public Project Project(Project p) => projects.Find(item => item.id == p.id);
+        public Project Project(string projectId) => projects.Find(item => item.id == projectId);
 
-        public Project projectAt(int index)
-        {
-            return projects.ElementAt(index);
-        }
+        public List<string> AllProjectIdentities() => projects.Select(item => item.id).ToList();
+        public List<string> AllProjectIdentities(string projectLeaderId) => projects.Where(item => 
+            item.projectLeaderId == projectLeaderId).Select(item => item.id).ToList();
 
-        public Project project(Project p)
-        {
-            return projects.Find(item => item.id == p.id);
-        }
 
-        public Project project(string projectId)
-        {
-            return projects.Find(item => item.id == projectId);
-        }
+        public Activity Activity(string id) => Activities().Find(item => item.ActivityId == id);
 
-        public List<string> allProjectIdentities()
-        {
-            return projects.Select(item => item.id).ToList();
-        }
-
-        public List<string> allProjectIdentities(string projectLeaderId)
-        {
-            return projects.Where(item => item.projectLeaderId == projectLeaderId).Select(item => item.id).ToList();
-        }
-
-        // Activities section begins
-
-        public Activity activity(string id) => activities().Find(item => item.Id == id);
-
-        public List<Activity> activities()
+        public List<Activity> Activities()
         {
             var resultingList = new List<Activity>();
             foreach (var p in projects)
             {
-                var userActivities = p.allActivities();
+                var userActivities = p.AllActivities();
                 resultingList.AddRange(userActivities);
             }
 
             return resultingList;
         }
 
-        public List<Activity> activities(string userName)
+        public List<Activity> Activities(string userName, UserManager uManager)
         {
             var resultingList = new List<Activity>();
             foreach (var p in projects)
             {
-                var userActivities = p.assignedActivities(userName);
+                var userActivities = p.AssignedActivities(userName, uManager);
                 resultingList.AddRange(userActivities);
             }
 
             return resultingList;
         }
 
-        // Activities section ends
-
-
-        /*
-         * Item models section begins
-         * - Returns a list of Project Item models with the following columndata:
-         * -- ProjectId
-         * -- Project leader username
-         * -- Start and estimated end week
-         */
-
-        public ListViewItem[] projectItemModels(ItemModelEntity<ListViewItem>.ListMode mode)
+        public ListViewItem[] ProjectItemModels(ItemModelEntity<ListViewItem>.ListMode mode)
         {
             int count = projects.Count, index = 0;
             var models = new ListViewItem[count];
 
             foreach (var p in projects)
-                models[index++] = p.itemModel(mode);
+                models[index++] = p.ItemModel(mode);
 
             return models;
         }
 
-        /*
-         * Models all the user time registration for visual representation in a ListView
-         */
-
-        public ListViewItem[] registeredUserHourModels(string userName = null)
+        public ListViewItem[] RegisteredUserHourModels(string userName = null)
         {
             var activities = new List<ListViewItem>();
             if (userName != null)
                 foreach (var p in projects)
-                foreach (var activity in p.allActivities())
+                foreach (var activity in p.AllActivities())
                 {
-                    var models = activity.registeredHourItemModels(userName).ToList();
+                    var models = activity.RegisteredHourItemModels(userName).ToList();
                     activities.AddRange(models);
                 }
             else
                 foreach (var p in projects)
-                foreach (var activity in p.allActivities())
+                foreach (var activity in p.AllActivities())
                 {
-                    var models = activity.registeredHourItemModels().ToList();
+                    var models = activity.RegisteredHourItemModels().ToList();
                     activities.AddRange(models);
                 }
 
             return activities.ToArray();
         }
 
-        /*
-         * Returns a list of Activity item models where each item has the following column data:
-         * - Id
-         * - Start week
-         * - End week
-         * - Total registered hours
-         * - Number of assigned users
-         * - Parent project
-         *
-         * Furthermore there is some access restrictions:
-         * - Admin can retrieve all activities
-         * - Projectleaders has access to activities in their corresponding project
-         * - Employees has no access.
-         */
-
-        public ListViewItem[] projectActivityItemModels()
+        public ListViewItem[] ProjectActivityItemModels(UserManager uManager)
         {
             var models = new List<ListViewItem>();
-            if (UserManager.verifyUserState() == User.UserRole.Admin)
+            if (uManager.verifyUserState() == User.UserRole.Admin)
             {
                 foreach (var p in projects)
-                foreach (var activity in p.allActivities())
+                foreach (var activity in p.AllActivities())
                 {
-                    var model = activity.itemModel(ItemModelEntity<ListViewItem>.ListMode.List);
+                    var model = activity.ItemModel(ItemModelEntity<ListViewItem>.ListMode.List);
                     models.Add(model);
                 }
 
                 return models.ToArray();
             }
 
-            var userId = UserManager.currentlyLoggedIn().userName();
+            var userId = uManager.currentlyLoggedIn().UserName();
 
             foreach (var p in projects)
-            foreach (var activity in p.allActivities())
+            foreach (var activity in p.AllActivities())
             {
-                if (!activity.isUserAssigned() && p.projectLeaderId != userId)
+                if (!activity.IsUserAssigned(uManager) && p.projectLeaderId != userId)
                     continue;
 
-                var model = activity.itemModel(ItemModelEntity<ListViewItem>.ListMode.List);
+                var model = activity.ItemModel(ItemModelEntity<ListViewItem>.ListMode.List);
                 models.Add(model);
             }
 
             return models.ToArray();
         }
 
-        /*
-         * User assigned activity item models
-         * - Activity id
-         * - Estimated duration
-         * - Total registered hours by a given user
-         * - Parent project identification
-         */
-
-        public ListViewItem[] userAssignedActivityModels()
+        public ListViewItem[] UserAssignedActivityModels(UserManager uManager)
         {
-            var userName = UserManager.currentlyLoggedIn().userName();
-            var assignedActivities = activities(userName);
+            var userName = uManager.currentlyLoggedIn().UserName();
+            var assignedActivities = Activities(userName, uManager);
             var count = assignedActivities.Count;
             var models = new ListViewItem[count];
             var index = 0;
 
             foreach (var activity in assignedActivities)
             {
-                var model = new ListViewItem(activity.Id);
-                model.SubItems.Add(activity.estimatedDuration().ToString());
-                model.SubItems.Add(activity.totalRegisteredHours(userName).ToString());
-                var projectId = activity.parentProjectId;
+                var model = new ListViewItem(activity.ActivityId);
+                model.SubItems.Add(activity.EstimatedDuration().ToString());
+                model.SubItems.Add(activity.TotalRegisteredHours(userName).ToString());
+                var projectId = activity.ParentProjectId;
                 model.SubItems.Add(projectId);
 
                 models[index++] = model;
@@ -228,19 +135,19 @@ namespace ProjectNameSpace
             return models;
         }
 
-        public ListViewItem[] userAssignedActivityModels(string userName)
+        public ListViewItem[] UserAssignedActivityModels(string userName, UserManager uManager)
         {
-            var assignedActivities = activities(userName);
+            var assignedActivities = Activities(userName,uManager);
             var count = assignedActivities.Count;
             var models = new ListViewItem[count];
             var index = 0;
 
             foreach (var activity in assignedActivities)
             {
-                var model = new ListViewItem(activity.Id);
-                model.SubItems.Add(activity.estimatedDuration().ToString());
-                model.SubItems.Add(activity.totalRegisteredHours(userName).ToString());
-                var projectId = activity.parentProjectId;
+                var model = new ListViewItem(activity.ActivityId);
+                model.SubItems.Add(activity.EstimatedDuration().ToString());
+                model.SubItems.Add(activity.TotalRegisteredHours(userName).ToString());
+                var projectId = activity.ParentProjectId;
                 model.SubItems.Add(projectId);
 
                 models[index++] = model;
@@ -249,22 +156,10 @@ namespace ProjectNameSpace
             return models;
         }
 
-        /*
-         * Item models section ends
-         */
-
-        /*
-         * User activities section begins
-         
-
-        /*
-         * Checks if the user is available within a given timespan
-         */
-
-        public User.Availability isUserAvailableWithinTimeSpan(string userName, int fromWeek, int toWeek)
+        public User.Availability IsUserAvailableWithinTimeSpan(string userName, UserManager uManager, int fromWeek, int toWeek)
         {
             int partlyOccurrences = 0, fullOccurrences = 0;
-            foreach (var item in userActivityEntities(userName))
+            foreach (var item in UserActivityEntities(userName,uManager))
                 if (fromWeek < item.startWeek && toWeek > item.endWeek)
                     partlyOccurrences++;
                 else if (fromWeek < item.startWeek && item.withinTimespan(toWeek))
@@ -281,10 +176,10 @@ namespace ProjectNameSpace
                 : User.Availability.Available;
         }
 
-        public IEnumerable<ActivityEntity> userActivityEntities(string userName)
+        public IEnumerable<ActivityEntity> UserActivityEntities(string userName,UserManager uManager)
         {
-            return activities(userName).Select(item =>
-                new ActivityEntity(item.startWeek, item.endWeek, item.id)).ToList();
+            return Activities(userName,uManager).Select(item =>
+                new ActivityEntity(item.StartWeek, item.EndWeek, item.id)).ToList();
         }
     }
 }

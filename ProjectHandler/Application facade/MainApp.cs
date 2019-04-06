@@ -4,45 +4,52 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using Projecthandler.Class_forms;
 using Projecthandler.Custom_events;
-using ProjectNameSpace;
+using ProjectRelated;
 using VirtualUserDomain;
+
 
 namespace MainUserSpace
 {
     public class MainApp
     {
+        private const string FileName = "ProjectFile";
         private readonly ProjectManager pManager;
-        private readonly UserManager uManager;
+        private readonly UserManager uManager = new UserManager();
 
         private bool isLastWindow = true;
 
         public MainApp()
         {
-            if (File.Exists("ProjectFile"))
+            if (File.Exists(FileName))
             {
                 Stream openFileStream = File.OpenRead("ProjectFile");
-                BinaryFormatter deserializer = new BinaryFormatter();
-                pManager = (ProjectManager)deserializer.Deserialize(openFileStream);
-
-                openFileStream.Close();
+                var deserializer = new BinaryFormatter();
+                try
+                {
+                    pManager = (ProjectManager)deserializer.Deserialize(openFileStream);
+                    openFileStream.Close();
+                }
+                catch (Exception)
+                {
+                    openFileStream.Close();
+                    File.Delete(FileName);
+                    pManager = new ProjectManager();
+                }   
             }
             else
-            {
                 pManager = new ProjectManager();
-            }
-            
-            uManager = new UserManager(pManager);
 
-            launchLoginView();
+
+            LaunchLoginView();
         }
 
         // For testing purposes
         public MainApp(string p0, string p1)
         {
-            launchLoginView(p0, p1);
+            LaunchLoginView(p0, p1);
         }
 
-        private void launchLoginView(string uName = null, string pass = null)
+        private void LaunchLoginView(string uName = null, string pass = null)
         {
             var lView = new LoginView();
 
@@ -57,12 +64,13 @@ namespace MainUserSpace
         private void loginView_OnSubmitClicked(object sender, MyEventArgs e)
         {
             var lView = (LoginView) sender;
-            if (UserManager.logIn(e.arg1, e.arg2, UserManager.getLocalAddress()))
+            if (uManager.logIn(e.arg1, e.arg2, UserManager.getLocalAddress()))
             {
                 isLastWindow = false;
-                var view = new MainWindow(pManager);
-                view.logoutEvent += mView_logoutEvent;
-                view.closeEvent += mView_closeEvent;
+                var view = new MainWindow(pManager,uManager);
+                view.logoutEvent += _logoutEvent;
+                view.CloseRequest += _CloseRequest;
+                view.HardCloseEvent += _HardCloseEvent;
 
                 lView.Close();
                 view.Show();
@@ -76,20 +84,37 @@ namespace MainUserSpace
 
         private void loginView_onFormClose(object sender, EventArgs e)
         {
-            if (isLastWindow)
-                Application.Exit();
+            if (!isLastWindow)
+                return;
+
+            Persistence();
+            Application.Exit();
         }
 
-        private void mView_logoutEvent(object sender, EventArgs e)
+        private void _logoutEvent(object sender, EventArgs e)
         {
             var view = (MainWindow) sender;
             view.Close();
         }
 
-        private void mView_closeEvent(object sender, EventArgs e)
+        private void _CloseRequest(object sender, EventArgs e)
         {
             isLastWindow = true;
-            launchLoginView();
+            LaunchLoginView();
+        }
+
+        private void _HardCloseEvent(object sender, EventArgs e)
+        {
+            Persistence();
+            Application.Exit();
+        }
+
+        private void Persistence()
+        {
+            Stream saveFileStream = File.Create(FileName);
+            var serializer = new BinaryFormatter();
+            serializer.Serialize(saveFileStream, pManager);
+            saveFileStream.Close();
         }
     }
 }
