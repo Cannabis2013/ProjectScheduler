@@ -22,7 +22,7 @@ namespace ProjectRelated
             EndWeek = eWeek;
         }
 
-        public Activity(Activity copy, UserManager uManager)
+        public Activity(Activity copy)
         {
             ParentProjectId = null;
             itemId = copy.itemId;
@@ -45,19 +45,14 @@ namespace ProjectRelated
 
         public string ParentProjectId { get; set; }
 
-        public int EstimatedDuration()
-        {
-            return EndWeek - StartWeek;
-        }
+        public int EstimatedDuration() => EndWeek - StartWeek;
 
-        public void AssignUser(string userID)
-        {
-            assignedUserIdentities.Add(userID);
-        }
+        public void AssignUser(string userID) => assignedUserIdentities.Add(userID);
 
         public void AssignUsers(List<string> userIDs)
         {
-            foreach (var userId in userIDs) assignedUserIdentities.Add(userId);
+            foreach (var userId in userIDs)
+                assignedUserIdentities.Add(userId);
         }
 
         public bool IsUserAssigned(UserManager uManager)
@@ -83,9 +78,14 @@ namespace ProjectRelated
 
         public void AddTimeObject(TimeObject time)
         {
-            time.owner = this;
+            time.ParentActivityId = ActivityId;
             registeredTimeObjects.Add(time);
         }
+
+        public List<TimeObject> TimeObjects(string userName) =>
+            registeredTimeObjects.Where(item => item.UserName == userName).ToList();
+
+        public List<TimeObject> TimeObjects() => registeredTimeObjects;
 
         public int TotalRegisteredHours(string userName = null)
         {
@@ -122,13 +122,7 @@ namespace ProjectRelated
             var index = 0;
 
             foreach (var tObject in tObjects)
-            {
-                var model = new ListViewItem(tObject.UserName);
-                model.SubItems.Add(tObject.Hours.ToString());
-                model.SubItems.Add(tObject.Week().ToString());
-
-                models[index++] = model;
-            }
+                models[index++] = tObject.ItemModel();
 
             return models;
         }
@@ -141,13 +135,7 @@ namespace ProjectRelated
             var index = 0;
 
             foreach (var tObject in tObjects)
-            {
-                var model = new ListViewItem(tObject.UserName);
-                model.SubItems.Add(tObject.Hours.ToString());
-                model.SubItems.Add(tObject.Week().ToString());
-
-                models[index++] = model;
-            }
+                models[index++] = tObject.ItemModel();  
 
             return models;
         }

@@ -77,10 +77,10 @@ namespace ProjectRelated
 
         public List<Activity> AllActivities() => projectActivities.ToList();
 
-        public List<Activity> AssignedActivities(string userName, UserManager uManager)
+        public List<Activity> AssignedActivities(string userName)
         {
             var userActivities = projectActivities.Where(item => item.IsUserAssigned(userName));
-            return userActivities.Select(item => new Activity(item,uManager)).ToList();
+            return userActivities.Select(item => new Activity(item)).ToList();
         }
 
         private ListViewItem ItemTileModel()

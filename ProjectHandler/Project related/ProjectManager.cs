@@ -24,7 +24,6 @@ namespace ProjectRelated
         public List<string> AllProjectIdentities(string projectLeaderId) => projects.Where(item => 
             item.projectLeaderId == projectLeaderId).Select(item => item.id).ToList();
 
-
         public Activity Activity(string id) => Activities().Find(item => item.ActivityId == id);
 
         public List<Activity> Activities()
@@ -39,16 +38,42 @@ namespace ProjectRelated
             return resultingList;
         }
 
-        public List<Activity> Activities(string userName, UserManager uManager)
+        public List<Activity> Activities(string userName)
         {
             var resultingList = new List<Activity>();
             foreach (var p in projects)
             {
-                var userActivities = p.AssignedActivities(userName, uManager);
+                var userActivities = p.AssignedActivities(userName);
                 resultingList.AddRange(userActivities);
             }
 
             return resultingList;
+        }
+
+        public List<TimeObject> ActivityTimeObjects()
+        {
+            var TimeObjects = new List<TimeObject>();
+            var activities = Activities();
+
+            foreach (var activity in activities)
+            {
+                var tm = activity.TimeObjects().ToList();
+                TimeObjects.AddRange(tm);
+            }
+            return TimeObjects;
+        }
+
+        public List<TimeObject> ActivityTimeObjects(string userName)
+        {
+            var TimeObjects = new List<TimeObject>();
+            var activities = Activities(userName);
+
+            foreach (var activity in activities)
+            {
+                var tm = activity.TimeObjects(userName).ToList();
+                TimeObjects.AddRange(tm);
+            }
+            return TimeObjects;
         }
 
         public ListViewItem[] ProjectItemModels(ItemModelEntity<ListViewItem>.ListMode mode)

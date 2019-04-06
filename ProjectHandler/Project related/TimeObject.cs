@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows.Forms;
+using Templates;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Local
-
 
 namespace ProjectRelated
 {
     [Serializable]
-    public class TimeObject
+    public class TimeObject : ItemModelEntity<ListViewItem>
     {
         private readonly int originalRegistrationWeek;
         private int latestEditedWeek;
-        private Activity parent;
-
-
+        private string parentActivityId;
         private string userName;
-        /*
-         * Constructor section begins
-         */
+        
 
         public TimeObject(int hours, string userName)
         {
@@ -35,6 +32,7 @@ namespace ProjectRelated
             this.Hours = hours;
             this.userName = userName;
             owner.AddTimeObject(this);
+            parentActivityId = owner.ActivityId;
 
             var ciCurr = CultureInfo.CurrentCulture;
             originalRegistrationWeek = latestEditedWeek = ciCurr.Calendar.GetWeekOfYear(DateTime.Now,
@@ -44,16 +42,16 @@ namespace ProjectRelated
 
         public TimeObject(TimeObject copy)
         {
-            parent = copy.owner;
+            parentActivityId = copy.ParentActivityId;
             userName = copy.UserName;
             Hours = copy.Hours;
             originalRegistrationWeek = copy.Week();
         }
 
-        public Activity owner
+        public string ParentActivityId
         {
-            get => parent;
-            set => parent = value;
+            get => parentActivityId;
+            set => parentActivityId = value;
         }
 
         public int Hours { get; set; }
@@ -65,9 +63,23 @@ namespace ProjectRelated
             set => userName = value;
         }
 
+        public string CorrespondingProjectId(ProjectManager pManager)
+        {
+            return pManager.Activity(ParentActivityId).ParentProjectId;
+        }
+
         public int Week()
         {
             return originalRegistrationWeek == latestEditedWeek ? originalRegistrationWeek : latestEditedWeek;
+        }
+
+        public override ListViewItem ItemModel(ListMode mode = ListMode.Tile)
+        {
+            var model = new ListViewItem(UserName);
+            model.SubItems.Add(Hours.ToString());
+            model.SubItems.Add(Week().ToString());
+
+            return model;
         }
     }
 }
