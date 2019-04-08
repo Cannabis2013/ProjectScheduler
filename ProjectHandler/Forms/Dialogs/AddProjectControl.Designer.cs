@@ -32,8 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddProjectControl));
             this.label6 = new System.Windows.Forms.Label();
             this.MainLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.endWeekSelector = new System.Windows.Forms.ComboBox();
-            this.startWeekSelector = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -42,8 +40,10 @@
             this.leaderSelector = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.UserIcons = new System.Windows.Forms.ImageList(this.components);
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.UserIcons = new System.Windows.Forms.ImageList(this.components);
+            this.StartDateSelector = new System.Windows.Forms.DateTimePicker();
+            this.EndDateSelector = new System.Windows.Forms.DateTimePicker();
             this.MainLayout.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -74,8 +74,6 @@
             this.MainLayout.ColumnCount = 2;
             this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
             this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.MainLayout.Controls.Add(this.endWeekSelector, 1, 3);
-            this.MainLayout.Controls.Add(this.startWeekSelector, 1, 2);
             this.MainLayout.Controls.Add(this.label2, 0, 2);
             this.MainLayout.Controls.Add(this.label3, 0, 3);
             this.MainLayout.Controls.Add(this.label4, 0, 1);
@@ -84,6 +82,8 @@
             this.MainLayout.Controls.Add(this.leaderSelector, 1, 4);
             this.MainLayout.Controls.Add(this.label6, 0, 0);
             this.MainLayout.Controls.Add(this.tableLayoutPanel1, 0, 6);
+            this.MainLayout.Controls.Add(this.StartDateSelector, 1, 2);
+            this.MainLayout.Controls.Add(this.EndDateSelector, 1, 3);
             this.MainLayout.Location = new System.Drawing.Point(0, 0);
             this.MainLayout.Name = "MainLayout";
             this.MainLayout.RowCount = 7;
@@ -96,32 +96,6 @@
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.MainLayout.Size = new System.Drawing.Size(504, 348);
             this.MainLayout.TabIndex = 1;
-            // 
-            // endWeekSelector
-            // 
-            this.endWeekSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.endWeekSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.endWeekSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.endWeekSelector.FormattingEnabled = true;
-            this.endWeekSelector.Location = new System.Drawing.Point(131, 113);
-            this.endWeekSelector.Name = "endWeekSelector";
-            this.endWeekSelector.Size = new System.Drawing.Size(370, 28);
-            this.endWeekSelector.TabIndex = 2;
-            // 
-            // startWeekSelector
-            // 
-            this.startWeekSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.startWeekSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.startWeekSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startWeekSelector.FormattingEnabled = true;
-            this.startWeekSelector.Location = new System.Drawing.Point(131, 73);
-            this.startWeekSelector.Name = "startWeekSelector";
-            this.startWeekSelector.Size = new System.Drawing.Size(370, 28);
-            this.startWeekSelector.TabIndex = 1;
             // 
             // label2
             // 
@@ -238,12 +212,6 @@
             this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // UserIcons
-            // 
-            this.UserIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("UserIcons.ImageStream")));
-            this.UserIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.UserIcons.Images.SetKeyName(0, "User.png");
-            // 
             // linkLabel2
             // 
             this.linkLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -258,6 +226,32 @@
             this.linkLabel2.Text = "Cancel";
             this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
+            // UserIcons
+            // 
+            this.UserIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("UserIcons.ImageStream")));
+            this.UserIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.UserIcons.Images.SetKeyName(0, "User.png");
+            // 
+            // StartDateSelector
+            // 
+            this.StartDateSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.StartDateSelector.Location = new System.Drawing.Point(131, 73);
+            this.StartDateSelector.Name = "StartDateSelector";
+            this.StartDateSelector.Size = new System.Drawing.Size(370, 20);
+            this.StartDateSelector.TabIndex = 7;
+            // 
+            // EndDateSelector
+            // 
+            this.EndDateSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.EndDateSelector.Location = new System.Drawing.Point(131, 113);
+            this.EndDateSelector.Name = "EndDateSelector";
+            this.EndDateSelector.Size = new System.Drawing.Size(370, 20);
+            this.EndDateSelector.TabIndex = 7;
             // 
             // AddProjectControl
             // 
@@ -280,8 +274,6 @@
 
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TableLayoutPanel MainLayout;
-        private System.Windows.Forms.ComboBox endWeekSelector;
-        private System.Windows.Forms.ComboBox startWeekSelector;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -292,5 +284,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.DateTimePicker StartDateSelector;
+        private System.Windows.Forms.DateTimePicker EndDateSelector;
     }
 }

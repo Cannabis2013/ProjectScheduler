@@ -13,7 +13,7 @@ namespace ProjectRelated
     {
         private readonly List<Activity> projectActivities = new List<Activity>();
         private string pLeaderId;
-        private int sWeek, eWeek;
+        private DateTime startDate, endDate;
 
 
         public Project(string projectId)
@@ -21,16 +21,16 @@ namespace ProjectRelated
             itemId = projectId ?? throw new ArgumentNullException(nameof(projectId));
         }
 
-        public int startWeek
+        public DateTime StartDate
         {
-            get => sWeek;
-            set => sWeek = value;
+            get => startDate;
+            set => startDate = value;
         }
 
-        public int endWeek
+        public DateTime EndDate
         {
-            get => eWeek;
-            set => eWeek = value;
+            get => endDate;
+            set => endDate = value;
         }
 
         public string projectLeaderId
@@ -73,7 +73,6 @@ namespace ProjectRelated
 
         public void RemoveActivity(Activity a) => projectActivities.Remove(a);
         
-        public int EstimatedDuration() => endWeek - startWeek;
 
         public List<Activity> AllActivities() => projectActivities.ToList();
 
@@ -93,11 +92,11 @@ namespace ProjectRelated
 
 
             var startDate = new StringBuilder("Week begin: ");
-            startDate.Append(startWeek);
+            startDate.Append(StartDate);
             model.SubItems.Add(startDate.ToString());
 
             var endDate = new StringBuilder("Week end: ");
-            endDate.Append(endWeek);
+            endDate.Append(EndDate);
             model.SubItems.Add(endDate.ToString());
             
             model.ImageIndex = 0;
@@ -113,8 +112,8 @@ namespace ProjectRelated
             var userLeader = new StringBuilder(projectLeaderId);
             model.SubItems.Add(userLeader.ToString());
 
-            model.SubItems.Add(startWeek.ToString());
-            model.SubItems.Add(endWeek.ToString());
+            model.SubItems.Add(StartDate.ToString());
+            model.SubItems.Add(EndDate.ToString());
             
             model.ImageIndex = 0;
             model.StateImageIndex = 0;

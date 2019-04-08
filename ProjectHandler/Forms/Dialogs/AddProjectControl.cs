@@ -28,8 +28,8 @@ namespace Projecthandler.Forms.Dialogs
         {
             this.uManager = uManager;
             InitializeComponent();
-
-            initializeSelectors();
+            
+            updateLeaderComboBoxView();
 
             mode = DialogMode.AddMode;
         }
@@ -40,7 +40,7 @@ namespace Projecthandler.Forms.Dialogs
             this.uManager = uManager;
 
             InitializeComponent();
-            initializeSelectors();
+            updateLeaderComboBoxView();
             initializeDialogValues();
 
             mode = DialogMode.EditMode;
@@ -50,16 +50,10 @@ namespace Projecthandler.Forms.Dialogs
         {
             string title = projectIDSelector.Text, pLeader = leaderSelector.Text;
 
-            if (!int.TryParse(startWeekSelector.Text, out var sWeek))
-                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
-
-            if (!int.TryParse(endWeekSelector.Text, out var eWeek))
-                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
-
             var p = new Project(title)
             {
-                startWeek = sWeek,
-                endWeek = eWeek,
+                StartDate = StartDateSelector.Value,
+                EndDate = EndDateSelector.Value,
                 projectLeaderId = pLeader
             };
 
@@ -68,7 +62,7 @@ namespace Projecthandler.Forms.Dialogs
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (projectIDSelector.Text == "" || startWeekSelector.Text == "")
+            if (projectIDSelector.Text == "")
                 return;
 
             if (mode == DialogMode.AddMode)
@@ -81,30 +75,11 @@ namespace Projecthandler.Forms.Dialogs
         {
             temporaryProject.id = projectIDSelector.Text;
             temporaryProject.projectLeaderId = leaderSelector.Text;
-
-            if (!int.TryParse(startWeekSelector.Text, out var sWeek))
-                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
-
-            if (!int.TryParse(endWeekSelector.Text, out var eWeek))
-                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
-
-            temporaryProject.startWeek = sWeek;
-            temporaryProject.endWeek = eWeek;
+            
+            temporaryProject.StartDate = StartDateSelector.Value;
+            temporaryProject.EndDate = EndDateSelector.Value;
 
             OnEditClicked?.Invoke(this, new EventArgs());
-        }
-
-        private void initializeSelectors()
-        {
-            for (var i = 1; i <= 52; i++)
-            {
-                startWeekSelector.Items.Add(i.ToString());
-                endWeekSelector.Items.Add(i.ToString());
-            }
-
-            startWeekSelector.SelectedIndex = 0;
-            endWeekSelector.SelectedIndex = 0;
-            updateLeaderComboBoxView();
         }
 
         private void updateLeaderComboBoxView()
@@ -116,8 +91,8 @@ namespace Projecthandler.Forms.Dialogs
         private void initializeDialogValues()
         {
             projectIDSelector.Text = temporaryProject.id;
-            startWeekSelector.Text = temporaryProject.startWeek.ToString();
-            endWeekSelector.Text = temporaryProject.endWeek.ToString();
+            StartDateSelector.Value = temporaryProject.StartDate;
+            EndDateSelector.Value = temporaryProject.EndDate;
             leaderSelector.Text = temporaryProject.projectLeaderId;
         }
 

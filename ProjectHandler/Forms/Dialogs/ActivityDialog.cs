@@ -15,6 +15,16 @@ namespace DialogNamespace
         private readonly ProjectManager pManager;
         private readonly UserManager uManager;
 
+        private enum DialogMode
+        {
+            AddMode,
+            EditMode
+        }
+
+        public event EventHandler<EventArgs> OnSubmitPushed;
+        public event EventHandler<EventArgs> OnEditPushed;
+
+
         public ActivityDialog(ProjectManager pManager, UserManager uManager)
         {
             this.pManager = pManager;
@@ -49,40 +59,12 @@ namespace DialogNamespace
             set => base.Text = value;
         }
 
-        private void InitializeSelectors(int sVal, int eVal)
+        private void InitializeSelectors()
         {
-            startWeekSelector.Items.Clear();
-            endWeekSelector.Items.Clear();
-            if (eVal < sVal)
+            for (int i = 0; i < 52; i++)
             {
-                for (var i = eVal; i < 52; i++)
-                {
-                    startWeekSelector.Items.Add(i.ToString());
-                    endWeekSelector.Items.Add(i.ToString());
-                }
-
-                for (var i = 0; i < 52; i++)
-                {
-                    startWeekSelector.Items.Add(i.ToString());
-                    endWeekSelector.Items.Add(i.ToString());
-                }
-
-                startWeekSelector.SelectedIndex = 0;
-                endWeekSelector.SelectedIndex = 0;
-            }
-            else
-            {
-                for (var i = sVal; i <= eVal; i++)
-                {
-                    startWeekSelector.Items.Add(i.ToString());
-                    endWeekSelector.Items.Add(i.ToString());
-                }
-            }
-
-            if (mode == DialogMode.EditMode)
-            {
-                startWeekSelector.Text = activity.StartWeek.ToString();
-                endWeekSelector.Text = activity.EndWeek.ToString();
+                startWeekSelector.Items.Add(i.ToString());
+                endWeekSelector.Items.Add(i.ToString());
             }
         }
 
@@ -110,7 +92,7 @@ namespace DialogNamespace
             projectSelector.Items.Add(activity.ParentProjectId);
             projectSelector.Text = activity.ParentProjectId;
             var p = pManager.Project(activity.ParentProjectId);
-            InitializeSelectors(p.startWeek,p.endWeek);
+            InitializeSelectors();
             startWeekSelector.Text = activity.StartWeek.ToString();
             endWeekSelector.Text = activity.EndWeek.ToString();
             var assignedUsers = activity.AssignedUsers();
@@ -257,33 +239,6 @@ namespace DialogNamespace
                 UserListView.Items.Remove((ListViewItem) item);
                 AssignedUserListView.Items.Add((ListViewItem) item);
             }
-        }
-
-        public event EventHandler<EventArgs> OnSubmitPushed;
-        public event EventHandler<EventArgs> OnEditPushed;
-
-        private void projectSelector_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var cIndex = projectSelector.SelectedIndex;
-            if (cIndex != -1)
-            {
-                startWeekSelector.Enabled = true;
-                endWeekSelector.Enabled = true;
-
-                var p = pManager.ProjectAt(cIndex);
-                InitializeSelectors(p.startWeek, p.endWeek);
-            }
-            else
-            {
-                startWeekSelector.Enabled = false;
-                endWeekSelector.Enabled = false;
-            }
-        }
-
-        private enum DialogMode
-        {
-            AddMode,
-            EditMode
         }
     }
 }
