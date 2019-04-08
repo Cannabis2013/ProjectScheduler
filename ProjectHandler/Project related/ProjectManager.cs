@@ -76,7 +76,7 @@ namespace ProjectRelated
             return TimeObjects;
         }
 
-        public ListViewItem[] ProjectItemModels(ItemModelEntity<ListViewItem>.ListMode mode)
+        public ListViewItem[] ProjectItemModels(ItemModelEntity<ListViewItem>.ListMode mode = ItemModelEntity<ListViewItem>.ListMode.List)
         {
             int count = projects.Count, index = 0;
             var models = new ListViewItem[count];
@@ -87,25 +87,34 @@ namespace ProjectRelated
             return models;
         }
 
-        public ListViewItem[] RegisteredUserHourModels(string userName = null)
+        public ListViewItem[] ActivityTimeObjectModels()
         {
             var activities = new List<ListViewItem>();
-            if (userName != null)
-                foreach (var p in projects)
+            foreach (var p in projects)
+            {
                 foreach (var activity in p.AllActivities())
                 {
-                    var models = activity.RegisteredHourItemModels(userName).ToList();
+                    var models = activity.TimeObjectModels().ToList();
                     activities.AddRange(models);
                 }
-            else
-                foreach (var p in projects)
-                foreach (var activity in p.AllActivities())
-                {
-                    var models = activity.RegisteredHourItemModels().ToList();
-                    activities.AddRange(models);
-                }
+            }
 
             return activities.ToArray();
+        }
+
+        public ListViewItem[] ActivityTimeObjectModels(string userName)
+        {
+            var TimeObjectModels = new List<ListViewItem>();
+
+            foreach (var p in projects)
+            {
+                foreach (var activity in p.AllActivities())
+                {
+                    var models = activity.TimeObjectModels(userName).ToList();
+                    TimeObjectModels.AddRange(models);
+                }
+            }
+            return TimeObjectModels.ToArray();
         }
 
         public ListViewItem[] ProjectActivityItemModels(UserManager uManager)
@@ -141,7 +150,7 @@ namespace ProjectRelated
         public ListViewItem[] UserAssignedActivityModels(UserManager uManager)
         {
             var userName = uManager.currentlyLoggedIn().UserName();
-            var assignedActivities = Activities(userName, uManager);
+            var assignedActivities = Activities(userName);
             var count = assignedActivities.Count;
             var models = new ListViewItem[count];
             var index = 0;
@@ -160,9 +169,9 @@ namespace ProjectRelated
             return models;
         }
 
-        public ListViewItem[] UserAssignedActivityModels(string userName, UserManager uManager)
+        public ListViewItem[] UserAssignedActivityModels(string userName)
         {
-            var assignedActivities = Activities(userName,uManager);
+            var assignedActivities = Activities(userName);
             var count = assignedActivities.Count;
             var models = new ListViewItem[count];
             var index = 0;
@@ -203,7 +212,7 @@ namespace ProjectRelated
 
         public IEnumerable<ActivityEntity> UserActivityEntities(string userName,UserManager uManager)
         {
-            return Activities(userName,uManager).Select(item =>
+            return Activities(userName).Select(item =>
                 new ActivityEntity(item.StartWeek, item.EndWeek, item.id)).ToList();
         }
     }

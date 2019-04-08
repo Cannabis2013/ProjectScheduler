@@ -1,8 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
+using Mng;
 using ProjectRelated;
 using VirtualUserDomain;
 
@@ -70,15 +69,8 @@ namespace MainUserSpace
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (uManager.verifyUserState() == User.UserRole.Admin)
-            {
-                var pMng = new ProjectManagement(pManager,uManager);
-                pMng.ShowDialog(this);
-            }
-            else
-            {
-                MessageBox.Show(@"Administrator privilliges required YOU FUCKING NAZI PIG!");
-            }
+            var mng = new Management(pManager,uManager);
+            mng.ShowDialog(this);
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

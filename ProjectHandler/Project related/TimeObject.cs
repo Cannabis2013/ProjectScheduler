@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 using System.Windows.Forms;
 using Templates;
 
@@ -75,9 +76,28 @@ namespace ProjectRelated
 
         public override ListViewItem ItemModel(ListMode mode = ListMode.Tile)
         {
-            var model = new ListViewItem(UserName);
+            var model = new ListViewItem();
+
+            var userId = new StringBuilder("User: ");
+            userId.Append(UserName);
+            model.Text = userId.ToString();
+
+            var hourString = new StringBuilder("Registered hours: ");
+            hourString.Append(Hours.ToString());
+            model.SubItems.Add(hourString.ToString());
+
             model.SubItems.Add(Hours.ToString());
             model.SubItems.Add(Week().ToString());
+
+            var origWeek = new StringBuilder("Original registered week: ");
+            origWeek.Append(originalRegistrationWeek.ToString());
+
+            origWeek.Append("(");
+            origWeek.Append(latestEditedWeek.ToString());
+            origWeek.Append(")");
+            model.SubItems.Add(origWeek.ToString());
+
+            model.StateImageIndex = 0;
 
             return model;
         }

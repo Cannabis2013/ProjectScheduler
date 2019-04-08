@@ -112,7 +112,7 @@ namespace ProjectRelated
             return mode == ListMode.Tile ? ItemTileModel() : ItemListModel();
         }
 
-        public ListViewItem[] RegisteredHourItemModels(string userName)
+        public ListViewItem[] TimeObjectModels(string userName)
         {
             var userTimeObjects = registeredTimeObjects.Where(item => item.UserName == userName).ToArray();
 
@@ -127,7 +127,7 @@ namespace ProjectRelated
             return models;
         }
 
-        public ListViewItem[] RegisteredHourItemModels()
+        public ListViewItem[] TimeObjectModels()
         {
             var tObjects = registeredTimeObjects.ToArray();
 

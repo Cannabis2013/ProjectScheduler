@@ -1,48 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using NUnit.Framework;
 using Projecthandler.Events;
 using ProjectRelated;
 using VirtualUserDomain;
 
-namespace DialogNamespace
+namespace Projecthandler.Forms.Dialogs
 {
-    public partial class ProjectDialog : Form
+    public partial class AddProjectControl : UserControl
     {
         private readonly DialogMode mode;
 
         private readonly Project temporaryProject;
-        private UserManager uManager;
+        private readonly UserManager uManager;
 
-        public event EventHandler<SubmitEvent> OnSubmitPushed;
-        public event EventHandler<EventArgs> OnEditPushed;
+        public event EventHandler<SubmitEvent> OnSaveClicked;
+        public event EventHandler<EventArgs> OnEditClicked;
+        public event EventHandler<EventArgs> OnCancelClicked;
 
-        public ProjectDialog(UserManager uManager)
+        public AddProjectControl( UserManager uManager)
         {
             this.uManager = uManager;
             InitializeComponent();
+
             initializeSelectors();
 
             mode = DialogMode.AddMode;
         }
 
-        // Test constructor - Add project
-        public ProjectDialog(string pTitle, int sWeek, int eWeek, string pLeaderId)
-        {
-            InitializeComponent();
-            initializeSelectors();
-
-            projectIDSelector.Text = pTitle;
-            startWeekSelector.Text = sWeek.ToString();
-            endWeekSelector.Text = eWeek.ToString();
-            leaderSelector.Text = pLeaderId;
-
-            mode = DialogMode.AddMode;
-
-            SaveButton_Click(this,new EventArgs());
-        }
-
-        public ProjectDialog(Project p, UserManager uManager)
+        public AddProjectControl(Project p, UserManager uManager)
         {
             temporaryProject = p;
             this.uManager = uManager;
@@ -52,40 +44,6 @@ namespace DialogNamespace
             initializeDialogValues();
 
             mode = DialogMode.EditMode;
-        }
-
-        private void initializeSelectors()
-        {
-            for (var i = 1; i <= 52; i++)
-            {
-                startWeekSelector.Items.Add(i.ToString());
-                endWeekSelector.Items.Add(i.ToString());
-            }
-
-            startWeekSelector.SelectedIndex = 0;
-            endWeekSelector.SelectedIndex = 0;
-            updateLeaderComboBoxView();
-        }
-
-        private void initializeDialogValues()
-        {
-            projectIDSelector.Text = temporaryProject.id;
-            startWeekSelector.Text = temporaryProject.startWeek.ToString();
-            endWeekSelector.Text = temporaryProject.endWeek.ToString();
-            leaderSelector.Text = temporaryProject.projectLeaderId;
-        }
-
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            if (projectIDSelector.Text == "" || startWeekSelector.Text == "")
-                return;
-
-            if (mode == DialogMode.AddMode)
-                invoke_Add_Mode_Submit();
-            else
-                invoke_Edit_Mode_Submit();
-
-            Close();
         }
 
         private void invoke_Add_Mode_Submit()
@@ -105,7 +63,18 @@ namespace DialogNamespace
                 projectLeaderId = pLeader
             };
 
-            OnSubmitPushed?.Invoke(this, new SubmitEvent(p));
+            OnSaveClicked?.Invoke(this, new SubmitEvent(p));
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (projectIDSelector.Text == "" || startWeekSelector.Text == "")
+                return;
+
+            if (mode == DialogMode.AddMode)
+                invoke_Add_Mode_Submit();
+            else
+                invoke_Edit_Mode_Submit();
         }
 
         private void invoke_Edit_Mode_Submit()
@@ -122,7 +91,20 @@ namespace DialogNamespace
             temporaryProject.startWeek = sWeek;
             temporaryProject.endWeek = eWeek;
 
-            OnEditPushed?.Invoke(this, new EventArgs());
+            OnEditClicked?.Invoke(this, new EventArgs());
+        }
+
+        private void initializeSelectors()
+        {
+            for (var i = 1; i <= 52; i++)
+            {
+                startWeekSelector.Items.Add(i.ToString());
+                endWeekSelector.Items.Add(i.ToString());
+            }
+
+            startWeekSelector.SelectedIndex = 0;
+            endWeekSelector.SelectedIndex = 0;
+            updateLeaderComboBoxView();
         }
 
         private void updateLeaderComboBoxView()
@@ -131,17 +113,23 @@ namespace DialogNamespace
                 leaderSelector.Items.Add(item);
         }
 
-        
-
-        private void CancelButton_Click(object sender, EventArgs e)
+        private void initializeDialogValues()
         {
-            Close();
+            projectIDSelector.Text = temporaryProject.id;
+            startWeekSelector.Text = temporaryProject.startWeek.ToString();
+            endWeekSelector.Text = temporaryProject.endWeek.ToString();
+            leaderSelector.Text = temporaryProject.projectLeaderId;
         }
 
         private enum DialogMode
         {
             AddMode,
             EditMode
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OnCancelClicked?.Invoke(this,e);
         }
     }
 }

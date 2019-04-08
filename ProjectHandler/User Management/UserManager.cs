@@ -97,7 +97,7 @@ namespace VirtualUserDomain
             FullName.Append(user.FullName());
             model.SubItems.Add(FullName.ToString());
 
-            var numbersOfActivitiesAssigned = pManager.Activities(userName,this).Count;
+            var numbersOfActivitiesAssigned = pManager.Activities(userName).Count;
 
             var activityCount = new StringBuilder("Number of activities assigned: ");
             activityCount.Append(numbersOfActivitiesAssigned);
