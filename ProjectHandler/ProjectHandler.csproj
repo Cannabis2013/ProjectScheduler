@@ -79,10 +79,16 @@
     <Compile Include="Forms\Dialogs\AddActivityControl.Designer.cs">
       <DependentUpon>AddActivityControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Project and activity management\ActivityManagement.cs">
+    <Compile Include="Forms\Project and activity management\OldActivityManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Project and activity management\ActivityManagement.Designer.cs">
+    <Compile Include="Forms\Project and activity management\OldActivityManagement.Designer.cs">
+      <DependentUpon>OldActivityManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Project and activity management\Controls\ActivityManagement.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Project and activity management\Controls\ActivityManagement.Designer.cs">
       <DependentUpon>ActivityManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Project and activity management\Management.cs">
@@ -158,7 +164,10 @@
     <EmbeddedResource Include="Forms\Dialogs\ActivityDialog.resx">
       <DependentUpon>ActivityDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Project and activity management\ActivityManagement.resx">
+    <EmbeddedResource Include="Forms\Project and activity management\OldActivityManagement.resx">
+      <DependentUpon>OldActivityManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Project and activity management\Controls\ActivityManagement.resx">
       <DependentUpon>ActivityManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Project and activity management\Management.resx">

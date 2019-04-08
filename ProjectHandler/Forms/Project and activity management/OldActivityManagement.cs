@@ -7,13 +7,15 @@ using VirtualUserDomain;
 
 namespace ProjectRelated
 {
-    public partial class ActivityManagement : Form
+    public partial class OldActivityManagement : Form
     {
         private readonly ListView aView;
         private readonly ProjectManager pManager;
         private readonly UserManager uManager;
 
-        public ActivityManagement(ProjectManager pManager, UserManager uManager)
+        public event EventHandler<EventArgs> updateParentView;
+
+        public OldActivityManagement(ProjectManager pManager, UserManager uManager)
         {
             InitializeComponent();
             this.pManager = pManager ?? throw new ArgumentNullException(nameof(pManager));
@@ -101,7 +103,7 @@ namespace ProjectRelated
             }
         }
 
-        public event EventHandler<EventArgs> updateParentView;
+        
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

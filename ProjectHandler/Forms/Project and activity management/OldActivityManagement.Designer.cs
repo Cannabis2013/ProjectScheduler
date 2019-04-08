@@ -1,6 +1,6 @@
 ﻿namespace ProjectRelated
 {
-    partial class ActivityManagement
+    partial class OldActivityManagement
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ActivityManagement));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OldActivityManagement));
             this.MainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.ButtonLayout = new System.Windows.Forms.TableLayoutPanel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
@@ -193,7 +193,7 @@
             this.Controls.Add(this.MainLayout);
             this.MaximumSize = new System.Drawing.Size(800, 480);
             this.MinimumSize = new System.Drawing.Size(800, 480);
-            this.Name = "ActivityManagement";
+            this.Name = "OldActivityManagement";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Activity management";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ProjectManagement_FormClosed);

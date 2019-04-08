@@ -20,6 +20,10 @@ namespace Projecthandler.Forms.Dialogs
         private readonly ProjectManager pManager;
         private readonly UserManager uManager;
 
+        public event EventHandler<EventArgs> OnCancelClicked;
+        public event EventHandler<EventArgs> OnSubmitClicked;
+        public event EventHandler<EventArgs> OnEditClicked;
+
         private enum DialogMode
         {
             AddMode,
@@ -111,12 +115,133 @@ namespace Projecthandler.Forms.Dialogs
 
         private void InitializeSelectors()
         {
-            for (int i = 0; i < 52; i++)
+            for (var i = 0; i < 52; i++)
             {
                 startWeekSelector.Items.Add(i.ToString());
                 endWeekSelector.Items.Add(i.ToString());
             }
         }
 
+        private void Link_Remove_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (AssignedUserListView.Items.Count <= 0)
+                return;
+
+            var currentItems = AssignedUserListView.SelectedItems;
+            foreach (var item in currentItems)
+            {
+                AssignedUserListView.Items.Remove((ListViewItem)item);
+                UserListView.Items.Add((ListViewItem)item);
+            }
+        }
+
+        private void Link_Add_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (UserListView.Items.Count <= 0)
+                return;
+
+            var currentItems = UserListView.SelectedItems;
+            foreach (var item in currentItems)
+            {
+                UserListView.Items.Remove((ListViewItem)item);
+                AssignedUserListView.Items.Add((ListViewItem)item);
+            }
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OnCancelClicked?.Invoke(sender,e);
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (IDSelector.Text == "" || startWeekSelector.Text == "")
+                return;
+
+            if (mode == DialogMode.AddMode)
+                invoke_Add_Mode_Submit();
+            else
+                invoke_Edit_Mode_Submit();
+        }
+
+        private void invoke_Add_Mode_Submit()
+        {
+            string activityTitle = IDSelector.Text, projectTitle = projectSelector.Text;
+
+            if (projectTitle == null)
+            {
+                MessageBox.Show(@"You have to assign the activity to a project!");
+                return;
+            }
+
+            if (!int.TryParse(startWeekSelector.Text, out var sWeek))
+                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
+
+            if (!int.TryParse(endWeekSelector.Text, out var eWeek))
+                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
+
+            var items = AssignedUserListView.Items;
+
+            var usernames = new List<string>();
+
+            var a = new Activity(activityTitle, sWeek, eWeek, projectTitle, uManager);
+
+
+            foreach (ListViewItem item in items)
+                usernames.Add(item.Text);
+
+            a.AssignUsers(usernames);
+
+            var p = pManager.Project(projectTitle);
+            p.AddActivity(a);
+
+            OnSubmitClicked?.Invoke(this, new EventArgs());
+        }
+
+        private void invoke_Edit_Mode_Submit()
+        {
+            activity.ActivityId = IDSelector.Text;
+
+            var projectId = projectSelector.Text;
+
+            if (projectId != activity.ParentProjectId)
+            {
+                var p = pManager.Project(activity.ParentProjectId);
+                p.RemoveActivity(activity);
+                activity.ParentProjectId = projectId;
+                p.AddActivity(activity);
+            }
+
+            if (!int.TryParse(startWeekSelector.Text, out var sWeek))
+                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
+
+            if (!int.TryParse(endWeekSelector.Text, out var eWeek))
+                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
+
+            activity.StartWeek = sWeek;
+            activity.EndWeek = eWeek;
+
+            var items = AssignedUserListView.Items;
+            var usernames = new List<string>();
+
+            activity.ClearAssignedUserIdentities();
+
+            foreach (ListViewItem item in items)
+                usernames.Add(item.Text);
+
+            activity.AssignUsers(usernames);
+
+            OnEditClicked?.Invoke(this, new EventArgs());
+        }
+
+        private void UserListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var sList = UserListView.SelectedItems;
+            if (sList.Count > 1)
+                return;
+
+            var item = sList[0];
+            Link_Add_LinkClicked(sender,null);
+        }
     }
 }

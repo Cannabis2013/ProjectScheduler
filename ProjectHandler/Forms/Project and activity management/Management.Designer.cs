@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Project management");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Projects and activity", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Project management");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Activity Management");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Projects and activity", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5});
             this.MainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.MenuSelectorView = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -50,7 +52,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MainLayout.BackColor = System.Drawing.Color.Sienna;
             this.MainLayout.ColumnCount = 2;
-            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 192F));
             this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainLayout.Controls.Add(this.MenuSelectorView, 0, 1);
             this.MainLayout.Controls.Add(this.tableLayoutPanel1, 1, 2);
@@ -71,25 +73,30 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MenuSelectorView.BackColor = System.Drawing.Color.Sienna;
             this.MenuSelectorView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.MenuSelectorView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MenuSelectorView.Indent = 15;
             this.MenuSelectorView.Location = new System.Drawing.Point(0, 24);
             this.MenuSelectorView.Margin = new System.Windows.Forms.Padding(0);
             this.MenuSelectorView.Name = "MenuSelectorView";
-            treeNode1.ForeColor = System.Drawing.Color.MidnightBlue;
-            treeNode1.Name = "Node3";
-            treeNode1.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            treeNode1.Text = "Project management";
-            treeNode2.ForeColor = System.Drawing.Color.Black;
-            treeNode2.Name = "Projects";
-            treeNode2.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            treeNode2.Text = "Projects and activity";
+            treeNode4.ForeColor = System.Drawing.Color.MidnightBlue;
+            treeNode4.Name = "Node3";
+            treeNode4.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            treeNode4.Text = "Project management";
+            treeNode5.ForeColor = System.Drawing.Color.MidnightBlue;
+            treeNode5.Name = "ActivityManagement";
+            treeNode5.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            treeNode5.Text = "Activity Management";
+            treeNode6.ForeColor = System.Drawing.Color.Black;
+            treeNode6.Name = "Projects";
+            treeNode6.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            treeNode6.Text = "Projects and activity";
             this.MenuSelectorView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode6});
             this.MainLayout.SetRowSpan(this.MenuSelectorView, 2);
             this.MenuSelectorView.ShowLines = false;
             this.MenuSelectorView.ShowPlusMinus = false;
             this.MenuSelectorView.ShowRootLines = false;
-            this.MenuSelectorView.Size = new System.Drawing.Size(160, 427);
+            this.MenuSelectorView.Size = new System.Drawing.Size(192, 427);
             this.MenuSelectorView.TabIndex = 0;
             this.MenuSelectorView.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.MenuSelectorView_BeforeCollapse);
             this.MenuSelectorView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.MenuSelectorView_BeforeSelect);
@@ -104,12 +111,12 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(160, 421);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(192, 421);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(644, 30);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(612, 30);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // linkLabel1
@@ -120,7 +127,7 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.linkLabel1.Location = new System.Drawing.Point(439, 0);
+            this.linkLabel1.Location = new System.Drawing.Point(407, 0);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(202, 30);
             this.linkLabel1.TabIndex = 0;
@@ -152,7 +159,7 @@
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             this.quitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
@@ -165,6 +172,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Management";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Management_FormClosed);
             this.MainLayout.ResumeLayout(false);
             this.MainLayout.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);

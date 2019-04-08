@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Projecthandler;
+using Projecthandler.Forms.Project_and_activity_management.Controls;
 using ProjectRelated;
 using VirtualUserDomain;
 
@@ -17,6 +18,9 @@ namespace Mng
     {
         private ProjectManager pManager;
         private UserManager uManager;
+
+        public event EventHandler<EventArgs> updateParentView;
+
         public Management(ProjectManager pManager, UserManager uManager)
         {
             InitializeComponent();
@@ -54,6 +58,15 @@ namespace Mng
                 }
             }
 
+            if (node != null && node.Text == "Activity management")
+            {
+                var aManagement = new ActivityManagement(pManager,uManager);
+
+                /*
+                 * Remember to implement a slot for invoking updateParentView eventhandler
+                 */
+            }
+
             return;
         }
 
@@ -65,6 +78,11 @@ namespace Mng
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void Management_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            updateParentView?.Invoke(sender, e);
         }
     }
 }

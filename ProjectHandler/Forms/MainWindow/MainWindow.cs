@@ -70,12 +70,13 @@ namespace MainUserSpace
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var mng = new Management(pManager,uManager);
+            mng.updateParentView += _updateParentView;
             mng.ShowDialog(this);
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var pMng = new ActivityManagement(pManager,uManager);
+            var pMng = new OldActivityManagement(pManager,uManager);
             pMng.updateParentView += _updateParentView;
             pMng.ShowDialog(this);
         }

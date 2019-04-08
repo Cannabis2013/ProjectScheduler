@@ -182,6 +182,7 @@
             this.UserListView.TabIndex = 1;
             this.UserListView.UseCompatibleStateImageBehavior = false;
             this.UserListView.View = System.Windows.Forms.View.SmallIcon;
+            this.UserListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.UserListView_MouseDoubleClick);
             // 
             // AssignedUserListView
             // 
@@ -215,6 +216,7 @@
             this.Link_Remove.TabStop = true;
             this.Link_Remove.Text = "<<";
             this.Link_Remove.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Link_Remove.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_Remove_LinkClicked);
             // 
             // Link_Add
             // 
@@ -231,6 +233,7 @@
             this.Link_Add.TabStop = true;
             this.Link_Add.Text = ">>";
             this.Link_Add.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Link_Add.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_Add_LinkClicked);
             // 
             // label4
             // 
@@ -257,20 +260,21 @@
             // 
             // ButtonLayout
             // 
-            this.ButtonLayout.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ButtonLayout.ColumnCount = 4;
+            this.ButtonLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ButtonLayout.ColumnCount = 3;
             this.MainLayout.SetColumnSpan(this.ButtonLayout, 2);
-            this.ButtonLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.ButtonLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ButtonLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.ButtonLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.ButtonLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.ButtonLayout.Controls.Add(this.linkLabel1, 2, 0);
             this.ButtonLayout.Controls.Add(this.linkLabel2, 1, 0);
-            this.ButtonLayout.Location = new System.Drawing.Point(172, 430);
+            this.ButtonLayout.Location = new System.Drawing.Point(3, 438);
             this.ButtonLayout.Name = "ButtonLayout";
             this.ButtonLayout.RowCount = 1;
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ButtonLayout.Size = new System.Drawing.Size(189, 34);
+            this.ButtonLayout.Size = new System.Drawing.Size(527, 26);
             this.ButtonLayout.TabIndex = 6;
             // 
             // linkLabel1
@@ -279,13 +283,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(149, 0);
+            this.linkLabel1.Location = new System.Drawing.Point(456, 0);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(68, 34);
+            this.linkLabel1.Size = new System.Drawing.Size(68, 26);
             this.linkLabel1.TabIndex = 0;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Save activity";
             this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // linkLabel2
             // 
@@ -293,13 +298,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(103, 0);
+            this.linkLabel2.Location = new System.Drawing.Point(410, 0);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(40, 34);
+            this.linkLabel2.Size = new System.Drawing.Size(40, 26);
             this.linkLabel2.TabIndex = 1;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Cancel";
             this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // MainLayout
             // 
@@ -332,8 +338,8 @@
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.MainLayout.Size = new System.Drawing.Size(533, 467);
             this.MainLayout.TabIndex = 1;
