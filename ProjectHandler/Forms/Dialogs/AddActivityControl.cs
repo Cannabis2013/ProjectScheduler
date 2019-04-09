@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Projecthandler.Events;
 using ProjectRelated;
 using VirtualUserDomain;
 
@@ -21,7 +22,7 @@ namespace Projecthandler.Forms.Dialogs
         private readonly UserManager uManager;
 
         public event EventHandler<EventArgs> OnCancelClicked;
-        public event EventHandler<EventArgs> OnSubmitClicked;
+        public event EventHandler<EventArgs> OnSaveClicked;
         public event EventHandler<EventArgs> OnEditClicked;
 
         private enum DialogMode
@@ -36,6 +37,7 @@ namespace Projecthandler.Forms.Dialogs
             this.uManager = uManager;
 
             InitializeComponent();
+            InitializeSelectors();
             initialize_userListViews();
 
             Text = @"Create activity";
@@ -195,7 +197,7 @@ namespace Projecthandler.Forms.Dialogs
             var p = pManager.Project(projectTitle);
             p.AddActivity(a);
 
-            OnSubmitClicked?.Invoke(this, new EventArgs());
+            OnSaveClicked?.Invoke(this, new EventArgs());
         }
 
         private void invoke_Edit_Mode_Submit()

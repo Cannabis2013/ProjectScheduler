@@ -79,12 +79,6 @@
     <Compile Include="Forms\Dialogs\AddActivityControl.Designer.cs">
       <DependentUpon>AddActivityControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Project and activity management\OldActivityManagement.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Project and activity management\OldActivityManagement.Designer.cs">
-      <DependentUpon>OldActivityManagement.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Project and activity management\Controls\ActivityManagement.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -101,12 +95,6 @@
     <Compile Include="Templates\ItemModelEntity.cs" />
     <Compile Include="Events\SubmitEvent.cs" />
     <Compile Include="Events\MyEventArgs.cs" />
-    <Compile Include="Forms\Dialogs\ActivityDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Dialogs\ActivityDialog.Designer.cs">
-      <DependentUpon>ActivityDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Dialogs\SelectUserDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,12 +148,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainWindow\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Dialogs\ActivityDialog.resx">
-      <DependentUpon>ActivityDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Project and activity management\OldActivityManagement.resx">
-      <DependentUpon>OldActivityManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Project and activity management\Controls\ActivityManagement.resx">
       <DependentUpon>ActivityManagement.cs</DependentUpon>

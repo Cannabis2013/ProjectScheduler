@@ -32,21 +32,8 @@ namespace MainUserSpace
 
             WelcomeLabel.Text = welcomingText.ToString();
 
-            if (uManager.verifyUserState() != User.UserRole.Admin) updateActivityView();
-        }
-
-        private void updateActivityView()
-        {
-            var assignedActivityModels = pManager.UserAssignedActivityModels(uManager);
-            aView.Clear();
-            aView.View = View.Details;
-
-            aView.Columns.Add("Id", 160, HorizontalAlignment.Left);
-            aView.Columns.Add("Activity time duration", 160, HorizontalAlignment.Left);
-            aView.Columns.Add("Total registered hours", 160, HorizontalAlignment.Left);
-            aView.Columns.Add("Project", 160, HorizontalAlignment.Left);
-
-            aView.Items.AddRange(assignedActivityModels);
+            if (uManager.verifyUserState() != User.UserRole.Admin)
+                _updateParentView(this,null);
         }
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -88,7 +75,16 @@ namespace MainUserSpace
 
         private void _updateParentView(object sender, EventArgs e)
         {
-            updateActivityView();
+            var assignedActivityModels = pManager.UserAssignedActivityModels(uManager);
+            aView.Clear();
+            aView.View = View.Details;
+
+            aView.Columns.Add("Id", 160, HorizontalAlignment.Left);
+            aView.Columns.Add("Activity time duration", 160, HorizontalAlignment.Left);
+            aView.Columns.Add("Total registered hours", 160, HorizontalAlignment.Left);
+            aView.Columns.Add("Project", 160, HorizontalAlignment.Left);
+
+            aView.Items.AddRange(assignedActivityModels);
         }
 
         public event EventHandler<EventArgs> logoutEvent;

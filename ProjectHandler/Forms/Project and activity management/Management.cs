@@ -19,6 +19,8 @@ namespace Mng
         private ProjectManager pManager;
         private UserManager uManager;
 
+        private readonly int MainLayoutCount;
+
         public event EventHandler<EventArgs> updateParentView;
 
         public Management(ProjectManager pManager, UserManager uManager)
@@ -27,8 +29,9 @@ namespace Mng
             this.pManager = pManager;
             this.uManager = uManager;
 
-            MenuSelectorView.ExpandAll();
+            MainLayoutCount = MainLayout.Controls.Count;
 
+            MenuSelectorView.ExpandAll();
         }
 
         private void MenuSelectorView_BeforeCollapse(object sender, TreeViewCancelEventArgs e)
@@ -44,6 +47,8 @@ namespace Mng
         private void MenuSelectorView_MouseClick(object sender, MouseEventArgs e)
         {
             var node = MenuSelectorView.GetNodeAt(e.Location);
+            if(MainLayout.Controls.Count > MainLayoutCount)
+                MainLayout.Controls.RemoveAt(MainLayoutCount);
             if (node != null && node.Text == "Project management")
             {
                 try
@@ -61,13 +66,9 @@ namespace Mng
             if (node != null && node.Text == "Activity management")
             {
                 var aManagement = new ActivityManagement(pManager,uManager);
-
-                /*
-                 * Remember to implement a slot for invoking updateParentView eventhandler
-                 */
+                aManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+                MainLayout.Controls.Add(aManagement);
             }
-
-            return;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

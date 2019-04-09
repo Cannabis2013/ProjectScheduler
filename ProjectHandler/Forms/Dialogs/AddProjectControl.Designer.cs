@@ -41,9 +41,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.UserIcons = new System.Windows.Forms.ImageList(this.components);
             this.StartDateSelector = new System.Windows.Forms.DateTimePicker();
             this.EndDateSelector = new System.Windows.Forms.DateTimePicker();
+            this.UserIcons = new System.Windows.Forms.ImageList(this.components);
             this.MainLayout.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -227,12 +227,6 @@
             this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
-            // UserIcons
-            // 
-            this.UserIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("UserIcons.ImageStream")));
-            this.UserIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.UserIcons.Images.SetKeyName(0, "User.png");
-            // 
             // StartDateSelector
             // 
             this.StartDateSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -252,6 +246,12 @@
             this.EndDateSelector.Name = "EndDateSelector";
             this.EndDateSelector.Size = new System.Drawing.Size(370, 20);
             this.EndDateSelector.TabIndex = 7;
+            // 
+            // UserIcons
+            // 
+            this.UserIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("UserIcons.ImageStream")));
+            this.UserIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.UserIcons.Images.SetKeyName(0, "User.png");
             // 
             // AddProjectControl
             // 

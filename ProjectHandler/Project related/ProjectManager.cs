@@ -26,6 +26,16 @@ namespace ProjectRelated
 
         public Activity Activity(string id) => Activities().Find(item => item.ActivityId == id);
 
+        public bool removeActivity(string projectId, string activityId)
+        {
+            var p = Project(projectId);
+            var activity = p?.Activity(activityId);
+            if (activity == null)
+                return false;
+            p.RemoveActivity(activity);
+            return true;
+        }
+
         public List<Activity> Activities()
         {
             var resultingList = new List<Activity>();
