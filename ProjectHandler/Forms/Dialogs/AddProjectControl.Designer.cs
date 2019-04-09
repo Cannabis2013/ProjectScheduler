@@ -60,7 +60,7 @@
             this.label6.Location = new System.Drawing.Point(0, 0);
             this.label6.Margin = new System.Windows.Forms.Padding(0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(504, 30);
+            this.label6.Size = new System.Drawing.Size(320, 30);
             this.label6.TabIndex = 3;
             this.label6.Text = "Fill in information";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -71,8 +71,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MainLayout.BackColor = System.Drawing.Color.Sienna;
-            this.MainLayout.ColumnCount = 2;
+            this.MainLayout.ColumnCount = 3;
             this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
+            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 192F));
             this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainLayout.Controls.Add(this.label2, 0, 2);
             this.MainLayout.Controls.Add(this.label3, 0, 3);
@@ -81,7 +82,7 @@
             this.MainLayout.Controls.Add(this.label5, 0, 4);
             this.MainLayout.Controls.Add(this.leaderSelector, 1, 4);
             this.MainLayout.Controls.Add(this.label6, 0, 0);
-            this.MainLayout.Controls.Add(this.tableLayoutPanel1, 0, 6);
+            this.MainLayout.Controls.Add(this.tableLayoutPanel1, 0, 5);
             this.MainLayout.Controls.Add(this.StartDateSelector, 1, 2);
             this.MainLayout.Controls.Add(this.EndDateSelector, 1, 3);
             this.MainLayout.Location = new System.Drawing.Point(0, 0);
@@ -92,8 +93,8 @@
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainLayout.Size = new System.Drawing.Size(504, 348);
             this.MainLayout.TabIndex = 1;
             // 
@@ -108,7 +109,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(122, 40);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Start week:";
+            this.label2.Text = "Start Date";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label3
@@ -122,7 +123,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(122, 40);
             this.label3.TabIndex = 3;
-            this.label3.Text = "End week:";
+            this.label3.Text = "End date";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label4
@@ -136,7 +137,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(122, 40);
             this.label4.TabIndex = 3;
-            this.label4.Text = "ProjectID:";
+            this.label4.Text = "ProjectID";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // projectIDSelector
@@ -145,7 +146,7 @@
             this.projectIDSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.projectIDSelector.Location = new System.Drawing.Point(131, 37);
             this.projectIDSelector.Name = "projectIDSelector";
-            this.projectIDSelector.Size = new System.Drawing.Size(370, 26);
+            this.projectIDSelector.Size = new System.Drawing.Size(186, 26);
             this.projectIDSelector.TabIndex = 4;
             // 
             // label5
@@ -159,7 +160,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(122, 40);
             this.label5.TabIndex = 3;
-            this.label5.Text = "Leader:";
+            this.label5.Text = "Leader";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // leaderSelector
@@ -173,7 +174,7 @@
             this.leaderSelector.FormattingEnabled = true;
             this.leaderSelector.Location = new System.Drawing.Point(131, 153);
             this.leaderSelector.Name = "leaderSelector";
-            this.leaderSelector.Size = new System.Drawing.Size(370, 28);
+            this.leaderSelector.Size = new System.Drawing.Size(186, 28);
             this.leaderSelector.Sorted = true;
             this.leaderSelector.TabIndex = 2;
             // 
@@ -189,12 +190,12 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.linkLabel2, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 303);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 190);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(504, 45);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(320, 45);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // linkLabel1
@@ -202,7 +203,7 @@
             this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkLabel1.Location = new System.Drawing.Point(472, 0);
+            this.linkLabel1.Location = new System.Drawing.Point(288, 0);
             this.linkLabel1.Margin = new System.Windows.Forms.Padding(0);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(32, 45);
@@ -218,7 +219,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(429, 0);
+            this.linkLabel2.Location = new System.Drawing.Point(245, 0);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(40, 45);
             this.linkLabel2.TabIndex = 6;
@@ -232,9 +233,10 @@
             this.StartDateSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.StartDateSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StartDateSelector.Location = new System.Drawing.Point(131, 73);
             this.StartDateSelector.Name = "StartDateSelector";
-            this.StartDateSelector.Size = new System.Drawing.Size(370, 20);
+            this.StartDateSelector.Size = new System.Drawing.Size(186, 26);
             this.StartDateSelector.TabIndex = 7;
             // 
             // EndDateSelector
@@ -242,9 +244,10 @@
             this.EndDateSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.EndDateSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EndDateSelector.Location = new System.Drawing.Point(131, 113);
             this.EndDateSelector.Name = "EndDateSelector";
-            this.EndDateSelector.Size = new System.Drawing.Size(370, 20);
+            this.EndDateSelector.Size = new System.Drawing.Size(186, 26);
             this.EndDateSelector.TabIndex = 7;
             // 
             // UserIcons

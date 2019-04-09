@@ -14,7 +14,6 @@ namespace MainUserSpace
         private readonly ListView aView;
         private readonly ProjectManager pManager;
         private readonly UserManager uManager;
-        private AnchorStyles anchorStyles;
 
         public MainWindow(ProjectManager pManager, UserManager uManager)
         {
@@ -59,13 +58,6 @@ namespace MainUserSpace
             var mng = new Management(pManager,uManager);
             mng.updateParentView += _updateParentView;
             mng.ShowDialog(this);
-        }
-
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            var pMng = new OldActivityManagement(pManager,uManager);
-            pMng.updateParentView += _updateParentView;
-            pMng.ShowDialog(this);
         }
 
         private void customizeToolStripMenuItem_Click(object sender, EventArgs e)
