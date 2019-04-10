@@ -26,18 +26,18 @@ namespace MainUserSpace
             aView = ActivityListView;
 
             var welcomingText = new StringBuilder("Welcome ");
-            var userName = uManager.currentlyLoggedIn().FullName();
+            var userName = uManager.loggedIn().UserName();
             welcomingText.Append(userName);
 
             WelcomeLabel.Text = welcomingText.ToString();
 
-            if (uManager.verifyUserState() != User.UserRole.Admin)
+            if (!uManager.isAdmin())
                 _updateParentView(this,null);
         }
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            uManager.logout(UserManager.getLocalAddress());
+            uManager.logout();
             logoutEvent?.Invoke(this, e);
         }
 
@@ -48,7 +48,7 @@ namespace MainUserSpace
 
         private void MainView_FormClosed(object sender, FormClosedEventArgs e)
         {
-            uManager.logout(UserManager.getLocalAddress());
+            uManager.logout();
             CloseRequest?.Invoke(this, e);
         }
 

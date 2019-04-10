@@ -80,7 +80,7 @@ namespace ProjectRelated
 
         public bool IsUserAssigned(UserManager uManager)
         {
-            var userName = uManager.currentlyLoggedIn().UserName();
+            var userName = uManager.loggedIn().UserName();
             return assignedUserIdentities.Any(item => item == userName);
         }
 
@@ -108,7 +108,7 @@ namespace ProjectRelated
         public List<RegistrationObject> HourRegistrationObjects(string userName) =>
             registeredTimeObjects.Where(item => item.UserName == userName).ToList();
 
-        public List<RegistrationObject> TimeObjects() => registeredTimeObjects;
+        public List<RegistrationObject> HourRegistrationObjects() => registeredTimeObjects;
 
         public int TotalRegisteredHours(string userName = null)
         {

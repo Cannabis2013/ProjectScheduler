@@ -13,7 +13,6 @@ namespace ProjectRelated
         private readonly List<Project> projects = new List<Project>();
         
         public void AddProject(Project p) => projects.Add(p);
-
         public void RemoveProjectAt(int index) => projects.RemoveAt(index);
 
         public Project ProjectAt(int index) => projects.ElementAt(index);
@@ -24,8 +23,6 @@ namespace ProjectRelated
         public List<string> AllProjectIdentities(string projectLeaderId) => projects.Where(item => 
             item.projectLeaderId == projectLeaderId).Select(item => item.id).ToList();
 
-        public Activity Activity(string id) => Activities().Find(item => item.ActivityId == id);
-
         public bool removeActivity(string projectId, string activityId)
         {
             var p = Project(projectId);
@@ -35,6 +32,8 @@ namespace ProjectRelated
             p.RemoveActivity(activity);
             return true;
         }
+
+        public Activity Activity(string id) => Activities().Find(item => item.ActivityId == id);
 
         public List<Activity> Activities()
         {
@@ -60,6 +59,21 @@ namespace ProjectRelated
             return resultingList;
         }
 
+        public RegistrationObject HourRegistrationObjects(RegistrationObject regObject)
+        {
+            var activities = Activities();
+
+            foreach (var activity in activities)
+            {
+                var tm = activity.HourRegistrationObjects().ToList();
+                var rObject = tm.Find(item => item == regObject);
+                if (rObject != null)
+                    return rObject;
+            }
+
+            return null;
+        }
+
         public List<RegistrationObject> HourRegistrationObjects()
         {
             var TimeObjects = new List<RegistrationObject>();
@@ -67,7 +81,7 @@ namespace ProjectRelated
 
             foreach (var activity in activities)
             {
-                var tm = activity.TimeObjects().ToList();
+                var tm = activity.HourRegistrationObjects().ToList();
                 TimeObjects.AddRange(tm);
             }
             return TimeObjects;
@@ -130,7 +144,7 @@ namespace ProjectRelated
         public ListViewItem[] ProjectActivityItemModels(UserManager uManager)
         {
             var models = new List<ListViewItem>();
-            if (uManager.verifyUserState() == User.UserRole.Admin)
+            if (uManager.isAdmin())
             {
                 foreach (var p in projects)
                 foreach (var activity in p.AllActivities())
@@ -142,7 +156,7 @@ namespace ProjectRelated
                 return models.ToArray();
             }
 
-            var userId = uManager.currentlyLoggedIn().UserName();
+            var userId = uManager.loggedIn().UserName();
 
             foreach (var p in projects)
             foreach (var activity in p.AllActivities())
@@ -159,7 +173,7 @@ namespace ProjectRelated
 
         public ListViewItem[] UserAssignedActivityModels(UserManager uManager)
         {
-            var userName = uManager.currentlyLoggedIn().UserName();
+            var userName = uManager.loggedIn().UserName();
             var assignedActivities = Activities(userName);
             var count = assignedActivities.Count;
             var models = new ListViewItem[count];

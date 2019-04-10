@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Projecthandler.Events;
+using Projecthandler.Templates_and_interfaces;
 using ProjectRelated;
 using VirtualUserDomain;
 
 namespace Projecthandler.Forms.Dialogs
 {
-    public partial class AddActivityControl : UserControl
+    public partial class AddActivityControl : UserControl, IDialogInterface<EventArgs>
     {
         private readonly Activity activity;
 
@@ -37,7 +38,7 @@ namespace Projecthandler.Forms.Dialogs
             this.uManager = uManager;
 
             InitializeComponent();
-            initialize_userListViews();
+            initializeListControls();
 
             Text = @"Create activity";
 
@@ -60,9 +61,15 @@ namespace Projecthandler.Forms.Dialogs
             mode = DialogMode.EditMode;
         }
 
-        private void initialize_userListViews()
+        public sealed override string Text
         {
-            if (uManager.verifyUserState() == User.UserRole.Admin)
+            get => base.Text;
+            set => base.Text = value;
+        }
+
+        public void initializeListControls()
+        {
+            if (uManager.isAdmin())
             {
                 var projects = pManager.AllProjectIdentities().ToArray();
                 // ReSharper disable once CoVariantArrayConversion
@@ -70,7 +77,7 @@ namespace Projecthandler.Forms.Dialogs
             }
             else
             {
-                var cUser = uManager.currentlyLoggedIn();
+                var cUser = uManager.loggedIn();
                 var projectIdentities = pManager.AllProjectIdentities(cUser.UserName()).ToArray();
                 ;
                 // ReSharper disable once CoVariantArrayConversion
@@ -78,13 +85,7 @@ namespace Projecthandler.Forms.Dialogs
             }
         }
 
-        public sealed override string Text
-        {
-            get => base.Text;
-            set => base.Text = value;
-        }
-
-        private void InitializeDialogValues()
+        public void InitializeDialogValues()
         {
             IDSelector.Text = activity.ActivityId;
             projectSelector.Items.Add(activity.ParentProjectId);
@@ -235,6 +236,11 @@ namespace Projecthandler.Forms.Dialogs
 
             EndDateSelector.MinDate = project.StartDate;
             EndDateSelector.MaxDate = project.EndDate;
+        }
+
+        public void updateView()
+        {
+            throw new NotImplementedException();
         }
     }
 }

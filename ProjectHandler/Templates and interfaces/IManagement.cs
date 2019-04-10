@@ -9,10 +9,10 @@ namespace Projecthandler.Templates
 {
     interface IManagement
     {
-        void updateView();
         void addTabPage(string title,Control control);
         void removeTabPage(int index);
         bool tabsActive();
         void updateCurrentTabTitle(string title);
+        void updateView();
     }
 }

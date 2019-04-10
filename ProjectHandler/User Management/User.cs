@@ -4,7 +4,6 @@ namespace VirtualUserDomain
 {
     public class User
     {
-        private readonly string fName;
         private readonly string pass;
         private readonly string uName;
 
@@ -22,12 +21,11 @@ namespace VirtualUserDomain
         }
 
         
-        public User(string userName, string passWord, UserRole role, string fullName)
+        public User(string userName, string passWord, UserRole role)
         {
             uName = userName;
             pass = passWord;
             this.Role = role;
-            fName = fullName;
         }
 
         public UserRole Role { get; }
@@ -41,11 +39,6 @@ namespace VirtualUserDomain
         public string UserName()
         {
             return uName;
-        }
-
-        public string FullName()
-        {
-            return fName;
         }
 
         public string PassWord()

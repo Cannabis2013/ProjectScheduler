@@ -55,9 +55,10 @@ namespace Projecthandler
             addTabPage("Add project",pControl);
         }
 
-        private void _OnSaveClicked(object sender, SubmitEvent e)
+        private void _OnSaveClicked(object sender, EventArgs e)
         {
-            var p = e.project();
+            var submitEvent = (SubmitEvent) e;
+            var p = submitEvent.project();
             pManager.AddProject(p);
             updateView();
 
@@ -80,7 +81,7 @@ namespace Projecthandler
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (uManager.verifyUserState() != User.UserRole.Admin)
+            if (!uManager.isAdmin())
             {
                 MessageBox.Show("Administrator privilliges required YOU FUCKING LOSER.", "Admin required");
                 return;
@@ -114,7 +115,7 @@ namespace Projecthandler
 
         public void addTabPage(string title, Control control)
         {
-            if (uManager.verifyUserState() != User.UserRole.Admin)
+            if (!uManager.isAdmin())
             {
                 MessageBox.Show(@"Administrator privilliges required YOU FUCKING LOSER.", @"Admin required");
                 return;

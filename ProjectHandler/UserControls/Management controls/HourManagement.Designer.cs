@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.TabView = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.MainLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -35,6 +36,8 @@
             this.ButtonLayout = new System.Windows.Forms.TableLayoutPanel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.IconList = new System.Windows.Forms.ImageList(this.components);
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.TabView.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.MainLayout.SuspendLayout();
@@ -143,6 +146,18 @@
             this.linkLabel2.Text = "Remove registration";
             this.linkLabel2.VisitedLinkColor = System.Drawing.Color.Blue;
             // 
+            // IconList
+            // 
+            this.IconList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.IconList.ImageSize = new System.Drawing.Size(16, 16);
+            this.IconList.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
             // HourManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -169,5 +184,7 @@
         private System.Windows.Forms.TableLayoutPanel ButtonLayout;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.ImageList IconList;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

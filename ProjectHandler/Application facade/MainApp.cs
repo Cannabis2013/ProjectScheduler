@@ -64,7 +64,7 @@ namespace MainUserSpace
         private void loginView_OnSubmitClicked(object sender, MyEventArgs e)
         {
             var lView = (LoginView) sender;
-            if (uManager.logIn(e.arg1, e.arg2, UserManager.getLocalAddress()))
+            if (uManager.logIn(e.arg1, e.arg2))
             {
                 isLastWindow = false;
                 var view = new MainWindow(pManager,uManager);

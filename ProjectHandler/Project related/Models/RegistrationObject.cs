@@ -54,6 +54,12 @@ namespace ProjectRelated
             set => userName = value;
         }
 
+        public string Text
+        {
+            get => activityTextContent;
+            set => activityTextContent = value;
+        }
+
         public string CorrespondingProjectId(ProjectManager pManager)
         {
             return pManager.Activity(ParentActivityId).ParentProjectId;

@@ -15,88 +15,64 @@ namespace VirtualUserDomain
     [Serializable]
     public class UserManager
     {
+        private readonly HashSet<User> users = new HashSet<User>();
+
         [field: NonSerialized]
-        private HashSet<User> _currentLoggedIn = new HashSet<User>();
-        private UserDatabase _userDb = new UserDatabase();
-        
+        private User currentlyLoggedIn = null;
 
-        /*
-         * Local address based on the ipv4 address of the user
-         */
-
-        public static string getLocalAddress()
+        public UserManager()
         {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                    return ip.ToString();
-            return "000.000.000.000";
+            createUserPrototypes();
         }
 
-        public bool logIn(string userName, string password, string localAddress)
+        public bool logIn(string userName, string password)
         {
-            var user = _userDb.verifyCredentials(userName, password);
+            var user = verifyCredentials(userName, password);
             if (user == null)
                 return false;
 
-            user.LocalAddress = localAddress;
-            UserLogOut(localAddress, user);
+            currentlyLoggedIn = user;
 
-            _currentLoggedIn.Add(user);
             return true;
         }
 
-        public void logout(string localAddress)
+        public void logout()
         {
-            UserLogOut(localAddress);
+            currentlyLoggedIn = null;
         }
 
-        public User.UserRole verifyUserState()
+        public bool isAdmin()
         {
-            foreach (var u in _currentLoggedIn)
-                if (u.LocalAddress == getLocalAddress())
-                    return u.Role;
-            throw new Exception("User not logged in");
+            return currentlyLoggedIn.Role == User.UserRole.Admin;
         }
 
-        public User User(string userName)
+        public User loggedIn()
         {
-            return _userDb.user(userName);
+            return currentlyLoggedIn;
         }
 
-        public User currentlyLoggedIn()
+        public User user(string userName)
         {
-            return _currentLoggedIn.Where(item => item.LocalAddress == getLocalAddress()).ElementAt(0);
-        }
-
-        public ListViewItem[] userListModel()
-        {
-            return _userDb.itemModels();
+            foreach (var u in users)
+                if (u.UserName() == userName)
+                    return u;
+            return null;
         }
 
         public List<string> allUserNames()
         {
-            return _userDb.allUserNames().Where(item => item != "admin").ToList();
-        }
+            var result = new List<string>();
+            foreach (var u in users)
+                result.Add(u.UserName());
 
-        /*
-         * Return an item model for a given user with the following data:
-         * - Username
-         * - Full name
-         * - Number of activities assigned
-         * - Users role
-         */
+            return result;
+        }
 
         public ListViewItem UserItemModel(string userName, ProjectManager pManager)
         {
-            var user = User(userName);
+            var u = user(userName);
             var model = new ListViewItem(userName);
-
-            // ReSharper disable once InconsistentNaming
-            var FullName = new StringBuilder("Fullname: ");
-            FullName.Append(user.FullName());
-            model.SubItems.Add(FullName.ToString());
-
+            
             var numbersOfActivitiesAssigned = pManager.Activities(userName).Count;
 
             var activityCount = new StringBuilder("Number of activities assigned: ");
@@ -104,10 +80,35 @@ namespace VirtualUserDomain
             model.SubItems.Add(activityCount.ToString());
 
             var uRole = new StringBuilder("User role: ");
-            uRole.Append(VirtualUserDomain.User._roleStringRepresentation(user.Role));
+            uRole.Append(VirtualUserDomain.User._roleStringRepresentation(u.Role));
             model.SubItems.Add(uRole.ToString());
 
             return model;
+        }
+
+        public ListViewItem[] itemModels(bool fullList = false)
+        {
+            int uCount = fullList ? users.Count : users.Count - 1, index = 0;
+            var models = new ListViewItem[uCount];
+            foreach (var u in users)
+            {
+                if (!fullList && u.Role == User.UserRole.Admin)
+                    continue;
+
+                var model = new ListViewItem(u.UserName())
+                {
+                    ImageIndex = 0
+                };
+                
+                var role = new StringBuilder("Users role: ");
+
+                role.Append(u.Role == User.UserRole.Admin ? "Admin" : "Employee");
+
+                model.SubItems.Add(role.ToString());
+                models[index++] = model;
+            }
+
+            return models;
         }
 
         public ListViewItem[] userListViewItems()
@@ -115,12 +116,38 @@ namespace VirtualUserDomain
             return allUserNames().Select(item => new ListViewItem(item)).ToArray();
         }
 
-        private void UserLogOut(string localAddress, User user = null)
+        private User verifyCredentials(string userName, string password)
         {
-            if (user != null)
-                _currentLoggedIn.RemoveWhere(c => c.LocalAddress == localAddress && c.UserName() == user.UserName());
-            else
-                _currentLoggedIn.RemoveWhere(c => c.LocalAddress == localAddress);
+            try
+            {
+                return users.First(item => item.UserName() == userName && item.PassWord() == password);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        private void createUserPrototypes()
+        {
+            var admin = new User("admin", "1234", User.UserRole.Admin);
+
+            users.Add(admin);
+
+            /*
+             * Initialize five users for testing purposes
+             */
+            var nUser1 = new User("Jens_Werner2019", "Tango44", User.UserRole.Employee);
+            var nUser2 = new User("Niels_Erik1964", "Traktor", User.UserRole.Employee);
+            var nUser3 = new User("Bent_Bjerre", "ghb4life", User.UserRole.Employee);
+            var nUser4 = new User("Finn_Luger", "hitler", User.UserRole.Employee);
+            var nUser5 = new User("Technotonny", "GOA_gartner", User.UserRole.Employee);
+
+            users.Add(nUser1);
+            users.Add(nUser2);
+            users.Add(nUser3);
+            users.Add(nUser4);
+            users.Add(nUser5);
         }
     }
 }

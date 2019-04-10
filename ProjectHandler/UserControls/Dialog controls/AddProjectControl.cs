@@ -8,19 +8,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Projecthandler.Events;
+using Projecthandler.Templates_and_interfaces;
 using ProjectRelated;
 using VirtualUserDomain;
 
 namespace Projecthandler.Forms.Dialogs
 {
-    public partial class AddProjectControl : UserControl
+    public partial class AddProjectControl : UserControl, IDialogInterface<EventArgs>
     {
         private readonly DialogMode mode;
 
         private readonly Project temporaryProject;
         private readonly UserManager uManager;
 
-        public event EventHandler<SubmitEvent> OnSaveClicked;
+        public void initializeListControls()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InitializeDialogValues()
+        {
+            throw new NotImplementedException();
+        }
+
+        public event EventHandler<EventArgs> OnSaveClicked;
         public event EventHandler<EventArgs> OnEditClicked;
         public event EventHandler<EventArgs> OnCancelClicked;
 
