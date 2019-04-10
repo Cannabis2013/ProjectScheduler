@@ -1,24 +1,27 @@
-﻿namespace ProjectRelated
+﻿using System;
+
+namespace ProjectRelated
 {
     public class ActivityEntity
     {
         private readonly string title;
+        private readonly DateTime startDate, endDate;
 
-        public ActivityEntity(int sWeek, int eWeek, string title)
+        public ActivityEntity(string title, DateTime endDate, DateTime startDate)
         {
-            startWeek = sWeek;
-            endWeek = eWeek;
             this.title = title;
+            this.endDate = endDate;
+            this.startDate = startDate;
         }
 
         public string activityId => title;
-        public int startWeek { get; }
+        public DateTime StartDate => startDate;
 
-        public int endWeek { get; }
+        public DateTime EndDate => endDate;
 
-        public bool withinTimespan(int val)
+        public bool withinTimespan(DateTime date)
         {
-            return val >= endWeek && val <= startWeek;
+            return startDate.CompareTo(date) <= 0 && endDate.CompareTo(date) >= 0;
         }
     }
 }

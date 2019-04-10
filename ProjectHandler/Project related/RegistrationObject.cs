@@ -9,54 +9,44 @@ using Templates;
 namespace ProjectRelated
 {
     [Serializable]
-    public class TimeObject : ItemModelEntity<ListViewItem>
+    public class RegistrationObject : ItemModelEntity<ListViewItem>
     {
-        private readonly int originalRegistrationWeek;
-        private int latestEditedWeek;
+        private readonly DateTime originalRegistrationDate;
+        private DateTime latestEditDate;
         private string parentActivityId;
         private string userName;
-        
+        private string activityTextContent;
 
-        public TimeObject(int hours, string userName)
+        public int Hours { get; set; }
+
+        public RegistrationObject(int hours, string userName, string text, Activity owner)
         {
             this.Hours = hours;
             this.userName = userName;
-
-            var ciCurr = CultureInfo.CurrentCulture;
-            originalRegistrationWeek = latestEditedWeek = ciCurr.Calendar.GetWeekOfYear(DateTime.Now,
-                CalendarWeekRule.FirstFourDayWeek,
-                DayOfWeek.Monday);
-        }
-
-        public TimeObject(int hours, string userName, Activity owner)
-        {
-            this.Hours = hours;
-            this.userName = userName;
+            this.activityTextContent = text;
             owner.AddTimeObject(this);
             parentActivityId = owner.ActivityId;
 
-            var ciCurr = CultureInfo.CurrentCulture;
-            originalRegistrationWeek = latestEditedWeek = ciCurr.Calendar.GetWeekOfYear(DateTime.Now,
-                CalendarWeekRule.FirstFourDayWeek,
-                DayOfWeek.Monday);
+            latestEditDate = DateTime.Now;
         }
 
-        public TimeObject(TimeObject copy)
+        public RegistrationObject(RegistrationObject copy, string activityTextContent)
         {
+            this.activityTextContent = activityTextContent;
             parentActivityId = copy.ParentActivityId;
             userName = copy.UserName;
             Hours = copy.Hours;
-            originalRegistrationWeek = copy.Week();
+            originalRegistrationDate = copy.originalRegistrationDate;
         }
+
+        public DateTime OriginRegistrationDate() => originalRegistrationDate;
+        public DateTime LastEditDate() => latestEditDate;
 
         public string ParentActivityId
         {
             get => parentActivityId;
             set => parentActivityId = value;
         }
-
-        public int Hours { get; set; }
-
 
         public string UserName
         {
@@ -67,11 +57,6 @@ namespace ProjectRelated
         public string CorrespondingProjectId(ProjectManager pManager)
         {
             return pManager.Activity(ParentActivityId).ParentProjectId;
-        }
-
-        public int Week()
-        {
-            return originalRegistrationWeek == latestEditedWeek ? originalRegistrationWeek : latestEditedWeek;
         }
 
         public override ListViewItem ItemModel(ListMode mode = ListMode.Tile)
@@ -87,13 +72,12 @@ namespace ProjectRelated
             model.SubItems.Add(hourString.ToString());
 
             model.SubItems.Add(Hours.ToString());
-            model.SubItems.Add(Week().ToString());
 
             var origWeek = new StringBuilder("Original registered week: ");
-            origWeek.Append(originalRegistrationWeek.ToString());
+            origWeek.Append(originalRegistrationDate.ToString());
 
             origWeek.Append("(");
-            origWeek.Append(latestEditedWeek.ToString());
+            origWeek.Append(latestEditDate.ToString());
             origWeek.Append(")");
             model.SubItems.Add(origWeek.ToString());
 

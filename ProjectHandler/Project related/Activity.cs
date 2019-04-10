@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -12,22 +13,24 @@ namespace ProjectRelated
     public class Activity : ItemModelEntity<ListViewItem>
     {
         private readonly List<string> assignedUserIdentities = new List<string>();
-        private readonly List<TimeObject> registeredTimeObjects = new List<TimeObject>();
+        private readonly List<RegistrationObject> registeredTimeObjects = new List<RegistrationObject>();
+
+        private DateTime startDate, endDate;
         
-        public Activity(string title, int sWeek, int eWeek, string project, UserManager uManager)
+        public Activity(string title, DateTime sDate, DateTime eDate, string project, UserManager uManager)
         {
             itemId = title;
             ParentProjectId = project;
-            StartWeek = sWeek;
-            EndWeek = eWeek;
+            startDate = sDate;
+            endDate = eDate;
         }
 
         public Activity(Activity copy)
         {
             ParentProjectId = null;
             itemId = copy.itemId;
-            StartWeek = copy.StartWeek;
-            EndWeek = copy.EndWeek;
+            startDate = copy.startDate;
+            endDate = copy.endDate;
             assignedUserIdentities = copy.assignedUserIdentities;
             registeredTimeObjects = copy.registeredTimeObjects;
             ParentProjectId = copy.ParentProjectId;
@@ -39,13 +42,33 @@ namespace ProjectRelated
             set => itemId = value;
         }
 
-        public int StartWeek { get; set; }
+        public DateTime StartDate
+        {
+            get => startDate;
+            set => startDate = value;
+        }
 
-        public int EndWeek { get; set; }
+        public DateTime EndDate
+        {
+            get => endDate;
+            set => endDate = value;
+        }
+
+        public int StartWeek()
+        {
+            var ciCurr = CultureInfo.CurrentCulture;
+             return ciCurr.Calendar.GetWeekOfYear(startDate,CalendarWeekRule.FirstFourDayWeek,DayOfWeek.Monday);
+        }
+
+        public int EndWeek()
+        {
+            var ciCurr = CultureInfo.CurrentCulture;
+            return ciCurr.Calendar.GetWeekOfYear(endDate, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        }
 
         public string ParentProjectId { get; set; }
 
-        public int EstimatedDuration() => EndWeek - StartWeek;
+        public int EstimatedDuration() => EndWeek() - StartWeek();
 
         public void AssignUser(string userID) => assignedUserIdentities.Add(userID);
 
@@ -76,16 +99,16 @@ namespace ProjectRelated
             assignedUserIdentities.Clear();
         }
 
-        public void AddTimeObject(TimeObject time)
+        public void AddTimeObject(RegistrationObject time)
         {
             time.ParentActivityId = ActivityId;
             registeredTimeObjects.Add(time);
         }
 
-        public List<TimeObject> TimeObjects(string userName) =>
+        public List<RegistrationObject> HourRegistrationObjects(string userName) =>
             registeredTimeObjects.Where(item => item.UserName == userName).ToList();
 
-        public List<TimeObject> TimeObjects() => registeredTimeObjects;
+        public List<RegistrationObject> TimeObjects() => registeredTimeObjects;
 
         public int TotalRegisteredHours(string userName = null)
         {
@@ -115,13 +138,11 @@ namespace ProjectRelated
         public ListViewItem[] TimeObjectModels(string userName)
         {
             var userTimeObjects = registeredTimeObjects.Where(item => item.UserName == userName).ToArray();
-
-            var tObjects = userTimeObjects.Select(item => new TimeObject(item)).ToArray();
-
-            var models = new ListViewItem[tObjects.Length];
+            
+            var models = new ListViewItem[userTimeObjects.Length];
             var index = 0;
 
-            foreach (var tObject in tObjects)
+            foreach (var tObject in userTimeObjects)
                 models[index++] = tObject.ItemModel();
 
             return models;
@@ -172,8 +193,8 @@ namespace ProjectRelated
         {
             var model = new ListViewItem(id);
 
-            model.SubItems.Add(StartWeek.ToString());
-            model.SubItems.Add(EndWeek.ToString());
+            model.SubItems.Add(StartWeek().ToString());
+            model.SubItems.Add(EndWeek().ToString());
 
             model.SubItems.Add(TotalRegisteredHours().ToString());
 

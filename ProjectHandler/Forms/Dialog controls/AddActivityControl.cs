@@ -37,7 +37,6 @@ namespace Projecthandler.Forms.Dialogs
             this.uManager = uManager;
 
             InitializeComponent();
-            InitializeSelectors();
             initialize_userListViews();
 
             Text = @"Create activity";
@@ -91,9 +90,6 @@ namespace Projecthandler.Forms.Dialogs
             projectSelector.Items.Add(activity.ParentProjectId);
             projectSelector.Text = activity.ParentProjectId;
             var p = pManager.Project(activity.ParentProjectId);
-            InitializeSelectors();
-            startWeekSelector.Text = activity.StartWeek.ToString();
-            endWeekSelector.Text = activity.EndWeek.ToString();
             var assignedUsers = activity.AssignedUsers();
             var assignedUserModels = assignedUsers.Select(item =>
                 new ListViewItem
@@ -101,6 +97,9 @@ namespace Projecthandler.Forms.Dialogs
                     Text = item,
                     ImageIndex = 0
                 }).ToArray();
+
+            StartDateSelector.Value = activity.StartDate;
+            EndDateSelector.Value = activity.EndDate;
 
             AssignedUserListView.Items.AddRange(assignedUserModels);
 
@@ -113,15 +112,6 @@ namespace Projecthandler.Forms.Dialogs
                 }).ToArray();
 
             UserListView.Items.AddRange(availableUserModels);
-        }
-
-        private void InitializeSelectors()
-        {
-            for (var i = 0; i < 52; i++)
-            {
-                startWeekSelector.Items.Add(i.ToString());
-                endWeekSelector.Items.Add(i.ToString());
-            }
         }
 
         private void Link_Remove_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -157,7 +147,7 @@ namespace Projecthandler.Forms.Dialogs
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (IDSelector.Text == "" || startWeekSelector.Text == "")
+            if (IDSelector.Text == "")
                 return;
 
             if (mode == DialogMode.AddMode)
@@ -175,18 +165,13 @@ namespace Projecthandler.Forms.Dialogs
                 MessageBox.Show(@"You have to assign the activity to a project!");
                 return;
             }
-
-            if (!int.TryParse(startWeekSelector.Text, out var sWeek))
-                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
-
-            if (!int.TryParse(endWeekSelector.Text, out var eWeek))
-                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
-
             var items = AssignedUserListView.Items;
 
             var usernames = new List<string>();
 
-            var a = new Activity(activityTitle, sWeek, eWeek, projectTitle, uManager);
+            DateTime startDate = StartDateSelector.Value, endDate = EndDateSelector.Value;
+
+            var a = new Activity(activityTitle, startDate, endDate, projectTitle, uManager);
 
 
             foreach (ListViewItem item in items)
@@ -213,15 +198,9 @@ namespace Projecthandler.Forms.Dialogs
                 activity.ParentProjectId = projectId;
                 p.AddActivity(activity);
             }
-
-            if (!int.TryParse(startWeekSelector.Text, out var sWeek))
-                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
-
-            if (!int.TryParse(endWeekSelector.Text, out var eWeek))
-                throw new ArgumentException("Something went wrong in ComboBox: StartWeek");
-
-            activity.StartWeek = sWeek;
-            activity.EndWeek = eWeek;
+            
+            activity.StartDate = StartDateSelector.Value;
+            activity.EndDate = EndDateSelector.Value;
 
             var items = AssignedUserListView.Items;
             var usernames = new List<string>();
@@ -244,6 +223,18 @@ namespace Projecthandler.Forms.Dialogs
 
             var item = sList[0];
             Link_Add_LinkClicked(sender,null);
+        }
+
+        private void projectSelector_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            var selectedItem = projectSelector.Text;
+            var project = pManager.Project(selectedItem);
+
+            StartDateSelector.MinDate = project.StartDate;
+            StartDateSelector.MaxDate = project.EndDate;
+
+            EndDateSelector.MinDate = project.StartDate;
+            EndDateSelector.MaxDate = project.EndDate;
         }
     }
 }

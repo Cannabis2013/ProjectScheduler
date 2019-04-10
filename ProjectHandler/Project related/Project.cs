@@ -91,13 +91,13 @@ namespace ProjectRelated
             model.SubItems.Add(userLeader.ToString());
 
 
-            var startDate = new StringBuilder("Week begin: ");
-            startDate.Append(StartDate);
-            model.SubItems.Add(startDate.ToString());
+            var sDate = new StringBuilder("Start date: ");
+            sDate.Append(StartDate);
+            model.SubItems.Add(sDate.ToString());
 
-            var endDate = new StringBuilder("Week end: ");
-            endDate.Append(EndDate);
-            model.SubItems.Add(endDate.ToString());
+            var eDate = new StringBuilder("End date: ");
+            eDate.Append(EndDate);
+            model.SubItems.Add(eDate.ToString());
             
             model.ImageIndex = 0;
             model.StateImageIndex = 0;

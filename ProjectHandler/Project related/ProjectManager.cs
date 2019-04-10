@@ -60,9 +60,9 @@ namespace ProjectRelated
             return resultingList;
         }
 
-        public List<TimeObject> ActivityTimeObjects()
+        public List<RegistrationObject> HourRegistrationObjects()
         {
-            var TimeObjects = new List<TimeObject>();
+            var TimeObjects = new List<RegistrationObject>();
             var activities = Activities();
 
             foreach (var activity in activities)
@@ -73,17 +73,17 @@ namespace ProjectRelated
             return TimeObjects;
         }
 
-        public List<TimeObject> ActivityTimeObjects(string userName)
+        public List<RegistrationObject> HourRegistrationObjects(string userName)
         {
-            var TimeObjects = new List<TimeObject>();
+            var RegObjects = new List<RegistrationObject>();
             var activities = Activities(userName);
 
             foreach (var activity in activities)
             {
-                var tm = activity.TimeObjects(userName).ToList();
-                TimeObjects.AddRange(tm);
+                var tm = activity.HourRegistrationObjects(userName).ToList();
+                RegObjects.AddRange(tm);
             }
-            return TimeObjects;
+            return RegObjects;
         }
 
         public ListViewItem[] ProjectItemModels(ItemModelEntity<ListViewItem>.ListMode mode = ItemModelEntity<ListViewItem>.ListMode.List)
@@ -200,18 +200,21 @@ namespace ProjectRelated
             return models;
         }
 
-        public User.Availability IsUserAvailableWithinTimeSpan(string userName, UserManager uManager, int fromWeek, int toWeek)
+        public User.Availability IsUserAvailableWithinTimeSpan(string userName, UserManager uManager, DateTime fromDate, DateTime toDate)
         {
             int partlyOccurrences = 0, fullOccurrences = 0;
-            foreach (var item in UserActivityEntities(userName,uManager))
-                if (fromWeek < item.startWeek && toWeek > item.endWeek)
+
+            foreach (var item in UserActivityEntities(userName, uManager))
+            {
+                if (fromDate.CompareTo(item.StartDate) < 0  && toDate.CompareTo(item.EndDate) > 0)
                     partlyOccurrences++;
-                else if (fromWeek < item.startWeek && item.withinTimespan(toWeek))
+                else if (fromDate.CompareTo(item.StartDate) < 0 && item.withinTimespan(toDate))
                     partlyOccurrences++;
-                else if (item.withinTimespan(fromWeek) && toWeek > item.endWeek)
+                else if (item.withinTimespan(fromDate) && toDate.CompareTo(item.EndDate) > 0)
                     partlyOccurrences++;
-                else if (item.withinTimespan(fromWeek) && item.withinTimespan(toWeek))
+                else if (item.withinTimespan(fromDate) && item.withinTimespan(toDate))
                     fullOccurrences++;
+            }
 
             if (fullOccurrences >= 20)
                 return User.Availability.NotAvailable;
@@ -223,7 +226,7 @@ namespace ProjectRelated
         public IEnumerable<ActivityEntity> UserActivityEntities(string userName,UserManager uManager)
         {
             return Activities(userName).Select(item =>
-                new ActivityEntity(item.StartWeek, item.EndWeek, item.id)).ToList();
+                new ActivityEntity(item.id, item.StartDate, item.EndDate)).ToList();
         }
     }
 }

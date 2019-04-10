@@ -2,12 +2,13 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Projecthandler.Forms.Dialogs;
+using Projecthandler.Templates;
 using ProjectRelated;
 using VirtualUserDomain;
 
 namespace Projecthandler.Forms.Project_and_activity_management.Controls
 {
-    public partial class ActivityManagement : UserControl
+    public partial class ActivityManagement : UserControl, IManagement
     {
         private readonly ListView aView;
         private readonly ProjectManager pManager;
@@ -23,10 +24,10 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
 
             aView = ActivityListView;
 
-            UpdateView();
+            updateView();
         }
 
-        private void UpdateView()
+        public void updateView()
         {
             aView.Clear();
             aView.View = View.Details;
@@ -43,38 +44,22 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
 
         private void _OnSubmitPushed(object sender, EventArgs e)
         {
-            UpdateView();
+            updateView();
         }
 
         private void _OnEditPushed(object sender, EventArgs e)
         {
-            UpdateView();
+            updateView();
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (TabView.TabPages.Count > 1)
-            {
-                TabView.SelectedIndex = 1;
-                MessageBox.Show("You have to finish your current operation.");
-                return;
-            }
-
-            var tPage = new TabPage("Add activity");
-
-            const AnchorStyles layoutAnchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             var aControl = new AddActivityControl(pManager,uManager);
 
             aControl.OnSaveClicked += _OnSaveClicked;
             aControl.OnCancelClicked += _OnCancelClicked;
-
-            aControl.Size = tPage.Size;
-            tPage.Controls.Add(aControl);
-
-            aControl.Anchor = layoutAnchor;
-
-            TabView.TabPages.Add(tPage);
-            TabView.SelectedTab = tPage;
+            
+            addTabPage("Add Activity",aControl);
 
             /*
              * Implement the activity usercontrol
@@ -83,37 +68,26 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
 
         private void _OnSaveClicked(object sender, EventArgs e)
         {
-            TabView.TabPages.RemoveAt(1);
-            TabView.Enabled = true;
-
-            UpdateView();
+            removeTabPage(1);
+            updateView();
         }
 
         private void _OnCancelClicked(object sender, EventArgs e)
         {
-            TabView.TabPages.RemoveAt(1);
-            TabView.Enabled = true;
+            removeTabPage(1);
         }
 
         private void _OnEditClicked(object sender, EventArgs e)
         {
-            TabView.TabPages.RemoveAt(1);
-            TabView.Enabled = true;
-
-            UpdateView();
+            removeTabPage(1);
+            updateView();
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (TabView.TabPages.Count > 1)
-            {
-                TabView.SelectedIndex = 1;
-                MessageBox.Show("You have to finish your current operation.");
+            if (ActivityListView.SelectedItems.Count < 1)
                 return;
-            }
-
-            var tPage = new TabPage("Edit activity");
-
+            
             var selectedItem = ActivityListView.SelectedItems[0];
             var activity = pManager.Activity(selectedItem.Text);
 
@@ -121,15 +95,8 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
 
             aControl.OnEditClicked += _OnEditClicked;
             aControl.OnCancelClicked += _OnCancelClicked;
-
-            aControl.Size = tPage.Size;
-            tPage.Controls.Add(aControl);
-
-            const AnchorStyles layoutAnchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            aControl.Anchor = layoutAnchor;
-
-            TabView.TabPages.Add(tPage);
-            TabView.SelectedTab = tPage;
+            
+            addTabPage("Edit activity",aControl);
         }
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -139,7 +106,49 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
             var parentActivityProjectId = activity.ParentProjectId;
             pManager.removeActivity(parentActivityProjectId, selectedActivityId);
 
-            UpdateView();
+            updateView();
+        }
+
+        private void ActivityListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            linkLabel2_LinkClicked(this,null);
+        }
+
+        public void addTabPage(string title, Control control)
+        {
+            if (tabsActive())
+            {
+                TabView.SelectedIndex = 1;
+                MessageBox.Show(@"You have to finish your current operation.");
+                return;
+            }
+
+            var tPage = new TabPage(title);
+
+            const AnchorStyles layoutAnchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            
+            control.Size = tPage.Size;
+            tPage.Controls.Add(control);
+
+            control.Anchor = layoutAnchor;
+
+            TabView.TabPages.Add(tPage);
+            TabView.SelectedTab = tPage;
+        }
+
+        public void removeTabPage(int index)
+        {
+            TabView.TabPages.RemoveAt(index);
+        }
+
+        public bool tabsActive()
+        {
+            return TabView.TabPages.Count > 1;
+        }
+
+        public void updateCurrentTabTitle(string title)
+        {
+            throw new NotImplementedException();
         }
     }
 }

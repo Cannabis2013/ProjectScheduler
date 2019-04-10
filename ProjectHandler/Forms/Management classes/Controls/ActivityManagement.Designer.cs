@@ -36,14 +36,15 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.TabView = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.ItemIcons = new System.Windows.Forms.ImageList(this.components);
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.MainLayout.SuspendLayout();
             this.ButtonLayout.SuspendLayout();
             this.TabView.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // ActivityListView
@@ -52,12 +53,13 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ActivityListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ActivityListView.Location = new System.Drawing.Point(-7, 0);
+            this.ActivityListView.Location = new System.Drawing.Point(0, 0);
             this.ActivityListView.Margin = new System.Windows.Forms.Padding(0);
             this.ActivityListView.Name = "ActivityListView";
-            this.ActivityListView.Size = new System.Drawing.Size(380, 363);
+            this.ActivityListView.Size = new System.Drawing.Size(369, 360);
             this.ActivityListView.TabIndex = 4;
             this.ActivityListView.UseCompatibleStateImageBehavior = false;
+            this.ActivityListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ActivityListView_MouseDoubleClick);
             // 
             // MainLayout
             // 
@@ -65,19 +67,16 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MainLayout.BackColor = System.Drawing.Color.Sienna;
-            this.MainLayout.ColumnCount = 2;
-            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
+            this.MainLayout.ColumnCount = 1;
             this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.MainLayout.Controls.Add(this.ButtonLayout, 0, 0);
-            this.MainLayout.Controls.Add(this.tableLayoutPanel1, 0, 1);
-            this.MainLayout.Controls.Add(this.TabView, 1, 0);
+            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.MainLayout.Controls.Add(this.TabView, 0, 0);
             this.MainLayout.Location = new System.Drawing.Point(0, 0);
             this.MainLayout.Margin = new System.Windows.Forms.Padding(5);
             this.MainLayout.Name = "MainLayout";
             this.MainLayout.RowCount = 2;
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.MainLayout.Size = new System.Drawing.Size(473, 385);
             this.MainLayout.TabIndex = 1;
             // 
@@ -91,7 +90,7 @@
             this.ButtonLayout.Controls.Add(this.linkLabel1, 0, 0);
             this.ButtonLayout.Controls.Add(this.linkLabel2, 0, 1);
             this.ButtonLayout.Controls.Add(this.linkLabel3, 0, 2);
-            this.ButtonLayout.Location = new System.Drawing.Point(0, 0);
+            this.ButtonLayout.Location = new System.Drawing.Point(369, 0);
             this.ButtonLayout.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonLayout.Name = "ButtonLayout";
             this.ButtonLayout.RowCount = 5;
@@ -101,7 +100,7 @@
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.ButtonLayout.Size = new System.Drawing.Size(96, 385);
+            this.ButtonLayout.Size = new System.Drawing.Size(96, 360);
             this.ButtonLayout.TabIndex = 0;
             // 
             // linkLabel1
@@ -140,45 +139,32 @@
             this.linkLabel3.Text = "Delete activity";
             this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.tableLayoutPanel1.AutoSize = true;
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.MainLayout.SetColumnSpan(this.tableLayoutPanel1, 2);
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(236, 385);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel1.MaximumSize = new System.Drawing.Size(0, 48);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(0, 0);
-            this.tableLayoutPanel1.TabIndex = 3;
-            // 
             // TabView
             // 
             this.TabView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabView.Controls.Add(this.tabPage1);
-            this.TabView.Location = new System.Drawing.Point(96, 0);
+            this.TabView.Location = new System.Drawing.Point(0, 0);
             this.TabView.Margin = new System.Windows.Forms.Padding(0);
+            this.TabView.Multiline = true;
             this.TabView.Name = "TabView";
+            this.TabView.Padding = new System.Drawing.Point(0, 0);
             this.TabView.SelectedIndex = 0;
-            this.TabView.Size = new System.Drawing.Size(377, 385);
-            this.TabView.TabIndex = 4;
+            this.TabView.Size = new System.Drawing.Size(473, 385);
+            this.TabView.TabIndex = 1;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.ActivityListView);
+            this.tabPage1.BackColor = System.Drawing.Color.Sienna;
+            this.tabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.tabPage1.Controls.Add(this.tableLayoutPanel2);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(369, 359);
+            this.tabPage1.Size = new System.Drawing.Size(465, 359);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Activity overview";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // ItemIcons
             // 
@@ -186,19 +172,37 @@
             this.ItemIcons.TransparentColor = System.Drawing.Color.Transparent;
             this.ItemIcons.Images.SetKeyName(0, "Project_Icon.png");
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.Controls.Add(this.ButtonLayout, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.ActivityListView, 0, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(465, 360);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
             // ActivityManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.MainLayout);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "ActivityManagement";
             this.Size = new System.Drawing.Size(473, 385);
             this.MainLayout.ResumeLayout(false);
-            this.MainLayout.PerformLayout();
             this.ButtonLayout.ResumeLayout(false);
             this.ButtonLayout.PerformLayout();
             this.TabView.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -211,9 +215,9 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.LinkLabel linkLabel2;
         private System.Windows.Forms.LinkLabel linkLabel3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ImageList ItemIcons;
         private System.Windows.Forms.TabControl TabView;
         private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }

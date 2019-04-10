@@ -36,7 +36,6 @@
             this.TabView = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
             this.ButtonLayout = new System.Windows.Forms.TableLayoutPanel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
@@ -53,15 +52,16 @@
             this.ProjectListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ProjectListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProjectListView.Location = new System.Drawing.Point(0, 26);
+            this.ProjectListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ProjectListView.LargeImageList = this.ItemIcons;
+            this.ProjectListView.Location = new System.Drawing.Point(0, 0);
             this.ProjectListView.Margin = new System.Windows.Forms.Padding(0);
             this.ProjectListView.Name = "ProjectListView";
-            this.ProjectListView.Size = new System.Drawing.Size(621, 451);
+            this.ProjectListView.Size = new System.Drawing.Size(626, 481);
             this.ProjectListView.SmallImageList = this.ItemIcons;
             this.ProjectListView.TabIndex = 0;
             this.ProjectListView.UseCompatibleStateImageBehavior = false;
-            this.ProjectListView.View = System.Windows.Forms.View.SmallIcon;
+            this.ProjectListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ProjectListView_MouseDoubleClick);
             // 
             // ItemIcons
             // 
@@ -110,7 +110,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.tabPage1.Size = new System.Drawing.Size(725, 477);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Project overview";
@@ -123,32 +123,16 @@
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.71429F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel2.Controls.Add(this.ProjectListView, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.ButtonLayout, 1, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.ProjectListView, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.ButtonLayout, 1, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(-3, -1);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(725, 477);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(731, 481);
             this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(621, 26);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Projects";
             // 
             // ButtonLayout
             // 
@@ -161,7 +145,7 @@
             this.ButtonLayout.Controls.Add(this.linkLabel1, 0, 0);
             this.ButtonLayout.Controls.Add(this.linkLabel2, 0, 1);
             this.ButtonLayout.Controls.Add(this.linkLabel3, 0, 2);
-            this.ButtonLayout.Location = new System.Drawing.Point(621, 26);
+            this.ButtonLayout.Location = new System.Drawing.Point(626, 0);
             this.ButtonLayout.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonLayout.Name = "ButtonLayout";
             this.ButtonLayout.RowCount = 4;
@@ -169,7 +153,7 @@
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ButtonLayout.Size = new System.Drawing.Size(104, 451);
+            this.ButtonLayout.Size = new System.Drawing.Size(105, 481);
             this.ButtonLayout.TabIndex = 2;
             // 
             // linkLabel1
@@ -180,7 +164,7 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Location = new System.Drawing.Point(3, 0);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(98, 20);
+            this.linkLabel1.Size = new System.Drawing.Size(99, 20);
             this.linkLabel1.TabIndex = 0;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Add project";
@@ -194,7 +178,7 @@
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.Location = new System.Drawing.Point(3, 20);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(98, 20);
+            this.linkLabel2.Size = new System.Drawing.Size(99, 20);
             this.linkLabel2.TabIndex = 0;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Edit project";
@@ -208,7 +192,7 @@
             this.linkLabel3.AutoSize = true;
             this.linkLabel3.Location = new System.Drawing.Point(3, 40);
             this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(98, 20);
+            this.linkLabel3.Size = new System.Drawing.Size(99, 20);
             this.linkLabel3.TabIndex = 0;
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "Remove project";
@@ -227,7 +211,6 @@
             this.TabView.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.ButtonLayout.ResumeLayout(false);
             this.ButtonLayout.PerformLayout();
             this.ResumeLayout(false);
@@ -241,7 +224,6 @@
         private System.Windows.Forms.TabControl TabView;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel ButtonLayout;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.LinkLabel linkLabel2;
