@@ -59,6 +59,7 @@ namespace Projecthandler.Forms.Dialogs
         private void button2_Click(object sender, EventArgs e)
         {
             OnCancelClicked?.Invoke(sender,e);
+            Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -77,7 +78,7 @@ namespace Projecthandler.Forms.Dialogs
             var sEvent = new SubmitEvent(rObject);
 
             OnSaveClicked?.Invoke(this,sEvent);
-
+            Close();
         }
 
         private void ActivityComboBoxSelector_SelectedIndexChanged(object sender, EventArgs e)

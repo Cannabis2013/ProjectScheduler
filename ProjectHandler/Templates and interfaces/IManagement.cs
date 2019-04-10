@@ -14,5 +14,9 @@ namespace Projecthandler.Templates
         bool tabsActive();
         void updateCurrentTabTitle(string title);
         void updateView();
+
+        void _OnSaveClicked(object sender, EventArgs e);
+        void _OnEditClicked(object sender, EventArgs e);
+        void _OnCancelClicked(object sender, EventArgs e);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Projecthandler.Forms.Dialogs;
 using Projecthandler.Templates;
 using Projecthandler.Templates_and_interfaces;
@@ -43,16 +44,6 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
             aView.Items.AddRange(pManager.ProjectActivityItemModels(uManager));
         }
 
-        private void _OnSubmitPushed(object sender, EventArgs e)
-        {
-            updateView();
-        }
-
-        private void _OnEditPushed(object sender, EventArgs e)
-        {
-            updateView();
-        }
-
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var aControl = new AddActivityControl(pManager,uManager);
@@ -67,19 +58,21 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
              */
         }
 
-        private void _OnSaveClicked(object sender, EventArgs e)
+        public void _OnSaveClicked(object sender, EventArgs e)
         {
+            updateParentView?.Invoke(this, e);
             removeTabPage(1);
             updateView();
         }
 
-        private void _OnCancelClicked(object sender, EventArgs e)
+        public void _OnCancelClicked(object sender, EventArgs e)
         {
             removeTabPage(1);
         }
 
-        private void _OnEditClicked(object sender, EventArgs e)
+        public void _OnEditClicked(object sender, EventArgs e)
         {
+            updateParentView?.Invoke(this, e);
             removeTabPage(1);
             updateView();
         }
@@ -106,7 +99,7 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
             var activity = pManager.Activity(selectedActivityId);
             var parentActivityProjectId = activity.ParentProjectId;
             pManager.removeActivity(parentActivityProjectId, selectedActivityId);
-
+            updateParentView?.Invoke(this, e);
             updateView();
         }
 

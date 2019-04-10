@@ -9,7 +9,7 @@ using VirtualUserDomain;
 namespace ProjectRelated
 {
     [Serializable]
-    public class Project : ItemModelEntity<ListViewItem>
+    public class Project : ModelEntity<ListViewItem>
     {
         private readonly List<Activity> projectActivities = new List<Activity>();
         private string pLeaderId;

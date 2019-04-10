@@ -30,9 +30,11 @@
         {
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Project management");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Activity management");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Projects and activity", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Hour management");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Management", new System.Windows.Forms.TreeNode[] {
             treeNode1,
-            treeNode2});
+            treeNode2,
+            treeNode3});
             this.MainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.MenuSelectorView = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -87,12 +89,16 @@
             treeNode2.Name = "ActivityManagement";
             treeNode2.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             treeNode2.Text = "Activity management";
-            treeNode3.ForeColor = System.Drawing.Color.Black;
-            treeNode3.Name = "Projects";
-            treeNode3.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            treeNode3.Text = "Projects and activity";
+            treeNode3.ForeColor = System.Drawing.Color.MidnightBlue;
+            treeNode3.Name = "Hour_Management";
+            treeNode3.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            treeNode3.Text = "Hour management";
+            treeNode4.ForeColor = System.Drawing.Color.Black;
+            treeNode4.Name = "Projects";
+            treeNode4.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            treeNode4.Text = "Management";
             this.MenuSelectorView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
+            treeNode4});
             this.MainLayout.SetRowSpan(this.MenuSelectorView, 2);
             this.MenuSelectorView.Size = new System.Drawing.Size(192, 535);
             this.MenuSelectorView.TabIndex = 0;

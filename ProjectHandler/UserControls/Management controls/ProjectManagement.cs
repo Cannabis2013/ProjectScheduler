@@ -55,7 +55,7 @@ namespace Projecthandler
             addTabPage("Add project",pControl);
         }
 
-        private void _OnSaveClicked(object sender, EventArgs e)
+        public void _OnSaveClicked(object sender, EventArgs e)
         {
             var submitEvent = (SubmitEvent) e;
             var p = submitEvent.Project();
@@ -65,15 +65,14 @@ namespace Projecthandler
             removeTabPage(1);
         }
 
-        private void _OnEditClicked(object sender, EventArgs e)
+        public void _OnEditClicked(object sender, EventArgs e)
         {
             updateView();
-
             removeTabPage(1);
             
         }
 
-        private void _OnCancelClicked(object sender, EventArgs e)
+        public void _OnCancelClicked(object sender, EventArgs e)
         {
             TabView.TabPages.RemoveAt(1);
             TabView.Enabled = true;

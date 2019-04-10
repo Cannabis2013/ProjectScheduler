@@ -100,7 +100,7 @@ namespace ProjectRelated
             return RegObjects;
         }
 
-        public ListViewItem[] ProjectItemModels(ItemModelEntity<ListViewItem>.ListMode mode = ItemModelEntity<ListViewItem>.ListMode.List)
+        public ListViewItem[] ProjectItemModels(ModelEntity<ListViewItem>.ListMode mode = ModelEntity<ListViewItem>.ListMode.List)
         {
             int count = projects.Count, index = 0;
             var models = new ListViewItem[count];
@@ -118,7 +118,7 @@ namespace ProjectRelated
             {
                 foreach (var activity in p.AllActivities())
                 {
-                    var models = activity.TimeObjectModels().ToList();
+                    var models = activity.RegistrationObjectModels().ToList();
                     activities.AddRange(models);
                 }
             }
@@ -134,7 +134,7 @@ namespace ProjectRelated
             {
                 foreach (var activity in p.AllActivities())
                 {
-                    var models = activity.TimeObjectModels(userName).ToList();
+                    var models = activity.RegistrationObjectItemModels(userName).ToList();
                     TimeObjectModels.AddRange(models);
                 }
             }
@@ -149,7 +149,7 @@ namespace ProjectRelated
                 foreach (var p in projects)
                 foreach (var activity in p.AllActivities())
                 {
-                    var model = activity.ItemModel(ItemModelEntity<ListViewItem>.ListMode.List);
+                    var model = activity.ItemModel(ModelEntity<ListViewItem>.ListMode.List);
                     models.Add(model);
                 }
 
@@ -164,7 +164,7 @@ namespace ProjectRelated
                 if (!activity.IsUserAssigned(uManager) && p.projectLeaderId != userId)
                     continue;
 
-                var model = activity.ItemModel(ItemModelEntity<ListViewItem>.ListMode.List);
+                var model = activity.ItemModel(ModelEntity<ListViewItem>.ListMode.List);
                 models.Add(model);
             }
 

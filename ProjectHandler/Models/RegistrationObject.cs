@@ -9,7 +9,7 @@ using Templates;
 namespace ProjectRelated
 {
     [Serializable]
-    public class RegistrationObject : ItemModelEntity<ListViewItem>
+    public class RegistrationObject : ModelEntity<ListViewItem>
     {
         private readonly DateTime originalRegistrationDate;
         private string regId;
@@ -63,6 +63,26 @@ namespace ProjectRelated
 
         public override ListViewItem ItemModel(ListMode mode = ListMode.Tile)
         {
+            if (mode == ListMode.List)
+                return ListListViewModel();
+            else
+                return TileListViewModel();
+        }
+
+        private ListViewItem ListListViewModel()
+        {
+            var model = new ListViewItem(RegistrationId) {Text = regId};
+            model.SubItems.Add(userName);
+            model.SubItems.Add(Hours.ToString());
+            model.SubItems.Add(originalRegistrationDate.ToString(CultureInfo.InvariantCulture));
+            model.SubItems.Add(parentActivityId);
+            model.StateImageIndex = 0;
+
+            return model;
+        }
+
+        private ListViewItem TileListViewModel()
+        {
             var model = new ListViewItem(RegistrationId);
 
             var userId = new StringBuilder("User: ");
@@ -76,7 +96,7 @@ namespace ProjectRelated
             model.SubItems.Add(Hours.ToString());
 
             var origWeek = new StringBuilder("Original registered week: ");
-            origWeek.Append(originalRegistrationDate.ToString());
+            origWeek.Append(originalRegistrationDate.ToString(CultureInfo.InvariantCulture));
 
             model.SubItems.Add(origWeek.ToString());
 

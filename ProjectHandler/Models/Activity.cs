@@ -10,10 +10,10 @@ using VirtualUserDomain;
 namespace ProjectRelated
 {
     [Serializable]
-    public class Activity : ItemModelEntity<ListViewItem>
+    public class Activity : ModelEntity<ListViewItem>
     {
         private readonly List<string> assignedUserIdentities = new List<string>();
-        private readonly List<RegistrationObject> registeredTimeObjects = new List<RegistrationObject>();
+        private readonly List<RegistrationObject> registrationObjects = new List<RegistrationObject>();
 
         private DateTime startDate, endDate;
         
@@ -32,7 +32,7 @@ namespace ProjectRelated
             startDate = copy.startDate;
             endDate = copy.endDate;
             assignedUserIdentities = copy.assignedUserIdentities;
-            registeredTimeObjects = copy.registeredTimeObjects;
+            registrationObjects = copy.registrationObjects;
             ParentProjectId = copy.ParentProjectId;
         }
 
@@ -99,23 +99,35 @@ namespace ProjectRelated
             assignedUserIdentities.Clear();
         }
 
-        public void AddTimeObject(RegistrationObject time)
+        public void AddRegistrationObject(RegistrationObject rObject)
         {
-            time.ParentActivityId = ActivityId;
-            registeredTimeObjects.Add(time);
+            registrationObjects.Add(rObject);
+        }
+
+        public void removeRegistrationObject(string regId)
+        {
+            for (var i = 0; i < registrationObjects.Count; i++)
+            {
+                var rObject = registrationObjects[i];
+                if (rObject.RegistrationId == regId)
+                {
+                    registrationObjects.RemoveAt(i);
+                    return;
+                }
+            }
         }
 
         public List<RegistrationObject> HourRegistrationObjects(string userName) =>
-            registeredTimeObjects.Where(item => item.UserName == userName).ToList();
+            registrationObjects.Where(item => item.UserName == userName).ToList();
 
-        public List<RegistrationObject> HourRegistrationObjects() => registeredTimeObjects;
+        public List<RegistrationObject> HourRegistrationObjects() => registrationObjects;
 
         public int TotalRegisteredHours(string userName = null)
         {
             var totalHours = 0;
             if (userName != null)
             {
-                foreach (var T in registeredTimeObjects)
+                foreach (var T in registrationObjects)
                 {
                     if (userName == T.UserName)
                         totalHours += T.Hours;
@@ -123,7 +135,7 @@ namespace ProjectRelated
             }
             else
             {
-                foreach (var T in registeredTimeObjects)
+                foreach (var T in registrationObjects)
                     totalHours += T.Hours;
             }
 
@@ -135,9 +147,9 @@ namespace ProjectRelated
             return mode == ListMode.Tile ? ItemTileModel() : ItemListModel();
         }
 
-        public ListViewItem[] TimeObjectModels(string userName)
+        public ListViewItem[] RegistrationObjectItemModels(string userName)
         {
-            var userTimeObjects = registeredTimeObjects.Where(item => item.UserName == userName).ToArray();
+            var userTimeObjects = registrationObjects.Where(item => item.UserName == userName).ToArray();
             
             var models = new ListViewItem[userTimeObjects.Length];
             var index = 0;
@@ -148,9 +160,9 @@ namespace ProjectRelated
             return models;
         }
 
-        public ListViewItem[] TimeObjectModels()
+        public ListViewItem[] RegistrationObjectModels()
         {
-            var tObjects = registeredTimeObjects.ToArray();
+            var tObjects = registrationObjects.ToArray();
 
             var models = new ListViewItem[tObjects.Length];
             var index = 0;

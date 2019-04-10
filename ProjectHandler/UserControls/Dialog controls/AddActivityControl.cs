@@ -179,7 +179,6 @@ namespace Projecthandler.Forms.Dialogs
                 usernames.Add(item.Text);
 
             a.AssignUsers(usernames);
-
             var p = pManager.Project(projectTitle);
             p.AddActivity(a);
 
