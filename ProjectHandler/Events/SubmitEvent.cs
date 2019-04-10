@@ -5,27 +5,18 @@ namespace Projecthandler.Events
 {
     public class SubmitEvent : EventArgs
     {
-        private readonly Activity a;
-        private readonly Project p;
+        private readonly RegistrationObject R;
+        private readonly Activity A;
+        private readonly Project P;
 
-        public SubmitEvent(Project p)
-        {
-            this.p = p;
-        }
+        public SubmitEvent(Project p) => P = p;
 
-        public SubmitEvent(Activity a)
-        {
-            this.a = a;
-        }
+        public SubmitEvent(Activity a) => A = a;
 
-        public Project project()
-        {
-            return p;
-        }
+        public SubmitEvent(RegistrationObject r) => R = r;
 
-        public Activity activity()
-        {
-            return a;
-        }
+        public Project Project() => P;
+        public Activity Activity() => A;
+        public RegistrationObject RegistrationObject() => R;
     }
 }

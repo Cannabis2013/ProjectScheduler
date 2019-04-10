@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Projecthandler.Templates;
 using Projecthandler.Templates_and_interfaces;
 using ProjectRelated;
 using VirtualUserDomain;
 
-namespace Projecthandler.Forms.Dialogs
+namespace Projecthandler.UserControls.Dialog_controls
 {
-    public partial class AddDialogForm : Form, IDialogInterface<EventArgs>
+    public partial class EditHourRegistrationControl : UserControl, IDialogInterface<EventArgs>
     {
         private readonly ProjectManager pManager;
         private readonly UserManager uManager;
 
-        public AddDialogForm(ProjectManager pManager, UserManager uManager)
+        public EditHourRegistrationControl(ProjectManager pManager, UserManager uManager)
         {
             this.pManager = pManager;
             this.uManager = uManager;
@@ -28,10 +27,7 @@ namespace Projecthandler.Forms.Dialogs
 
         public void initializeListControls()
         {
-            var currentUserName = uManager.loggedIn().UserName();
-            var activityModels = pManager.Activities(currentUserName).Select(item => item.ActivityId).ToArray();
-
-            ActivityComboSelector.Items.AddRange(activityModels);
+            throw new NotImplementedException();
         }
 
         public void InitializeDialogValues()

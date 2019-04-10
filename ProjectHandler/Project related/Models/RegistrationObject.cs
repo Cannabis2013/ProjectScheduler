@@ -12,35 +12,31 @@ namespace ProjectRelated
     public class RegistrationObject : ItemModelEntity<ListViewItem>
     {
         private readonly DateTime originalRegistrationDate;
-        private DateTime latestEditDate;
+        private string regId;
         private string parentActivityId;
         private string userName;
         private string activityTextContent;
 
         public int Hours { get; set; }
 
-        public RegistrationObject(int hours, string userName, string text, Activity owner)
+        public RegistrationObject(string title,int hours, string userName, string text, string activityId)
         {
+            regId = title;
             this.Hours = hours;
             this.userName = userName;
             this.activityTextContent = text;
-            owner.AddTimeObject(this);
-            parentActivityId = owner.ActivityId;
+            parentActivityId = activityId;
 
-            latestEditDate = DateTime.Now;
+            originalRegistrationDate = DateTime.Now;
         }
 
-        public RegistrationObject(RegistrationObject copy, string activityTextContent)
+        public string RegistrationId
         {
-            this.activityTextContent = activityTextContent;
-            parentActivityId = copy.ParentActivityId;
-            userName = copy.UserName;
-            Hours = copy.Hours;
-            originalRegistrationDate = copy.originalRegistrationDate;
+            get => regId;
+            set => regId = value;
         }
 
         public DateTime OriginRegistrationDate() => originalRegistrationDate;
-        public DateTime LastEditDate() => latestEditDate;
 
         public string ParentActivityId
         {
@@ -54,7 +50,7 @@ namespace ProjectRelated
             set => userName = value;
         }
 
-        public string Text
+        public string Description
         {
             get => activityTextContent;
             set => activityTextContent = value;
@@ -67,7 +63,7 @@ namespace ProjectRelated
 
         public override ListViewItem ItemModel(ListMode mode = ListMode.Tile)
         {
-            var model = new ListViewItem();
+            var model = new ListViewItem(RegistrationId);
 
             var userId = new StringBuilder("User: ");
             userId.Append(UserName);
@@ -82,9 +78,6 @@ namespace ProjectRelated
             var origWeek = new StringBuilder("Original registered week: ");
             origWeek.Append(originalRegistrationDate.ToString());
 
-            origWeek.Append("(");
-            origWeek.Append(latestEditDate.ToString());
-            origWeek.Append(")");
             model.SubItems.Add(origWeek.ToString());
 
             model.StateImageIndex = 0;

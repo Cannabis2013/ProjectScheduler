@@ -59,14 +59,14 @@ namespace ProjectRelated
             return resultingList;
         }
 
-        public RegistrationObject HourRegistrationObjects(RegistrationObject regObject)
+        public RegistrationObject HourRegistrationObject(string regId)
         {
             var activities = Activities();
 
             foreach (var activity in activities)
             {
                 var tm = activity.HourRegistrationObjects().ToList();
-                var rObject = tm.Find(item => item == regObject);
+                var rObject = tm.Find(item => item.RegistrationId == regId);
                 if (rObject != null)
                     return rObject;
             }

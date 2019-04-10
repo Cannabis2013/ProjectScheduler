@@ -61,13 +61,13 @@ namespace MainUserSpace
                 lView.enterCredentialsManual(uName, pass);
         }
 
-        private void loginView_OnSubmitClicked(object sender, MyEventArgs e)
+        private void loginView_OnSubmitClicked(object sender, CredentialArguments e)
         {
             var lView = (LoginView) sender;
             if (uManager.logIn(e.arg1, e.arg2))
             {
                 isLastWindow = false;
-                var view = new MainWindow(pManager,uManager);
+                var view = new ProjectView(pManager,uManager);
                 view.logoutEvent += _logoutEvent;
                 view.CloseRequest += _CloseRequest;
                 view.HardCloseEvent += _HardCloseEvent;
@@ -93,7 +93,7 @@ namespace MainUserSpace
 
         private void _logoutEvent(object sender, EventArgs e)
         {
-            var view = (MainWindow) sender;
+            var view = (ProjectView) sender;
             view.Close();
         }
 

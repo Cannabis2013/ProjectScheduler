@@ -1,6 +1,6 @@
 ﻿namespace MainUserSpace
 {
-    partial class MainWindow
+    partial class ProjectView
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectView));
             this.ProjectViewImageList = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -237,14 +237,14 @@
             // customizeToolStripMenuItem
             // 
             this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
-            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.customizeToolStripMenuItem.Text = "Management";
             this.customizeToolStripMenuItem.Click += new System.EventHandler(this.customizeToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(142, 6);
             // 
             // helpToolStripMenuItem
             // 
@@ -425,6 +425,7 @@
             // 
             // ActivityListView
             // 
+            this.ActivityListView.ContextMenuStrip = this.ActivityListMenuStrip;
             this.ActivityListView.Location = new System.Drawing.Point(3, 19);
             this.ActivityListView.Margin = new System.Windows.Forms.Padding(0);
             this.ActivityListView.Name = "ActivityListView";
@@ -437,13 +438,14 @@
             this.ActivityListMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.ActivityListMenuStrip.Name = "ActivityListMenuStrip";
-            this.ActivityListMenuStrip.Size = new System.Drawing.Size(145, 26);
+            this.ActivityListMenuStrip.Size = new System.Drawing.Size(181, 48);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem1.Text = "Register hour";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // UserImages
             // 
@@ -451,7 +453,7 @@
             this.UserImages.TransparentColor = System.Drawing.Color.Transparent;
             this.UserImages.Images.SetKeyName(0, "Jens Werner.jpg");
             // 
-            // MainWindow
+            // ProjectView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -462,7 +464,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximumSize = new System.Drawing.Size(960, 512);
             this.MinimumSize = new System.Drawing.Size(960, 512);
-            this.Name = "MainWindow";
+            this.Name = "ProjectView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Project scheduler";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainView_FormClosed);

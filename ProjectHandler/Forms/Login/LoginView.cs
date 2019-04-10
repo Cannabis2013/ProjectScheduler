@@ -15,7 +15,7 @@ namespace Projecthandler.Class_forms
         // For testing purposes
         public void enterCredentialsManual(string uName, string pass)
         {
-            OnSubmitClicked?.Invoke(this, new MyEventArgs(uName, pass));
+            OnSubmitClicked?.Invoke(this, new CredentialArguments(uName, pass));
         }
 
         public void setWarningText(string msg)
@@ -37,7 +37,7 @@ namespace Projecthandler.Class_forms
             var uName = textBox1.Text;
             var pass = textBox2.Text;
 
-            OnSubmitClicked?.Invoke(this, new MyEventArgs(uName, pass));
+            OnSubmitClicked?.Invoke(this, new CredentialArguments(uName, pass));
         }
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -45,7 +45,7 @@ namespace Projecthandler.Class_forms
             Application.Exit();
         }
 
-        public event EventHandler<MyEventArgs> OnSubmitClicked;
+        public event EventHandler<CredentialArguments> OnSubmitClicked;
         public event EventHandler<EventArgs> onFormClose;
 
         private void LoginView_FormClosed(object sender, FormClosedEventArgs e)

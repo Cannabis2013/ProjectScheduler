@@ -61,11 +61,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\Dialogs\AddDialogForm.cs">
+    <Compile Include="Forms\Dialogs\AddRegistrationDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Dialogs\AddDialogForm.Designer.cs">
-      <DependentUpon>AddDialogForm.cs</DependentUpon>
+    <Compile Include="Forms\Dialogs\AddRegistrationDialogForm.Designer.cs">
+      <DependentUpon>AddRegistrationDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Templates and interfaces\IDialogInterface.cs" />
     <Compile Include="UserControls\Dialog controls\AddProjectControl.cs">
@@ -79,6 +79,12 @@
     </Compile>
     <Compile Include="UserControls\Dialog controls\AddActivityControl.Designer.cs">
       <DependentUpon>AddActivityControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Dialog controls\EditHourRegistrationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Dialog controls\EditHourRegistrationControl.Designer.cs">
+      <DependentUpon>EditHourRegistrationControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Management controls\HourManagement.cs">
       <SubType>UserControl</SubType>
@@ -109,11 +115,11 @@
     <Compile Include="Project related\Models\RegistrationObject.cs" />
     <Compile Include="Project related\Models\Activity.cs" />
     <Compile Include="Project related\ProjectManager.cs" />
-    <Compile Include="Forms\MainWindow\MainWindow.cs">
+    <Compile Include="Forms\ProjectView\ProjectView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MainWindow\MainWindow.Designer.cs">
-      <DependentUpon>MainWindow.cs</DependentUpon>
+    <Compile Include="Forms\ProjectView\ProjectView.Designer.cs">
+      <DependentUpon>ProjectView.cs</DependentUpon>
     </Compile>
     <Compile Include="User Management\User.cs" />
     <Compile Include="User Management\UserManager.cs" />
@@ -132,8 +138,8 @@
     <Compile Include="UserControls\Management controls\ProjectManagement.Designer.cs">
       <DependentUpon>ProjectManagement.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Forms\Dialogs\AddDialogForm.resx">
-      <DependentUpon>AddDialogForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Dialogs\AddRegistrationDialogForm.resx">
+      <DependentUpon>AddRegistrationDialogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Dialog controls\AddProjectControl.resx">
       <DependentUpon>AddProjectControl.cs</DependentUpon>
@@ -141,14 +147,17 @@
     <EmbeddedResource Include="UserControls\Dialog controls\AddActivityControl.resx">
       <DependentUpon>AddActivityControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Dialog controls\EditHourRegistrationControl.resx">
+      <DependentUpon>EditHourRegistrationControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Management controls\HourManagement.resx">
       <DependentUpon>HourManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Login\LoginView.resx">
       <DependentUpon>LoginView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MainWindow\MainWindow.resx">
-      <DependentUpon>MainWindow.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ProjectView\ProjectView.resx">
+      <DependentUpon>ProjectView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Management controls\ActivityManagement.resx">
       <DependentUpon>ActivityManagement.cs</DependentUpon>

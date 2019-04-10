@@ -58,7 +58,7 @@ namespace Projecthandler
         private void _OnSaveClicked(object sender, EventArgs e)
         {
             var submitEvent = (SubmitEvent) e;
-            var p = submitEvent.project();
+            var p = submitEvent.Project();
             pManager.AddProject(p);
             updateView();
 

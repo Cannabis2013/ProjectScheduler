@@ -2,6 +2,7 @@
 using System.Text;
 using System.Windows.Forms;
 using Mng;
+using Projecthandler.Forms.Dialogs;
 using ProjectRelated;
 using VirtualUserDomain;
 
@@ -9,13 +10,13 @@ using VirtualUserDomain;
 
 namespace MainUserSpace
 {
-    public partial class MainWindow : Form
+    public partial class ProjectView : Form
     {
         private readonly ListView aView;
         private readonly ProjectManager pManager;
         private readonly UserManager uManager;
 
-        public MainWindow(ProjectManager pManager, UserManager uManager)
+        public ProjectView(ProjectManager pManager, UserManager uManager)
         {
             InitializeComponent();
 
@@ -82,5 +83,14 @@ namespace MainUserSpace
         public event EventHandler<EventArgs> logoutEvent;
         public event EventHandler<EventArgs> CloseRequest;
         public event EventHandler<EventArgs> HardCloseEvent;
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (ActivityListView.SelectedItems.Count < 1)
+                return;
+            var activityId = ActivityListView.SelectedItems[0].Text;
+            var rDialog = new AddRegistrationDialogForm(pManager,uManager,activityId);
+            rDialog.ShowDialog(this);
+        }
     }
 }
