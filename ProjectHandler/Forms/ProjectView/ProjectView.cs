@@ -106,21 +106,27 @@ namespace MainUserSpace
             aView.Clear();
             aView.View = View.Details;
 
-            aView.Columns.Add("Id", 160, HorizontalAlignment.Left);
-            aView.Columns.Add("Activity time duration", 160, HorizontalAlignment.Left);
-            aView.Columns.Add("Total registered hours", 160, HorizontalAlignment.Left);
-            aView.Columns.Add("Project", 160, HorizontalAlignment.Left);
+            int columnWidth = 160;
+
+            aView.Columns.Add("Activity title", columnWidth, HorizontalAlignment.Left);
+            aView.Columns.Add("Start week", columnWidth, HorizontalAlignment.Left);
+            aView.Columns.Add("Estimated end week", columnWidth, HorizontalAlignment.Left);
+            aView.Columns.Add("Total registered hours", columnWidth, HorizontalAlignment.Left);
+            aView.Columns.Add("Assigned users", columnWidth, HorizontalAlignment.Left);
+            aView.Columns.Add("Project", columnWidth, HorizontalAlignment.Left);
 
             aView.Items.AddRange(activityModels);
 
             RegistrationHourListView.Clear();
             RegistrationHourListView.View = View.Details;
 
-            RegistrationHourListView.Columns.Add("Registration id", 60, HorizontalAlignment.Left);
-            RegistrationHourListView.Columns.Add("User", 60, HorizontalAlignment.Left);
-            RegistrationHourListView.Columns.Add("Original registration date", 60, HorizontalAlignment.Left);
-            RegistrationHourListView.Columns.Add("Work hours registrated", 60, HorizontalAlignment.Left);
-            RegistrationHourListView.Columns.Add("Parent activity", 60, HorizontalAlignment.Left);
+            columnWidth = 120;
+
+            RegistrationHourListView.Columns.Add("Registration id", columnWidth, HorizontalAlignment.Left);
+            RegistrationHourListView.Columns.Add("User", columnWidth, HorizontalAlignment.Left);
+            RegistrationHourListView.Columns.Add("Original registration date", columnWidth, HorizontalAlignment.Left);
+            RegistrationHourListView.Columns.Add("Work hours registrated", columnWidth, HorizontalAlignment.Left);
+            RegistrationHourListView.Columns.Add("Parent activity", columnWidth, HorizontalAlignment.Left);
 
             var listMode = ModelEntity<ListViewItem>.ListMode.List;
 

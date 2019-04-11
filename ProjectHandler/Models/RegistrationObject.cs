@@ -74,7 +74,7 @@ namespace ProjectRelated
             var model = new ListViewItem(RegistrationId) {Text = regId};
             model.SubItems.Add(userName);
             model.SubItems.Add(Hours.ToString());
-            model.SubItems.Add(originalRegistrationDate.ToString(CultureInfo.InvariantCulture));
+            model.SubItems.Add(originalRegistrationDate.ToString("dd/MM/yyyy"));
             model.SubItems.Add(parentActivityId);
             model.StateImageIndex = 0;
 

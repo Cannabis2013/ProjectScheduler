@@ -28,7 +28,11 @@ namespace Projecthandler.Forms.Dialogs
 
         public void InitializeDialogValues()
         {
-            throw new NotImplementedException();
+            projectIDSelector.Text = temporaryProject.id;
+            StartDateSelector.Value = temporaryProject.StartDate;
+            EndDateSelector.Value = temporaryProject.EndDate;
+            leaderSelector.Text = temporaryProject.projectLeaderId;
+            DescriptionBoxSelector.Text = temporaryProject.ShortDescription;
         }
 
         public event EventHandler<EventArgs> OnSaveClicked;
@@ -52,7 +56,7 @@ namespace Projecthandler.Forms.Dialogs
 
             InitializeComponent();
             updateLeaderComboBoxView();
-            initializeDialogValues();
+            InitializeDialogValues();
 
             mode = DialogMode.EditMode;
         }
@@ -65,10 +69,40 @@ namespace Projecthandler.Forms.Dialogs
             {
                 StartDate = StartDateSelector.Value,
                 EndDate = EndDateSelector.Value,
-                projectLeaderId = pLeader
+                projectLeaderId = pLeader,
+                ShortDescription = DescriptionBoxSelector.Text
             };
 
             OnSaveClicked?.Invoke(this, new SubmitEvent(p));
+        }
+
+        private void invoke_Edit_Mode_Submit()
+        {
+            temporaryProject.id = projectIDSelector.Text;
+            temporaryProject.projectLeaderId = leaderSelector.Text;
+            
+            temporaryProject.StartDate = StartDateSelector.Value;
+            temporaryProject.EndDate = EndDateSelector.Value;
+            temporaryProject.ShortDescription = DescriptionBoxSelector.Text;
+
+            OnEditClicked?.Invoke(this, new EventArgs());
+        }
+
+        private void updateLeaderComboBoxView()
+        {
+            foreach (var item in uManager.allUserNames())
+                leaderSelector.Items.Add(item);
+        }
+
+        private enum DialogMode
+        {
+            AddMode,
+            EditMode
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OnCancelClicked?.Invoke(this, e);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -80,42 +114,6 @@ namespace Projecthandler.Forms.Dialogs
                 invoke_Add_Mode_Submit();
             else
                 invoke_Edit_Mode_Submit();
-        }
-
-        private void invoke_Edit_Mode_Submit()
-        {
-            temporaryProject.id = projectIDSelector.Text;
-            temporaryProject.projectLeaderId = leaderSelector.Text;
-            
-            temporaryProject.StartDate = StartDateSelector.Value;
-            temporaryProject.EndDate = EndDateSelector.Value;
-
-            OnEditClicked?.Invoke(this, new EventArgs());
-        }
-
-        private void updateLeaderComboBoxView()
-        {
-            foreach (var item in uManager.allUserNames())
-                leaderSelector.Items.Add(item);
-        }
-
-        private void initializeDialogValues()
-        {
-            projectIDSelector.Text = temporaryProject.id;
-            StartDateSelector.Value = temporaryProject.StartDate;
-            EndDateSelector.Value = temporaryProject.EndDate;
-            leaderSelector.Text = temporaryProject.projectLeaderId;
-        }
-
-        private enum DialogMode
-        {
-            AddMode,
-            EditMode
-        }
-
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            OnCancelClicked?.Invoke(this,e);
         }
     }
 }

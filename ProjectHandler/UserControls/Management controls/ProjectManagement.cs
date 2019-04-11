@@ -94,6 +94,9 @@ namespace Projecthandler
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (ProjectListView.Items.Count < 1 || ProjectListView.SelectedIndices.Count < 1)
+                return;
+
             var item = ProjectListView.SelectedItems[0];
             var p = pManager.Project(item.Text);
 

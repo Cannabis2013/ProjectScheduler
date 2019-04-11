@@ -12,7 +12,7 @@ namespace ProjectRelated
     public class Project : ModelEntity<ListViewItem>
     {
         private readonly List<Activity> projectActivities = new List<Activity>();
-        private string pLeaderId;
+        private string pLeaderId, shortDescription;
         private DateTime startDate, endDate;
 
 
@@ -37,6 +37,12 @@ namespace ProjectRelated
         {
             get => pLeaderId;
             set => pLeaderId = value;
+        }
+
+        public string ShortDescription
+        {
+            get => shortDescription;
+            set => shortDescription = value;
         }
 
         public override ListViewItem ItemModel(ListMode mode = ListMode.Tile)
