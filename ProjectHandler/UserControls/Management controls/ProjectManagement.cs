@@ -39,8 +39,6 @@ namespace Projecthandler
             ProjectListView.Columns.Add("Start date", columnWidth, HorizontalAlignment.Left);
             ProjectListView.Columns.Add("Estimated end date", columnWidth, HorizontalAlignment.Left);
             ProjectListView.Columns.Add("Total registered hours", columnWidth, HorizontalAlignment.Left);
-            ProjectListView.Columns.Add("Assigned users", columnWidth, HorizontalAlignment.Left);
-            ProjectListView.Columns.Add("Project", columnWidth, HorizontalAlignment.Left);
             ProjectListView.Items.AddRange(pManager.ProjectItemModels());
         }
 

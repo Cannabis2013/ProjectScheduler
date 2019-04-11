@@ -66,7 +66,7 @@
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.MainLayout.Size = new System.Drawing.Size(788, 562);
+            this.MainLayout.Size = new System.Drawing.Size(1012, 562);
             this.MainLayout.TabIndex = 0;
             // 
             // MenuSelectorView
@@ -120,7 +120,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(593, 30);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(817, 30);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // linkLabel1
@@ -131,7 +131,7 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.linkLabel1.Location = new System.Drawing.Point(388, 0);
+            this.linkLabel1.Location = new System.Drawing.Point(612, 0);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(202, 30);
             this.linkLabel1.TabIndex = 0;
@@ -147,7 +147,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(1, 1);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(786, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1010, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -171,10 +171,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(1008, 561);
             this.Controls.Add(this.MainLayout);
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(800, 600);
+            this.MinimumSize = new System.Drawing.Size(1024, 600);
             this.Name = "Management";
             this.Text = "Form1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Management_FormClosed);

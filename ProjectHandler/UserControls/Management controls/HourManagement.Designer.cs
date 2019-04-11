@@ -53,7 +53,7 @@
             this.TabView.Location = new System.Drawing.Point(0, 0);
             this.TabView.Name = "TabView";
             this.TabView.SelectedIndex = 0;
-            this.TabView.Size = new System.Drawing.Size(459, 534);
+            this.TabView.Size = new System.Drawing.Size(654, 534);
             this.TabView.TabIndex = 0;
             // 
             // tabPage1
@@ -62,7 +62,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(451, 508);
+            this.tabPage1.Size = new System.Drawing.Size(646, 508);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Registrations overview";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -74,8 +74,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MainLayout.BackColor = System.Drawing.Color.Sienna;
             this.MainLayout.ColumnCount = 2;
-            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.62749F));
-            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.37251F));
+            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.MainLayout.Controls.Add(this.HourListView, 0, 0);
             this.MainLayout.Controls.Add(this.ButtonLayout, 1, 0);
             this.MainLayout.Location = new System.Drawing.Point(0, 0);
@@ -83,8 +83,7 @@
             this.MainLayout.Name = "MainLayout";
             this.MainLayout.RowCount = 1;
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.MainLayout.Size = new System.Drawing.Size(451, 509);
+            this.MainLayout.Size = new System.Drawing.Size(646, 509);
             this.MainLayout.TabIndex = 0;
             // 
             // HourListView
@@ -95,7 +94,7 @@
             this.HourListView.Location = new System.Drawing.Point(0, 0);
             this.HourListView.Margin = new System.Windows.Forms.Padding(0);
             this.HourListView.Name = "HourListView";
-            this.HourListView.Size = new System.Drawing.Size(304, 509);
+            this.HourListView.Size = new System.Drawing.Size(499, 509);
             this.HourListView.TabIndex = 0;
             this.HourListView.UseCompatibleStateImageBehavior = false;
             // 
@@ -109,7 +108,7 @@
             this.ButtonLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.ButtonLayout.Controls.Add(this.linkLabel1, 0, 0);
             this.ButtonLayout.Controls.Add(this.linkLabel2, 0, 1);
-            this.ButtonLayout.Location = new System.Drawing.Point(304, 0);
+            this.ButtonLayout.Location = new System.Drawing.Point(499, 0);
             this.ButtonLayout.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonLayout.Name = "ButtonLayout";
             this.ButtonLayout.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
@@ -169,7 +168,7 @@
             this.BackColor = System.Drawing.Color.Sienna;
             this.Controls.Add(this.TabView);
             this.Name = "HourManagement";
-            this.Size = new System.Drawing.Size(459, 534);
+            this.Size = new System.Drawing.Size(654, 534);
             this.TabView.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.MainLayout.ResumeLayout(false);

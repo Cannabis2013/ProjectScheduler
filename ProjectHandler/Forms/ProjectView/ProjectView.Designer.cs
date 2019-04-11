@@ -69,6 +69,8 @@
             this.ActivityListMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.UserImages = new System.Windows.Forms.ImageList(this.components);
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.RegistrationHourListView = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -76,6 +78,7 @@
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.ActivityListMenuStrip.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // ProjectViewImageList
@@ -296,16 +299,17 @@
             this.MainTableLayout.ColumnCount = 2;
             this.MainTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 256F));
             this.MainTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.MainTableLayout.Controls.Add(this.tableLayoutPanel1, 0, 1);
             this.MainTableLayout.Controls.Add(this.groupBox2, 1, 1);
+            this.MainTableLayout.Controls.Add(this.tableLayoutPanel1, 0, 1);
+            this.MainTableLayout.Controls.Add(this.groupBox3, 1, 2);
             this.MainTableLayout.Location = new System.Drawing.Point(0, 24);
             this.MainTableLayout.Margin = new System.Windows.Forms.Padding(0);
             this.MainTableLayout.Name = "MainTableLayout";
-            this.MainTableLayout.RowCount = 3;
+            this.MainTableLayout.RowCount = 4;
             this.MainTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
-            this.MainTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.MainTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.MainTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.MainTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
-            this.MainTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.MainTableLayout.Size = new System.Drawing.Size(944, 450);
             this.MainTableLayout.TabIndex = 1;
             // 
@@ -318,15 +322,15 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 5);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 8);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
+            this.MainTableLayout.SetRowSpan(this.tableLayoutPanel1, 2);
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(256, 440);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(250, 434);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // linkLabel1
@@ -334,7 +338,7 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkLabel1.Location = new System.Drawing.Point(3, 207);
+            this.linkLabel1.Location = new System.Drawing.Point(3, 204);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(139, 26);
             this.linkLabel1.TabIndex = 4;
@@ -352,7 +356,7 @@
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(256, 207);
+            this.groupBox1.Size = new System.Drawing.Size(250, 204);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Userbox";
@@ -371,7 +375,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(245, 182);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(239, 179);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // button1
@@ -389,7 +393,7 @@
             this.button1.Location = new System.Drawing.Point(0, 0);
             this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(245, 162);
+            this.button1.Size = new System.Drawing.Size(245, 159);
             this.button1.TabIndex = 6;
             this.button1.UseVisualStyleBackColor = true;
             // 
@@ -400,7 +404,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.WelcomeLabel.AutoSize = true;
             this.WelcomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WelcomeLabel.Location = new System.Drawing.Point(0, 162);
+            this.WelcomeLabel.Location = new System.Drawing.Point(0, 159);
             this.WelcomeLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WelcomeLabel.Name = "WelcomeLabel";
             this.WelcomeLabel.Size = new System.Drawing.Size(245, 20);
@@ -415,10 +419,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.ActivityListView);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(256, 5);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(0);
+            this.groupBox2.Location = new System.Drawing.Point(259, 8);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(688, 440);
+            this.groupBox2.Size = new System.Drawing.Size(682, 214);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Currently assigned activities";
@@ -429,7 +432,7 @@
             this.ActivityListView.Location = new System.Drawing.Point(3, 19);
             this.ActivityListView.Margin = new System.Windows.Forms.Padding(0);
             this.ActivityListView.Name = "ActivityListView";
-            this.ActivityListView.Size = new System.Drawing.Size(682, 416);
+            this.ActivityListView.Size = new System.Drawing.Size(676, 192);
             this.ActivityListView.TabIndex = 0;
             this.ActivityListView.UseCompatibleStateImageBehavior = false;
             // 
@@ -438,12 +441,12 @@
             this.ActivityListMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.ActivityListMenuStrip.Name = "ActivityListMenuStrip";
-            this.ActivityListMenuStrip.Size = new System.Drawing.Size(181, 48);
+            this.ActivityListMenuStrip.Size = new System.Drawing.Size(145, 26);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
             this.toolStripMenuItem1.Text = "Register hour";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -452,6 +455,33 @@
             this.UserImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("UserImages.ImageStream")));
             this.UserImages.TransparentColor = System.Drawing.Color.Transparent;
             this.UserImages.Images.SetKeyName(0, "Jens Werner.jpg");
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.RegistrationHourListView);
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(259, 228);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.groupBox3.Size = new System.Drawing.Size(682, 214);
+            this.groupBox3.TabIndex = 7;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Registered hour entities";
+            // 
+            // RegistrationHourListView
+            // 
+            this.RegistrationHourListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RegistrationHourListView.Location = new System.Drawing.Point(3, 22);
+            this.RegistrationHourListView.Margin = new System.Windows.Forms.Padding(0);
+            this.RegistrationHourListView.Name = "RegistrationHourListView";
+            this.RegistrationHourListView.Size = new System.Drawing.Size(676, 189);
+            this.RegistrationHourListView.TabIndex = 0;
+            this.RegistrationHourListView.UseCompatibleStateImageBehavior = false;
             // 
             // ProjectView
             // 
@@ -478,6 +508,7 @@
             this.tableLayoutPanel2.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.ActivityListMenuStrip.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -524,5 +555,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ListView ActivityListView;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ListView RegistrationHourListView;
     }
 }

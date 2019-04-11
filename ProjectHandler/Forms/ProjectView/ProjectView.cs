@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Mng;
 using Projecthandler.Events;
 using Projecthandler.Forms.Dialogs;
 using ProjectRelated;
+using Templates;
 using VirtualUserDomain;
 
 // ReSharper disable InconsistentNaming
@@ -36,9 +38,8 @@ namespace MainUserSpace
             welcomingText.Append(userName);
 
             WelcomeLabel.Text = welcomingText.ToString();
-
-            if (!uManager.isAdmin())
-                Management_updateParentView(this,null);
+            
+            updateModelViews();
         }
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -72,7 +73,7 @@ namespace MainUserSpace
 
         private void Management_updateParentView(object sender, EventArgs e)
         {
-            updateModelView();
+            updateModelViews();
         }
 
         private void Registration_OnSaveClicked(object sender, EventArgs e)
@@ -85,7 +86,7 @@ namespace MainUserSpace
             var activity = pManager.Activity(parentActivityId);
             activity.AddRegistrationObject(rObject);
 
-            updateModelView();
+            updateModelViews();
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -99,9 +100,9 @@ namespace MainUserSpace
             rDialog.ShowDialog(this);
         }
 
-        private void updateModelView()
+        private void updateModelViews()
         {
-            var assignedActivityModels = pManager.UserAssignedActivityModels(uManager);
+            var activityModels = pManager.ProjectActivityItemModels(uManager);
             aView.Clear();
             aView.View = View.Details;
 
@@ -110,7 +111,25 @@ namespace MainUserSpace
             aView.Columns.Add("Total registered hours", 160, HorizontalAlignment.Left);
             aView.Columns.Add("Project", 160, HorizontalAlignment.Left);
 
-            aView.Items.AddRange(assignedActivityModels);
+            aView.Items.AddRange(activityModels);
+
+            RegistrationHourListView.Clear();
+            RegistrationHourListView.View = View.Details;
+
+            RegistrationHourListView.Columns.Add("Registration id", 60, HorizontalAlignment.Left);
+            RegistrationHourListView.Columns.Add("User", 60, HorizontalAlignment.Left);
+            RegistrationHourListView.Columns.Add("Original registration date", 60, HorizontalAlignment.Left);
+            RegistrationHourListView.Columns.Add("Work hours registrated", 60, HorizontalAlignment.Left);
+            RegistrationHourListView.Columns.Add("Parent activity", 60, HorizontalAlignment.Left);
+
+            var listMode = ModelEntity<ListViewItem>.ListMode.List;
+
+            ListViewItem[] regObjects = uManager.isAdmin() ?
+                regObjects = pManager.HourRegistrationObjects().Select(item => item.ItemModel(listMode)).ToArray() :
+                regObjects = pManager.HourRegistrationObjects(uManager.loggedIn().UserName()).Select(item => item.ItemModel(listMode))
+                    .ToArray();
+
+            RegistrationHourListView.Items.AddRange(regObjects);
         }
     }
 }
