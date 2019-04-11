@@ -60,8 +60,8 @@ namespace Mng
                     {
                         Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
                     };
-
                     MainLayout.Controls.Add(pManagement);
+                    MainLayout.SetRowSpan(pManagement,2);
                 }
                 catch (Exception ex)
                 {
@@ -75,6 +75,7 @@ namespace Mng
                 aManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
                 aManagement.updateParentView += _updateParentView;
                 MainLayout.Controls.Add(aManagement);
+                MainLayout.SetRowSpan(aManagement,2);
             }
 
             if (node != null && node.Text == @"Hour management")
@@ -82,6 +83,7 @@ namespace Mng
                 var hourManagement = new HourManagement(uManager,pManager);
                 hourManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
                 MainLayout.Controls.Add(hourManagement);
+                MainLayout.SetRowSpan(hourManagement,2);
             }
         }
 

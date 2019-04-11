@@ -18,8 +18,8 @@ namespace Projecthandler
 {
     public partial class ProjectManagement : UserControl, IManagement
     {
-        private ProjectManager pManager;
-        private UserManager uManager;
+        private readonly ProjectManager pManager;
+        private readonly UserManager uManager;
         public ProjectManagement(ProjectManager pManager, UserManager uManager)
         {
             this.pManager = pManager;

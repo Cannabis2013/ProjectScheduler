@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddActivityControl));
-            this.label9 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.projectSelector = new System.Windows.Forms.ComboBox();
@@ -52,38 +51,21 @@
             this.label6 = new System.Windows.Forms.Label();
             this.StartDateSelector = new System.Windows.Forms.DateTimePicker();
             this.EndDateSelector = new System.Windows.Forms.DateTimePicker();
+            this.label9 = new System.Windows.Forms.Label();
             this.ButtonLayout.SuspendLayout();
             this.MainLayout.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label9
-            // 
-            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label9.AutoSize = true;
-            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MainLayout.SetColumnSpan(this.label9, 2);
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(0, 190);
-            this.label9.Margin = new System.Windows.Forms.Padding(0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(428, 30);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "Assign users to activity";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 150);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(331, 60);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(122, 40);
+            this.label3.Size = new System.Drawing.Size(122, 30);
             this.label3.TabIndex = 3;
             this.label3.Text = "End week:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -93,11 +75,10 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 110);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(331, 30);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 40);
+            this.label2.Size = new System.Drawing.Size(122, 30);
             this.label2.TabIndex = 3;
             this.label2.Text = "Start week:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -111,9 +92,9 @@
             this.projectSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.projectSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.projectSelector.FormattingEnabled = true;
-            this.projectSelector.Location = new System.Drawing.Point(131, 73);
+            this.projectSelector.Location = new System.Drawing.Point(131, 63);
             this.projectSelector.Name = "projectSelector";
-            this.projectSelector.Size = new System.Drawing.Size(294, 28);
+            this.projectSelector.Size = new System.Drawing.Size(194, 28);
             this.projectSelector.Sorted = true;
             this.projectSelector.TabIndex = 2;
             this.projectSelector.SelectionChangeCommitted += new System.EventHandler(this.projectSelector_SelectionChangeCommitted);
@@ -130,10 +111,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(3, 70);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(3, 60);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(122, 40);
+            this.label5.Size = new System.Drawing.Size(122, 30);
             this.label5.TabIndex = 3;
             this.label5.Text = "Project:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -147,7 +128,7 @@
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(3, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(188, 20);
+            this.label7.Size = new System.Drawing.Size(357, 20);
             this.label7.TabIndex = 3;
             this.label7.Text = "Available users";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -159,9 +140,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(237, 0);
+            this.label8.Location = new System.Drawing.Point(406, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(188, 20);
+            this.label8.Size = new System.Drawing.Size(358, 20);
             this.label8.TabIndex = 3;
             this.label8.Text = "Assigned users";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -177,7 +158,7 @@
             this.UserListView.Margin = new System.Windows.Forms.Padding(0);
             this.UserListView.Name = "UserListView";
             this.tableLayoutPanel1.SetRowSpan(this.UserListView, 4);
-            this.UserListView.Size = new System.Drawing.Size(194, 167);
+            this.UserListView.Size = new System.Drawing.Size(363, 307);
             this.UserListView.SmallImageList = this.UserIcons;
             this.UserListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.UserListView.TabIndex = 1;
@@ -192,11 +173,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.AssignedUserListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.AssignedUserListView.Location = new System.Drawing.Point(234, 20);
+            this.AssignedUserListView.Location = new System.Drawing.Point(403, 20);
             this.AssignedUserListView.Margin = new System.Windows.Forms.Padding(0);
             this.AssignedUserListView.Name = "AssignedUserListView";
             this.tableLayoutPanel1.SetRowSpan(this.AssignedUserListView, 4);
-            this.AssignedUserListView.Size = new System.Drawing.Size(194, 167);
+            this.AssignedUserListView.Size = new System.Drawing.Size(364, 307);
             this.AssignedUserListView.SmallImageList = this.UserIcons;
             this.AssignedUserListView.TabIndex = 1;
             this.AssignedUserListView.UseCompatibleStateImageBehavior = false;
@@ -210,7 +191,7 @@
             this.Link_Remove.AutoSize = true;
             this.Link_Remove.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Link_Remove.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.Link_Remove.Location = new System.Drawing.Point(197, 40);
+            this.Link_Remove.Location = new System.Drawing.Point(366, 40);
             this.Link_Remove.Name = "Link_Remove";
             this.Link_Remove.Size = new System.Drawing.Size(34, 20);
             this.Link_Remove.TabIndex = 4;
@@ -227,7 +208,7 @@
             this.Link_Add.AutoSize = true;
             this.Link_Add.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Link_Add.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.Link_Add.Location = new System.Drawing.Point(197, 60);
+            this.Link_Add.Location = new System.Drawing.Point(366, 60);
             this.Link_Add.Name = "Link_Add";
             this.Link_Add.Size = new System.Drawing.Size(34, 20);
             this.Link_Add.TabIndex = 5;
@@ -242,10 +223,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(3, 30);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(122, 40);
+            this.label4.Size = new System.Drawing.Size(122, 30);
             this.label4.TabIndex = 3;
             this.label4.Text = "Activity ID:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -254,9 +235,9 @@
             // 
             this.IDSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.IDSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IDSelector.Location = new System.Drawing.Point(131, 37);
+            this.IDSelector.Location = new System.Drawing.Point(131, 33);
             this.IDSelector.Name = "IDSelector";
-            this.IDSelector.Size = new System.Drawing.Size(294, 26);
+            this.IDSelector.Size = new System.Drawing.Size(194, 26);
             this.IDSelector.TabIndex = 4;
             // 
             // ButtonLayout
@@ -265,17 +246,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonLayout.ColumnCount = 3;
-            this.MainLayout.SetColumnSpan(this.ButtonLayout, 2);
+            this.MainLayout.SetColumnSpan(this.ButtonLayout, 5);
             this.ButtonLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ButtonLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.ButtonLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.ButtonLayout.Controls.Add(this.linkLabel1, 2, 0);
             this.ButtonLayout.Controls.Add(this.linkLabel2, 1, 0);
-            this.ButtonLayout.Location = new System.Drawing.Point(3, 410);
+            this.ButtonLayout.Location = new System.Drawing.Point(3, 450);
             this.ButtonLayout.Name = "ButtonLayout";
             this.ButtonLayout.RowCount = 1;
             this.ButtonLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ButtonLayout.Size = new System.Drawing.Size(422, 22);
+            this.ButtonLayout.Size = new System.Drawing.Size(761, 14);
             this.ButtonLayout.TabIndex = 6;
             // 
             // linkLabel1
@@ -284,9 +265,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(351, 0);
+            this.linkLabel1.Location = new System.Drawing.Point(690, 0);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(68, 22);
+            this.linkLabel1.Size = new System.Drawing.Size(68, 14);
             this.linkLabel1.TabIndex = 0;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Save activity";
@@ -299,9 +280,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(305, 0);
+            this.linkLabel2.Location = new System.Drawing.Point(644, 0);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(40, 22);
+            this.linkLabel2.Size = new System.Drawing.Size(40, 14);
             this.linkLabel2.TabIndex = 1;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Cancel";
@@ -313,36 +294,40 @@
             this.MainLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.MainLayout.BackColor = System.Drawing.Color.Sienna;
-            this.MainLayout.ColumnCount = 3;
+            this.MainLayout.BackColor = System.Drawing.Color.Silver;
+            this.MainLayout.ColumnCount = 5;
             this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
-            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
+            this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.MainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainLayout.Controls.Add(this.label4, 0, 1);
             this.MainLayout.Controls.Add(this.IDSelector, 1, 1);
-            this.MainLayout.Controls.Add(this.tableLayoutPanel1, 0, 6);
             this.MainLayout.Controls.Add(this.label6, 0, 0);
-            this.MainLayout.Controls.Add(this.label9, 0, 5);
-            this.MainLayout.Controls.Add(this.label3, 0, 4);
-            this.MainLayout.Controls.Add(this.label2, 0, 3);
             this.MainLayout.Controls.Add(this.label5, 0, 2);
             this.MainLayout.Controls.Add(this.projectSelector, 1, 2);
-            this.MainLayout.Controls.Add(this.StartDateSelector, 1, 3);
-            this.MainLayout.Controls.Add(this.EndDateSelector, 1, 4);
-            this.MainLayout.Controls.Add(this.ButtonLayout, 0, 7);
+            this.MainLayout.Controls.Add(this.ButtonLayout, 0, 5);
+            this.MainLayout.Controls.Add(this.tableLayoutPanel1, 0, 4);
+            this.MainLayout.Controls.Add(this.label2, 2, 1);
+            this.MainLayout.Controls.Add(this.StartDateSelector, 3, 1);
+            this.MainLayout.Controls.Add(this.EndDateSelector, 3, 2);
+            this.MainLayout.Controls.Add(this.label3, 2, 2);
+            this.MainLayout.Controls.Add(this.label9, 0, 3);
             this.MainLayout.Location = new System.Drawing.Point(0, 0);
             this.MainLayout.Name = "MainLayout";
-            this.MainLayout.RowCount = 9;
+            this.MainLayout.RowCount = 7;
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.MainLayout.Size = new System.Drawing.Size(613, 467);
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.MainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.MainLayout.Size = new System.Drawing.Size(767, 467);
             this.MainLayout.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -351,7 +336,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 3;
-            this.MainLayout.SetColumnSpan(this.tableLayoutPanel1, 2);
+            this.MainLayout.SetColumnSpan(this.tableLayoutPanel1, 5);
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -361,16 +346,17 @@
             this.tableLayoutPanel1.Controls.Add(this.AssignedUserListView, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.Link_Remove, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.Link_Add, 1, 3);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 220);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 120);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowCount = 4;
+            this.MainLayout.SetRowSpan(this.tableLayoutPanel1, 4);
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(428, 187);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(767, 327);
             this.tableLayoutPanel1.TabIndex = 7;
             // 
             // label6
@@ -380,12 +366,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MainLayout.SetColumnSpan(this.label6, 2);
+            this.MainLayout.SetColumnSpan(this.label6, 5);
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(0, 0);
             this.label6.Margin = new System.Windows.Forms.Padding(0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(428, 30);
+            this.label6.Size = new System.Drawing.Size(767, 30);
             this.label6.TabIndex = 3;
             this.label6.Text = "Fill in information";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -396,9 +382,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.StartDateSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StartDateSelector.Location = new System.Drawing.Point(131, 113);
+            this.StartDateSelector.Location = new System.Drawing.Point(459, 33);
             this.StartDateSelector.Name = "StartDateSelector";
-            this.StartDateSelector.Size = new System.Drawing.Size(294, 26);
+            this.StartDateSelector.Size = new System.Drawing.Size(194, 26);
             this.StartDateSelector.TabIndex = 8;
             // 
             // EndDateSelector
@@ -407,10 +393,27 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.EndDateSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EndDateSelector.Location = new System.Drawing.Point(131, 153);
+            this.EndDateSelector.Location = new System.Drawing.Point(459, 63);
             this.EndDateSelector.Name = "EndDateSelector";
-            this.EndDateSelector.Size = new System.Drawing.Size(294, 26);
+            this.EndDateSelector.Size = new System.Drawing.Size(194, 26);
             this.EndDateSelector.TabIndex = 8;
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label9.AutoSize = true;
+            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MainLayout.SetColumnSpan(this.label9, 5);
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(0, 90);
+            this.label9.Margin = new System.Windows.Forms.Padding(0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(767, 30);
+            this.label9.TabIndex = 3;
+            this.label9.Text = "Assign users to activity";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // AddActivityControl
             // 
@@ -419,7 +422,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.MainLayout);
             this.Name = "AddActivityControl";
-            this.Size = new System.Drawing.Size(613, 467);
+            this.Size = new System.Drawing.Size(767, 467);
             this.ButtonLayout.ResumeLayout(false);
             this.ButtonLayout.PerformLayout();
             this.MainLayout.ResumeLayout(false);
@@ -431,8 +434,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TableLayoutPanel MainLayout;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox IDSelector;
@@ -454,5 +455,6 @@
         private System.Windows.Forms.LinkLabel linkLabel2;
         private System.Windows.Forms.DateTimePicker StartDateSelector;
         private System.Windows.Forms.DateTimePicker EndDateSelector;
+        private System.Windows.Forms.Label label9;
     }
 }

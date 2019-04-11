@@ -90,6 +90,7 @@ namespace Projecthandler.Forms.Dialogs
             IDSelector.Text = activity.ActivityId;
             projectSelector.Items.Add(activity.ParentProjectId);
             projectSelector.Text = activity.ParentProjectId;
+            projectSelector_SelectionChangeCommitted(this,new EventArgs());
             var p = pManager.Project(activity.ParentProjectId);
             var assignedUsers = activity.AssignedUsers();
             var assignedUserModels = assignedUsers.Select(item =>
