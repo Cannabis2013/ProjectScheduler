@@ -3,23 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Projecthandler.Templates_and_interfaces;
 using Templates;
 using VirtualUserDomain;
 
 namespace ProjectRelated
 {
     [Serializable]
-    public class Project : ModelEntity<ListViewItem>
+    public class ProjectModel : AbstractModel<ListViewItem,ActivityModel>
     {
-        private readonly List<Activity> projectActivities = new List<Activity>();
+        private readonly List<ActivityModel> projectActivities = new List<ActivityModel>();
         private string pLeaderId, shortDescription;
         private DateTime startDate, endDate;
-
-
-        public Project(string projectId)
-        {
-            itemId = projectId ?? throw new ArgumentNullException(nameof(projectId));
-        }
 
         public DateTime StartDate
         {
@@ -45,11 +40,6 @@ namespace ProjectRelated
             set => shortDescription = value;
         }
 
-        public override ListViewItem ItemModel(ListMode mode = ListMode.Tile)
-        {
-            return mode == ListMode.Tile ? ItemTileModel() : ItemListModel();
-        }
-
         public ListViewItem[] ActivityItemModels()
         {
             int count = projectActivities.Count, index = 0;
@@ -63,7 +53,7 @@ namespace ProjectRelated
             return models;
         }
 
-        public Activity Activity(int index)
+        public ActivityModel Activity(int index)
         {
             var i = 0;
             foreach (var a in projectActivities)
@@ -73,54 +63,31 @@ namespace ProjectRelated
             return null;
         }
 
-        public Activity Activity(string activityId) => projectActivities.Where(item => item.ActivityId == activityId).ToArray()[0];
+        public ActivityModel Activity(string activityId) => projectActivities.Where(item => item.ModelIdentity == activityId).ToArray()[0];
 
-        public void AddActivity(Activity a) => projectActivities.Add(a);
+        public void AddActivity(ActivityModel a) => projectActivities.Add(a);
 
-        public void RemoveActivity(Activity a) => projectActivities.Remove(a);
+        public void RemoveActivity(ActivityModel a) => projectActivities.Remove(a);
         
 
-        public List<Activity> AllActivities() => projectActivities.ToList();
+        public List<ActivityModel> AllActivities() => projectActivities.ToList();
 
-        public List<Activity> AssignedActivities(string userName)
+        public List<ActivityModel> AssignedActivities(string userName)
         {
             var userActivities = projectActivities.Where(item => item.IsUserAssigned(userName));
-            return userActivities.Select(item => new Activity(item)).ToList();
+            return userActivities.Select(item => new ActivityModel(item)).ToList();
         }
 
-        private ListViewItem ItemTileModel()
+        public override ListViewItem ItemModel()
         {
-            var model = new ListViewItem(id);
-
-            var userLeader = new StringBuilder("Tech lead: ");
-            userLeader.Append(projectLeaderId);
-            model.SubItems.Add(userLeader.ToString());
-
-
-            var sDate = new StringBuilder("Start date: ");
-            sDate.Append(StartDate);
-            model.SubItems.Add(sDate.ToString());
-
-            var eDate = new StringBuilder("End date: ");
-            eDate.Append(EndDate);
-            model.SubItems.Add(eDate.ToString());
-            
-            model.ImageIndex = 0;
-            model.StateImageIndex = 0;
-
-            return model;
-        }
-
-        private ListViewItem ItemListModel()
-        {
-            var model = new ListViewItem(id);
+            var model = new ListViewItem(ModelIdentity);
 
             var userLeader = new StringBuilder(projectLeaderId);
             model.SubItems.Add(userLeader.ToString());
 
             model.SubItems.Add(StartDate.ToString());
             model.SubItems.Add(EndDate.ToString());
-            
+
             model.ImageIndex = 0;
             model.StateImageIndex = 0;
 

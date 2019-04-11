@@ -44,8 +44,8 @@ namespace Projecthandler.Forms.Dialogs
 
         public void initializeListControls()
         {
-            var currentUserName = uManager.loggedIn().UserName();
-            var activityModels = pManager.Activities(currentUserName).Select(item => item.ActivityId).ToArray();
+            var currentUserName = uManager.loggedIn().ModelIdentity;
+            var activityModels = pManager.ActivityModels(currentUserName).Select(item => item.ModelIdentity).ToArray();
 
             // ReSharper disable once CoVariantArrayConversion
             ActivityComboBoxSelector.Items.AddRange(activityModels);
@@ -64,7 +64,7 @@ namespace Projecthandler.Forms.Dialogs
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var currentUserId = uManager.loggedIn().UserName();
+            var currentUserId = uManager.loggedIn().ModelIdentity;
             string regTitle = TitleBoxSelector.Text, 
                 activityId = ActivityComboBoxSelector.Text,
                 description = DescriptionBoxSelector.Text,
@@ -73,7 +73,7 @@ namespace Projecthandler.Forms.Dialogs
             if (!int.TryParse(Hours, out int hours))
                 throw new ArgumentException("Something went wrong with conversion from string to int.");
 
-            var rObject = new RegistrationObject(regTitle,hours,currentUserId,description,activityId);
+            var rObject = new HourRegistrationModel(regTitle,hours,currentUserId,description,activityId);
 
             var sEvent = new SubmitEvent(rObject);
 

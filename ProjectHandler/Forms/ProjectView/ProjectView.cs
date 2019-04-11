@@ -34,7 +34,7 @@ namespace MainUserSpace
             aView = ActivityListView;
 
             var welcomingText = new StringBuilder("Welcome ");
-            var userName = uManager.loggedIn().UserName();
+            var userName = uManager.loggedIn().ModelIdentity;
             welcomingText.Append(userName);
 
             WelcomeLabel.Text = welcomingText.ToString();
@@ -83,7 +83,7 @@ namespace MainUserSpace
             var rObject = sEvent.RegistrationObject();
             var parentActivityId = rObject.ParentActivityId;
 
-            var activity = pManager.Activity(parentActivityId);
+            var activity = pManager.getActivityModel(parentActivityId);
             activity.AddRegistrationObject(rObject);
 
             updateModelViews();
@@ -127,12 +127,11 @@ namespace MainUserSpace
             RegistrationHourListView.Columns.Add("Original registration date", columnWidth, HorizontalAlignment.Left);
             RegistrationHourListView.Columns.Add("Work hours registrated", columnWidth, HorizontalAlignment.Left);
             RegistrationHourListView.Columns.Add("Parent activity", columnWidth, HorizontalAlignment.Left);
-
-            var listMode = ModelEntity<ListViewItem>.ListMode.List;
+            
 
             ListViewItem[] regObjects = uManager.isAdmin() ?
-                regObjects = pManager.HourRegistrationObjects().Select(item => item.ItemModel(listMode)).ToArray() :
-                regObjects = pManager.HourRegistrationObjects(uManager.loggedIn().UserName()).Select(item => item.ItemModel(listMode))
+                regObjects = pManager.GetHourRegistrationModels().Select(item => item.ItemModel()).ToArray() :
+                regObjects = pManager.GetHourRegistrationModels(uManager.loggedIn().ModelIdentity).Select(item => item.ItemModel())
                     .ToArray();
 
             RegistrationHourListView.Items.AddRange(regObjects);

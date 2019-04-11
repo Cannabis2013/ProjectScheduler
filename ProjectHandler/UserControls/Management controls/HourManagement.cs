@@ -38,12 +38,11 @@ namespace Projecthandler.Forms.Dialog_controls
             HourListView.Columns.Add("Original registration date", 60, HorizontalAlignment.Left);
             HourListView.Columns.Add("Work hours registrated", 60, HorizontalAlignment.Left);
             HourListView.Columns.Add("Parent activity", 60, HorizontalAlignment.Left);
-
-            var listMode = ModelEntity<ListViewItem>.ListMode.List;
+            
 
             ListViewItem[] regObjects = uManager.isAdmin() ? 
-                regObjects = pManager.HourRegistrationObjects().Select(item => item.ItemModel(listMode)).ToArray() : 
-                regObjects = pManager.HourRegistrationObjects(uManager.loggedIn().UserName()).Select(item => item.ItemModel(listMode))
+                regObjects = pManager.GetHourRegistrationModels().Select(item => item.ItemModel()).ToArray() : 
+                regObjects = pManager.GetHourRegistrationModels(uManager.loggedIn().ModelIdentity).Select(item => item.ItemModel())
                     .ToArray();
 
             HourListView.Items.AddRange(regObjects);
@@ -113,7 +112,7 @@ namespace Projecthandler.Forms.Dialog_controls
 
             var item = HourListView.SelectedItems[0];
 
-            var rObject = pManager.HourRegistrationObject(item.Text);
+            var rObject = pManager.getHourRegistrationModel(item.Text);
             var editHourControl = new EditHourRegistrationControl(pManager, uManager, rObject);
             
             editHourControl.OnEditClicked += _OnEditClicked;
@@ -129,7 +128,7 @@ namespace Projecthandler.Forms.Dialog_controls
 
             var item = HourListView.SelectedItems[0];
             var activityId = item.SubItems[4];
-            var activity = pManager.Activity(activityId.Text);
+            var activity = pManager.getActivityModel(activityId.Text);
             activity.removeRegistrationObject(item.Text);
 
             updateView();

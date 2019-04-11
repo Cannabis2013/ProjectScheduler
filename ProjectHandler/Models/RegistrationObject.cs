@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
+using Projecthandler.Templates_and_interfaces;
 using Templates;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Local
@@ -9,7 +11,7 @@ using Templates;
 namespace ProjectRelated
 {
     [Serializable]
-    public class RegistrationObject : ModelEntity<ListViewItem>
+    public class HourRegistrationModel : AbstractModel<ListViewItem,HourRegistrationModel>
     {
         private readonly DateTime originalRegistrationDate;
         private string regId;
@@ -19,7 +21,7 @@ namespace ProjectRelated
 
         public int Hours { get; set; }
 
-        public RegistrationObject(string title,int hours, string userName, string text, string activityId)
+        public HourRegistrationModel(string title,int hours, string userName, string text, string activityId)
         {
             regId = title;
             this.Hours = hours;
@@ -28,6 +30,7 @@ namespace ProjectRelated
             parentActivityId = activityId;
 
             originalRegistrationDate = DateTime.Now;
+            Childrens = new List<HourRegistrationModel>();
         }
 
         public string RegistrationId
@@ -44,7 +47,7 @@ namespace ProjectRelated
             set => parentActivityId = value;
         }
 
-        public string UserName
+        public string ModelIdentity
         {
             get => userName;
             set => userName = value;
@@ -58,48 +61,16 @@ namespace ProjectRelated
 
         public string CorrespondingProjectId(ProjectManager pManager)
         {
-            return pManager.Activity(ParentActivityId).ParentProjectId;
+            return pManager.getActivityModel(ParentActivityId).ParentProjectId;
         }
 
-        public override ListViewItem ItemModel(ListMode mode = ListMode.Tile)
+        public override ListViewItem ItemModel()
         {
-            if (mode == ListMode.List)
-                return ListListViewModel();
-            else
-                return TileListViewModel();
-        }
-
-        private ListViewItem ListListViewModel()
-        {
-            var model = new ListViewItem(RegistrationId) {Text = regId};
+            var model = new ListViewItem(RegistrationId) { Text = regId };
             model.SubItems.Add(userName);
             model.SubItems.Add(Hours.ToString());
             model.SubItems.Add(originalRegistrationDate.ToString("dd/MM/yyyy"));
             model.SubItems.Add(parentActivityId);
-            model.StateImageIndex = 0;
-
-            return model;
-        }
-
-        private ListViewItem TileListViewModel()
-        {
-            var model = new ListViewItem(RegistrationId);
-
-            var userId = new StringBuilder("User: ");
-            userId.Append(UserName);
-            model.Text = userId.ToString();
-
-            var hourString = new StringBuilder("Registered hours: ");
-            hourString.Append(Hours.ToString());
-            model.SubItems.Add(hourString.ToString());
-
-            model.SubItems.Add(Hours.ToString());
-
-            var origWeek = new StringBuilder("Original registered week: ");
-            origWeek.Append(originalRegistrationDate.ToString(CultureInfo.InvariantCulture));
-
-            model.SubItems.Add(origWeek.ToString());
-
             model.StateImageIndex = 0;
 
             return model;

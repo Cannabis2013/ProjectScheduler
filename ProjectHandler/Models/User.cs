@@ -1,11 +1,26 @@
 ﻿// ReSharper disable once CheckNamespace
 
+using System.Collections.Generic;
+using System.Windows.Forms;
+using NUnit.Framework.Internal;
+using Projecthandler.Templates_and_interfaces;
+using Templates;
+
 namespace VirtualUserDomain
 {
-    public class User
+    public class UserModel : AbstractModel<ListViewItem,UserModel>
     {
         private readonly string pass;
-        private readonly string uName;
+
+        private static List<string> _AlternativeItemModelHeaders = new List<string>()
+        {
+            "Username",
+            "User role"
+        };
+        private static List<string> _ItemModelHeaders;
+
+        public static List<string> ItemModelHeaders => _ItemModelHeaders;
+        public static List<string> AlternativeItemModelHeaders => _AlternativeItemModelHeaders;
 
         public enum Availability
         {
@@ -21,9 +36,9 @@ namespace VirtualUserDomain
         }
 
         
-        public User(string userName, string passWord, UserRole role)
+        public UserModel(string userName, string passWord, UserRole role)
         {
-            uName = userName;
+            ModelIdentity = userName;
             pass = passWord;
             this.Role = role;
         }
@@ -36,14 +51,24 @@ namespace VirtualUserDomain
             return r == UserRole.Admin ? "Administrator" : "Employee";
         }
 
-        public string UserName()
+        private static string _AvailabilityStringRepresentation(Availability availability)
         {
-            return uName;
+            if (availability == Availability.Available)
+                return "Available";
+            if (availability == Availability.PartlyAvailable)
+                return "Partly available";
+
+            return "Not available";
         }
 
-        public string PassWord()
+        public string PassWord => pass;
+
+        public override ListViewItem ItemModel()
         {
-            return pass;
+            var model = new ListViewItem(ModelIdentity);
+            model.SubItems.Add(_roleStringRepresentation(Role));
+
+            return model;
         }
     }
 }

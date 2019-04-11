@@ -57,7 +57,7 @@ namespace Projecthandler
         {
             var submitEvent = (SubmitEvent) e;
             var p = submitEvent.Project();
-            pManager.AddProject(p);
+            pManager.AddModel(p);
             updateView();
 
             removeTabPage(1);
@@ -88,7 +88,7 @@ namespace Projecthandler
                 return;
 
             var cIndex = ProjectListView.SelectedIndices[0];
-            pManager.RemoveProjectAt(cIndex);
+            pManager.RemoveModelAt(cIndex);
             updateView();
         }
 
@@ -98,7 +98,7 @@ namespace Projecthandler
                 return;
 
             var item = ProjectListView.SelectedItems[0];
-            var p = pManager.Project(item.Text);
+            var p = pManager.Model(item.Text);
 
             var pControl = new AddProjectControl(p,uManager);
             

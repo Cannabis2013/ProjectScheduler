@@ -4,42 +4,40 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Projecthandler.Templates_and_interfaces;
 using Templates;
 using VirtualUserDomain;
 
 namespace ProjectRelated
 {
     [Serializable]
-    public class Activity : ModelEntity<ListViewItem>
+    public class ActivityModel : AbstractModel<ListViewItem,HourRegistrationModel>
     {
         private readonly List<string> assignedUserIdentities = new List<string>();
-        private readonly List<RegistrationObject> registrationObjects = new List<RegistrationObject>();
+        private readonly List<HourRegistrationModel> registrationObjects = new List<HourRegistrationModel>();
 
         private DateTime startDate, endDate;
         
-        public Activity(string title, DateTime sDate, DateTime eDate, string project, UserManager uManager)
+        public ActivityModel(string title, DateTime sDate, DateTime eDate, string project, UserManager uManager)
         {
-            itemId = title;
+            ModelIdentity = title;
             ParentProjectId = project;
             startDate = sDate;
             endDate = eDate;
+
+            Childrens = new List<HourRegistrationModel>();
         }
 
-        public Activity(Activity copy)
+        public ActivityModel(ActivityModel copy)
         {
+            Childrens = copy.Childrens;
             ParentProjectId = null;
-            itemId = copy.itemId;
+            ModelIdentity = copy.ModelIdentity;
             startDate = copy.startDate;
             endDate = copy.endDate;
             assignedUserIdentities = copy.assignedUserIdentities;
             registrationObjects = copy.registrationObjects;
             ParentProjectId = copy.ParentProjectId;
-        }
-
-        public string ActivityId
-        {
-            get => itemId;
-            set => itemId = value;
         }
 
         public DateTime StartDate
@@ -80,7 +78,7 @@ namespace ProjectRelated
 
         public bool IsUserAssigned(UserManager uManager)
         {
-            var userName = uManager.loggedIn().UserName();
+            var userName = uManager.loggedIn().ModelIdentity;
             return assignedUserIdentities.Any(item => item == userName);
         }
 
@@ -99,7 +97,7 @@ namespace ProjectRelated
             assignedUserIdentities.Clear();
         }
 
-        public void AddRegistrationObject(RegistrationObject rObject)
+        public void AddRegistrationObject(HourRegistrationModel rObject)
         {
             registrationObjects.Add(rObject);
         }
@@ -117,10 +115,10 @@ namespace ProjectRelated
             }
         }
 
-        public List<RegistrationObject> HourRegistrationObjects(string userName) =>
-            registrationObjects.Where(item => item.UserName == userName).ToList();
+        public List<HourRegistrationModel> HourRegistrationObjects(string userName) =>
+            registrationObjects.Where(item => item.ModelIdentity == userName).ToList();
 
-        public List<RegistrationObject> HourRegistrationObjects() => registrationObjects;
+        public List<HourRegistrationModel> HourRegistrationObjects() => registrationObjects;
 
         public int TotalRegisteredHours(string userName = null)
         {
@@ -129,7 +127,7 @@ namespace ProjectRelated
             {
                 foreach (var T in registrationObjects)
                 {
-                    if (userName == T.UserName)
+                    if (userName == T.ModelIdentity)
                         totalHours += T.Hours;
                 }
             }
@@ -142,14 +140,9 @@ namespace ProjectRelated
             return totalHours;
         }
 
-        public override ListViewItem ItemModel(ListMode mode = ListMode.Tile)
-        {
-            return mode == ListMode.Tile ? ItemTileModel() : ItemListModel();
-        }
-
         public ListViewItem[] RegistrationObjectItemModels(string userName)
         {
-            var userTimeObjects = registrationObjects.Where(item => item.UserName == userName).ToArray();
+            var userTimeObjects = registrationObjects.Where(item => item.ModelIdentity == userName).ToArray();
             
             var models = new ListViewItem[userTimeObjects.Length];
             var index = 0;
@@ -175,7 +168,7 @@ namespace ProjectRelated
 
         public TreeNode AssignedUserModels()
         {
-            var rootNode = new TreeNode(id);
+            var rootNode = new TreeNode(ModelIdentity);
 
             foreach (var userName in assignedUserIdentities)
                 rootNode.Nodes.Add(userName);
@@ -185,7 +178,7 @@ namespace ProjectRelated
 
         private ListViewItem ItemTileModel()
         {
-            var model = new ListViewItem(id);
+            var model = new ListViewItem(ModelIdentity);
 
             var assignedHours = new StringBuilder("Total assigned hours: ");
             var totalHours = TotalRegisteredHours();
@@ -201,9 +194,9 @@ namespace ProjectRelated
             return model;
         }
 
-        private ListViewItem ItemListModel()
+        public override ListViewItem ItemModel()
         {
-            var model = new ListViewItem(id);
+            var model = new ListViewItem(ModelIdentity);
 
             model.SubItems.Add(StartWeek().ToString());
             model.SubItems.Add(EndWeek().ToString());

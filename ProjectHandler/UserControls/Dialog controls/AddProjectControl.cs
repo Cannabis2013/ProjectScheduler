@@ -18,7 +18,7 @@ namespace Projecthandler.Forms.Dialogs
     {
         private readonly DialogMode mode;
 
-        private readonly Project temporaryProject;
+        private readonly ProjectModel temporaryProject;
         private readonly UserManager uManager;
 
         public void initializeListControls()
@@ -28,7 +28,7 @@ namespace Projecthandler.Forms.Dialogs
 
         public void InitializeDialogValues()
         {
-            projectIDSelector.Text = temporaryProject.id;
+            projectIDSelector.Text = temporaryProject.ModelIdentity;
             StartDateSelector.Value = temporaryProject.StartDate;
             EndDateSelector.Value = temporaryProject.EndDate;
             leaderSelector.Text = temporaryProject.projectLeaderId;
@@ -49,7 +49,7 @@ namespace Projecthandler.Forms.Dialogs
             mode = DialogMode.AddMode;
         }
 
-        public AddProjectControl(Project p, UserManager uManager)
+        public AddProjectControl(ProjectModel p, UserManager uManager)
         {
             temporaryProject = p;
             this.uManager = uManager;
@@ -65,8 +65,9 @@ namespace Projecthandler.Forms.Dialogs
         {
             string title = projectIDSelector.Text, pLeader = leaderSelector.Text;
 
-            var p = new Project(title)
+            var p = new ProjectModel()
             {
+                ModelIdentity = title,
                 StartDate = StartDateSelector.Value,
                 EndDate = EndDateSelector.Value,
                 projectLeaderId = pLeader,
@@ -78,7 +79,7 @@ namespace Projecthandler.Forms.Dialogs
 
         private void invoke_Edit_Mode_Submit()
         {
-            temporaryProject.id = projectIDSelector.Text;
+            temporaryProject.ModelIdentity = projectIDSelector.Text;
             temporaryProject.projectLeaderId = leaderSelector.Text;
             
             temporaryProject.StartDate = StartDateSelector.Value;
@@ -90,7 +91,7 @@ namespace Projecthandler.Forms.Dialogs
 
         private void updateLeaderComboBoxView()
         {
-            foreach (var item in uManager.allUserNames())
+            foreach (var item in uManager.ListModelIdentities())
                 leaderSelector.Items.Add(item);
         }
 

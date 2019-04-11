@@ -83,7 +83,7 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
                 return;
             
             var selectedItem = ActivityListView.SelectedItems[0];
-            var activity = pManager.Activity(selectedItem.Text);
+            var activity = pManager.getActivityModel(selectedItem.Text);
 
             var aControl = new AddActivityControl(activity,pManager,uManager);
 
@@ -96,9 +96,9 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var selectedActivityId = ActivityListView.SelectedItems[0].Text;
-            var activity = pManager.Activity(selectedActivityId);
+            var activity = pManager.getActivityModel(selectedActivityId);
             var parentActivityProjectId = activity.ParentProjectId;
-            pManager.removeActivity(parentActivityProjectId, selectedActivityId);
+            pManager.removeActivityModel(parentActivityProjectId, selectedActivityId);
             updateParentView?.Invoke(this, e);
             updateView();
         }

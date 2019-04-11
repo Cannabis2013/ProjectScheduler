@@ -18,9 +18,9 @@ namespace Projecthandler.UserControls.Dialog_controls
     {
         private readonly ProjectManager pManager;
         private readonly UserManager uManager;
-        private readonly RegistrationObject rObject;
+        private readonly HourRegistrationModel rObject;
 
-        public EditHourRegistrationControl(ProjectManager pManager, UserManager uManager, RegistrationObject rObject)
+        public EditHourRegistrationControl(ProjectManager pManager, UserManager uManager, HourRegistrationModel rObject)
         {
             this.pManager = pManager;
             this.uManager = uManager;
@@ -32,8 +32,8 @@ namespace Projecthandler.UserControls.Dialog_controls
 
         public void initializeListControls()
         {
-            var currentUserName = uManager.loggedIn().UserName();
-            var activityModels = pManager.Activities(currentUserName).Select(item => item.ActivityId).ToArray();
+            var currentUserName = uManager.loggedIn().ModelIdentity;
+            var activityModels = pManager.ActivityModels(currentUserName).Select(item => item.ModelIdentity).ToArray();
 
             // ReSharper disable once CoVariantArrayConversion
             ActivityComboBoxSelector.Items.AddRange(activityModels);
@@ -53,7 +53,7 @@ namespace Projecthandler.UserControls.Dialog_controls
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var currentUserId = uManager.loggedIn().UserName();
+            var currentUserId = uManager.loggedIn().ModelIdentity;
 
             var regTitle = TitleBoxSelector.Text;
             rObject.ParentActivityId = ActivityComboBoxSelector.Text;

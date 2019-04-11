@@ -67,7 +67,8 @@
     <Compile Include="Forms\Dialogs\AddRegistrationDialogForm.Designer.cs">
       <DependentUpon>AddRegistrationDialogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Templates and interfaces\IDialogInterface.cs" />
+    <Compile Include="Abstract classes and interfaces\AbstractManager.cs" />
+    <Compile Include="Abstract classes and interfaces\IDialogInterface.cs" />
     <Compile Include="UserControls\Dialog controls\AddProjectControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -104,9 +105,9 @@
     <Compile Include="Forms\Management classes\Management.Designer.cs">
       <DependentUpon>Management.cs</DependentUpon>
     </Compile>
-    <Compile Include="Templates and interfaces\IManagement.cs" />
+    <Compile Include="Abstract classes and interfaces\IManagement.cs" />
     <Compile Include="TempPool.cs" />
-    <Compile Include="Templates and interfaces\ModelEntity.cs" />
+    <Compile Include="Abstract classes and interfaces\ModelEntity.cs" />
     <Compile Include="Events\SubmitEvent.cs" />
     <Compile Include="Events\MyEventArgs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
