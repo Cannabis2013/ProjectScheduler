@@ -1,4 +1,4 @@
-﻿namespace MainUserSpace
+﻿namespace MainDomain
 {
     partial class ProjectView
     {
@@ -58,26 +58,26 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.WelcomeLabel = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ActivityListView = new System.Windows.Forms.ListView();
             this.ActivityListMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.UserImages = new System.Windows.Forms.ImageList(this.components);
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ManagementLink = new System.Windows.Forms.LinkLabel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.WelcomeLabel = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.RegistrationHourListView = new System.Windows.Forms.ListView();
+            this.UserImages = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.ActivityListMenuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.ActivityListMenuStrip.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -313,6 +313,44 @@
             this.MainTableLayout.Size = new System.Drawing.Size(944, 450);
             this.MainTableLayout.TabIndex = 1;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.ActivityListView);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(259, 8);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(682, 214);
+            this.groupBox2.TabIndex = 6;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Currently assigned activities";
+            // 
+            // ActivityListView
+            // 
+            this.ActivityListView.ContextMenuStrip = this.ActivityListMenuStrip;
+            this.ActivityListView.Location = new System.Drawing.Point(3, 19);
+            this.ActivityListView.Margin = new System.Windows.Forms.Padding(0);
+            this.ActivityListView.Name = "ActivityListView";
+            this.ActivityListView.Size = new System.Drawing.Size(676, 192);
+            this.ActivityListView.TabIndex = 0;
+            this.ActivityListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // ActivityListMenuStrip
+            // 
+            this.ActivityListMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+            this.ActivityListMenuStrip.Name = "ActivityListMenuStrip";
+            this.ActivityListMenuStrip.Size = new System.Drawing.Size(145, 26);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
+            this.toolStripMenuItem1.Text = "Register hour";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -320,7 +358,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.ManagementLink, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 8);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -333,18 +371,18 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(250, 434);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
-            // linkLabel1
+            // ManagementLink
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkLabel1.Location = new System.Drawing.Point(3, 204);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(139, 26);
-            this.linkLabel1.TabIndex = 4;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Management";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.ManagementLink.AutoSize = true;
+            this.ManagementLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ManagementLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.ManagementLink.Location = new System.Drawing.Point(3, 204);
+            this.ManagementLink.Name = "ManagementLink";
+            this.ManagementLink.Size = new System.Drawing.Size(139, 26);
+            this.ManagementLink.TabIndex = 4;
+            this.ManagementLink.TabStop = true;
+            this.ManagementLink.Text = "Management";
+            this.ManagementLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ManagementLink_Clicked);
             // 
             // groupBox1
             // 
@@ -412,50 +450,6 @@
             this.WelcomeLabel.Text = "label2";
             this.WelcomeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.ActivityListView);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(259, 8);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(682, 214);
-            this.groupBox2.TabIndex = 6;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Currently assigned activities";
-            // 
-            // ActivityListView
-            // 
-            this.ActivityListView.ContextMenuStrip = this.ActivityListMenuStrip;
-            this.ActivityListView.Location = new System.Drawing.Point(3, 19);
-            this.ActivityListView.Margin = new System.Windows.Forms.Padding(0);
-            this.ActivityListView.Name = "ActivityListView";
-            this.ActivityListView.Size = new System.Drawing.Size(676, 192);
-            this.ActivityListView.TabIndex = 0;
-            this.ActivityListView.UseCompatibleStateImageBehavior = false;
-            // 
-            // ActivityListMenuStrip
-            // 
-            this.ActivityListMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
-            this.ActivityListMenuStrip.Name = "ActivityListMenuStrip";
-            this.ActivityListMenuStrip.Size = new System.Drawing.Size(145, 26);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
-            this.toolStripMenuItem1.Text = "Register hour";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
-            // UserImages
-            // 
-            this.UserImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("UserImages.ImageStream")));
-            this.UserImages.TransparentColor = System.Drawing.Color.Transparent;
-            this.UserImages.Images.SetKeyName(0, "Jens Werner.jpg");
-            // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -483,6 +477,12 @@
             this.RegistrationHourListView.TabIndex = 0;
             this.RegistrationHourListView.UseCompatibleStateImageBehavior = false;
             // 
+            // UserImages
+            // 
+            this.UserImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("UserImages.ImageStream")));
+            this.UserImages.TransparentColor = System.Drawing.Color.Transparent;
+            this.UserImages.Images.SetKeyName(0, "Jens Werner.jpg");
+            // 
             // ProjectView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -501,13 +501,13 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.MainTableLayout.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.ActivityListMenuStrip.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.ActivityListMenuStrip.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -547,7 +547,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel ManagementLink;
         private System.Windows.Forms.Label WelcomeLabel;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ImageList UserImages;

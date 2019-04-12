@@ -64,6 +64,7 @@
     <Compile Include="Abstract classes and interfaces\AbstractModel.cs" />
     <Compile Include="Abstract classes and interfaces\ICustomObservable.cs" />
     <Compile Include="Abstract classes and interfaces\ICustomObserver.cs" />
+    <Compile Include="Testing environment\TestingFacade.cs" />
     <Compile Include="Forms\Dialogs\AddRegistrationDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>

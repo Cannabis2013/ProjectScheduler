@@ -8,9 +8,9 @@ using ProjectRelated;
 using UserDomain;
 
 
-namespace MainUserSpace
+namespace MainDomain
 {
-    public class MainApp
+    public partial class MainApp
     {
         private const string FileName = "ProjectFile";
         private readonly ProjectManager pManager;

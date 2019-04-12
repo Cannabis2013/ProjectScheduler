@@ -66,17 +66,6 @@ namespace TestProject
             testRunner.CollectScenarioErrors();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Admin creates a project succesfully", SourceLine=4)]
-        public virtual void AdminCreatesAProjectSuccesfully()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Admin creates a project succesfully", null, ((string[])(null)));
-#line 5
-this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
         [TechTalk.SpecRun.TestRunCleanup()]
         public virtual void TestRunCleanup()
         {

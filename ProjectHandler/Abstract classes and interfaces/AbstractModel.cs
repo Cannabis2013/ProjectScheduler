@@ -13,7 +13,6 @@ namespace Templates
         private AbstractManager parentManager = null;
         private List<AbstractModel> subModels = new List<AbstractModel>();
 
-
         private string ModelId;
 
         public string ModelIdentity
@@ -22,7 +21,7 @@ namespace Templates
             set => ModelId = value;
         }
 
-        public virtual AbstractModel Parent
+        public AbstractModel Parent
         {
             get => parent;
             set => parent = value;
@@ -104,8 +103,8 @@ namespace Templates
 
         public void StateChanged()
         {
-            AbstractModel ParentProject = WarnParentObject(this);
-            ParentProject.parentManager.RequestUpdate();
+            var ParentProject = WarnParentObject(this);
+            ParentProject?.parentManager.RequestUpdate();
         }
 
         private AbstractModel WarnParentObject(AbstractModel model)

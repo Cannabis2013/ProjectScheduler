@@ -11,17 +11,14 @@ using UserDomain;
 
 // ReSharper disable InconsistentNaming
 
-namespace MainUserSpace
+namespace MainDomain
 {
     public partial class ProjectView : Form, ICustomObserver
     {
-        [field: NonSerialized]
         private readonly ListView aView;
-        
         private readonly ProjectManager pManager;
-        [field: NonSerialized]
         private readonly UserManager uManager;
-        [field: NonSerialized]
+        
         public event EventHandler<EventArgs> logoutEvent;
         public event EventHandler<EventArgs> CloseRequest;
         public event EventHandler<EventArgs> HardCloseEvent;
@@ -36,7 +33,7 @@ namespace MainUserSpace
             this.uManager = uManager;
             aView = ActivityListView;
 
-            pManager.Subscribe(this);
+            pManager.SubScribe(this);
 
             var welcomingText = new StringBuilder("Welcome ");
             var userName = uManager.loggedIn().ModelIdentity;
@@ -55,16 +52,18 @@ namespace MainUserSpace
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            pManager.UnSubScribeAll();
             HardCloseEvent?.Invoke(this,e);
         }
 
         private void MainView_FormClosed(object sender, FormClosedEventArgs e)
         {
             uManager.logout();
+            pManager.UnSubScribeAll();
             CloseRequest?.Invoke(this, e);
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        public void ManagementLink_Clicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var mng = new Management(pManager,uManager);
             mng.ShowDialog(this);
@@ -72,7 +71,7 @@ namespace MainUserSpace
 
         private void customizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            linkLabel1_LinkClicked(this, null);
+            ManagementLink_Clicked(this, null);
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)

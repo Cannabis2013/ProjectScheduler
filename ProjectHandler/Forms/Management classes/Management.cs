@@ -34,9 +34,9 @@ namespace Mng
             aManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             hManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 
-            pManager.Subscribe(pManagement);
-            pManager.Subscribe(aManagement);
-            pManager.Subscribe(hManagement);
+            pManager.SubScribe(pManagement);
+            pManager.SubScribe(aManagement);
+            pManager.SubScribe(hManagement);
 
             MainLayoutCount = MainLayout.Controls.Count;
 

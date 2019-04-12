@@ -10,7 +10,8 @@ namespace Projecthandler.Abstract_classes_and_interfaces
     interface ICustomObservable
     {
         void NotifyObservers();
-        void Subscribe(ICustomObserver observer);
-        void UnSubcribe(ICustomObserver observer);
+        void SubScribe(ICustomObserver observer);
+        void UnSubScribe(ICustomObserver observer);
+        void UnSubScribeAll();
     }
 }

@@ -66,40 +66,49 @@ namespace TestProject
             testRunner.CollectScenarioErrors();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("User is really admin and logs in succesfully", new string[] {
-                "mytag"}, SourceLine=4)]
-        public virtual void UserIsReallyAdminAndLogsInSuccesfully()
+        [TechTalk.SpecRun.ScenarioAttribute("User logs in succesfully", SourceLine=3)]
+        public virtual void UserLogsInSuccesfully()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User is really admin and logs in succesfully", null, new string[] {
-                        "mytag"});
-#line 5
-this.ScenarioInitialize(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User logs in succesfully", null, ((string[])(null)));
+#line 4
+ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
+#line 5
+ testRunner.Given("the user enter his username Finn_Luger and password hitler", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 6
- testRunner.Given("that the userrole is Admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 7
- testRunner.And("the username is admin and the password is 1234", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 8
- testRunner.Then("the user succesfully logs in", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 9
- testRunner.And("the users role is Admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("he logs in succesfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("User logs in with wrong credentials", SourceLine=10)]
+        [TechTalk.SpecRun.ScenarioAttribute("User is really admin and logs in succesfully", SourceLine=7)]
+        public virtual void UserIsReallyAdminAndLogsInSuccesfully()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User is really admin and logs in succesfully", null, ((string[])(null)));
+#line 8
+ this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 9
+ testRunner.Given("that the user logs in succesfully with username admin and password 1234", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 10
+ testRunner.Then("the users role is Admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("User logs in with wrong credentials", SourceLine=11)]
         public virtual void UserLogsInWithWrongCredentials()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User logs in with wrong credentials", null, ((string[])(null)));
-#line 11
-this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
 #line 12
- testRunner.Given("that the users username is admin with the password 1234", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
 #line 13
+ testRunner.Given("that the users username is admin with the password 1234", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 14
  testRunner.And("he accidentially was drunk and enters the right username but the wrong password 1" +
                     "235", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 14
+#line 15
  testRunner.Then("the UserManager returns a user which is null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -114,3 +123,4 @@ this.ScenarioInitialize(scenarioInfo);
 }
 #pragma warning restore
 #endregion
+

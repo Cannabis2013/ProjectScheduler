@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using MainUserSpace;
 
 namespace Projecthandler
 {
@@ -14,8 +13,8 @@ namespace Projecthandler
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var app = new MainApp();
-            Application.Run();
+            var app = new TestingFace.ApplicationTestingFacade();
+            //Application.Run();
         }
     }
 }

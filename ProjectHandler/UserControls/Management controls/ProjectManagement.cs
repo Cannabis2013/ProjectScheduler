@@ -20,7 +20,7 @@ namespace Projecthandler
             this.uManager = uManager;
             InitializeComponent();
             
-            pManager.Subscribe(this);
+            pManager.SubScribe(this);
 
             UpdateView();
         }
@@ -76,7 +76,7 @@ namespace Projecthandler
         {
             if (!uManager.isAdmin())
             {
-                MessageBox.Show("Administrator privilliges required YOU FUCKING LOSER.", "Admin required");
+                MessageBox.Show("Administrator privilliges required.", "Admin required");
                 return;
             }
 
@@ -113,7 +113,7 @@ namespace Projecthandler
         {
             if (!uManager.isAdmin())
             {
-                MessageBox.Show(@"Administrator privilliges required YOU FUCKING LOSER.", @"Admin required");
+                MessageBox.Show(@"Administrator privilliges required.", @"Admin required");
                 return;
             }
 

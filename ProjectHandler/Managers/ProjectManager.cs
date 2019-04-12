@@ -11,7 +11,6 @@ namespace ProjectRelated
     [Serializable]
     public class ProjectManager : AbstractManager,ICustomObservable
     {
-        [field: NonSerialized]
         protected List<ICustomObserver> observers = new List<ICustomObserver>();
 
         public bool RemoveActivityModel(string projectId, string activityId)
@@ -255,14 +254,19 @@ namespace ProjectRelated
             }
         }
 
-        public void Subscribe(ICustomObserver observer)
+        public void SubScribe(ICustomObserver observer)
         {
             observers.Add(observer);
         }
 
-        public void UnSubcribe(ICustomObserver observer)
+        public void UnSubScribe(ICustomObserver observer)
         {
             observers.Remove(observer);
+        }
+
+        public void UnSubScribeAll()
+        {
+            observers.Clear();
         }
     }
 }
