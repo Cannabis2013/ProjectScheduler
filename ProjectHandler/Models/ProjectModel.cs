@@ -8,7 +8,7 @@ using Templates;
 namespace ProjectRelated
 {
     [Serializable]
-    public class ProjectModel : AbstractModel<ProjectManager,ActivityModel>
+    public class ProjectModel : AbstractModel
     {
         private string pLeaderId, shortDescription;
         private DateTime startDate, endDate;
@@ -39,9 +39,9 @@ namespace ProjectRelated
 
         public ListViewItem[] ActivityItemModels()
         {
-            int count = AllSubModels.Count, index = 0;
+            int count = AllSubModels<ActivityModel>().Count, index = 0;
             var models = new ListViewItem[count];
-            foreach (var a in AllSubModels)
+            foreach (var a in AllSubModels<ActivityModel>())
             {
                 models[index] = a.ItemModel();
                 index++;
@@ -51,7 +51,8 @@ namespace ProjectRelated
         }
         public List<ActivityModel> AssignedActivitiesModels(string userName)
         {
-            var userActivities = AllSubModels.Where(item => item.IsUserAssigned(userName));
+            var userActivities = AllSubModels<ActivityModel>().Where(item => item.IsUserAssigned(userName));
+
             return userActivities.Select(item => new ActivityModel(item)).ToList();
         }
 
@@ -69,13 +70,5 @@ namespace ProjectRelated
 
             return model;
         }
-
-        public override void RemoveSubModel(string SubModelId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override ActivityModel SubModel(string SubModelIdentity) => 
-            AllSubModels.Find(item => item.ModelIdentity == SubModelIdentity);
     }
 }

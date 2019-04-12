@@ -12,7 +12,7 @@ using VirtualUserDomain;
 namespace ProjectRelated
 {
     [Serializable]
-    public class ProjectManager : AbstractManager<ProjectModel,ListViewItem>
+    public class ProjectManager : AbstractManager
     {
 
         public bool RemoveActivityModel(string projectId, string activityId)
@@ -25,14 +25,12 @@ namespace ProjectRelated
             return true;
         }
 
-        public ActivityModel ActivityModel(string id) => ActivityModels().Find(item => item.ModelIdentity == id);
-
         public List<ActivityModel> ActivityModels()
         {
             var resultingList = new List<ActivityModel>();
-            foreach (var p in ModelList)
+            foreach (var p in Models)
             {
-                var userActivities = p.AllSubModels;
+                var userActivities = p.AllSubModels<ActivityModel>();
                 resultingList.AddRange(userActivities);
             }
 
@@ -42,9 +40,10 @@ namespace ProjectRelated
         public List<ActivityModel> ActivityModels(string userName)
         {
             var resultingList = new List<ActivityModel>();
-            foreach (var p in ModelList)
+            foreach (var model in Models)
             {
-                var userActivities = p.AssignedActivitiesModels(userName);
+                var project = (ProjectModel) model;
+                var userActivities = project.AssignedActivitiesModels(userName);
                 resultingList.AddRange(userActivities);
             }
 
@@ -53,7 +52,7 @@ namespace ProjectRelated
 
         public HourRegistrationModel getHourRegistrationModel(string regId)
         {
-            var activities = ActivityModels();
+            var activities = Models.Select(item => (ActivityModel) item);
 
             foreach (var activity in activities)
             {
@@ -69,7 +68,7 @@ namespace ProjectRelated
         public List<HourRegistrationModel> AllHourRegistrationModels()
         {
             var TimeObjects = new List<HourRegistrationModel>();
-            var activities = ActivityModels();
+            var activities = Models.Select(item => (ActivityModel) item);
 
             foreach (var activity in activities)
             {
@@ -94,10 +93,10 @@ namespace ProjectRelated
 
         public ListViewItem[] ProjectItemModels()
         {
-            int count = ModelList.Count, index = 0;
+            int count = Models.Count, index = 0;
             var models = new ListViewItem[count];
 
-            foreach (var p in ModelList)
+            foreach (var p in Models)
                 models[index++] = p.ItemModel();
 
             return models;
@@ -106,11 +105,12 @@ namespace ProjectRelated
         public ListViewItem[] AllActivitySubModels()
         {
             var activities = new List<ListViewItem>();
-            foreach (var p in ModelList)
+            foreach (var p in Models)
             {
-                foreach (var activity in p.AllSubModels)
+                foreach (var T in p.AllSubModels<ActivityModel>())
                 {
-                    var models = activity.RegistrationObjectModels().ToList();
+                    var activity = (ActivityModel) T;
+                    var models = activity.allSubItemModels();
                     activities.AddRange(models);
                 }
             }
@@ -122,11 +122,12 @@ namespace ProjectRelated
         {
             var TimeObjectModels = new List<ListViewItem>();
 
-            foreach (var p in ModelList)
+            foreach (var pModel in Models)
             {
-                foreach (var activity in p.AllSubModels)
+                foreach (var activity in pModel.AllSubModels<ActivityModel>())
                 {
-                    var models = activity.RegistrationObjectItemModels(userName).ToList();
+                    var rObjects = activity.AllSubModels<HourRegistrationModel>().Where(item => item.UserName == userName);
+                    var models = rObjects.Select(item => item.ItemModel());
                     TimeObjectModels.AddRange(models);
                 }
             }
@@ -138,11 +139,10 @@ namespace ProjectRelated
             var models = new List<ListViewItem>();
             if (uManager.isAdmin())
             {
-                foreach (var p in ModelList)
-                foreach (var activity in p.AllSubModels)
+                foreach (var item in Models)
                 {
-                    var model = activity.ItemModel();
-                    models.Add(model);
+                    var project = (ProjectModel) item;
+                    models.AddRange(project.ActivityItemModels());
                 }
 
                 return models.ToArray();
@@ -150,14 +150,18 @@ namespace ProjectRelated
 
             var userId = uManager.loggedIn().ModelIdentity;
 
-            foreach (var p in ModelList)
-            foreach (var activity in p.AllSubModels)
+            foreach (var item in Models)
             {
-                if (!activity.IsUserAssigned(uManager) && p.projectLeaderId != userId)
-                    continue;
+                var project = (ProjectModel) item;
+                foreach (var activity in project.AllSubModels<ActivityModel>())
+                {
 
-                var model = activity.ItemModel();
-                models.Add(model);
+                    if (!activity.IsUserAssigned(uManager) && project.projectLeaderId != userId)
+                        continue;
+
+                    var model = activity.ItemModel();
+                    models.Add(model);
+                }
             }
 
             return models.ToArray();
@@ -234,12 +238,7 @@ namespace ProjectRelated
             return ActivityModels(userName).Select(item =>
                 new ActivityEntity(item.ModelIdentity, item.StartDate, item.EndDate)).ToList();
         }
-        public override ProjectModel Model(string id)
-        {
-            return ModelList.Find(item => item.ModelIdentity == id);
-        }
-        
 
-        public override List<string> ListModelIdentities() => ModelList.Select(item => item.ModelIdentity).ToList();
+        public override List<string> ListModelIdentities() => Models.Select(item => item.ModelIdentity).ToList();
     }
 }

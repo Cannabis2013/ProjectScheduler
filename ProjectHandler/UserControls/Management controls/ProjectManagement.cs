@@ -50,7 +50,7 @@ namespace Projecthandler
         {
             var submitEvent = (SubmitEvent) e;
             var p = submitEvent.Project();
-            pManager.AddModel(p);
+            pManager.AddModel((AbstractModel) p);
             updateView();
 
             removeTabPage(1);
@@ -91,9 +91,9 @@ namespace Projecthandler
                 return;
 
             var item = ProjectListView.SelectedItems[0];
-            var p = pManager.Model(item.Text);
+            var project = (ProjectModel) pManager.Model(item.Text);
 
-            var pControl = new AddProjectControl(p,uManager);
+            var pControl = new AddProjectControl(project,uManager);
             
             pControl.OnEditClicked += _OnEditClicked;
             pControl.OnCancelClicked += _OnCancelClicked;

@@ -10,7 +10,7 @@ using VirtualUserDomain;
 namespace ProjectRelated
 {
     [Serializable]
-    public class ActivityModel : AbstractModel<ProjectModel,HourRegistrationModel>
+    public class ActivityModel : AbstractModel
     {
         private readonly List<string> assignedUserIdentities = new List<string>();
 
@@ -28,12 +28,11 @@ namespace ProjectRelated
 
         public ActivityModel(ActivityModel copy)
         {
-            AllSubModels = copy.AllSubModels;
+            SubModels = copy.SubModels;
             ModelIdentity = copy.ModelIdentity;
             startDate = copy.startDate;
             endDate = copy.endDate;
             assignedUserIdentities = copy.assignedUserIdentities;
-            AllSubModels = copy.AllSubModels;
             Parent = copy.Parent;
         }
 
@@ -93,54 +92,29 @@ namespace ProjectRelated
         }
 
         public List<HourRegistrationModel> HourRegistrationObjects(string userName) =>
-            AllSubModels.Where(item => item.UserName == userName).ToList();
+            AllSubModels<HourRegistrationModel>().Where(item => item.UserName == userName).ToList();
 
-        public List<HourRegistrationModel> HourRegistrationObjects() => AllSubModels;
+        public List<HourRegistrationModel> HourRegistrationObjects() => 
+            AllSubModels<HourRegistrationModel>();
 
         public int TotalRegisteredHours(string userName = null)
         {
             var totalHours = 0;
             if (userName != null)
             {
-                foreach (var T in AllSubModels)
+                foreach (var rObject in AllSubModels<HourRegistrationModel>())
                 {
-                    if (userName == T.ModelIdentity)
-                        totalHours += T.Hours;
+                    if (userName == rObject.UserName)
+                        totalHours += rObject.Hours;
                 }
             }
             else
             {
-                foreach (var T in AllSubModels)
-                    totalHours += T.Hours;
+                foreach (var rObject in AllSubModels<HourRegistrationModel>())
+                    totalHours += rObject.Hours;
             }
 
             return totalHours;
-        }
-
-        public ListViewItem[] RegistrationObjectItemModels(string userName)
-        {
-            var userTimeObjects = AllSubModels.Where(item => item.ModelIdentity == userName).ToArray();
-            
-            var models = new ListViewItem[userTimeObjects.Length];
-            var index = 0;
-
-            foreach (var tObject in userTimeObjects)
-                models[index++] = tObject.ItemModel();
-
-            return models;
-        }
-
-        public ListViewItem[] RegistrationObjectModels()
-        {
-            var tObjects = AllSubModels.ToArray();
-
-            var models = new ListViewItem[tObjects.Length];
-            var index = 0;
-
-            foreach (var tObject in tObjects)
-                models[index++] = tObject.ItemModel();  
-
-            return models;
         }
 
         public TreeNode AssignedUserModels()
@@ -151,24 +125,6 @@ namespace ProjectRelated
                 rootNode.Nodes.Add(userName);
 
             return rootNode;
-        }
-
-        private ListViewItem ItemTileModel()
-        {
-            var model = new ListViewItem(ModelIdentity);
-
-            var assignedHours = new StringBuilder("Total assigned hours: ");
-            var totalHours = TotalRegisteredHours();
-            assignedHours.Append(totalHours.ToString());
-            model.SubItems.Add(assignedHours.ToString());
-
-            var assignedUsers = new StringBuilder("Active users: ");
-            var totalUsersAssigned = assignedUserIdentities.Count;
-            assignedUsers.Append(totalUsersAssigned.ToString());
-
-            model.SubItems.Add(assignedUsers.ToString());
-
-            return model;
         }
 
         public override ListViewItem ItemModel()
@@ -186,16 +142,6 @@ namespace ProjectRelated
             model.SubItems.Add(ParentModelIdentity());
 
             return model;
-        }
-
-        public override void RemoveSubModel(string SubModelId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override HourRegistrationModel SubModel(string SubModelIdentity)
-        {
-            throw new NotImplementedException();
         }
     }
 }

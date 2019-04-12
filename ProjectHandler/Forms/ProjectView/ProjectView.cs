@@ -82,9 +82,8 @@ namespace MainUserSpace
             var rObject = sEvent.RegistrationObject();
             var parentActivityId = rObject.ParentActivityId;
 
-            var activity = pManager.ActivityModel(parentActivityId);
+            var activity = pManager.Model(parentActivityId);
             activity.AddSubModel(rObject);
-            rObject.Parent = activity;
             updateModelViews();
         }
 
@@ -141,5 +140,11 @@ namespace MainUserSpace
 
             RegistrationHourListView.Items.AddRange(regObjects);
         }
+
+        /*
+         * Testing
+         */
+
+
     }
 }

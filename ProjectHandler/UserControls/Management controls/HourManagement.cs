@@ -121,7 +121,7 @@ namespace Projecthandler.Forms.Dialog_controls
 
             var item = HourListView.SelectedItems[0];
             var activityId = item.SubItems[4];
-            var activity = pManager.ActivityModel(activityId.Text);
+            var activity = pManager.Model(activityId.Text);
             activity.RemoveSubModel(item.Text);
 
             updateView();

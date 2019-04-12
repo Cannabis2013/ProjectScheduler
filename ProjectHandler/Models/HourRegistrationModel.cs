@@ -8,7 +8,7 @@ using Templates;
 namespace ProjectRelated
 {
     [Serializable]
-    public class HourRegistrationModel : AbstractModel<ActivityModel,HourRegistrationModel>
+    public class HourRegistrationModel : AbstractModel
     {
         private readonly DateTime originalRegistrationDate;
         private string parentActivityId;
@@ -25,7 +25,7 @@ namespace ProjectRelated
             parentActivityId = activityId;
 
             originalRegistrationDate = DateTime.Now;
-            AllSubModels= new List<HourRegistrationModel>();
+            SubModels = new List<AbstractModel>();
         }
 
         public string UserName { get; }
@@ -52,7 +52,7 @@ namespace ProjectRelated
 
         public string CorrespondingProjectId(ProjectManager pManager)
         {
-            return pManager.ActivityModel(ParentActivityId).ParentModelIdentity();
+            return pManager.Model(ParentActivityId).ParentModelIdentity();
         }
 
         public override ListViewItem ItemModel()
@@ -65,16 +65,6 @@ namespace ProjectRelated
             model.StateImageIndex = 0;
 
             return model;
-        }
-
-        public override void RemoveSubModel(string SubModelId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override HourRegistrationModel SubModel(string SubModelIdentity)
-        {
-            throw new NotImplementedException();
         }
     }
 }

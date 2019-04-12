@@ -6,7 +6,7 @@ using Templates;
 
 namespace VirtualUserDomain
 {
-    public class UserModel : AbstractModel<UserManager,UserModel>
+    public class UserModel : AbstractModel
     {
         private readonly string passWord;
 
@@ -58,14 +58,5 @@ namespace VirtualUserDomain
             return model;
         }
 
-        public override void RemoveSubModel(string SubModelId)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override UserModel SubModel(string SubModelIdentity)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

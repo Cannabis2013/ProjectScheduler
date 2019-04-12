@@ -11,7 +11,7 @@ using Templates;
 namespace VirtualUserDomain
 {
     [Serializable]
-    public class UserManager : AbstractManager<UserModel, ListViewItem>
+    public class UserManager : AbstractManager
     {
 
         [field: NonSerialized]
@@ -50,10 +50,7 @@ namespace VirtualUserDomain
 
         public UserModel user(string userName)
         {
-            foreach (var u in ModelList)
-                if (u.ModelIdentity == userName)
-                    return u;
-            return null;
+            return Models.Select(item => (UserModel) item).FirstOrDefault(u => u.ModelIdentity == userName);
         }
 
         public ListViewItem DetailedItemModels(string userName, ProjectManager pManager)
@@ -76,7 +73,7 @@ namespace VirtualUserDomain
         {
             try
             {
-                return ModelList.First(item => item.ModelIdentity == userName && item.PassWord == password);
+                return (UserModel) Models.First(item => item.ModelIdentity == userName && ((UserModel) item).PassWord == password);
             }
             catch (Exception e)
             {
@@ -88,7 +85,7 @@ namespace VirtualUserDomain
         {
             var admin = new UserModel("admin", "1234", UserModel.UserRole.Admin);
 
-            ModelList.Add(admin);
+            Models.Add(admin);
 
             /*
              * Initialize five users for testing purposes
@@ -106,16 +103,12 @@ namespace VirtualUserDomain
             AddModel(nUser4);
             AddModel(nUser5);
         }
-
-        public override UserModel Model(string id)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public override List<string> ListModelIdentities()
         {
             var result = new List<string>();
-            foreach (var u in ModelList)
+            foreach (var u in Models)
                 result.Add(u.ModelIdentity);
 
             return result;
@@ -123,16 +116,16 @@ namespace VirtualUserDomain
 
         public ListViewItem[] ItemModels(bool fullList = false)
         {
-            int uCount = ModelList.Count,startIndex = 0, index = 0; 
+            int uCount = Models.Count,startIndex = 0, index = 0; 
             if (!fullList)
             {
                 uCount--;
                 startIndex = 1;
             }
             var models = new ListViewItem[uCount];
-            for (var i = startIndex; i < ModelList.Count; i++)
+            for (var i = startIndex; i < Models.Count; i++)
             {
-                var u = ModelList[i];
+                var u = Models[i];
                 models[index++] = u.ItemModel();
             }
 

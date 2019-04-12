@@ -166,7 +166,7 @@ namespace Projecthandler.Forms.Dialogs
             var usernames = new List<string>();
 
             DateTime startDate = StartDateSelector.Value, endDate = EndDateSelector.Value;
-            var project = pManager.Model(projectIdentity);
+            var project = (ProjectModel) pManager.Model(projectIdentity);
             var activity = new ActivityModel(identity, startDate, endDate, project, uManager);
 
 
@@ -189,7 +189,6 @@ namespace Projecthandler.Forms.Dialogs
                 var oldProject = pManager.Model(activity.ParentModelIdentity());
                 oldProject.RemoveSubModel(activity);
                 var newProject = pManager.Model(projectId);
-                activity.Parent = newProject;
                 newProject.AddSubModel(activity);
             }
             
@@ -222,7 +221,7 @@ namespace Projecthandler.Forms.Dialogs
         private void projectSelector_SelectionChangeCommitted(object sender, EventArgs e)
         {
             var selectedItem = projectSelector.Text;
-            var project = pManager.Model(selectedItem);
+            var project = (ProjectModel) pManager.Model(selectedItem);
 
             StartDateSelector.MinDate = project.StartDate;
             StartDateSelector.MaxDate = project.EndDate;
