@@ -2,25 +2,13 @@
 
 using System.Collections.Generic;
 using System.Windows.Forms;
-using NUnit.Framework.Internal;
-using Projecthandler.Templates_and_interfaces;
 using Templates;
 
 namespace VirtualUserDomain
 {
-    public class UserModel : AbstractModel<ListViewItem,UserModel>
+    public class UserModel : AbstractModel<UserManager,UserModel>
     {
-        private readonly string pass;
-
-        private static List<string> _AlternativeItemModelHeaders = new List<string>()
-        {
-            "Username",
-            "User role"
-        };
-        private static List<string> _ItemModelHeaders;
-
-        public static List<string> ItemModelHeaders => _ItemModelHeaders;
-        public static List<string> AlternativeItemModelHeaders => _AlternativeItemModelHeaders;
+        private readonly string passWord;
 
         public enum Availability
         {
@@ -34,12 +22,11 @@ namespace VirtualUserDomain
             Admin,
             Employee
         }
-
         
         public UserModel(string userName, string passWord, UserRole role)
         {
             ModelIdentity = userName;
-            pass = passWord;
+            this.passWord = passWord;
             this.Role = role;
         }
 
@@ -61,7 +48,7 @@ namespace VirtualUserDomain
             return "Not available";
         }
 
-        public string PassWord => pass;
+        public string PassWord => passWord;
 
         public override ListViewItem ItemModel()
         {
@@ -69,6 +56,16 @@ namespace VirtualUserDomain
             model.SubItems.Add(_roleStringRepresentation(Role));
 
             return model;
+        }
+
+        public override void RemoveSubModel(string SubModelId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override UserModel SubModel(string SubModelIdentity)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

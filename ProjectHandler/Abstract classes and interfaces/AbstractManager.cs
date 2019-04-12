@@ -1,34 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Templates;
 
-namespace Projecthandler.Templates_and_interfaces
+namespace Templates
 {
-    [Serializable]
-    public abstract class AbstractModel  <ItemModelType,SubModelType> : ModelEntity<ItemModelType>
-    {
-        private string ModelId;
-        protected List<SubModelType> Childrens;
-
-        public string ModelIdentity
-        {
-            get => ModelId;
-            set => ModelId = value;
-        }
-
-        public abstract override ItemModelType ItemModel();
-
-        public void AddChild(SubModelType child) => Childrens.Add(child);
-        public void RemoveChild(SubModelType child) => Childrens.Remove(child);
-        public void RemoveChildAt(int index) => Childrens.RemoveAt(index);
-
-        public SubModelType ChildAt(int index) => Childrens[index];
-    }
-
     [Serializable]
     public abstract class AbstractManager<ItemType, ModelType>
     {
@@ -50,4 +24,5 @@ namespace Projecthandler.Templates_and_interfaces
             throw new NotImplementedException();
         }
     }
+
 }

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using Projecthandler.Forms.Dialogs;
-using Projecthandler.Templates;
-using Projecthandler.Templates_and_interfaces;
 using ProjectRelated;
+using Templates;
 using VirtualUserDomain;
 
 namespace Projecthandler.Forms.Project_and_activity_management.Controls
@@ -83,7 +81,7 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
                 return;
             
             var selectedItem = ActivityListView.SelectedItems[0];
-            var activity = pManager.getActivityModel(selectedItem.Text);
+            var activity = pManager.ActivityModel(selectedItem.Text);
 
             var aControl = new AddActivityControl(activity,pManager,uManager);
 
@@ -96,9 +94,9 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var selectedActivityId = ActivityListView.SelectedItems[0].Text;
-            var activity = pManager.getActivityModel(selectedActivityId);
-            var parentActivityProjectId = activity.ParentProjectId;
-            pManager.removeActivityModel(parentActivityProjectId, selectedActivityId);
+            var activity = pManager.ActivityModel(selectedActivityId);
+            var parentProjectId = activity.ParentModelIdentity();
+            pManager.RemoveActivityModel(parentProjectId, selectedActivityId);
             updateParentView?.Invoke(this, e);
             updateView();
         }

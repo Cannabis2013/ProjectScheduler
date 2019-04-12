@@ -44,8 +44,8 @@
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.StartDateSelector = new System.Windows.Forms.DateTimePicker();
             this.EndDateSelector = new System.Windows.Forms.DateTimePicker();
-            this.DescriptionBoxSelector = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.DescriptionBoxSelector = new System.Windows.Forms.TextBox();
             this.MainLayout.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -265,18 +265,6 @@
             this.EndDateSelector.Size = new System.Drawing.Size(186, 26);
             this.EndDateSelector.TabIndex = 7;
             // 
-            // DescriptionBoxSelector
-            // 
-            this.DescriptionBoxSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.DescriptionBoxSelector.Location = new System.Drawing.Point(328, 38);
-            this.DescriptionBoxSelector.Multiline = true;
-            this.DescriptionBoxSelector.Name = "DescriptionBoxSelector";
-            this.MainLayout.SetRowSpan(this.DescriptionBoxSelector, 4);
-            this.DescriptionBoxSelector.Size = new System.Drawing.Size(242, 154);
-            this.DescriptionBoxSelector.TabIndex = 8;
-            // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -290,6 +278,18 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Enter short description";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // DescriptionBoxSelector
+            // 
+            this.DescriptionBoxSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DescriptionBoxSelector.Location = new System.Drawing.Point(328, 38);
+            this.DescriptionBoxSelector.Multiline = true;
+            this.DescriptionBoxSelector.Name = "DescriptionBoxSelector";
+            this.MainLayout.SetRowSpan(this.DescriptionBoxSelector, 4);
+            this.DescriptionBoxSelector.Size = new System.Drawing.Size(242, 154);
+            this.DescriptionBoxSelector.TabIndex = 8;
             // 
             // AddProjectControl
             // 

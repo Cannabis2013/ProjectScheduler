@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Windows.Forms;
-using Projecthandler.Templates_and_interfaces;
 
 namespace ProjectRelated
 {
-    public class ActivityEntity : AbstractModel<ListViewItem,ActivityEntity>
+    public class ActivityEntity
     {
         private readonly string title;
         private readonly DateTime startDate, endDate;
@@ -24,11 +22,6 @@ namespace ProjectRelated
         public bool withinTimespan(DateTime date)
         {
             return startDate.CompareTo(date) <= 0 && endDate.CompareTo(date) >= 0;
-        }
-
-        public override ListViewItem ItemModel()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Projecthandler.Events;
-using Projecthandler.Templates_and_interfaces;
 using ProjectRelated;
+using Templates;
 using VirtualUserDomain;
 
 namespace Projecthandler.UserControls.Dialog_controls
@@ -41,7 +34,7 @@ namespace Projecthandler.UserControls.Dialog_controls
 
         public void InitializeDialogValues()
         {
-            TitleBoxSelector.Text = rObject.RegistrationId;
+            TitleBoxSelector.Text = rObject.ModelIdentity;
             ActivityComboBoxSelector.SelectedItem = rObject.ParentActivityId;
             HourBoxSelector.Text = rObject.Hours.ToString();
             DescriptionBoxSelector.Text = rObject.Description;

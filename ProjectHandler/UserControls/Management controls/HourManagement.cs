@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Projecthandler.Templates;
 using Projecthandler.UserControls.Dialog_controls;
 using ProjectRelated;
 using Templates;
@@ -41,8 +34,8 @@ namespace Projecthandler.Forms.Dialog_controls
             
 
             ListViewItem[] regObjects = uManager.isAdmin() ? 
-                regObjects = pManager.GetHourRegistrationModels().Select(item => item.ItemModel()).ToArray() : 
-                regObjects = pManager.GetHourRegistrationModels(uManager.loggedIn().ModelIdentity).Select(item => item.ItemModel())
+                regObjects = pManager.AllHourRegistrationModels().Select(item => item.ItemModel()).ToArray() : 
+                regObjects = pManager.AllHourRegistrationModels(uManager.loggedIn().ModelIdentity).Select(item => item.ItemModel())
                     .ToArray();
 
             HourListView.Items.AddRange(regObjects);
@@ -128,8 +121,8 @@ namespace Projecthandler.Forms.Dialog_controls
 
             var item = HourListView.SelectedItems[0];
             var activityId = item.SubItems[4];
-            var activity = pManager.getActivityModel(activityId.Text);
-            activity.removeRegistrationObject(item.Text);
+            var activity = pManager.ActivityModel(activityId.Text);
+            activity.RemoveSubModel(item.Text);
 
             updateView();
         }

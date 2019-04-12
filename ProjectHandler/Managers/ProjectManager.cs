@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Projecthandler.Templates_and_interfaces;
 using Templates;
 using VirtualUserDomain;
 
 /*
- * Fields:
- * - All ItemList
- * Method/properties:
- * - Add/remove project
- * - Get project (3 overloads)
- * - All project id's
+ *
  */
 
 namespace ProjectRelated
@@ -21,24 +15,24 @@ namespace ProjectRelated
     public class ProjectManager : AbstractManager<ProjectModel,ListViewItem>
     {
 
-        public bool removeActivityModel(string projectId, string activityId)
+        public bool RemoveActivityModel(string projectId, string activityId)
         {
             var p = Model(projectId);
-            var activity = p?.Activity(activityId);
+            var activity = p?.SubModel(activityId);
             if (activity == null)
                 return false;
-            p.RemoveActivity(activity);
+            p.RemoveSubModel(activity);
             return true;
         }
 
-        public ActivityModel getActivityModel(string id) => ActivityModels().Find(item => item.ModelIdentity == id);
+        public ActivityModel ActivityModel(string id) => ActivityModels().Find(item => item.ModelIdentity == id);
 
         public List<ActivityModel> ActivityModels()
         {
             var resultingList = new List<ActivityModel>();
             foreach (var p in ModelList)
             {
-                var userActivities = p.AllActivities();
+                var userActivities = p.AllSubModels;
                 resultingList.AddRange(userActivities);
             }
 
@@ -50,7 +44,7 @@ namespace ProjectRelated
             var resultingList = new List<ActivityModel>();
             foreach (var p in ModelList)
             {
-                var userActivities = p.AssignedActivities(userName);
+                var userActivities = p.AssignedActivitiesModels(userName);
                 resultingList.AddRange(userActivities);
             }
 
@@ -64,7 +58,7 @@ namespace ProjectRelated
             foreach (var activity in activities)
             {
                 var tm = activity.HourRegistrationObjects().ToList();
-                var rObject = tm.Find(item => item.RegistrationId == regId);
+                var rObject = tm.Find(item => item.ModelIdentity == regId);
                 if (rObject != null)
                     return rObject;
             }
@@ -72,7 +66,7 @@ namespace ProjectRelated
             return null;
         }
 
-        public List<HourRegistrationModel> GetHourRegistrationModels()
+        public List<HourRegistrationModel> AllHourRegistrationModels()
         {
             var TimeObjects = new List<HourRegistrationModel>();
             var activities = ActivityModels();
@@ -85,7 +79,7 @@ namespace ProjectRelated
             return TimeObjects;
         }
 
-        public List<HourRegistrationModel> GetHourRegistrationModels(string userName)
+        public List<HourRegistrationModel> AllHourRegistrationModels(string userName)
         {
             var RegObjects = new List<HourRegistrationModel>();
             var activities = ActivityModels(userName);
@@ -109,12 +103,12 @@ namespace ProjectRelated
             return models;
         }
 
-        public ListViewItem[] ActivityTimeObjectModels()
+        public ListViewItem[] AllActivitySubModels()
         {
             var activities = new List<ListViewItem>();
             foreach (var p in ModelList)
             {
-                foreach (var activity in p.AllActivities())
+                foreach (var activity in p.AllSubModels)
                 {
                     var models = activity.RegistrationObjectModels().ToList();
                     activities.AddRange(models);
@@ -124,13 +118,13 @@ namespace ProjectRelated
             return activities.ToArray();
         }
 
-        public ListViewItem[] ActivityTimeObjectModels(string userName)
+        public ListViewItem[] ActivityRegistrationItemModels(string userName)
         {
             var TimeObjectModels = new List<ListViewItem>();
 
             foreach (var p in ModelList)
             {
-                foreach (var activity in p.AllActivities())
+                foreach (var activity in p.AllSubModels)
                 {
                     var models = activity.RegistrationObjectItemModels(userName).ToList();
                     TimeObjectModels.AddRange(models);
@@ -145,7 +139,7 @@ namespace ProjectRelated
             if (uManager.isAdmin())
             {
                 foreach (var p in ModelList)
-                foreach (var activity in p.AllActivities())
+                foreach (var activity in p.AllSubModels)
                 {
                     var model = activity.ItemModel();
                     models.Add(model);
@@ -157,7 +151,7 @@ namespace ProjectRelated
             var userId = uManager.loggedIn().ModelIdentity;
 
             foreach (var p in ModelList)
-            foreach (var activity in p.AllActivities())
+            foreach (var activity in p.AllSubModels)
             {
                 if (!activity.IsUserAssigned(uManager) && p.projectLeaderId != userId)
                     continue;
@@ -182,7 +176,7 @@ namespace ProjectRelated
                 var model = new ListViewItem(activity.ModelIdentity);
                 model.SubItems.Add(activity.EstimatedDuration().ToString());
                 model.SubItems.Add(activity.TotalRegisteredHours(userName).ToString());
-                var projectId = activity.ParentProjectId;
+                var projectId = activity.ParentModelIdentity();
                 model.SubItems.Add(projectId);
 
                 models[index++] = model;
@@ -203,7 +197,7 @@ namespace ProjectRelated
                 var model = new ListViewItem(activity.ModelIdentity);
                 model.SubItems.Add(activity.EstimatedDuration().ToString());
                 model.SubItems.Add(activity.TotalRegisteredHours(userName).ToString());
-                var projectId = activity.ParentProjectId;
+                var projectId = activity.ParentModelIdentity();
                 model.SubItems.Add(projectId);
 
                 models[index++] = model;

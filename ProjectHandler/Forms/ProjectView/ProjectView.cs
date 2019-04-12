@@ -6,7 +6,6 @@ using Mng;
 using Projecthandler.Events;
 using Projecthandler.Forms.Dialogs;
 using ProjectRelated;
-using Templates;
 using VirtualUserDomain;
 
 // ReSharper disable InconsistentNaming
@@ -83,14 +82,20 @@ namespace MainUserSpace
             var rObject = sEvent.RegistrationObject();
             var parentActivityId = rObject.ParentActivityId;
 
-            var activity = pManager.getActivityModel(parentActivityId);
-            activity.AddRegistrationObject(rObject);
-
+            var activity = pManager.ActivityModel(parentActivityId);
+            activity.AddSubModel(rObject);
+            rObject.Parent = activity;
             updateModelViews();
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            if (uManager.isAdmin())
+            {
+                MessageBox.Show(@"Admin not allowed to register hour objects. Its beneath your paygrade. Sorry.");
+                return;
+            }
+
             if (ActivityListView.SelectedItems.Count < 1)
                 return;
             var activityId = ActivityListView.SelectedItems[0].Text;
@@ -130,8 +135,8 @@ namespace MainUserSpace
             
 
             ListViewItem[] regObjects = uManager.isAdmin() ?
-                regObjects = pManager.GetHourRegistrationModels().Select(item => item.ItemModel()).ToArray() :
-                regObjects = pManager.GetHourRegistrationModels(uManager.loggedIn().ModelIdentity).Select(item => item.ItemModel())
+                regObjects = pManager.AllHourRegistrationModels().Select(item => item.ItemModel()).ToArray() :
+                regObjects = pManager.AllHourRegistrationModels(uManager.loggedIn().ModelIdentity).Select(item => item.ItemModel())
                     .ToArray();
 
             RegistrationHourListView.Items.AddRange(regObjects);

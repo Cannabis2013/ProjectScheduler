@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using System.Windows.Forms;
-using Projecthandler.Templates_and_interfaces;
 using ProjectRelated;
+using Templates;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Local
 // ReSharper disable once CheckNamespace
@@ -126,10 +123,18 @@ namespace VirtualUserDomain
 
         public ListViewItem[] ItemModels(bool fullList = false)
         {
-            int uCount = fullList ? ModelList.Count : ModelList.Count - 1, index = 0;
+            int uCount = ModelList.Count,startIndex = 0, index = 0; 
+            if (!fullList)
+            {
+                uCount--;
+                startIndex = 1;
+            }
             var models = new ListViewItem[uCount];
-            foreach (var u in ModelList)
+            for (var i = startIndex; i < ModelList.Count; i++)
+            {
+                var u = ModelList[i];
                 models[index++] = u.ItemModel();
+            }
 
             return models;
         }

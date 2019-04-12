@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Projecthandler.Templates_and_interfaces;
 using Templates;
-using VirtualUserDomain;
 
 namespace ProjectRelated
 {
     [Serializable]
-    public class ProjectModel : AbstractModel<ListViewItem,ActivityModel>
+    public class ProjectModel : AbstractModel<ProjectManager,ActivityModel>
     {
-        private readonly List<ActivityModel> projectActivities = new List<ActivityModel>();
         private string pLeaderId, shortDescription;
         private DateTime startDate, endDate;
 
@@ -42,9 +39,9 @@ namespace ProjectRelated
 
         public ListViewItem[] ActivityItemModels()
         {
-            int count = projectActivities.Count, index = 0;
+            int count = AllSubModels.Count, index = 0;
             var models = new ListViewItem[count];
-            foreach (var a in projectActivities)
+            foreach (var a in AllSubModels)
             {
                 models[index] = a.ItemModel();
                 index++;
@@ -52,46 +49,33 @@ namespace ProjectRelated
 
             return models;
         }
-
-        public ActivityModel Activity(int index)
+        public List<ActivityModel> AssignedActivitiesModels(string userName)
         {
-            var i = 0;
-            foreach (var a in projectActivities)
-                if (i++ == index)
-                    return a;
-
-            return null;
-        }
-
-        public ActivityModel Activity(string activityId) => projectActivities.Where(item => item.ModelIdentity == activityId).ToArray()[0];
-
-        public void AddActivity(ActivityModel a) => projectActivities.Add(a);
-
-        public void RemoveActivity(ActivityModel a) => projectActivities.Remove(a);
-        
-
-        public List<ActivityModel> AllActivities() => projectActivities.ToList();
-
-        public List<ActivityModel> AssignedActivities(string userName)
-        {
-            var userActivities = projectActivities.Where(item => item.IsUserAssigned(userName));
+            var userActivities = AllSubModels.Where(item => item.IsUserAssigned(userName));
             return userActivities.Select(item => new ActivityModel(item)).ToList();
         }
 
         public override ListViewItem ItemModel()
         {
             var model = new ListViewItem(ModelIdentity);
+            
+            model.SubItems.Add(projectLeaderId);
 
-            var userLeader = new StringBuilder(projectLeaderId);
-            model.SubItems.Add(userLeader.ToString());
-
-            model.SubItems.Add(StartDate.ToString());
-            model.SubItems.Add(EndDate.ToString());
+            model.SubItems.Add(StartDate.ToString("dd/MM/yyyy"));
+            model.SubItems.Add(EndDate.ToString("dd/MM/yyyy"));
 
             model.ImageIndex = 0;
             model.StateImageIndex = 0;
 
             return model;
         }
+
+        public override void RemoveSubModel(string SubModelId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ActivityModel SubModel(string SubModelIdentity) => 
+            AllSubModels.Find(item => item.ModelIdentity == SubModelIdentity);
     }
 }

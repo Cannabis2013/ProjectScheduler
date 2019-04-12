@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using System.Windows.Forms;
-using Projecthandler.Templates_and_interfaces;
 using Templates;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Local
@@ -11,32 +8,32 @@ using Templates;
 namespace ProjectRelated
 {
     [Serializable]
-    public class HourRegistrationModel : AbstractModel<ListViewItem,HourRegistrationModel>
+    public class HourRegistrationModel : AbstractModel<ActivityModel,HourRegistrationModel>
     {
         private readonly DateTime originalRegistrationDate;
-        private string regId;
         private string parentActivityId;
-        private string userName;
         private string activityTextContent;
+        private int hours;
 
-        public int Hours { get; set; }
 
-        public HourRegistrationModel(string title,int hours, string userName, string text, string activityId)
+        public HourRegistrationModel(string identity,int hours, string userName, string text, string activityId)
         {
-            regId = title;
+            ModelIdentity = identity;
             this.Hours = hours;
-            this.userName = userName;
+            this.UserName = userName;
             this.activityTextContent = text;
             parentActivityId = activityId;
 
             originalRegistrationDate = DateTime.Now;
-            Childrens = new List<HourRegistrationModel>();
+            AllSubModels= new List<HourRegistrationModel>();
         }
 
-        public string RegistrationId
+        public string UserName { get; }
+
+        public int Hours
         {
-            get => regId;
-            set => regId = value;
+            get => hours;
+            set => hours = value;
         }
 
         public DateTime OriginRegistrationDate() => originalRegistrationDate;
@@ -46,13 +43,7 @@ namespace ProjectRelated
             get => parentActivityId;
             set => parentActivityId = value;
         }
-
-        public string ModelIdentity
-        {
-            get => userName;
-            set => userName = value;
-        }
-
+        
         public string Description
         {
             get => activityTextContent;
@@ -61,19 +52,29 @@ namespace ProjectRelated
 
         public string CorrespondingProjectId(ProjectManager pManager)
         {
-            return pManager.getActivityModel(ParentActivityId).ParentProjectId;
+            return pManager.ActivityModel(ParentActivityId).ParentModelIdentity();
         }
 
         public override ListViewItem ItemModel()
         {
-            var model = new ListViewItem(RegistrationId) { Text = regId };
-            model.SubItems.Add(userName);
+            var model = new ListViewItem(ModelIdentity) { Text = ModelIdentity };
+            model.SubItems.Add(UserName);
             model.SubItems.Add(Hours.ToString());
             model.SubItems.Add(originalRegistrationDate.ToString("dd/MM/yyyy"));
-            model.SubItems.Add(parentActivityId);
+            model.SubItems.Add(ParentModelIdentity());
             model.StateImageIndex = 0;
 
             return model;
+        }
+
+        public override void RemoveSubModel(string SubModelId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override HourRegistrationModel SubModel(string SubModelIdentity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

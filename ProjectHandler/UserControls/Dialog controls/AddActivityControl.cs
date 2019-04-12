@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Projecthandler.Events;
-using Projecthandler.Templates_and_interfaces;
 using ProjectRelated;
+using Templates;
 using VirtualUserDomain;
 
 namespace Projecthandler.Forms.Dialogs
@@ -88,10 +82,9 @@ namespace Projecthandler.Forms.Dialogs
         public void InitializeDialogValues()
         {
             IDSelector.Text = activity.ModelIdentity;
-            projectSelector.Items.Add(activity.ParentProjectId);
-            projectSelector.Text = activity.ParentProjectId;
+            projectSelector.Items.Add(activity.ParentModelIdentity());
+            projectSelector.Text = activity.ParentModelIdentity();
             projectSelector_SelectionChangeCommitted(this,new EventArgs());
-            var p = pManager.Model(activity.ParentProjectId);
             var assignedUsers = activity.AssignedUsers();
             var assignedUserModels = assignedUsers.Select(item =>
                 new ListViewItem
@@ -160,29 +153,28 @@ namespace Projecthandler.Forms.Dialogs
 
         private void invoke_Add_Mode_Submit()
         {
-            string activityTitle = IDSelector.Text, projectTitle = projectSelector.Text;
+            string identity = IDSelector.Text, projectIdentity = projectSelector.Text;
 
-            if (projectTitle == null)
+            if (projectIdentity == null)
             {
                 MessageBox.Show(@"You have to assign the activity to a project!");
                 return;
             }
+
             var items = AssignedUserListView.Items;
 
             var usernames = new List<string>();
 
             DateTime startDate = StartDateSelector.Value, endDate = EndDateSelector.Value;
-
-            var a = new ActivityModel(activityTitle, startDate, endDate, projectTitle, uManager);
+            var project = pManager.Model(projectIdentity);
+            var activity = new ActivityModel(identity, startDate, endDate, project, uManager);
 
 
             foreach (ListViewItem item in items)
                 usernames.Add(item.Text);
 
-            a.AssignUsers(usernames);
-            var p = pManager.Model(projectTitle);
-            p.AddActivity(a);
-
+            activity.AssignUsers(usernames);
+            
             OnSaveClicked?.Invoke(this, new EventArgs());
         }
 
@@ -192,12 +184,13 @@ namespace Projecthandler.Forms.Dialogs
 
             var projectId = projectSelector.Text;
 
-            if (projectId != activity.ParentProjectId)
+            if (projectId != activity.ParentModelIdentity())
             {
-                var p = pManager.Model(activity.ParentProjectId);
-                p.RemoveActivity(activity);
-                activity.ParentProjectId = projectId;
-                p.AddActivity(activity);
+                var oldProject = pManager.Model(activity.ParentModelIdentity());
+                oldProject.RemoveSubModel(activity);
+                var newProject = pManager.Model(projectId);
+                activity.Parent = newProject;
+                newProject.AddSubModel(activity);
             }
             
             activity.StartDate = StartDateSelector.Value;

@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Projecthandler.Events;
-using Projecthandler.Templates;
-using Projecthandler.Templates_and_interfaces;
 using ProjectRelated;
+using Templates;
 using VirtualUserDomain;
 
 namespace Projecthandler.Forms.Dialogs

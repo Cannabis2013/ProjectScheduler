@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Projecthandler.Properties {
+namespace Templates.Properties {
     using System;
     
     

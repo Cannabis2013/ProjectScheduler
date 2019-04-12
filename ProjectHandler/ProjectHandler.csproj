@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract classes and interfaces\AbstractModel.cs" />
     <Compile Include="Forms\Dialogs\AddRegistrationDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,14 +108,13 @@
     </Compile>
     <Compile Include="Abstract classes and interfaces\IManagement.cs" />
     <Compile Include="TempPool.cs" />
-    <Compile Include="Abstract classes and interfaces\ModelEntity.cs" />
     <Compile Include="Events\SubmitEvent.cs" />
     <Compile Include="Events\MyEventArgs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Models\ActivityEntity.cs" />
-    <Compile Include="Models\Project.cs" />
-    <Compile Include="Models\RegistrationObject.cs" />
-    <Compile Include="Models\Activity.cs" />
+    <Compile Include="Entities\ActivityEntity.cs" />
+    <Compile Include="Models\ProjectModel.cs" />
+    <Compile Include="Models\HourRegistrationModel.cs" />
+    <Compile Include="Models\ActivityModel.cs" />
     <Compile Include="Managers\ProjectManager.cs" />
     <Compile Include="Forms\ProjectView\ProjectView.cs">
       <SubType>Form</SubType>
@@ -122,7 +122,7 @@
     <Compile Include="Forms\ProjectView\ProjectView.Designer.cs">
       <DependentUpon>ProjectView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Forms\Login\LoginView.cs">
       <SubType>Form</SubType>
