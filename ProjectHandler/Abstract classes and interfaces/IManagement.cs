@@ -9,7 +9,6 @@ namespace Templates
         void removeTabPage(int index);
         bool tabsActive();
         void updateCurrentTabTitle(string title);
-        void updateView();
 
         void _OnSaveClicked(object sender, EventArgs e);
         void _OnEditClicked(object sender, EventArgs e);

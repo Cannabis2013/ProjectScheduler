@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using Projecthandler.Events;
 using ProjectRelated;
 using Templates;
-using VirtualUserDomain;
+using UserDomain;
 
 namespace Projecthandler.Forms.Dialogs
 {
@@ -66,11 +66,12 @@ namespace Projecthandler.Forms.Dialogs
             if (!int.TryParse(Hours, out int hours))
                 throw new ArgumentException("Something went wrong with conversion from string to int.");
 
-            var rObject = new HourRegistrationModel(regTitle,hours,currentUserId,description,activityId);
+            var ParentActivity = pManager.ActivityModels().FirstOrDefault(item => item.ModelIdentity == activityId);
+
+            var rObject = new HourRegistrationModel(regTitle,hours,currentUserId,description,ParentActivity);
 
             var sEvent = new SubmitEvent(rObject);
-
-            OnSaveClicked?.Invoke(this,sEvent);
+            
             Close();
         }
 

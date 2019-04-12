@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Projecthandler.Abstract_classes_and_interfaces;
 
 namespace Templates
 {
     [Serializable]
     public abstract class AbstractModel
     {
-        private AbstractModel parent;
+        private AbstractModel parent = null;
+        private AbstractManager parentManager = null;
         private List<AbstractModel> subModels = new List<AbstractModel>();
 
 
@@ -20,10 +22,16 @@ namespace Templates
             set => ModelId = value;
         }
 
-        public AbstractModel Parent
+        public virtual AbstractModel Parent
         {
             get => parent;
             set => parent = value;
+        }
+
+        public AbstractManager ParentManager
+        {
+            get => parentManager;
+            set => parentManager = value;
         }
 
         public string ParentModelIdentity()
@@ -37,12 +45,14 @@ namespace Templates
         {
             subModels.Add(SubModel);
             SubModel.Parent = this;
+            StateChanged();
         }
 
         public void RemoveSubModel(AbstractModel SubModel)
         {
             subModels.Remove(SubModel);
             SubModel.Parent = null;
+            StateChanged();
         }
 
         public void RemoveSubModel(string identity)
@@ -53,11 +63,17 @@ namespace Templates
                 if (model.ModelIdentity == identity)
                 {
                     subModels.RemoveAt(i);
+                    StateChanged();
                     return;
                 }
             }
         }
-        public void RemoveSubModelAt(int index) => subModels.RemoveAt(index);
+
+        public void RemoveSubModelAt(int index)
+        {
+            subModels.RemoveAt(index);
+            StateChanged();
+        }
 
         public AbstractModel SubModel(string SubModelIdentity) => 
             subModels.Find(item => item.ModelIdentity == SubModelIdentity);
@@ -81,5 +97,24 @@ namespace Templates
         }
 
         public ListViewItem[] allSubItemModels() => subModels.Select(item => item.ItemModel()).ToArray();
+        public void NotifyObservers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StateChanged()
+        {
+            AbstractModel ParentProject = WarnParentObject(this);
+            ParentProject.parentManager.RequestUpdate();
+        }
+
+        private AbstractModel WarnParentObject(AbstractModel model)
+        {
+            if (model.Parent != null)
+                return WarnParentObject(model.Parent);
+
+            return model;
+
+        }
     }
 }

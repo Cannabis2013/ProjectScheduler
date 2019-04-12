@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Projecthandler.Abstract_classes_and_interfaces;
 using Projecthandler.Events;
 using Projecthandler.Forms.Dialogs;
 using ProjectRelated;
 using Templates;
-using VirtualUserDomain;
+using UserDomain;
 
 namespace Projecthandler
 {
-    public partial class ProjectManagement : UserControl, IManagement
+    public partial class ProjectManagement : UserControl, IManagement, ICustomObserver
     {
         private readonly ProjectManager pManager;
         private readonly UserManager uManager;
@@ -18,11 +19,13 @@ namespace Projecthandler
             this.pManager = pManager;
             this.uManager = uManager;
             InitializeComponent();
+            
+            pManager.Subscribe(this);
 
-            updateView();
+            UpdateView();
         }
 
-        public void updateView()
+        public void UpdateView()
         {
             ProjectListView.Clear();
             ProjectListView.View = View.Details;
@@ -51,14 +54,14 @@ namespace Projecthandler
             var submitEvent = (SubmitEvent) e;
             var p = submitEvent.Project();
             pManager.AddModel((AbstractModel) p);
-            updateView();
+            UpdateView();
 
             removeTabPage(1);
         }
 
         public void _OnEditClicked(object sender, EventArgs e)
         {
-            updateView();
+            UpdateView();
             removeTabPage(1);
             
         }
@@ -82,7 +85,7 @@ namespace Projecthandler
 
             var cIndex = ProjectListView.SelectedIndices[0];
             pManager.RemoveModelAt(cIndex);
-            updateView();
+            UpdateView();
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

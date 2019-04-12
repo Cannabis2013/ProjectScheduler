@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Projecthandler.Abstract_classes_and_interfaces;
 
 namespace Templates
 {
@@ -9,8 +10,13 @@ namespace Templates
     public abstract class AbstractManager
     {
         private List<AbstractModel> ModelList = new List<AbstractModel>();
-
-        public void AddModel(AbstractModel item) => ModelList.Add(item);
+        
+        public void AddModel(AbstractModel item)
+        {
+            ModelList.Add(item);
+            item.ParentManager = this;
+            RequestUpdate();
+        }
 
         public void RemoveModel(AbstractModel item) => ModelList?.Remove(item);
         public void RemoveModelAt(int index) => ModelList?.RemoveAt(index);
@@ -25,12 +31,17 @@ namespace Templates
             set => ModelList = value;
         }
 
+        protected List<T> AllModels<T>() => 
+            ModelList.Select(item => (T) Convert.ChangeType(item, typeof(T))).ToList();
+
         public abstract List<string> ListModelIdentities();
 
         public virtual ListViewItem[] ModelListViewItem()
         {
             throw new NotImplementedException();
         }
+
+        public abstract void RequestUpdate();
     }
 
 }

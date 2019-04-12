@@ -156,7 +156,6 @@
             this.MinimumSize = new System.Drawing.Size(1024, 600);
             this.Name = "Management";
             this.Text = "Form1";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Management_FormClosed);
             this.MainLayout.ResumeLayout(false);
             this.MainLayout.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

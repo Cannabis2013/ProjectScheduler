@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Templates;
 
-namespace VirtualUserDomain
+namespace UserDomain
 {
     public class UserModel : AbstractModel
     {

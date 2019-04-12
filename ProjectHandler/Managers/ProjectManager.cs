@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Projecthandler.Abstract_classes_and_interfaces;
 using Templates;
-using VirtualUserDomain;
-
-/*
- *
- */
+using UserDomain;
 
 namespace ProjectRelated
 {
     [Serializable]
-    public class ProjectManager : AbstractManager
+    public class ProjectManager : AbstractManager,ICustomObservable
     {
+        [field: NonSerialized]
+        protected List<ICustomObserver> observers = new List<ICustomObserver>();
 
         public bool RemoveActivityModel(string projectId, string activityId)
         {
@@ -52,10 +51,11 @@ namespace ProjectRelated
 
         public HourRegistrationModel getHourRegistrationModel(string regId)
         {
-            var activities = Models.Select(item => (ActivityModel) item);
+            var activities = ActivityModels();
 
-            foreach (var activity in activities)
+            foreach (var T in activities)
             {
+                var activity = (ActivityModel) T;
                 var tm = activity.HourRegistrationObjects().ToList();
                 var rObject = tm.Find(item => item.ModelIdentity == regId);
                 if (rObject != null)
@@ -68,10 +68,11 @@ namespace ProjectRelated
         public List<HourRegistrationModel> AllHourRegistrationModels()
         {
             var TimeObjects = new List<HourRegistrationModel>();
-            var activities = Models.Select(item => (ActivityModel) item);
+            var activities = ActivityModels();
 
-            foreach (var activity in activities)
+            foreach (var T in activities)
             {
+                var activity = (ActivityModel) T;
                 var tm = activity.HourRegistrationObjects().ToList();
                 TimeObjects.AddRange(tm);
             }
@@ -240,5 +241,28 @@ namespace ProjectRelated
         }
 
         public override List<string> ListModelIdentities() => Models.Select(item => item.ModelIdentity).ToList();
+
+        public override void RequestUpdate()
+        {
+            NotifyObservers();
+        }
+
+        public void NotifyObservers()
+        {
+            foreach (var observer in observers)
+            {
+                observer.UpdateView();
+            }
+        }
+
+        public void Subscribe(ICustomObserver observer)
+        {
+            observers.Add(observer);
+        }
+
+        public void UnSubcribe(ICustomObserver observer)
+        {
+            observers.Remove(observer);
+        }
     }
 }

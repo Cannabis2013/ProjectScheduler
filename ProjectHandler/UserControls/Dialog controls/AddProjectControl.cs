@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using Projecthandler.Events;
 using ProjectRelated;
 using Templates;
-using VirtualUserDomain;
+using UserDomain;
 
 namespace Projecthandler.Forms.Dialogs
 {

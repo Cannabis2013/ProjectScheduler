@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Templates;
-using VirtualUserDomain;
+using UserDomain;
 
 namespace ProjectRelated
 {
@@ -19,7 +19,6 @@ namespace ProjectRelated
         public ActivityModel(string title, DateTime sDate, DateTime eDate, ProjectModel project, UserManager uManager)
         {
             ModelIdentity = title;
-            Parent = project;
             startDate = sDate;
             endDate = eDate;
 

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ProjectRelated;
 using Templates;
-using VirtualUserDomain;
+using UserDomain;
 
 namespace Projecthandler.UserControls.Dialog_controls
 {
@@ -35,7 +35,7 @@ namespace Projecthandler.UserControls.Dialog_controls
         public void InitializeDialogValues()
         {
             TitleBoxSelector.Text = rObject.ModelIdentity;
-            ActivityComboBoxSelector.SelectedItem = rObject.ParentActivityId;
+            ActivityComboBoxSelector.SelectedItem = rObject.ParentModelIdentity();
             HourBoxSelector.Text = rObject.Hours.ToString();
             DescriptionBoxSelector.Text = rObject.Description;
         }
@@ -48,14 +48,27 @@ namespace Projecthandler.UserControls.Dialog_controls
         {
             var currentUserId = uManager.loggedIn().ModelIdentity;
 
-            var regTitle = TitleBoxSelector.Text;
-            rObject.ParentActivityId = ActivityComboBoxSelector.Text;
+            var oldActivityIdentity = rObject.ParentModelIdentity();
+            var oldActivity = pManager.ActivityModels()
+                .FirstOrDefault(item => item.ModelIdentity == oldActivityIdentity);
+            oldActivity.RemoveSubModel(rObject.ModelIdentity);
+
+            var newRegIdentity = TitleBoxSelector.SelectedText;
+            rObject.ModelIdentity = newRegIdentity;
+
             rObject.Description = DescriptionBoxSelector.Text;
 
             if (!int.TryParse(HourBoxSelector.Text, out int hours))
                 throw new ArgumentException("Something went wrong with conversion from string to int.");
 
             rObject.Hours = hours;
+
+            var newActivityIdentity = TitleBoxSelector.Text;
+            var newActivity = pManager.ActivityModels()
+                .FirstOrDefault(item => item.ModelIdentity == newActivityIdentity);
+
+            rObject.Parent = newActivity;
+            newActivity.AddSubModel(rObject);
 
             OnEditClicked?.Invoke(this, new EventArgs());
         }

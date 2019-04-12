@@ -51,6 +51,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabView.Controls.Add(this.tabPage1);
             this.TabView.Location = new System.Drawing.Point(0, 0);
+            this.TabView.Margin = new System.Windows.Forms.Padding(0);
             this.TabView.Name = "TabView";
             this.TabView.SelectedIndex = 0;
             this.TabView.Size = new System.Drawing.Size(654, 534);
@@ -167,6 +168,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Sienna;
             this.Controls.Add(this.TabView);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "HourManagement";
             this.Size = new System.Drawing.Size(654, 534);
             this.TabView.ResumeLayout(false);

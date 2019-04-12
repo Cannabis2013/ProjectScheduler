@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Projecthandler.Abstract_classes_and_interfaces;
 using Projecthandler.Forms.Dialogs;
 using ProjectRelated;
 using Templates;
-using VirtualUserDomain;
+using UserDomain;
 
 namespace Projecthandler.Forms.Project_and_activity_management.Controls
 {
-    public partial class ActivityManagement : UserControl, IManagement
+    public partial class ActivityManagement : UserControl, IManagement, ICustomObserver
     {
         private readonly ListView aView;
         private readonly ProjectManager pManager;
@@ -24,10 +25,10 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
 
             aView = ActivityListView;
 
-            updateView();
+            UpdateView();
         }
 
-        public void updateView()
+        public void UpdateView()
         {
             aView.Clear();
             aView.View = View.Details;
@@ -58,9 +59,8 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
 
         public void _OnSaveClicked(object sender, EventArgs e)
         {
-            updateParentView?.Invoke(this, e);
             removeTabPage(1);
-            updateView();
+            UpdateView();
         }
 
         public void _OnCancelClicked(object sender, EventArgs e)
@@ -72,7 +72,7 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
         {
             updateParentView?.Invoke(this, e);
             removeTabPage(1);
-            updateView();
+            UpdateView();
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -98,7 +98,7 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
             var parentProjectId = activity.ParentModelIdentity();
             pManager.RemoveActivityModel(parentProjectId, selectedActivityId);
             updateParentView?.Invoke(this, e);
-            updateView();
+            UpdateView();
         }
 
         private void ActivityListView_MouseDoubleClick(object sender, MouseEventArgs e)

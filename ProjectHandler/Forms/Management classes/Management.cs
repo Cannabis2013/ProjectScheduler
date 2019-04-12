@@ -4,7 +4,7 @@ using Projecthandler;
 using Projecthandler.Forms.Dialog_controls;
 using Projecthandler.Forms.Project_and_activity_management.Controls;
 using ProjectRelated;
-using VirtualUserDomain;
+using UserDomain;
 
 namespace Mng
 {
@@ -12,6 +12,9 @@ namespace Mng
     {
         private readonly ProjectManager pManager;
         private readonly UserManager uManager;
+        private readonly ProjectManagement pManagement;
+        private readonly ActivityManagement aManagement;
+        private readonly HourManagement hManagement;
 
         private readonly int MainLayoutCount;
 
@@ -22,6 +25,18 @@ namespace Mng
             InitializeComponent();
             this.pManager = pManager;
             this.uManager = uManager;
+
+            pManagement = new ProjectManagement(pManager,uManager);
+            aManagement = new ActivityManagement(pManager,uManager);
+            hManagement = new HourManagement(pManager,uManager);
+
+            pManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            aManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            hManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            pManager.Subscribe(pManagement);
+            pManager.Subscribe(aManagement);
+            pManager.Subscribe(hManagement);
 
             MainLayoutCount = MainLayout.Controls.Count;
 
@@ -49,10 +64,6 @@ namespace Mng
             {
                 try
                 {
-                    var pManagement = new ProjectManagement(pManager, uManager)
-                    {
-                        Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
-                    };
                     MainLayout.Controls.Add(pManagement);
                     MainLayout.SetRowSpan(pManagement,2);
                 }
@@ -64,19 +75,14 @@ namespace Mng
 
             if (node != null && node.Text == "Activity management")
             {
-                var aManagement = new ActivityManagement(pManager,uManager);
-                aManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-                aManagement.updateParentView += _updateParentView;
                 MainLayout.Controls.Add(aManagement);
                 MainLayout.SetRowSpan(aManagement,2);
             }
 
             if (node != null && node.Text == @"Hour management")
             {
-                var hourManagement = new HourManagement(uManager,pManager);
-                hourManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-                MainLayout.Controls.Add(hourManagement);
-                MainLayout.SetRowSpan(hourManagement,2);
+                MainLayout.Controls.Add(hManagement);
+                MainLayout.SetRowSpan(hManagement,2);
             }
         }
 
@@ -89,9 +95,5 @@ namespace Mng
         {
             Close();
         }
-
-        private void _updateParentView(object sender, EventArgs e) => updateParentView?.Invoke(sender, e);
-
-        private void Management_FormClosed(object sender, FormClosedEventArgs e) => updateParentView?.Invoke(sender, e);
     }
 }

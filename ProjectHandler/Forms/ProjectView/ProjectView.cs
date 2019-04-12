@@ -3,21 +3,25 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Mng;
+using Projecthandler.Abstract_classes_and_interfaces;
 using Projecthandler.Events;
 using Projecthandler.Forms.Dialogs;
 using ProjectRelated;
-using VirtualUserDomain;
+using UserDomain;
 
 // ReSharper disable InconsistentNaming
 
 namespace MainUserSpace
 {
-    public partial class ProjectView : Form
+    public partial class ProjectView : Form, ICustomObserver
     {
+        [field: NonSerialized]
         private readonly ListView aView;
+        
         private readonly ProjectManager pManager;
+        [field: NonSerialized]
         private readonly UserManager uManager;
-
+        [field: NonSerialized]
         public event EventHandler<EventArgs> logoutEvent;
         public event EventHandler<EventArgs> CloseRequest;
         public event EventHandler<EventArgs> HardCloseEvent;
@@ -32,13 +36,15 @@ namespace MainUserSpace
             this.uManager = uManager;
             aView = ActivityListView;
 
+            pManager.Subscribe(this);
+
             var welcomingText = new StringBuilder("Welcome ");
             var userName = uManager.loggedIn().ModelIdentity;
             welcomingText.Append(userName);
 
             WelcomeLabel.Text = welcomingText.ToString();
-            
-            updateModelViews();
+
+            UpdateView();
         }
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -61,30 +67,12 @@ namespace MainUserSpace
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var mng = new Management(pManager,uManager);
-            mng.updateParentView += Management_updateParentView;
             mng.ShowDialog(this);
         }
 
         private void customizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             linkLabel1_LinkClicked(this, null);
-        }
-
-        private void Management_updateParentView(object sender, EventArgs e)
-        {
-            updateModelViews();
-        }
-
-        private void Registration_OnSaveClicked(object sender, EventArgs e)
-        {
-            var sEvent = (SubmitEvent) e;
-
-            var rObject = sEvent.RegistrationObject();
-            var parentActivityId = rObject.ParentActivityId;
-
-            var activity = pManager.Model(parentActivityId);
-            activity.AddSubModel(rObject);
-            updateModelViews();
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -99,12 +87,16 @@ namespace MainUserSpace
                 return;
             var activityId = ActivityListView.SelectedItems[0].Text;
             var rDialog = new AddRegistrationDialogForm(pManager,uManager,activityId);
-            rDialog.OnSaveClicked += Registration_OnSaveClicked;
 
             rDialog.ShowDialog(this);
         }
 
-        private void updateModelViews()
+        /*
+         * Testing
+         */
+
+
+        public void UpdateView()
         {
             var activityModels = pManager.ProjectActivityItemModels(uManager);
             aView.Clear();
@@ -131,7 +123,7 @@ namespace MainUserSpace
             RegistrationHourListView.Columns.Add("Original registration date", columnWidth, HorizontalAlignment.Left);
             RegistrationHourListView.Columns.Add("Work hours registrated", columnWidth, HorizontalAlignment.Left);
             RegistrationHourListView.Columns.Add("Parent activity", columnWidth, HorizontalAlignment.Left);
-            
+
 
             ListViewItem[] regObjects = uManager.isAdmin() ?
                 regObjects = pManager.AllHourRegistrationModels().Select(item => item.ItemModel()).ToArray() :
@@ -140,11 +132,5 @@ namespace MainUserSpace
 
             RegistrationHourListView.Items.AddRange(regObjects);
         }
-
-        /*
-         * Testing
-         */
-
-
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ProjectRelated;
 using Templates;
-using VirtualUserDomain;
+using UserDomain;
 
 namespace Projecthandler.Forms.Dialogs
 {

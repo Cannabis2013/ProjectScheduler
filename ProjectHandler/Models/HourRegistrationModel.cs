@@ -11,18 +11,18 @@ namespace ProjectRelated
     public class HourRegistrationModel : AbstractModel
     {
         private readonly DateTime originalRegistrationDate;
-        private string parentActivityId;
         private string activityTextContent;
         private int hours;
 
 
-        public HourRegistrationModel(string identity,int hours, string userName, string text, string activityId)
+        public HourRegistrationModel(string identity,int hours, string userName, string text, AbstractModel ParentActivity)
         {
             ModelIdentity = identity;
             this.Hours = hours;
             this.UserName = userName;
             this.activityTextContent = text;
-            parentActivityId = activityId;
+
+            ParentActivity.AddSubModel(this);
 
             originalRegistrationDate = DateTime.Now;
             SubModels = new List<AbstractModel>();
@@ -37,12 +37,6 @@ namespace ProjectRelated
         }
 
         public DateTime OriginRegistrationDate() => originalRegistrationDate;
-
-        public string ParentActivityId
-        {
-            get => parentActivityId;
-            set => parentActivityId = value;
-        }
         
         public string Description
         {
@@ -52,7 +46,7 @@ namespace ProjectRelated
 
         public string CorrespondingProjectId(ProjectManager pManager)
         {
-            return pManager.Model(ParentActivityId).ParentModelIdentity();
+            return pManager.Model(ParentModelIdentity()).ParentModelIdentity();
         }
 
         public override ListViewItem ItemModel()

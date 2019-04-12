@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using Projecthandler.Abstract_classes_and_interfaces;
 using Projecthandler.UserControls.Dialog_controls;
 using ProjectRelated;
 using Templates;
-using VirtualUserDomain;
+using UserDomain;
 
 namespace Projecthandler.Forms.Dialog_controls
 {
-    public partial class HourManagement : UserControl, IManagement
+    public partial class HourManagement : UserControl, IManagement, ICustomObserver
     {
         private readonly ProjectManager pManager;
         private readonly UserManager uManager;
 
-        public HourManagement(UserManager uManager, ProjectManager pManager)
+        public HourManagement(ProjectManager pManager, UserManager uManager)
         {
             this.uManager = uManager;
             this.pManager = pManager;
             InitializeComponent();
-            updateView();
+            UpdateView();
         }
 
-        public void updateView()
+        public void UpdateView()
         {
             HourListView.Clear();
             HourListView.View = View.Details;
@@ -49,13 +50,13 @@ namespace Projecthandler.Forms.Dialog_controls
         public void _OnEditClicked(object sender, EventArgs e)
         {
             removeTabPage(1);
-            updateView();
+            UpdateView();
         }
 
         public void _OnCancelClicked(object sender, EventArgs e)
         {
             removeTabPage(1);
-            updateView();
+            UpdateView();
         }
 
         public void addTabPage(string title, Control control)
@@ -124,7 +125,7 @@ namespace Projecthandler.Forms.Dialog_controls
             var activity = pManager.Model(activityId.Text);
             activity.RemoveSubModel(item.Text);
 
-            updateView();
+            UpdateView();
         }
     }
 }

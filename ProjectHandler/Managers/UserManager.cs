@@ -8,7 +8,7 @@ using Templates;
 // ReSharper disable FieldCanBeMadeReadOnly.Local
 // ReSharper disable once CheckNamespace
 
-namespace VirtualUserDomain
+namespace UserDomain
 {
     [Serializable]
     public class UserManager : AbstractManager
@@ -50,7 +50,7 @@ namespace VirtualUserDomain
 
         public UserModel user(string userName)
         {
-            return Models.Select(item => (UserModel) item).FirstOrDefault(u => u.ModelIdentity == userName);
+            return AllModels<UserModel>().FirstOrDefault(item => item.ModelIdentity == userName);
         }
 
         public ListViewItem DetailedItemModels(string userName, ProjectManager pManager)
@@ -112,6 +112,11 @@ namespace VirtualUserDomain
                 result.Add(u.ModelIdentity);
 
             return result;
+        }
+
+        public override void RequestUpdate()
+        {
+            
         }
 
         public ListViewItem[] ItemModels(bool fullList = false)
