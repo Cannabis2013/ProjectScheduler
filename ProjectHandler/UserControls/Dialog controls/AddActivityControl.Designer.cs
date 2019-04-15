@@ -52,6 +52,9 @@
             this.StartDateSelector = new System.Windows.Forms.DateTimePicker();
             this.EndDateSelector = new System.Windows.Forms.DateTimePicker();
             this.label9 = new System.Windows.Forms.Label();
+            this.Username = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Availability = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Role = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ButtonLayout.SuspendLayout();
             this.MainLayout.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -154,6 +157,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UserListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UserListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Username,
+            this.Role,
+            this.Availability});
             this.UserListView.Location = new System.Drawing.Point(0, 20);
             this.UserListView.Margin = new System.Windows.Forms.Padding(0);
             this.UserListView.Name = "UserListView";
@@ -163,7 +170,7 @@
             this.UserListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.UserListView.TabIndex = 1;
             this.UserListView.UseCompatibleStateImageBehavior = false;
-            this.UserListView.View = System.Windows.Forms.View.SmallIcon;
+            this.UserListView.View = System.Windows.Forms.View.Details;
             this.UserListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.UserListView_MouseDoubleClick);
             // 
             // AssignedUserListView
@@ -386,6 +393,7 @@
             this.StartDateSelector.Name = "StartDateSelector";
             this.StartDateSelector.Size = new System.Drawing.Size(194, 26);
             this.StartDateSelector.TabIndex = 8;
+            this.StartDateSelector.ValueChanged += new System.EventHandler(this.StartDateSelector_ValueChanged);
             // 
             // EndDateSelector
             // 
@@ -397,6 +405,7 @@
             this.EndDateSelector.Name = "EndDateSelector";
             this.EndDateSelector.Size = new System.Drawing.Size(194, 26);
             this.EndDateSelector.TabIndex = 8;
+            this.EndDateSelector.ValueChanged += new System.EventHandler(this.EndDateSelector_ValueChanged);
             // 
             // label9
             // 
@@ -414,6 +423,20 @@
             this.label9.TabIndex = 3;
             this.label9.Text = "Assign users to activity";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Username
+            // 
+            this.Username.Text = "Username";
+            this.Username.Width = 134;
+            // 
+            // Availability
+            // 
+            this.Availability.Text = "Availability";
+            this.Availability.Width = 119;
+            // 
+            // Role
+            // 
+            this.Role.Text = "Role";
             // 
             // AddActivityControl
             // 
@@ -456,5 +479,8 @@
         private System.Windows.Forms.DateTimePicker StartDateSelector;
         private System.Windows.Forms.DateTimePicker EndDateSelector;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ColumnHeader Username;
+        private System.Windows.Forms.ColumnHeader Availability;
+        private System.Windows.Forms.ColumnHeader Role;
     }
 }

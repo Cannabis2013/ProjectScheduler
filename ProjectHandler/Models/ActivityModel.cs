@@ -14,6 +14,13 @@ namespace ProjectRelated
     {
         private readonly List<string> assignedUserIdentities;
         private DateTime startDate, endDate;
+        private readonly ActivityType Type = ActivityType.Work_Related;
+
+        public enum ActivityType
+        {
+            Work_Related,
+            Absent_Related
+        };
         
         public ActivityModel(string activityTitle,AbstractModel parentProjectModel, 
             DateTime sDate, 
@@ -27,7 +34,15 @@ namespace ProjectRelated
 
             parentProjectModel.AddSubModel(this);
             Parent = parentProjectModel;
+        }
 
+        public ActivityModel(string activityTitle, DateTime sDate, DateTime eDate)
+        {
+            ModelIdentity = activityTitle;
+            startDate = sDate;
+            endDate = eDate;
+
+            Type = ActivityType.Absent_Related;
         }
 
         public ActivityModel(ActivityModel copy)
@@ -39,6 +54,8 @@ namespace ProjectRelated
             assignedUserIdentities = copy.assignedUserIdentities;
             Parent = copy.Parent;
         }
+
+        public ActivityType TypeOfActivity => Type;
 
         public DateTime StartDate
         {

@@ -20,6 +20,9 @@ namespace Projecthandler.Abstract_classes_and_interfaces
 
         ListViewItem[] UserListModels(bool IncludeAdmin);
 
+        string UserAvailability(string username, 
+            DateTime sDate, DateTime eDate);
+
         // Project section
 
         string AddProject(ProjectModel newProject);

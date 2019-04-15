@@ -185,33 +185,47 @@ namespace ProjectRelated
             return regModels.ToArray();
         }
 
-        public UserModel.Availability IsUserAvailableWithinTimeSpan(string userName, UserManager uManager, DateTime fromDate, DateTime toDate)
+        public string UserAvailability(string userName, UserManager uManager, DateTime fromDate, DateTime toDate)
         {
             int partlyOccurrences = 0, fullOccurrences = 0;
 
             foreach (var item in UserActivityEntities(userName, uManager))
             {
-                if (fromDate.CompareTo(item.StartDate) < 0  && toDate.CompareTo(item.EndDate) > 0)
-                    partlyOccurrences++;
-                else if (fromDate.CompareTo(item.StartDate) < 0 && item.withinTimespan(toDate))
-                    partlyOccurrences++;
-                else if (item.withinTimespan(fromDate) && toDate.CompareTo(item.EndDate) > 0)
-                    partlyOccurrences++;
-                else if (item.withinTimespan(fromDate) && item.withinTimespan(toDate))
-                    fullOccurrences++;
+                if(item.TypeOfActivity == ActivityModel.ActivityType.Work_Related)
+                {
+                    if (DateTime.Compare(fromDate,item.StartDate) < 0  && DateTime.Compare(toDate, item.EndDate) > 0)
+                        partlyOccurrences++;
+                    else if (DateTime.Compare(fromDate,item.StartDate) < 0 && item.withinTimespan(toDate))
+                        partlyOccurrences++;
+                    else if (item.withinTimespan(fromDate) && DateTime.Compare(toDate,item.EndDate) > 0)
+                        partlyOccurrences++;
+                    else if (item.withinTimespan(fromDate) && item.withinTimespan(toDate))
+                        fullOccurrences++;
+                }
+                else
+                {
+                    if (DateTime.Compare(fromDate, item.StartDate) < 0 && DateTime.Compare(toDate, item.EndDate) > 0)
+                        return "Partly available";
+                    else if (DateTime.Compare(fromDate, item.StartDate) < 0 && item.withinTimespan(toDate))
+                        return "Partly available";
+                    else if (item.withinTimespan(fromDate) && DateTime.Compare(toDate, item.EndDate) > 0)
+                        return "Partly available";
+                    else if (item.withinTimespan(fromDate) && item.withinTimespan(toDate))
+                        return "Not available";
+                }
             }
 
             if (fullOccurrences >= 20)
-                return UserModel.Availability.NotAvailable;
+                return "Not available";
             return partlyOccurrences + fullOccurrences >= 20
-                ? UserModel.Availability.PartlyAvailable
-                : UserModel.Availability.Available;
+                ? "Partly available"
+                : "Available";
         }
 
         private IEnumerable<ActivityEntity> UserActivityEntities(string userName,UserManager uManager)
         {
             return ActivityModels(userName).Select(item =>
-                new ActivityEntity(item.ModelIdentity, item.StartDate, item.EndDate)).ToList();
+                new ActivityEntity(item.ModelIdentity, item.StartDate, item.EndDate, item.TypeOfActivity)).ToList();
         }
 
         public override List<string> ListModelIdentities() => Models.Select(item => item.ModelIdentity).ToList();

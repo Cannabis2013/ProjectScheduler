@@ -71,6 +71,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.RegistrationHourListView = new System.Windows.Forms.ListView();
             this.UserImages = new System.Windows.Forms.ImageList(this.components);
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.menuStrip1.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -358,27 +360,30 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.ManagementLink, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.ManagementLink, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.linkLabel2, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 0, 2);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 8);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 5;
             this.MainTableLayout.SetRowSpan(this.tableLayoutPanel1, 2);
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(250, 434);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // ManagementLink
             // 
             this.ManagementLink.AutoSize = true;
-            this.ManagementLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ManagementLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ManagementLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.ManagementLink.Location = new System.Drawing.Point(3, 204);
+            this.ManagementLink.Location = new System.Drawing.Point(3, 416);
             this.ManagementLink.Name = "ManagementLink";
-            this.ManagementLink.Size = new System.Drawing.Size(139, 26);
+            this.ManagementLink.Size = new System.Drawing.Size(90, 17);
             this.ManagementLink.TabIndex = 4;
             this.ManagementLink.TabStop = true;
             this.ManagementLink.Text = "Management";
@@ -394,7 +399,7 @@
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(250, 204);
+            this.groupBox1.Size = new System.Drawing.Size(250, 191);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Userbox";
@@ -413,7 +418,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(239, 179);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(239, 166);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // button1
@@ -431,7 +436,7 @@
             this.button1.Location = new System.Drawing.Point(0, 0);
             this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(245, 159);
+            this.button1.Size = new System.Drawing.Size(245, 146);
             this.button1.TabIndex = 6;
             this.button1.UseVisualStyleBackColor = true;
             // 
@@ -442,7 +447,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.WelcomeLabel.AutoSize = true;
             this.WelcomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WelcomeLabel.Location = new System.Drawing.Point(0, 159);
+            this.WelcomeLabel.Location = new System.Drawing.Point(0, 146);
             this.WelcomeLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WelcomeLabel.Name = "WelcomeLabel";
             this.WelcomeLabel.Size = new System.Drawing.Size(245, 20);
@@ -482,6 +487,34 @@
             this.UserImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("UserImages.ImageStream")));
             this.UserImages.TransparentColor = System.Drawing.Color.Transparent;
             this.UserImages.Images.SetKeyName(0, "Jens Werner.jpg");
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel1.Location = new System.Drawing.Point(3, 382);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(244, 17);
+            this.linkLabel1.TabIndex = 8;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Register hour";
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel2.Location = new System.Drawing.Point(3, 399);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(244, 17);
+            this.linkLabel2.TabIndex = 8;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "Register off-work activity";
             // 
             // ProjectView
             // 
@@ -557,5 +590,7 @@
         private System.Windows.Forms.ListView ActivityListView;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ListView RegistrationHourListView;
+        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

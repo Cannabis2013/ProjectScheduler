@@ -87,6 +87,12 @@ namespace MainDomain
                 return uManager.ItemModels();
         }
 
+        public string UserAvailability(string username, DateTime sDate, DateTime eDate)
+        {
+            return pManager.UserAvailability(username, uManager, sDate, eDate);
+
+        }
+
         public string AddProject(ProjectModel newProject)
         {
             if (!uManager.isAdmin())

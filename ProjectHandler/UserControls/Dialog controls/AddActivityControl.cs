@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Projecthandler.Abstract_classes_and_interfaces;
@@ -38,7 +39,7 @@ namespace Projecthandler.Forms.Dialogs
 
             mode = DialogMode.AddMode;
 
-            UserListView.Items.AddRange(service.UserListModels(false));
+            
         }
 
         // Edit constructor
@@ -77,6 +78,8 @@ namespace Projecthandler.Forms.Dialogs
                 // ReSharper disable once CoVariantArrayConversion
                 projectSelector.Items.AddRange(projects);
             }
+
+            UserListView.Items.AddRange(service.UserListModels(false));
         }
 
         public void InitializeDialogValues()
@@ -85,28 +88,19 @@ namespace Projecthandler.Forms.Dialogs
             projectSelector.Items.Add(activity.ParentModelIdentity());
             projectSelector.Text = activity.ParentModelIdentity();
             projectSelector_SelectionChangeCommitted(this,new EventArgs());
-            var assignedUsers = activity.AssignedUsers();
-            var assignedUserModels = assignedUsers.Select(item =>
-                new ListViewItem
-                {
-                    Text = item,
-                    ImageIndex = 0
-                }).ToArray();
 
             StartDateSelector.Value = activity.StartDate;
             EndDateSelector.Value = activity.EndDate;
 
-            AssignedUserListView.Items.AddRange(assignedUserModels);
+            var assignedUsers = activity.AssignedUsers();
+            var assignedUserModels = service.UserListModels(false).Where(item => assignedUsers.Contains(item.Text));
+            AssignedUserListView.Items.AddRange(assignedUserModels.ToArray());
 
-            var availableUsers = service.UserNames().Where(item => !assignedUsers.Contains(item)).ToList();
-            var availableUserModels = availableUsers.Select(item =>
-                new ListViewItem
-                {
-                    Text = item,
-                    ImageIndex = 0
-                }).ToArray();
+            var availableUserModels = service.UserListModels(false).Where(item => !assignedUsers.Contains(item.Text)).ToList();
+            
+            UserListView.Items.AddRange(availableUserModels.ToArray());
 
-            UserListView.Items.AddRange(availableUserModels);
+            ReInitializeUserList(StartDateSelector.Value,EndDateSelector.Value);
         }
 
         private void Link_Remove_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -128,8 +122,10 @@ namespace Projecthandler.Forms.Dialogs
                 return;
 
             var currentItems = UserListView.SelectedItems;
-            foreach (var item in currentItems)
+            foreach (var item in currentItems.Cast<ListViewItem>())
             {
+                if (item.SubItems[2].Text == "Not available")
+                    return;
                 UserListView.Items.Remove((ListViewItem)item);
                 AssignedUserListView.Items.Add((ListViewItem)item);
             }
@@ -230,6 +226,63 @@ namespace Projecthandler.Forms.Dialogs
         public void updateView()
         {
             throw new NotImplementedException();
+        }
+
+        private void StartDateSelector_ValueChanged(object sender, EventArgs e)
+        {
+            ReInitializeUserList(StartDateSelector.Value,EndDateSelector.Value);
+        }
+
+        private void EndDateSelector_ValueChanged(object sender, EventArgs e)
+        {
+            ReInitializeUserList(StartDateSelector.Value, EndDateSelector.Value);
+        }
+
+        private void ReInitializeUserList(DateTime sDate, DateTime eDate)
+        {
+            
+            
+            foreach (var item in UserListView.Items.Cast<ListViewItem>().ToList())
+            {
+                if(item.SubItems.Count > 2)
+                    item.SubItems.RemoveAt(2);
+
+                var availability = service.UserAvailability(item.Text, sDate, eDate);
+                if (availability == "Available")
+                {
+                    item.ForeColor = Color.Green;
+                    var ItemCol = new ListViewItem.ListViewSubItem(item, "Available") {ForeColor = Color.Green};
+                    item.SubItems.Add(ItemCol);
+                }
+                else if (availability == "Partly available")
+                {
+                    item.ForeColor = Color.Yellow;
+                    var ItemCol = new ListViewItem.ListViewSubItem(item, "Partly available") { ForeColor = Color.Yellow};
+                    item.SubItems.Add(ItemCol);
+                }
+                else
+                {
+                    item.ForeColor = Color.Red;
+                    var ItemCol = new ListViewItem.ListViewSubItem(item, "Not available") { ForeColor = Color.Red };
+                    item.SubItems.Add(ItemCol);
+                }
+            }
+
+            var AssignedUserListItems = AssignedUserListView.Items.Cast<ListViewItem>().ToList();
+            foreach (var item in AssignedUserListItems)
+            {
+                var availability = service.UserAvailability(item.Text, sDate, eDate);
+                if (availability == "Not Available")
+                {
+                    var ItemClone = (ListViewItem) item.Clone();
+                    AssignedUserListView.Items.Remove(item);
+                    ItemClone.ForeColor = Color.Red;
+                    var ItemCol = new ListViewItem.ListViewSubItem(item, "Not available") { ForeColor = Color.Red };
+                    ItemClone.SubItems.Add(ItemCol);
+                    UserListView.Items.Add(ItemClone);
+                }
+            }
+
         }
     }
 }
