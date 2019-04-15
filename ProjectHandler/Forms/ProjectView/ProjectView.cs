@@ -71,6 +71,11 @@ namespace MainDomain
             ManagementLink_Clicked(this, null);
         }
 
+        private void FillAbsenceDialog_OnSaveClicked(object sender, SubmitEvent e)
+        {
+
+        }
+
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (service.IsAdmin())
@@ -123,6 +128,14 @@ namespace MainDomain
                 regObjects = service.HourRegistrationItemModels(service.CurrentUserLoggedIn().ModelIdentity);
 
             RegistrationHourListView.Items.AddRange(regObjects);
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var dialog = new FillAbsenceDialog();
+            dialog.OnSaveClicked += FillAbsenceDialog_OnSaveClicked;
+
+            dialog.ShowDialog(this);
         }
     }
 }

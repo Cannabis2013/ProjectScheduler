@@ -14,6 +14,7 @@ namespace ProjectRelated
     {
         private readonly List<string> assignedUserIdentities;
         private DateTime startDate, endDate;
+        private string reason;
         private readonly ActivityType Type = ActivityType.Work_Related;
 
         public enum ActivityType
@@ -21,6 +22,12 @@ namespace ProjectRelated
             Work_Related,
             Absent_Related
         };
+
+        public string Reason
+        {
+            get => reason;
+            set => reason = value;
+        }
         
         public ActivityModel(string activityTitle,AbstractModel parentProjectModel, 
             DateTime sDate, 
@@ -36,8 +43,9 @@ namespace ProjectRelated
             Parent = parentProjectModel;
         }
 
-        public ActivityModel(string activityTitle, DateTime sDate, DateTime eDate)
+        public ActivityModel(string activityTitle,string reason, DateTime sDate, DateTime eDate)
         {
+            this.reason = reason;
             ModelIdentity = activityTitle;
             startDate = sDate;
             endDate = eDate;
