@@ -16,6 +16,8 @@ namespace Projecthandler.Abstract_classes_and_interfaces
 
         UserModel CurrentUserLoggedIn();
 
+        List<string> UserNames();
+
         ListViewItem[] UserListModels(bool IncludeAdmin);
 
         // Project section

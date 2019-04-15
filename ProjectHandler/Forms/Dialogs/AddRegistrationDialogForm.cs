@@ -21,19 +21,19 @@ namespace Projecthandler.Forms.Dialogs
         {
             this.service = service;
             InitializeComponent();
-            initializeListControls();
+            InitializeControls();
         }
 
         public AddRegistrationDialogForm(IApplicationProgrammableInterface service, string activityId)
         {
             this.service = service;
             InitializeComponent();
-            initializeListControls();
+            InitializeControls();
 
             ActivityComboBoxSelector.SelectedItem = activityId;
         }
 
-        public void initializeListControls()
+        public void InitializeControls()
         {
             var currentUserName = service.CurrentUserLoggedIn().ModelIdentity;
             var activityModels = service.activityItemModels(currentUserName);

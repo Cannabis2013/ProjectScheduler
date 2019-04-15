@@ -74,6 +74,11 @@ namespace MainDomain
             return uManager.loggedIn();
         }
 
+        public List<string> UserNames()
+        {
+            return uManager.ListModelIdentities();
+        }
+
         public ListViewItem[] UserListModels(bool IncludeAdmin)
         {
             if(uManager.isAdmin())

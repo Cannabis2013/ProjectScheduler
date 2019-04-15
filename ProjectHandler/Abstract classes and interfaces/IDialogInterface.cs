@@ -4,7 +4,7 @@ namespace Templates
 {
     interface IDialogInterface<t>
     {
-        void initializeListControls();
+        void InitializeControls();
         void InitializeDialogValues();
 
         event EventHandler<t> OnSaveClicked;

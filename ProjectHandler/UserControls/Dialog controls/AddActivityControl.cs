@@ -26,12 +26,13 @@ namespace Projecthandler.Forms.Dialogs
             EditMode
         }
 
+        // Add constructor
         public AddActivityControl(IApplicationProgrammableInterface service)
         {
             this.service = service;
 
             InitializeComponent();
-            initializeListControls();
+            InitializeControls();
 
             Text = @"Create activity";
 
@@ -40,6 +41,7 @@ namespace Projecthandler.Forms.Dialogs
             UserListView.Items.AddRange(service.UserListModels(false));
         }
 
+        // Edit constructor
         public AddActivityControl(IApplicationProgrammableInterface service, ActivityModel activity)
         {
             this.service = service;
@@ -59,11 +61,11 @@ namespace Projecthandler.Forms.Dialogs
             set => base.Text = value;
         }
 
-        public void initializeListControls()
+        public void InitializeControls()
         {
             if (service.IsAdmin())
             {
-                var projects = service.ProjectItemModels();
+                var projects = service.ProjectItemModels().Select(item => item.Text).ToArray();
                 // ReSharper disable once CoVariantArrayConversion
                 projectSelector.Items.AddRange(projects);
             }
@@ -96,11 +98,11 @@ namespace Projecthandler.Forms.Dialogs
 
             AssignedUserListView.Items.AddRange(assignedUserModels);
 
-            var availableUsers = service.UserListModels(false).Where(item => !assignedUsers.Contains(item.Text)).ToList();
+            var availableUsers = service.UserNames().Where(item => !assignedUsers.Contains(item)).ToList();
             var availableUserModels = availableUsers.Select(item =>
                 new ListViewItem
                 {
-                    Text = item.Text,
+                    Text = item,
                     ImageIndex = 0
                 }).ToArray();
 
@@ -164,15 +166,10 @@ namespace Projecthandler.Forms.Dialogs
             foreach (ListViewItem item in items)
                 usernames.Add(item.Text);
 
-
             DateTime startDate = StartDateSelector.Value, endDate = EndDateSelector.Value;
             var project = service.Project(projectIdentity);
             var newActivity = new ActivityModel(identity, project, startDate, endDate, usernames);
-
-
             
-
-            newActivity.AssignUsers(usernames);
             
             OnSaveClicked?.Invoke(this, new EventArgs());
         }

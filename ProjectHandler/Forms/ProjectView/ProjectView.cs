@@ -15,7 +15,7 @@ namespace MainDomain
 {
     public partial class ProjectView : Form, ICustomObserver
     {
-        private readonly ListView aView;
+        private readonly ListView ActivitiesView;
         private readonly IApplicationProgrammableInterface service;
         
         public event EventHandler<EventArgs> LogoutEvent;
@@ -28,7 +28,7 @@ namespace MainDomain
             this.service = service;
             var item = new ListViewItem();
             
-            aView = ActivityListView;
+            ActivitiesView = ActivityListView;
 
             service.SubScribe(this);
 
@@ -87,27 +87,24 @@ namespace MainDomain
             rDialog.ShowDialog(this);
         }
 
-        /*
-         * Testing
-         */
-
-
         public void UpdateView()
         {
-            var activityModels = service.activityItemModels();
-            aView.Clear();
-            aView.View = View.Details;
+            
+            var activityModels = (service.IsAdmin()) ? service.activityItemModels() : 
+                service.activityItemModels(service.CurrentUserLoggedIn().ModelIdentity);
+            ActivitiesView.Clear();
+            ActivitiesView.View = View.Details;
 
             int columnWidth = 160;
 
-            aView.Columns.Add("Activity title", columnWidth, HorizontalAlignment.Left);
-            aView.Columns.Add("Start week", columnWidth, HorizontalAlignment.Left);
-            aView.Columns.Add("Estimated end week", columnWidth, HorizontalAlignment.Left);
-            aView.Columns.Add("Total registered hours", columnWidth, HorizontalAlignment.Left);
-            aView.Columns.Add("Assigned users", columnWidth, HorizontalAlignment.Left);
-            aView.Columns.Add("Project", columnWidth, HorizontalAlignment.Left);
+            ActivitiesView.Columns.Add("Activity title", columnWidth, HorizontalAlignment.Left);
+            ActivitiesView.Columns.Add("Start week", columnWidth, HorizontalAlignment.Left);
+            ActivitiesView.Columns.Add("Estimated end week", columnWidth, HorizontalAlignment.Left);
+            ActivitiesView.Columns.Add("Total registered hours", columnWidth, HorizontalAlignment.Left);
+            ActivitiesView.Columns.Add("Assigned users", columnWidth, HorizontalAlignment.Left);
+            ActivitiesView.Columns.Add("Project", columnWidth, HorizontalAlignment.Left);
 
-            aView.Items.AddRange(activityModels);
+            ActivitiesView.Items.AddRange(activityModels);
 
             RegistrationHourListView.Clear();
             RegistrationHourListView.View = View.Details;

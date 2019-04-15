@@ -18,11 +18,11 @@ namespace Projecthandler.UserControls.Dialog_controls
             this.service = service;
             this.rObject = rObject;
             InitializeComponent();
-            initializeListControls();
+            InitializeControls();
             InitializeDialogValues();
         }
 
-        public void initializeListControls()
+        public void InitializeControls()
         {
             var currentUserName = service.CurrentUserLoggedIn().ModelIdentity;
             var activityModelsIdentities = 

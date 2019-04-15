@@ -23,11 +23,11 @@ namespace ProjectRelated
             ModelIdentity = activityTitle;
             startDate = sDate;
             endDate = eDate;
+            assignedUserIdentities = assignedUsers;
 
             parentProjectModel.AddSubModel(this);
             Parent = parentProjectModel;
 
-            assignedUserIdentities = assignedUsers;
         }
 
         public ActivityModel(ActivityModel copy)

@@ -13,7 +13,7 @@ namespace Projecthandler.Forms.Dialogs
         private readonly ListViewItem[] UserList;
         private readonly ProjectModel temporaryProject;
 
-        public void initializeListControls()
+        public void InitializeControls()
         {
             throw new NotImplementedException();
         }
