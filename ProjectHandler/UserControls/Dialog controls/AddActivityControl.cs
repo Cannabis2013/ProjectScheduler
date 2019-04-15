@@ -51,7 +51,15 @@ namespace Projecthandler.Forms.Dialogs
             Text = @"Edit activity";
 
             InitializeComponent();
-            InitializeDialogValues();
+            if (activity.TypeOfActivity == ActivityModel.ActivityType.Absent_Related)
+            {
+                UserListView.Enabled = false;
+                AssignedUserListView.Enabled = false;
+                UnAssignUserLink.Enabled = false;
+                AssignUserLink.Enabled = false;
+            }
+            else
+                InitializeDialogValues();
 
             mode = DialogMode.EditMode;
         }
@@ -239,9 +247,7 @@ namespace Projecthandler.Forms.Dialogs
         }
 
         private void ReInitializeUserList(DateTime sDate, DateTime eDate)
-        {
-            
-            
+        {   
             foreach (var item in UserListView.Items.Cast<ListViewItem>().ToList())
             {
                 if(item.SubItems.Count > 2)

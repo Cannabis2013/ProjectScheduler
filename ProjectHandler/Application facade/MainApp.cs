@@ -149,6 +149,18 @@ namespace MainDomain
             return projects.Select(item => item.ItemModel()).ToArray();
         }
 
+        public void AddAbsenceActivity(ActivityModel activtity)
+        {
+            foreach (var model in pManager.Models)
+                pManager.AddActivity(model.ModelIdentity,activtity);
+        }
+
+        public void RemoveAbsenceActivity(string id)
+        {
+            foreach (var model in pManager.Models)
+                pManager.RemoveActivityModel(model.ModelIdentity, id);
+        }
+
         public void RemoveActivity(string projectId, string activityId)
         {
             var project = pManager.Model(projectId);

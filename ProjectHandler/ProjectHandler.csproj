@@ -73,6 +73,12 @@
     </Compile>
     <Compile Include="Abstract classes and interfaces\AbstractManager.cs" />
     <Compile Include="Abstract classes and interfaces\IDialogInterface.cs" />
+    <Compile Include="Forms\Dialogs\FillAbsenceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dialogs\FillAbsenceDialog.Designer.cs">
+      <DependentUpon>FillAbsenceDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Dialog controls\AddProjectControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -144,6 +150,9 @@
     </Compile>
     <EmbeddedResource Include="Forms\Dialogs\AddRegistrationDialogForm.resx">
       <DependentUpon>AddRegistrationDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dialogs\FillAbsenceDialog.resx">
+      <DependentUpon>FillAbsenceDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Dialog controls\AddProjectControl.resx">
       <DependentUpon>AddProjectControl.cs</DependentUpon>

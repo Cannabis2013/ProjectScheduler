@@ -38,9 +38,12 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.UserListView = new System.Windows.Forms.ListView();
+            this.Username = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Role = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Availability = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.AssignedUserListView = new System.Windows.Forms.ListView();
-            this.Link_Remove = new System.Windows.Forms.LinkLabel();
-            this.Link_Add = new System.Windows.Forms.LinkLabel();
+            this.UnAssignUserLink = new System.Windows.Forms.LinkLabel();
+            this.AssignUserLink = new System.Windows.Forms.LinkLabel();
             this.label4 = new System.Windows.Forms.Label();
             this.IDSelector = new System.Windows.Forms.TextBox();
             this.ButtonLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -52,9 +55,6 @@
             this.StartDateSelector = new System.Windows.Forms.DateTimePicker();
             this.EndDateSelector = new System.Windows.Forms.DateTimePicker();
             this.label9 = new System.Windows.Forms.Label();
-            this.Username = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Availability = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Role = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ButtonLayout.SuspendLayout();
             this.MainLayout.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -173,6 +173,20 @@
             this.UserListView.View = System.Windows.Forms.View.Details;
             this.UserListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.UserListView_MouseDoubleClick);
             // 
+            // Username
+            // 
+            this.Username.Text = "Username";
+            this.Username.Width = 134;
+            // 
+            // Role
+            // 
+            this.Role.Text = "Role";
+            // 
+            // Availability
+            // 
+            this.Availability.Text = "Availability";
+            this.Availability.Width = 119;
+            // 
             // AssignedUserListView
             // 
             this.AssignedUserListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
@@ -190,39 +204,39 @@
             this.AssignedUserListView.UseCompatibleStateImageBehavior = false;
             this.AssignedUserListView.View = System.Windows.Forms.View.SmallIcon;
             // 
-            // Link_Remove
+            // UnAssignUserLink
             // 
-            this.Link_Remove.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.UnAssignUserLink.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Link_Remove.AutoSize = true;
-            this.Link_Remove.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Link_Remove.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.Link_Remove.Location = new System.Drawing.Point(366, 40);
-            this.Link_Remove.Name = "Link_Remove";
-            this.Link_Remove.Size = new System.Drawing.Size(34, 20);
-            this.Link_Remove.TabIndex = 4;
-            this.Link_Remove.TabStop = true;
-            this.Link_Remove.Text = "<<";
-            this.Link_Remove.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Link_Remove.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_Remove_LinkClicked);
+            this.UnAssignUserLink.AutoSize = true;
+            this.UnAssignUserLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UnAssignUserLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.UnAssignUserLink.Location = new System.Drawing.Point(366, 40);
+            this.UnAssignUserLink.Name = "UnAssignUserLink";
+            this.UnAssignUserLink.Size = new System.Drawing.Size(34, 20);
+            this.UnAssignUserLink.TabIndex = 4;
+            this.UnAssignUserLink.TabStop = true;
+            this.UnAssignUserLink.Text = "<<";
+            this.UnAssignUserLink.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.UnAssignUserLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_Remove_LinkClicked);
             // 
-            // Link_Add
+            // AssignUserLink
             // 
-            this.Link_Add.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.AssignUserLink.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Link_Add.AutoSize = true;
-            this.Link_Add.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Link_Add.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.Link_Add.Location = new System.Drawing.Point(366, 60);
-            this.Link_Add.Name = "Link_Add";
-            this.Link_Add.Size = new System.Drawing.Size(34, 20);
-            this.Link_Add.TabIndex = 5;
-            this.Link_Add.TabStop = true;
-            this.Link_Add.Text = ">>";
-            this.Link_Add.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Link_Add.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_Add_LinkClicked);
+            this.AssignUserLink.AutoSize = true;
+            this.AssignUserLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AssignUserLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.AssignUserLink.Location = new System.Drawing.Point(366, 60);
+            this.AssignUserLink.Name = "AssignUserLink";
+            this.AssignUserLink.Size = new System.Drawing.Size(34, 20);
+            this.AssignUserLink.TabIndex = 5;
+            this.AssignUserLink.TabStop = true;
+            this.AssignUserLink.Text = ">>";
+            this.AssignUserLink.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.AssignUserLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_Add_LinkClicked);
             // 
             // label4
             // 
@@ -368,8 +382,8 @@
             this.tableLayoutPanel1.Controls.Add(this.label8, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.UserListView, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.AssignedUserListView, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.Link_Remove, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.Link_Add, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.UnAssignUserLink, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.AssignUserLink, 1, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 120);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -424,20 +438,6 @@
             this.label9.Text = "Assign users to activity";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Username
-            // 
-            this.Username.Text = "Username";
-            this.Username.Width = 134;
-            // 
-            // Availability
-            // 
-            this.Availability.Text = "Availability";
-            this.Availability.Width = 119;
-            // 
-            // Role
-            // 
-            this.Role.Text = "Role";
-            // 
             // AddActivityControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -466,8 +466,8 @@
         private System.Windows.Forms.ListView UserListView;
         private System.Windows.Forms.ImageList UserIcons;
         private System.Windows.Forms.ListView AssignedUserListView;
-        private System.Windows.Forms.LinkLabel Link_Remove;
-        private System.Windows.Forms.LinkLabel Link_Add;
+        private System.Windows.Forms.LinkLabel UnAssignUserLink;
+        private System.Windows.Forms.LinkLabel AssignUserLink;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;

@@ -37,11 +37,14 @@ namespace Projecthandler.Abstract_classes_and_interfaces
         ListViewItem[] ProjectItemModels(string UserIdentity);
 
         // Activities
-        
+        void AddAbsenceActivity(ActivityModel activtity);
+        void RemoveAbsenceActivity(string id);
+
         void RemoveActivity(string projectid, string activityId);
 
         ActivityModel Activity(string projectId, string activityId);
         ActivityModel Activity(string activityId);
+
         List<ActivityModel> Activities();
         List<ActivityModel> Activities(string userName);
 
