@@ -48,27 +48,6 @@ namespace UserDomain
             return currentlyLoggedIn;
         }
 
-        public UserModel user(string userName)
-        {
-            return AllModels<UserModel>().FirstOrDefault(item => item.ModelIdentity == userName);
-        }
-
-        public ListViewItem DetailedItemModels(string userName, ProjectManager pManager)
-        {
-            var u = user(userName);
-            var model = new ListViewItem(userName);
-            
-            var numbersOfActivitiesAssigned = pManager.ActivityModels(userName).Count;
-            
-            model.SubItems.Add(numbersOfActivitiesAssigned.ToString());
-
-            var userRole = UserModel._roleStringRepresentation(u.Role);
-
-            model.SubItems.Add(userRole);
-
-            return model;
-        }
-
         private UserModel verifyCredentials(string userName, string password)
         {
             try

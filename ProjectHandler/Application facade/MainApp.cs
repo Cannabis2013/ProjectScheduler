@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using Projecthandler.Abstract_classes_and_interfaces;
 using Projecthandler.Class_forms;
 using Projecthandler.Custom_events;
 using ProjectRelated;
@@ -10,15 +12,26 @@ using UserDomain;
 
 namespace MainDomain
 {
-    public partial class MainApp
+    public partial class MainApp : IApplicationProgrammableInterface
     {
         private const string FileName = "ProjectFile";
-        private readonly ProjectManager pManager;
+        private ProjectManager pManager;
         private readonly UserManager uManager = new UserManager();
 
-        private bool isLastWindow = true;
-
         public MainApp()
+        {
+            ReadPersistenceData();
+        }
+
+        public void WritePersistence()
+        {
+            Stream saveFileStream = File.Create(FileName);
+            var serializer = new BinaryFormatter();
+            serializer.Serialize(saveFileStream, pManager);
+            saveFileStream.Close();
+        }
+
+        private void ReadPersistenceData()
         {
             if (File.Exists(FileName))
             {
@@ -34,87 +47,189 @@ namespace MainDomain
                     openFileStream.Close();
                     File.Delete(FileName);
                     pManager = new ProjectManager();
-                }   
+                }
             }
             else
                 pManager = new ProjectManager();
-
-
-            LaunchLoginView();
         }
 
-        // For testing purposes
-        public MainApp(string p0, string p1)
+        public bool Login(string userName, string password)
         {
-            LaunchLoginView(p0, p1);
+            return uManager.logIn(userName, password);
         }
 
-        private void LaunchLoginView(string uName = null, string pass = null)
+        public void Logut()
         {
-            var lView = new LoginView();
-
-            lView.OnSubmitClicked += loginView_OnSubmitClicked;
-            lView.onFormClose += loginView_onFormClose;
-
-            lView.Show();
-            if (uName != null && pass != null)
-                lView.enterCredentialsManual(uName, pass);
+            uManager.logout();
         }
 
-        private void loginView_OnSubmitClicked(object sender, CredentialArguments e)
+        public UserModel CurrentUserLoggedIn()
         {
-            var lView = (LoginView) sender;
-            if (uManager.logIn(e.arg1, e.arg2))
+            return uManager.loggedIn();
+        }
+
+        public ListViewItem[] UserListModels()
+        {
+            if(uManager.isAdmin())
+                return uManager.ItemModels(true);
+            else
+                return uManager.ItemModels();
+        }
+
+        public string AddProject(string ProjectTitel, string projectLeaderIdentity, DateTime startDate, DateTime endDate,
+            string shortDescription)
+        {
+            if (!uManager.isAdmin())
+                return "Admin privligges required.";
+            var newProject = new ProjectModel();
+            newProject.ModelIdentity = ProjectTitel;
+            newProject.projectLeaderId = projectLeaderIdentity;
+            newProject.StartDate = startDate;
+            newProject.EndDate = endDate;
+            newProject.ShortDescription = shortDescription;
+
+            pManager.AddModel(newProject);
+
+            return "";
+        }
+
+        public string RemoveProject(int index)
+        {
+            if (!uManager.isAdmin())
+                return "Admin privilliges required";
+
+            pManager.RemoveModelAt(index);
+
+            return "";
+        }
+
+        public string RemoveProject(string identity)
+        {
+            if (!uManager.isAdmin())
+                return "Admin privilliges required";
+            
+            pManager.RemoveModel(identity);
+
+            return "";
+        }
+
+        public void RemoveProject(ProjectModel project)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ProjectModel Project(int index)
+        {
+            return (ProjectModel) pManager.ModelAt(index);
+        }
+
+        public ProjectModel Project(string identity)
+        {
+            return (ProjectModel) pManager.Model(identity);
+        }
+
+        public ListViewItem[] ProjectItemModels()
+        {
+            return pManager.ProjectItemModels();
+        }
+
+        public string AddActivity(string projectId, string id, string[] assignedUsers, DateTime startDate, DateTime endDate)
+        {
+            var project = pManager.Model(projectId);
+            var pUser = ((ProjectModel)project).projectLeaderId;
+            if (uManager.loggedIn().ModelIdentity == pUser)
             {
-                isLastWindow = false;
-                var view = new ProjectView(pManager,uManager);
-                view.logoutEvent += _logoutEvent;
-                view.CloseRequest += _CloseRequest;
-                view.HardCloseEvent += _HardCloseEvent;
-
-                lView.Close();
-                view.Show();
+                var activityModel = new ActivityModel(id,project,startDate,endDate,assignedUsers);
+                return "";
             }
             else
+                return "Only users which is project leader of the given project is allowed to create activities."
+        }
+
+        public void RemoveActivity(string projectId, string activityId)
+        {
+            var project = pManager.Model(projectId);
+            var pUser = ((ProjectModel)project).projectLeaderId;
+            if (((ProjectModel) project).projectLeaderId == pUser)
             {
-                // Do something with LoginView
-                lView.setWarningText("Wrong credentials entered.");
+                pManager.RemoveActivityModel(projectId, activityId);
             }
         }
 
-        private void loginView_onFormClose(object sender, EventArgs e)
+        public ActivityModel Activity(string projectId, string activityId)
         {
-            if (!isLastWindow)
-                return;
-
-            Persistence();
-            Application.Exit();
+            return pManager.ActivityModelById(projectId, activityId);
         }
 
-        private void _logoutEvent(object sender, EventArgs e)
+        public List<ActivityModel> Activities()
         {
-            var view = (ProjectView) sender;
-            view.Close();
+            return uManager.isAdmin() ? pManager.ActivityModels() : 
+                pManager.ActivityModels(uManager.loggedIn().ModelIdentity);
         }
 
-        private void _CloseRequest(object sender, EventArgs e)
+        public List<ActivityModel> Activities(string userName)
         {
-            isLastWindow = true;
-            LaunchLoginView();
+            return pManager.ActivityModels(userName);
         }
 
-        private void _HardCloseEvent(object sender, EventArgs e)
+        public ListViewItem[] activityModels()
         {
-            Persistence();
-            Application.Exit();
+            return uManager.isAdmin() ? pManager.ActivityItemModels(uManager) :
+                pManager.ActivityItemModels(uManager.loggedIn().ModelIdentity);
         }
 
-        private void Persistence()
+        public ListViewItem[] activityModels(string userName)
         {
-            Stream saveFileStream = File.Create(FileName);
-            var serializer = new BinaryFormatter();
-            serializer.Serialize(saveFileStream, pManager);
-            saveFileStream.Close();
+            return pManager.ActivityItemModels(userName);
+        }
+
+        public void RegisterHour(string projectId, string activityId, string regId, int hours, string shortDescription)
+        {
+            var userId = uManager.loggedIn().ModelIdentity;
+            var parentActivity = pManager.ActivityModelById(projectId, activityId);
+            var rObject = new HourRegistrationModel(regId,
+                hours,
+                userId,
+                shortDescription, 
+                parentActivity);
+        }
+
+        public void UnRegisterHour(string projectId, string activityId, string regId)
+        {
+            pManager.UnRegisterHour(projectId,activityId,regId);
+        }
+
+        public HourRegistrationModel HourRegistrationModel(string projectId, string activityId, string regId)
+        {
+            return pManager.getHourRegistrationModel(projectId, activityId, regId);
+        }
+
+        public ListViewItem[] HourRegistrationItemModels()
+        {
+            if (uManager.isAdmin())
+                return pManager.RegistrationItemModels();
+
+            return pManager.RegistrationItemModels(uManager.loggedIn().ModelIdentity);
+        }
+
+        public ListViewItem[] HourRegistrationModel(string userName)
+        {
+            return pManager.RegistrationItemModels(userName);
+        }
+
+        public void SubScribe(ICustomObserver observer)
+        {
+            pManager.SubScribe(observer);
+        }
+
+        public void UnSubScribe(ICustomObserver observer)
+        {
+            pManager.UnSubScribe(observer);
+        }
+
+        public void UnSubScribeAll()
+        {
+            pManager.UnSubScribeAll();
         }
     }
 }

@@ -49,10 +49,9 @@ namespace ProjectRelated
 
             return models;
         }
-        public List<ActivityModel> AssignedActivitiesModels(string userName)
+        public List<ActivityModel> Activities(string userName)
         {
             var userActivities = AllSubModels<ActivityModel>().Where(item => item.IsUserAssigned(userName));
-
             return userActivities.Select(item => new ActivityModel(item)).ToList();
         }
 

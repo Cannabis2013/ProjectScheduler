@@ -162,16 +162,17 @@ namespace Projecthandler.Forms.Dialogs
             }
 
             var items = AssignedUserListView.Items;
-
             var usernames = new List<string>();
+            foreach (ListViewItem item in items)
+                usernames.Add(item.Text);
+
 
             DateTime startDate = StartDateSelector.Value, endDate = EndDateSelector.Value;
             var project = (ProjectModel) pManager.Model(projectIdentity);
-            var activity = new ActivityModel(identity, startDate, endDate, project, uManager);
+            var activity = new ActivityModel(identity, project, startDate, endDate, usernames);
 
 
-            foreach (ListViewItem item in items)
-                usernames.Add(item.Text);
+            
 
             activity.AssignUsers(usernames);
             

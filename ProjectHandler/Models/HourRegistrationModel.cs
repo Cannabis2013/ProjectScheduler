@@ -38,7 +38,7 @@ namespace ProjectRelated
 
         public DateTime OriginRegistrationDate() => originalRegistrationDate;
         
-        public string Description
+        public string ShortDescription
         {
             get => activityTextContent;
             set => activityTextContent = value;

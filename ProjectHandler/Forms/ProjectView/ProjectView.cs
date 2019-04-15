@@ -97,7 +97,7 @@ namespace MainDomain
 
         public void UpdateView()
         {
-            var activityModels = pManager.ProjectActivityItemModels(uManager);
+            var activityModels = pManager.ActivityItemModels(uManager);
             aView.Clear();
             aView.View = View.Details;
 
@@ -125,9 +125,8 @@ namespace MainDomain
 
 
             ListViewItem[] regObjects = uManager.isAdmin() ?
-                regObjects = pManager.AllHourRegistrationModels().Select(item => item.ItemModel()).ToArray() :
-                regObjects = pManager.AllHourRegistrationModels(uManager.loggedIn().ModelIdentity).Select(item => item.ItemModel())
-                    .ToArray();
+                regObjects = pManager.RegistrationItemModels() :
+                regObjects = pManager.RegistrationItemModels(uManager.loggedIn().ModelIdentity);
 
             RegistrationHourListView.Items.AddRange(regObjects);
         }

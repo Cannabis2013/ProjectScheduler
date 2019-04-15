@@ -37,7 +37,7 @@ namespace Projecthandler.UserControls.Dialog_controls
             TitleBoxSelector.Text = rObject.ModelIdentity;
             ActivityComboBoxSelector.SelectedItem = rObject.ParentModelIdentity();
             HourBoxSelector.Text = rObject.Hours.ToString();
-            DescriptionBoxSelector.Text = rObject.Description;
+            DescriptionBoxSelector.Text = rObject.ShortDescription;
         }
 
         public event EventHandler<EventArgs> OnSaveClicked;
@@ -56,7 +56,7 @@ namespace Projecthandler.UserControls.Dialog_controls
             var newRegIdentity = TitleBoxSelector.SelectedText;
             rObject.ModelIdentity = newRegIdentity;
 
-            rObject.Description = DescriptionBoxSelector.Text;
+            rObject.ShortDescription = DescriptionBoxSelector.Text;
 
             if (!int.TryParse(HourBoxSelector.Text, out int hours))
                 throw new ArgumentException("Something went wrong with conversion from string to int.");

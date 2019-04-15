@@ -12,17 +12,22 @@ namespace ProjectRelated
     [Serializable]
     public class ActivityModel : AbstractModel
     {
-        private readonly List<string> assignedUserIdentities = new List<string>();
-
+        private readonly List<string> assignedUserIdentities;
         private DateTime startDate, endDate;
         
-        public ActivityModel(string title, DateTime sDate, DateTime eDate, ProjectModel project, UserManager uManager)
+        public ActivityModel(string activityTitle,AbstractModel parentProjectModel, 
+            DateTime sDate, 
+            DateTime eDate, 
+            List<string> assignedUsers)
         {
-            ModelIdentity = title;
+            ModelIdentity = activityTitle;
             startDate = sDate;
             endDate = eDate;
 
-            project.AddSubModel(this);
+            parentProjectModel.AddSubModel(this);
+            Parent = parentProjectModel;
+
+            assignedUserIdentities = assignedUsers;
         }
 
         public ActivityModel(ActivityModel copy)

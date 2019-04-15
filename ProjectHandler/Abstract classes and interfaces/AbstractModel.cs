@@ -109,11 +109,7 @@ namespace Templates
 
         private AbstractModel WarnParentObject(AbstractModel model)
         {
-            if (model.Parent != null)
-                return WarnParentObject(model.Parent);
-
-            return model;
-
+            return model.Parent != null ? WarnParentObject(model.Parent) : model;
         }
     }
 }

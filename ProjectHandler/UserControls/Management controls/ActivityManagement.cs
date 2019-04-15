@@ -40,7 +40,7 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
             aView.Columns.Add("Total registered hours", columnWidth, HorizontalAlignment.Left);
             aView.Columns.Add("Assigned users", columnWidth, HorizontalAlignment.Left);
             aView.Columns.Add("Project", columnWidth, HorizontalAlignment.Left);
-            aView.Items.AddRange(pManager.ProjectActivityItemModels(uManager));
+            aView.Items.AddRange(pManager.ActivityItemModels(uManager));
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

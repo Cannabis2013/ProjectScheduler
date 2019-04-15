@@ -18,7 +18,18 @@ namespace Templates
             RequestUpdate();
         }
 
-        public void RemoveModel(AbstractModel item) => ModelList?.Remove(item);
+        public void RemoveModel(string identity)
+        {
+            for (var i = 0; i < ModelList.Count; i++)
+            {
+                var model = ModelList[i];
+                if (model.ModelIdentity == identity)
+                {
+                    ModelList.RemoveAt(i);
+                    return;
+                }
+            }
+        }
         public void RemoveModelAt(int index) => ModelList?.RemoveAt(index);
 
         public AbstractModel Model(AbstractModel item) => ModelList.Find(i => i.Equals(item));

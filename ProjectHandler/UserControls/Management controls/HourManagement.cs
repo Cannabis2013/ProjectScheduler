@@ -35,9 +35,9 @@ namespace Projecthandler.Forms.Dialog_controls
             
 
             ListViewItem[] regObjects = uManager.isAdmin() ? 
-                regObjects = pManager.AllHourRegistrationModels().Select(item => item.ItemModel()).ToArray() : 
-                regObjects = pManager.AllHourRegistrationModels(uManager.loggedIn().ModelIdentity).Select(item => item.ItemModel())
-                    .ToArray();
+                regObjects = pManager.RegistrationItemModels() : 
+                regObjects = pManager.RegistrationItemModels(uManager.loggedIn().ModelIdentity);
+;
 
             HourListView.Items.AddRange(regObjects);
         }

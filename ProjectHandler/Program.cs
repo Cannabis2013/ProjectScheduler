@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using MainDomain;
 
 namespace Projecthandler
 {
-    internal static class Program
+    internal class Program
     {
         /// <summary>
         ///     The main entry point for the application.
@@ -13,8 +14,8 @@ namespace Projecthandler
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var app = new TestingFace.ApplicationTestingFacade();
-            //Application.Run();
+            var app = new MainApp();
+            Application.Run();
         }
     }
 }
