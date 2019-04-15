@@ -12,15 +12,15 @@ namespace Projecthandler.Abstract_classes_and_interfaces
         bool Login(string userName, string password);
         void Logut();
 
+        bool IsAdmin();
+
         UserModel CurrentUserLoggedIn();
 
-        ListViewItem[] UserListModels();
+        ListViewItem[] UserListModels(bool IncludeAdmin);
 
         // Project section
 
-        string AddProject(string ProjectTitel, string projectLeaderIdentity,
-            DateTime startDate,
-            DateTime endDate, string shortDescription);
+        string AddProject(ProjectModel newProject);
         string RemoveProject(int index);
         string RemoveProject(string identity);
         void RemoveProject(ProjectModel project);
@@ -29,20 +29,19 @@ namespace Projecthandler.Abstract_classes_and_interfaces
         ProjectModel Project(string identity);
 
         ListViewItem[] ProjectItemModels();
+        ListViewItem[] ProjectItemModels(string UserIdentity);
 
         // Activities
         
-        string AddActivity(string projectId, string id, string[] assignedUsers,
-            DateTime startDate,
-            DateTime endDate);
         void RemoveActivity(string projectid, string activityId);
 
         ActivityModel Activity(string projectId, string activityId);
+        ActivityModel Activity(string activityId);
         List<ActivityModel> Activities();
         List<ActivityModel> Activities(string userName);
 
-        ListViewItem[] activityModels();
-        ListViewItem[] activityModels(string userName);
+        ListViewItem[] activityItemModels();
+        ListViewItem[] activityItemModels(string userName);
 
         // Hour registrations
 
@@ -51,9 +50,9 @@ namespace Projecthandler.Abstract_classes_and_interfaces
 
         void UnRegisterHour(string projectId, string activityId, string regId);
 
-        HourRegistrationModel HourRegistrationModel(string projectId, string activityId, string regId);
+        HourRegistrationModel HourRegistrationModel(string activityId, string regId);
         ListViewItem[] HourRegistrationItemModels();
-        ListViewItem[] HourRegistrationModel(string userNames);
+        ListViewItem[] HourRegistrationItemModels(string userNames);
 
         // Observer
 

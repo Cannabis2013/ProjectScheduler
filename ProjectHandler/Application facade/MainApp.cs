@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using Projecthandler.Abstract_classes_and_interfaces;
@@ -63,30 +64,28 @@ namespace MainDomain
             uManager.logout();
         }
 
+        public bool IsAdmin()
+        {
+            return uManager.isAdmin();
+        }
+
         public UserModel CurrentUserLoggedIn()
         {
             return uManager.loggedIn();
         }
 
-        public ListViewItem[] UserListModels()
+        public ListViewItem[] UserListModels(bool IncludeAdmin)
         {
             if(uManager.isAdmin())
-                return uManager.ItemModels(true);
+                return uManager.ItemModels(IncludeAdmin);
             else
                 return uManager.ItemModels();
         }
 
-        public string AddProject(string ProjectTitel, string projectLeaderIdentity, DateTime startDate, DateTime endDate,
-            string shortDescription)
+        public string AddProject(ProjectModel newProject)
         {
             if (!uManager.isAdmin())
                 return "Admin privligges required.";
-            var newProject = new ProjectModel();
-            newProject.ModelIdentity = ProjectTitel;
-            newProject.projectLeaderId = projectLeaderIdentity;
-            newProject.StartDate = startDate;
-            newProject.EndDate = endDate;
-            newProject.ShortDescription = shortDescription;
 
             pManager.AddModel(newProject);
 
@@ -133,17 +132,10 @@ namespace MainDomain
             return pManager.ProjectItemModels();
         }
 
-        public string AddActivity(string projectId, string id, string[] assignedUsers, DateTime startDate, DateTime endDate)
+        public ListViewItem[] ProjectItemModels(string UserIdentity)
         {
-            var project = pManager.Model(projectId);
-            var pUser = ((ProjectModel)project).projectLeaderId;
-            if (uManager.loggedIn().ModelIdentity == pUser)
-            {
-                var activityModel = new ActivityModel(id,project,startDate,endDate,assignedUsers);
-                return "";
-            }
-            else
-                return "Only users which is project leader of the given project is allowed to create activities."
+            var projects = pManager.Models.Where(item => ((ProjectModel) item).projectLeaderId == UserIdentity);
+            return projects.Select(item => item.ItemModel()).ToArray();
         }
 
         public void RemoveActivity(string projectId, string activityId)
@@ -161,6 +153,11 @@ namespace MainDomain
             return pManager.ActivityModelById(projectId, activityId);
         }
 
+        public ActivityModel Activity(string activityId)
+        {
+            return pManager.ActivityModels().FirstOrDefault(item => item.ModelIdentity == activityId);
+        }
+
         public List<ActivityModel> Activities()
         {
             return uManager.isAdmin() ? pManager.ActivityModels() : 
@@ -172,13 +169,13 @@ namespace MainDomain
             return pManager.ActivityModels(userName);
         }
 
-        public ListViewItem[] activityModels()
+        public ListViewItem[] activityItemModels()
         {
             return uManager.isAdmin() ? pManager.ActivityItemModels(uManager) :
                 pManager.ActivityItemModels(uManager.loggedIn().ModelIdentity);
         }
 
-        public ListViewItem[] activityModels(string userName)
+        public ListViewItem[] activityItemModels(string userName)
         {
             return pManager.ActivityItemModels(userName);
         }
@@ -199,9 +196,11 @@ namespace MainDomain
             pManager.UnRegisterHour(projectId,activityId,regId);
         }
 
-        public HourRegistrationModel HourRegistrationModel(string projectId, string activityId, string regId)
+        public HourRegistrationModel HourRegistrationModel(string activityId, string regId)
         {
-            return pManager.getHourRegistrationModel(projectId, activityId, regId);
+            var activity = pManager.ActivityModels().FirstOrDefault(item => item.ModelIdentity == activityId);
+            var ProjectId = activity.ParentModelIdentity();
+            return pManager.getHourRegistrationModel(ProjectId, activityId, regId);
         }
 
         public ListViewItem[] HourRegistrationItemModels()
@@ -212,7 +211,7 @@ namespace MainDomain
             return pManager.RegistrationItemModels(uManager.loggedIn().ModelIdentity);
         }
 
-        public ListViewItem[] HourRegistrationModel(string userName)
+        public ListViewItem[] HourRegistrationItemModels(string userName)
         {
             return pManager.RegistrationItemModels(userName);
         }

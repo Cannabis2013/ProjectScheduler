@@ -36,10 +36,10 @@ namespace Templates
         public AbstractModel Model(string id) => ModelList.Find(item => item.ModelIdentity == id);
         public AbstractModel ModelAt(int index) => ModelList[index];
 
-        protected List<AbstractModel> Models
+        public List<AbstractModel> Models
         {
             get => ModelList;
-            set => ModelList = value;
+            protected set => ModelList = value;
         }
 
         protected List<T> AllModels<T>() => 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using Projecthandler.Abstract_classes_and_interfaces;
 using ProjectRelated;
 using Templates;
 using UserDomain;
@@ -9,14 +10,12 @@ namespace Projecthandler.UserControls.Dialog_controls
 {
     public partial class EditHourRegistrationControl : UserControl, IDialogInterface<EventArgs>
     {
-        private readonly ProjectManager pManager;
-        private readonly UserManager uManager;
+        private readonly IApplicationProgrammableInterface service;
         private readonly HourRegistrationModel rObject;
 
-        public EditHourRegistrationControl(ProjectManager pManager, UserManager uManager, HourRegistrationModel rObject)
+        public EditHourRegistrationControl(IApplicationProgrammableInterface service, HourRegistrationModel rObject)
         {
-            this.pManager = pManager;
-            this.uManager = uManager;
+            this.service = service;
             this.rObject = rObject;
             InitializeComponent();
             initializeListControls();
@@ -25,11 +24,12 @@ namespace Projecthandler.UserControls.Dialog_controls
 
         public void initializeListControls()
         {
-            var currentUserName = uManager.loggedIn().ModelIdentity;
-            var activityModels = pManager.ActivityModels(currentUserName).Select(item => item.ModelIdentity).ToArray();
+            var currentUserName = service.CurrentUserLoggedIn().ModelIdentity;
+            var activityModelsIdentities = 
+                service.Activities(currentUserName).Select(item => item.ModelIdentity).ToArray();
 
             // ReSharper disable once CoVariantArrayConversion
-            ActivityComboBoxSelector.Items.AddRange(activityModels);
+            ActivityComboBoxSelector.Items.AddRange(activityModelsIdentities);
         }
 
         public void InitializeDialogValues()
@@ -46,10 +46,10 @@ namespace Projecthandler.UserControls.Dialog_controls
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var currentUserId = uManager.loggedIn().ModelIdentity;
+            var currentUserId = service.CurrentUserLoggedIn().ModelIdentity;
 
             var oldActivityIdentity = rObject.ParentModelIdentity();
-            var oldActivity = pManager.ActivityModels()
+            var oldActivity = service.Activities()
                 .FirstOrDefault(item => item.ModelIdentity == oldActivityIdentity);
             oldActivity.RemoveSubModel(rObject.ModelIdentity);
 
@@ -64,7 +64,7 @@ namespace Projecthandler.UserControls.Dialog_controls
             rObject.Hours = hours;
 
             var newActivityIdentity = TitleBoxSelector.Text;
-            var newActivity = pManager.ActivityModels()
+            var newActivity = service.Activities()
                 .FirstOrDefault(item => item.ModelIdentity == newActivityIdentity);
 
             rObject.Parent = newActivity;

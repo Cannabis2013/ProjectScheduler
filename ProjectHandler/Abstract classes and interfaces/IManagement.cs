@@ -5,10 +5,10 @@ namespace Templates
 {
     interface IManagement
     {
-        void addTabPage(string title,Control control);
-        void removeTabPage(int index);
-        bool tabsActive();
-        void updateCurrentTabTitle(string title);
+        void AddTabPage(string title,Control control);
+        void RemoveTabPage(int index);
+        bool TabsActive();
+        void UpdateCurrentTabTitle(string title);
 
         void _OnSaveClicked(object sender, EventArgs e);
         void _OnEditClicked(object sender, EventArgs e);

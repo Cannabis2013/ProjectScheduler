@@ -12,15 +12,13 @@ namespace Projecthandler
 {
     public partial class ProjectManagement : UserControl, IManagement, ICustomObserver
     {
-        private readonly ProjectManager pManager;
-        private readonly UserManager uManager;
-        public ProjectManagement(ProjectManager pManager, UserManager uManager)
+        private readonly IApplicationProgrammableInterface service;
+        public ProjectManagement(IApplicationProgrammableInterface service)
         {
-            this.pManager = pManager;
-            this.uManager = uManager;
             InitializeComponent();
+            this.service = service;
             
-            pManager.SubScribe(this);
+            service.SubScribe(this);
 
             UpdateView();
         }
@@ -35,34 +33,39 @@ namespace Projecthandler
             ProjectListView.Columns.Add("Start date", columnWidth, HorizontalAlignment.Left);
             ProjectListView.Columns.Add("Estimated end date", columnWidth, HorizontalAlignment.Left);
             ProjectListView.Columns.Add("Total registered hours", columnWidth, HorizontalAlignment.Left);
-            ProjectListView.Items.AddRange(pManager.ProjectItemModels());
+            ProjectListView.Items.AddRange(service.ProjectItemModels());
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (!service.IsAdmin())
+            {
+                MessageBox.Show(@"Admin privilliges required.");
+                return;
+            }
             const AnchorStyles layoutAnchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            var pControl = new AddProjectControl(uManager);
+            var pControl = new AddProjectControl(service.UserListModels(false));
 
             pControl.OnSaveClicked += _OnSaveClicked;
             pControl.OnCancelClicked += _OnCancelClicked;
             
-            addTabPage("Add project",pControl);
+            AddTabPage("Add project",pControl);
         }
 
         public void _OnSaveClicked(object sender, EventArgs e)
         {
             var submitEvent = (SubmitEvent) e;
             var p = submitEvent.Project();
-            pManager.AddModel((AbstractModel) p);
+            service.AddProject(p);
             UpdateView();
 
-            removeTabPage(1);
+            RemoveTabPage(1);
         }
 
         public void _OnEditClicked(object sender, EventArgs e)
         {
             UpdateView();
-            removeTabPage(1);
+            RemoveTabPage(1);
             
         }
 
@@ -74,9 +77,9 @@ namespace Projecthandler
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (!uManager.isAdmin())
+            if (!service.IsAdmin())
             {
-                MessageBox.Show("Administrator privilliges required.", "Admin required");
+                MessageBox.Show(@"Administrator privilliges required.", @"Admin required");
                 return;
             }
 
@@ -84,7 +87,7 @@ namespace Projecthandler
                 return;
 
             var cIndex = ProjectListView.SelectedIndices[0];
-            pManager.RemoveModelAt(cIndex);
+            service.RemoveProject(cIndex);
             UpdateView();
         }
 
@@ -94,14 +97,14 @@ namespace Projecthandler
                 return;
 
             var item = ProjectListView.SelectedItems[0];
-            var project = (ProjectModel) pManager.Model(item.Text);
+            var project = (ProjectModel) service.Project(item.Text);
 
-            var pControl = new AddProjectControl(project,uManager);
+            var pControl = new AddProjectControl(project,service.UserListModels(false));
             
             pControl.OnEditClicked += _OnEditClicked;
             pControl.OnCancelClicked += _OnCancelClicked;
             
-            addTabPage("Edit project",pControl);
+            AddTabPage("Edit project",pControl);
         }
 
         private void ProjectListView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -109,15 +112,9 @@ namespace Projecthandler
             linkLabel2_LinkClicked(sender,null);
         }
 
-        public void addTabPage(string title, Control control)
+        public void AddTabPage(string title, Control control)
         {
-            if (!uManager.isAdmin())
-            {
-                MessageBox.Show(@"Administrator privilliges required.", @"Admin required");
-                return;
-            }
-
-            if (tabsActive())
+            if (TabsActive())
             {
                 TabView.SelectedIndex = 1;
                 MessageBox.Show(@"You have to finish your current operation.");
@@ -137,17 +134,17 @@ namespace Projecthandler
             TabView.SelectedTab = tPage;
         }
 
-        public void removeTabPage(int index)
+        public void RemoveTabPage(int index)
         {
             TabView.TabPages.RemoveAt(index);
         }
 
-        public bool tabsActive()
+        public bool TabsActive()
         {
             return TabView.TabPages.Count > 1;
         }
 
-        public void updateCurrentTabTitle(string title)
+        public void UpdateCurrentTabTitle(string title)
         {
             throw new NotImplementedException();
         }

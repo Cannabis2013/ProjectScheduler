@@ -11,13 +11,11 @@ namespace Projecthandler.Forms.Dialog_controls
 {
     public partial class HourManagement : UserControl, IManagement, ICustomObserver
     {
-        private readonly ProjectManager pManager;
-        private readonly UserManager uManager;
+        private readonly IApplicationProgrammableInterface service;
 
-        public HourManagement(ProjectManager pManager, UserManager uManager)
+        public HourManagement(IApplicationProgrammableInterface service)
         {
-            this.uManager = uManager;
-            this.pManager = pManager;
+            this.service = service;
             InitializeComponent();
             UpdateView();
         }
@@ -34,9 +32,9 @@ namespace Projecthandler.Forms.Dialog_controls
             HourListView.Columns.Add("Parent activity", 60, HorizontalAlignment.Left);
             
 
-            ListViewItem[] regObjects = uManager.isAdmin() ? 
-                regObjects = pManager.RegistrationItemModels() : 
-                regObjects = pManager.RegistrationItemModels(uManager.loggedIn().ModelIdentity);
+            ListViewItem[] regObjects = service.IsAdmin() ? 
+                regObjects = service.HourRegistrationItemModels() : 
+                regObjects = service.HourRegistrationItemModels(service.CurrentUserLoggedIn().ModelIdentity);
 ;
 
             HourListView.Items.AddRange(regObjects);
@@ -49,19 +47,19 @@ namespace Projecthandler.Forms.Dialog_controls
 
         public void _OnEditClicked(object sender, EventArgs e)
         {
-            removeTabPage(1);
+            RemoveTabPage(1);
             UpdateView();
         }
 
         public void _OnCancelClicked(object sender, EventArgs e)
         {
-            removeTabPage(1);
+            RemoveTabPage(1);
             UpdateView();
         }
 
-        public void addTabPage(string title, Control control)
+        public void AddTabPage(string title, Control control)
         {
-            if (tabsActive())
+            if (TabsActive())
             {
                 TabView.SelectedIndex = 1;
                 MessageBox.Show(@"You have to finish your current operation.");
@@ -81,12 +79,12 @@ namespace Projecthandler.Forms.Dialog_controls
             TabView.SelectedTab = tPage;
         }
 
-        public void removeTabPage(int index)
+        public void RemoveTabPage(int index)
         {
             TabView.TabPages.RemoveAt(index);
         }
 
-        public bool tabsActive()
+        public bool TabsActive()
         {
             if (TabView.TabPages.Count > 1)
                 return true;
@@ -94,7 +92,7 @@ namespace Projecthandler.Forms.Dialog_controls
             return false;
         }
 
-        public void updateCurrentTabTitle(string title)
+        public void UpdateCurrentTabTitle(string title)
         {
             throw new NotImplementedException();
         }
@@ -105,14 +103,15 @@ namespace Projecthandler.Forms.Dialog_controls
                 return;
 
             var item = HourListView.SelectedItems[0];
+            var ActivityId = item.SubItems[4].Text;
 
-            var rObject = pManager.getHourRegistrationModel(item.Text);
-            var editHourControl = new EditHourRegistrationControl(pManager, uManager, rObject);
+            var rObject = service.HourRegistrationModel(ActivityId,item.Text);
+            var editHourControl = new EditHourRegistrationControl(service, rObject);
             
             editHourControl.OnEditClicked += _OnEditClicked;
             editHourControl.OnCancelClicked += _OnCancelClicked;
 
-            addTabPage("Edit hour registration",editHourControl);
+            AddTabPage("Edit hour registration",editHourControl);
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -121,8 +120,8 @@ namespace Projecthandler.Forms.Dialog_controls
                 return;
 
             var item = HourListView.SelectedItems[0];
-            var activityId = item.SubItems[4];
-            var activity = pManager.Model(activityId.Text);
+            var activityId = item.SubItems[4].Text;
+            var activity = service.Activity(activityId);
             activity.RemoveSubModel(item.Text);
 
             UpdateView();

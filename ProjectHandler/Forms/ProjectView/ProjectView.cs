@@ -16,27 +16,24 @@ namespace MainDomain
     public partial class ProjectView : Form, ICustomObserver
     {
         private readonly ListView aView;
-        private readonly ProjectManager pManager;
-        private readonly UserManager uManager;
+        private readonly IApplicationProgrammableInterface service;
         
-        public event EventHandler<EventArgs> logoutEvent;
+        public event EventHandler<EventArgs> LogoutEvent;
         public event EventHandler<EventArgs> CloseRequest;
         public event EventHandler<EventArgs> HardCloseEvent;
 
-        public ProjectView(ProjectManager pManager, UserManager uManager)
+        public ProjectView(IApplicationProgrammableInterface service)
         {
             InitializeComponent();
-
+            this.service = service;
             var item = new ListViewItem();
-
-            this.pManager = pManager;
-            this.uManager = uManager;
+            
             aView = ActivityListView;
 
-            pManager.SubScribe(this);
+            service.SubScribe(this);
 
             var welcomingText = new StringBuilder("Welcome ");
-            var userName = uManager.loggedIn().ModelIdentity;
+            var userName = service.CurrentUserLoggedIn().ModelIdentity;
             welcomingText.Append(userName);
 
             WelcomeLabel.Text = welcomingText.ToString();
@@ -46,26 +43,26 @@ namespace MainDomain
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            uManager.logout();
-            logoutEvent?.Invoke(this, e);
+            service.Logut();
+            LogoutEvent?.Invoke(this, e);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pManager.UnSubScribeAll();
+            service.UnSubScribeAll();
             HardCloseEvent?.Invoke(this,e);
         }
 
         private void MainView_FormClosed(object sender, FormClosedEventArgs e)
         {
-            uManager.logout();
-            pManager.UnSubScribeAll();
-            CloseRequest?.Invoke(this, e);
+            service.Logut();
+            service.UnSubScribeAll();
+            LogoutEvent?.Invoke(this, e);
         }
 
         public void ManagementLink_Clicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var mng = new Management(pManager,uManager);
+            var mng = new Management(service);
             mng.ShowDialog(this);
         }
 
@@ -76,7 +73,7 @@ namespace MainDomain
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (uManager.isAdmin())
+            if (service.IsAdmin())
             {
                 MessageBox.Show(@"Admin not allowed to register hour objects. Its beneath your paygrade. Sorry.");
                 return;
@@ -85,7 +82,7 @@ namespace MainDomain
             if (ActivityListView.SelectedItems.Count < 1)
                 return;
             var activityId = ActivityListView.SelectedItems[0].Text;
-            var rDialog = new AddRegistrationDialogForm(pManager,uManager,activityId);
+            var rDialog = new AddRegistrationDialogForm(service,activityId);
 
             rDialog.ShowDialog(this);
         }
@@ -97,7 +94,7 @@ namespace MainDomain
 
         public void UpdateView()
         {
-            var activityModels = pManager.ActivityItemModels(uManager);
+            var activityModels = service.activityItemModels();
             aView.Clear();
             aView.View = View.Details;
 
@@ -124,9 +121,9 @@ namespace MainDomain
             RegistrationHourListView.Columns.Add("Parent activity", columnWidth, HorizontalAlignment.Left);
 
 
-            ListViewItem[] regObjects = uManager.isAdmin() ?
-                regObjects = pManager.RegistrationItemModels() :
-                regObjects = pManager.RegistrationItemModels(uManager.loggedIn().ModelIdentity);
+            ListViewItem[] regObjects = service.IsAdmin() ?
+                regObjects = service.HourRegistrationItemModels() :
+                regObjects = service.HourRegistrationItemModels(service.CurrentUserLoggedIn().ModelIdentity);
 
             RegistrationHourListView.Items.AddRange(regObjects);
         }

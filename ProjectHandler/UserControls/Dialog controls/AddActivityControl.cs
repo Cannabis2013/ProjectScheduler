@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Projecthandler.Abstract_classes_and_interfaces;
 using ProjectRelated;
 using Templates;
 using UserDomain;
@@ -13,8 +14,7 @@ namespace Projecthandler.Forms.Dialogs
         private readonly ActivityModel activity;
 
         private readonly DialogMode mode;
-        private readonly ProjectManager pManager;
-        private readonly UserManager uManager;
+        private readonly IApplicationProgrammableInterface service;
 
         public event EventHandler<EventArgs> OnCancelClicked;
         public event EventHandler<EventArgs> OnSaveClicked;
@@ -26,10 +26,9 @@ namespace Projecthandler.Forms.Dialogs
             EditMode
         }
 
-        public AddActivityControl(ProjectManager pManager, UserManager uManager)
+        public AddActivityControl(IApplicationProgrammableInterface service)
         {
-            this.pManager = pManager;
-            this.uManager = uManager;
+            this.service = service;
 
             InitializeComponent();
             initializeListControls();
@@ -38,14 +37,13 @@ namespace Projecthandler.Forms.Dialogs
 
             mode = DialogMode.AddMode;
 
-            UserListView.Items.AddRange(uManager.ItemModels());
+            UserListView.Items.AddRange(service.UserListModels(false));
         }
 
-        public AddActivityControl(ActivityModel activity, ProjectManager pManager, UserManager uManager)
+        public AddActivityControl(IApplicationProgrammableInterface service, ActivityModel activity)
         {
+            this.service = service;
             this.activity = activity;
-            this.pManager = pManager;
-            this.uManager = uManager;
 
             Text = @"Edit activity";
 
@@ -63,19 +61,19 @@ namespace Projecthandler.Forms.Dialogs
 
         public void initializeListControls()
         {
-            if (uManager.isAdmin())
+            if (service.IsAdmin())
             {
-                var projects = pManager.ListModelIdentities().ToArray();
+                var projects = service.ProjectItemModels();
                 // ReSharper disable once CoVariantArrayConversion
                 projectSelector.Items.AddRange(projects);
             }
             else
             {
-                var cUser = uManager.loggedIn();
-                var projectIdentities = pManager.ListModelIdentities().ToArray();
-                ;
+                var CurrentUserIdentity = service.CurrentUserLoggedIn().ModelIdentity;
+                var projects = service.ProjectItemModels(CurrentUserIdentity);
+
                 // ReSharper disable once CoVariantArrayConversion
-                projectSelector.Items.AddRange(projectIdentities);
+                projectSelector.Items.AddRange(projects);
             }
         }
 
@@ -98,11 +96,11 @@ namespace Projecthandler.Forms.Dialogs
 
             AssignedUserListView.Items.AddRange(assignedUserModels);
 
-            var availableUsers = uManager.ListModelIdentities().Where(item => !assignedUsers.Contains(item)).ToList();
+            var availableUsers = service.UserListModels(false).Where(item => !assignedUsers.Contains(item.Text)).ToList();
             var availableUserModels = availableUsers.Select(item =>
                 new ListViewItem
                 {
-                    Text = item,
+                    Text = item.Text,
                     ImageIndex = 0
                 }).ToArray();
 
@@ -168,13 +166,13 @@ namespace Projecthandler.Forms.Dialogs
 
 
             DateTime startDate = StartDateSelector.Value, endDate = EndDateSelector.Value;
-            var project = (ProjectModel) pManager.Model(projectIdentity);
-            var activity = new ActivityModel(identity, project, startDate, endDate, usernames);
+            var project = service.Project(projectIdentity);
+            var newActivity = new ActivityModel(identity, project, startDate, endDate, usernames);
 
 
             
 
-            activity.AssignUsers(usernames);
+            newActivity.AssignUsers(usernames);
             
             OnSaveClicked?.Invoke(this, new EventArgs());
         }
@@ -187,9 +185,10 @@ namespace Projecthandler.Forms.Dialogs
 
             if (projectId != activity.ParentModelIdentity())
             {
-                var oldProject = pManager.Model(activity.ParentModelIdentity());
+                var ProjectId = activity.ParentModelIdentity();
+                var oldProject = service.Project(projectId);
                 oldProject.RemoveSubModel(activity);
-                var newProject = pManager.Model(projectId);
+                var newProject = service.Project(projectId);
                 newProject.AddSubModel(activity);
             }
             
@@ -222,7 +221,7 @@ namespace Projecthandler.Forms.Dialogs
         private void projectSelector_SelectionChangeCommitted(object sender, EventArgs e)
         {
             var selectedItem = projectSelector.Text;
-            var project = (ProjectModel) pManager.Model(selectedItem);
+            var project = service.Project(selectedItem);
 
             StartDateSelector.MinDate = project.StartDate;
             StartDateSelector.MaxDate = project.EndDate;

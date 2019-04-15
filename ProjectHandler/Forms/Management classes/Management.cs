@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Projecthandler;
+using Projecthandler.Abstract_classes_and_interfaces;
 using Projecthandler.Forms.Dialog_controls;
 using Projecthandler.Forms.Project_and_activity_management.Controls;
 using ProjectRelated;
@@ -10,8 +11,7 @@ namespace Mng
 {
     public partial class Management : Form
     {
-        private readonly ProjectManager pManager;
-        private readonly UserManager uManager;
+        private readonly IApplicationProgrammableInterface service;
         private readonly ProjectManagement pManagement;
         private readonly ActivityManagement aManagement;
         private readonly HourManagement hManagement;
@@ -20,23 +20,23 @@ namespace Mng
 
         public event EventHandler<EventArgs> updateParentView;
 
-        public Management(ProjectManager pManager, UserManager uManager)
+        public Management(IApplicationProgrammableInterface service)
         {
             InitializeComponent();
-            this.pManager = pManager;
-            this.uManager = uManager;
 
-            pManagement = new ProjectManagement(pManager,uManager);
-            aManagement = new ActivityManagement(pManager,uManager);
-            hManagement = new HourManagement(pManager,uManager);
+            this.service = service;
+
+            pManagement = new ProjectManagement(service);
+            aManagement = new ActivityManagement(service);
+            hManagement = new HourManagement(service);
 
             pManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             aManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             hManagement.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 
-            pManager.SubScribe(pManagement);
-            pManager.SubScribe(aManagement);
-            pManager.SubScribe(hManagement);
+            service.SubScribe(pManagement);
+            service.SubScribe(aManagement);
+            service.SubScribe(hManagement);
 
             MainLayoutCount = MainLayout.Controls.Count;
 

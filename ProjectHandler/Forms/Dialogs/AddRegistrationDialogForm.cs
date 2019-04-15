@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using Projecthandler.Abstract_classes_and_interfaces;
 using Projecthandler.Events;
 using ProjectRelated;
 using Templates;
@@ -10,25 +11,22 @@ namespace Projecthandler.Forms.Dialogs
 {
     public partial class AddRegistrationDialogForm : Form, IDialogInterface<EventArgs>
     {
-        private readonly ProjectManager pManager;
-        private readonly UserManager uManager;
+        private readonly IApplicationProgrammableInterface service;
 
         public event EventHandler<EventArgs> OnSaveClicked;
         public event EventHandler<EventArgs> OnEditClicked;
         public event EventHandler<EventArgs> OnCancelClicked;
 
-        public AddRegistrationDialogForm(ProjectManager pManager, UserManager uManager)
+        public AddRegistrationDialogForm(IApplicationProgrammableInterface service)
         {
-            this.pManager = pManager;
-            this.uManager = uManager;
+            this.service = service;
             InitializeComponent();
             initializeListControls();
         }
 
-        public AddRegistrationDialogForm(ProjectManager pManager, UserManager uManager, string activityId)
+        public AddRegistrationDialogForm(IApplicationProgrammableInterface service, string activityId)
         {
-            this.pManager = pManager;
-            this.uManager = uManager;
+            this.service = service;
             InitializeComponent();
             initializeListControls();
 
@@ -37,8 +35,8 @@ namespace Projecthandler.Forms.Dialogs
 
         public void initializeListControls()
         {
-            var currentUserName = uManager.loggedIn().ModelIdentity;
-            var activityModels = pManager.ActivityModels(currentUserName).Select(item => item.ModelIdentity).ToArray();
+            var currentUserName = service.CurrentUserLoggedIn().ModelIdentity;
+            var activityModels = service.activityItemModels(currentUserName);
 
             // ReSharper disable once CoVariantArrayConversion
             ActivityComboBoxSelector.Items.AddRange(activityModels);
@@ -57,7 +55,7 @@ namespace Projecthandler.Forms.Dialogs
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var currentUserId = uManager.loggedIn().ModelIdentity;
+            var currentUserId = service.CurrentUserLoggedIn().ModelIdentity;
             string regTitle = TitleBoxSelector.Text, 
                 activityId = ActivityComboBoxSelector.Text,
                 description = DescriptionBoxSelector.Text,
@@ -66,7 +64,7 @@ namespace Projecthandler.Forms.Dialogs
             if (!int.TryParse(Hours, out int hours))
                 throw new ArgumentException("Something went wrong with conversion from string to int.");
 
-            var ParentActivity = pManager.ActivityModels().FirstOrDefault(item => item.ModelIdentity == activityId);
+            var ParentActivity = service.Activity(activityId);
 
             var rObject = new HourRegistrationModel(regTitle,hours,currentUserId,description,ParentActivity);
 

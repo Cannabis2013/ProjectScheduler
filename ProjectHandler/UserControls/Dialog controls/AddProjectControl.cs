@@ -10,9 +10,8 @@ namespace Projecthandler.Forms.Dialogs
     public partial class AddProjectControl : UserControl, IDialogInterface<EventArgs>
     {
         private readonly DialogMode mode;
-
+        private readonly ListViewItem[] UserList;
         private readonly ProjectModel temporaryProject;
-        private readonly UserManager uManager;
 
         public void initializeListControls()
         {
@@ -32,9 +31,9 @@ namespace Projecthandler.Forms.Dialogs
         public event EventHandler<EventArgs> OnEditClicked;
         public event EventHandler<EventArgs> OnCancelClicked;
 
-        public AddProjectControl( UserManager uManager)
+        public AddProjectControl(ListViewItem[] UserList)
         {
-            this.uManager = uManager;
+            this.UserList = UserList;
             InitializeComponent();
             
             updateLeaderComboBoxView();
@@ -42,10 +41,10 @@ namespace Projecthandler.Forms.Dialogs
             mode = DialogMode.AddMode;
         }
 
-        public AddProjectControl(ProjectModel p, UserManager uManager)
+        public AddProjectControl(ProjectModel p, ListViewItem[] UserList)
         {
             temporaryProject = p;
-            this.uManager = uManager;
+            this.UserList = UserList;
 
             InitializeComponent();
             updateLeaderComboBoxView();
@@ -84,8 +83,8 @@ namespace Projecthandler.Forms.Dialogs
 
         private void updateLeaderComboBoxView()
         {
-            foreach (var item in uManager.ListModelIdentities())
-                leaderSelector.Items.Add(item);
+            foreach (var item in UserList)
+                leaderSelector.Items.Add(item.Text);
         }
 
         private enum DialogMode

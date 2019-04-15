@@ -12,15 +12,13 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
     public partial class ActivityManagement : UserControl, IManagement, ICustomObserver
     {
         private readonly ListView aView;
-        private readonly ProjectManager pManager;
-        private readonly UserManager uManager;
+        private readonly IApplicationProgrammableInterface service;
 
         public event EventHandler<EventArgs> updateParentView;
 
-        public ActivityManagement(ProjectManager pManager, UserManager uManager)
+        public ActivityManagement(IApplicationProgrammableInterface service)
         {
-            this.pManager = pManager;
-            this.uManager = uManager;
+            this.service = service;
             InitializeComponent();
 
             aView = ActivityListView;
@@ -40,17 +38,19 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
             aView.Columns.Add("Total registered hours", columnWidth, HorizontalAlignment.Left);
             aView.Columns.Add("Assigned users", columnWidth, HorizontalAlignment.Left);
             aView.Columns.Add("Project", columnWidth, HorizontalAlignment.Left);
-            aView.Items.AddRange(pManager.ActivityItemModels(uManager));
+            aView.Items.AddRange(service.IsAdmin()
+                ? service.activityItemModels()
+                : service.activityItemModels(service.CurrentUserLoggedIn().ModelIdentity));
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var aControl = new AddActivityControl(pManager,uManager);
+            var aControl = new AddActivityControl(service);
 
             aControl.OnSaveClicked += _OnSaveClicked;
             aControl.OnCancelClicked += _OnCancelClicked;
             
-            addTabPage("Add Activity",aControl);
+            AddTabPage("Add Activity",aControl);
 
             /*
              * Implement the activity usercontrol
@@ -59,19 +59,19 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
 
         public void _OnSaveClicked(object sender, EventArgs e)
         {
-            removeTabPage(1);
+            RemoveTabPage(1);
             UpdateView();
         }
 
         public void _OnCancelClicked(object sender, EventArgs e)
         {
-            removeTabPage(1);
+            RemoveTabPage(1);
         }
 
         public void _OnEditClicked(object sender, EventArgs e)
         {
             updateParentView?.Invoke(this, e);
-            removeTabPage(1);
+            RemoveTabPage(1);
             UpdateView();
         }
 
@@ -81,22 +81,22 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
                 return;
             
             var selectedItem = ActivityListView.SelectedItems[0];
-            var activity = (ActivityModel) pManager.Model(selectedItem.Text);
+            var activity = service.Activity(selectedItem.Text);
 
-            var aControl = new AddActivityControl(activity,pManager,uManager);
+            var aControl = new AddActivityControl(service,activity);
 
             aControl.OnEditClicked += _OnEditClicked;
             aControl.OnCancelClicked += _OnCancelClicked;
             
-            addTabPage("Edit activity",aControl);
+            AddTabPage("Edit activity",aControl);
         }
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var selectedActivityId = ActivityListView.SelectedItems[0].Text;
-            var activity = pManager.Model(selectedActivityId);
+            var activity = service.Activity(selectedActivityId);
             var parentProjectId = activity.ParentModelIdentity();
-            pManager.RemoveActivityModel(parentProjectId, selectedActivityId);
+            service.RemoveActivity(parentProjectId, selectedActivityId);
             updateParentView?.Invoke(this, e);
             UpdateView();
         }
@@ -106,9 +106,9 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
             linkLabel2_LinkClicked(this,null);
         }
 
-        public void addTabPage(string title, Control control)
+        public void AddTabPage(string title, Control control)
         {
-            if (tabsActive())
+            if (TabsActive())
             {
                 TabView.SelectedIndex = 1;
                 MessageBox.Show(@"You have to finish your current operation.");
@@ -128,17 +128,17 @@ namespace Projecthandler.Forms.Project_and_activity_management.Controls
             TabView.SelectedTab = tPage;
         }
 
-        public void removeTabPage(int index)
+        public void RemoveTabPage(int index)
         {
             TabView.TabPages.RemoveAt(index);
         }
 
-        public bool tabsActive()
+        public bool TabsActive()
         {
             return TabView.TabPages.Count > 1;
         }
 
-        public void updateCurrentTabTitle(string title)
+        public void UpdateCurrentTabTitle(string title)
         {
             throw new NotImplementedException();
         }
