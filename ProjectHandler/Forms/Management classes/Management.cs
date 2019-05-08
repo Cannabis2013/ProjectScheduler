@@ -73,7 +73,7 @@ namespace Mng
                 }
             }
 
-            if (node != null && node.Text == "Activity management")
+            if (node != null && node.Text == @"Activity management")
             {
                 MainLayout.Controls.Add(aManagement);
                 MainLayout.SetRowSpan(aManagement,2);

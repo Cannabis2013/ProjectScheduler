@@ -87,10 +87,9 @@ namespace ProjectRelated
         {
             var activities = ActivityModels();
 
-            foreach (var T in activities)
+            foreach (var activity in activities)
             {
-                var activity = (ActivityModel) T;
-                var tm = activity.HourRegistrationObjects().ToList();
+                var tm = activity.HourRegistrationObjects();
                 var rObject = tm.Find(item => item.ModelIdentity == regId);
                 if (rObject != null)
                     return rObject;

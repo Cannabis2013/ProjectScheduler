@@ -146,16 +146,6 @@ namespace ProjectRelated
             return totalHours;
         }
 
-        public TreeNode AssignedUserModels()
-        {
-            var rootNode = new TreeNode(ModelIdentity);
-
-            foreach (var userName in assignedUserIdentities)
-                rootNode.Nodes.Add(userName);
-
-            return rootNode;
-        }
-
         public override ListViewItem ItemModel()
         {
             var model = new ListViewItem(ModelIdentity);

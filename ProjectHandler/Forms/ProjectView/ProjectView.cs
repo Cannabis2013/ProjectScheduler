@@ -44,6 +44,7 @@ namespace MainDomain
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             service.Logut();
+            service.UnSubScribeAll();
             LogoutEvent?.Invoke(this, e);
         }
 
@@ -73,7 +74,8 @@ namespace MainDomain
 
         private void FillAbsenceDialog_OnSaveClicked(object sender, SubmitEvent e)
         {
-
+            var activity = e.Activity();
+            service.AddAbsenceActivity(activity);
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)

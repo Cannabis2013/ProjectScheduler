@@ -60,7 +60,7 @@ namespace Projecthandler
         private void ProjectView_LogutEvent(object sender, EventArgs e)
         {
             var view = (ProjectView) sender;
-            view.Close();
+            view.Dispose();
             ExitApplication = true;
             LaunchLoginView();
         }

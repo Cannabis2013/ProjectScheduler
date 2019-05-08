@@ -38,8 +38,6 @@ namespace Projecthandler.Forms.Dialogs
             Text = @"Create activity";
 
             mode = DialogMode.AddMode;
-
-            
         }
 
         // Edit constructor

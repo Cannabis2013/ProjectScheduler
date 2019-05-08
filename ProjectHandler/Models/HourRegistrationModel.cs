@@ -51,7 +51,7 @@ namespace ProjectRelated
 
         public override ListViewItem ItemModel()
         {
-            var model = new ListViewItem(ModelIdentity) { Text = ModelIdentity };
+            var model = new ListViewItem(ModelIdentity);
             model.SubItems.Add(UserName);
             model.SubItems.Add(Hours.ToString());
             model.SubItems.Add(originalRegistrationDate.ToString("dd/MM/yyyy"));
